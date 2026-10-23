@@ -15,3 +15,17 @@ Before writing any Crusader Kings III mod code, read `CK3_MODDING_GUIDE.md` in t
 - Window: `gui/dap_window.gui`; button actions: `common/scripted_guis/dap_scripted_guis.txt`.
 - Never restart or screenshot CK3 without asking if the user may be using it.
 - Launch CK3 by running `ck3.app/Contents/MacOS/ck3` directly with `nohup … & disown` (not `open`), so macOS does not ask for Documents access; close test runs with `pkill -9 -x ck3`.
+
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked in GitHub Issues for PhilII/ck3-modding, via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default labels: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: one `GLOSSARY.md` and `docs/adr/` at the repo root (created when first needed). See `docs/agents/domain.md`.
