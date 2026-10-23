@@ -1,0 +1,142 @@
+﻿# Dynasty Autopilot window actions. root = the player in every call.
+
+dap_close_window = {
+	scope = character
+	effect = {
+		remove_variable = dap_window_open
+	}
+}
+
+# scope:holder = character whose setting changes, scope:setting = flag:<variable name>
+dap_setting_next = {
+	scope = character
+	saved_scopes = { holder setting }
+	effect = {
+		scope:holder = { dap_setting_next_effect = yes }
+	}
+}
+
+dap_setting_prev = {
+	scope = character
+	saved_scopes = { holder setting }
+	effect = {
+		scope:holder = { dap_setting_prev_effect = yes }
+	}
+}
+
+# scope:target = the character whose rules the window shows (the player for default rules)
+dap_select_target = {
+	scope = character
+	saved_scopes = { target }
+	effect = {
+		set_variable = { name = dap_edit_target value = scope:target }
+	}
+}
+
+dap_make_personal = {
+	scope = character
+	saved_scopes = { target }
+	is_valid = {
+		NOT = { scope:target = root }
+	}
+	effect = {
+		scope:target = { dap_copy_rules_effect = { FROM = root } }
+	}
+}
+
+dap_use_defaults = {
+	scope = character
+	saved_scopes = { target }
+	effect = {
+		scope:target = { dap_clear_rules_effect = yes }
+	}
+}
+
+dap_toggle_excluded = {
+	scope = character
+	saved_scopes = { target }
+	effect = {
+		scope:target = {
+			if = {
+				limit = { has_variable = dap_excluded }
+				remove_variable = dap_excluded
+			}
+			else = {
+				set_variable = { name = dap_excluded value = 1 }
+			}
+		}
+	}
+}
+
+dap_search_now = {
+	scope = character
+	effect = {
+		dap_run_all_effect = yes
+		dap_refresh_family_effect = yes
+	}
+}
+
+# scope:holder = rule holder, scope:preset = flag:dap_preset_<id>
+dap_apply_preset = {
+	scope = character
+	saved_scopes = { holder preset }
+	effect = {
+		scope:holder = {
+			dap_apply_preset_effect = yes
+			if = {
+				limit = { NOT = { this = root } }
+				set_variable = { name = dap_override value = 1 }
+			}
+		}
+	}
+}
+
+# scope:holder = rule holder, scope:slot = flag:dap_slot_<n>
+dap_save_slot = {
+	scope = character
+	saved_scopes = { holder slot }
+	effect = {
+		dap_save_slot_by_flag_effect = yes
+	}
+}
+
+dap_load_slot = {
+	scope = character
+	saved_scopes = { holder slot }
+	effect = {
+		scope:holder = {
+			dap_load_slot_by_flag_effect = yes
+			if = {
+				limit = { NOT = { this = root } }
+				set_variable = { name = dap_override value = 1 }
+			}
+		}
+	}
+}
+
+# scope:holder = whose rules to copy to every listed family member
+dap_apply_to_family = {
+	scope = character
+	saved_scopes = { holder }
+	effect = {
+		dap_apply_rules_to_family_effect = yes
+	}
+}
+
+dap_reset_family = {
+	scope = character
+	effect = {
+		every_in_list = {
+			variable = dap_family
+			limit = { has_variable = dap_override }
+			dap_clear_rules_effect = yes
+		}
+	}
+}
+
+dap_clear_log = {
+	scope = character
+	effect = {
+		clear_variable_list = dap_log
+	}
+}

@@ -1,0 +1,116 @@
+﻿namespace = dap_confirm
+
+# "Ask before big decisions". root = player.
+
+# Break a betrothal. scope:subject, scope:dap_current_partner, scope:dap_upgrade (yes = for a better match)
+dap_confirm.1 = {
+	type = character_event
+	title = dap_confirm.1.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:dap_upgrade = yes }
+				desc = dap_confirm.1.desc_upgrade
+			}
+			desc = dap_confirm.1.desc_rules
+		}
+	}
+	theme = marriage
+	left_portrait = scope:subject
+	right_portrait = scope:dap_current_partner
+
+	trigger = {
+		scope:subject = {
+			is_alive = yes
+			exists = betrothed
+			betrothed = scope:dap_current_partner
+		}
+	}
+
+	option = {
+		name = dap_confirm.1.a
+		scope:subject = {
+			break_betrothal = scope:dap_current_partner
+			remove_variable = dap_auto_partner
+			remove_variable = dap_confirm_pending
+			dap_log_with_target_effect = { ACTION = dap_log_broke_betrothal TARGET = scope:dap_current_partner }
+		}
+	}
+	option = {
+		name = dap_confirm.1.b
+		scope:subject = {
+			remove_variable = dap_confirm_pending
+			# Keep this betrothal; stop reviewing it
+			remove_variable = dap_auto_partner
+		}
+	}
+}
+
+# Grant a duchy title. scope:dap_duchy, scope:dap_duke
+dap_confirm.2 = {
+	type = character_event
+	title = dap_confirm.2.t
+	desc = dap_confirm.2.desc
+	theme = realm
+	left_portrait = root
+	right_portrait = scope:dap_duke
+
+	trigger = {
+		scope:dap_duchy.holder ?= root
+		scope:dap_duke = {
+			is_alive = yes
+			is_vassal_of = root
+		}
+	}
+
+	option = {
+		name = dap_confirm.2.a
+		dap_grant_duchy_now_effect = yes
+		scope:dap_duchy = { remove_variable = dap_confirm_pending }
+	}
+	option = {
+		name = dap_confirm.2.b
+		scope:dap_duchy = {
+			remove_variable = dap_confirm_pending
+			# Do not ask about this duchy again for a while
+			set_variable = { name = dap_confirm_pending value = 1 years = 5 }
+		}
+	}
+}
+
+# Create a title. scope:dap_new_title
+dap_confirm.3 = {
+	type = character_event
+	title = dap_confirm.3.t
+	desc = dap_confirm.3.desc
+	theme = realm
+	left_portrait = root
+
+	trigger = {
+		scope:dap_new_title = {
+			NOT = { exists = holder }
+		}
+	}
+
+	option = {
+		name = dap_confirm.3.a
+		trigger = {
+			trigger_if = {
+				limit = { scope:dap_new_title = { tier = tier_duchy } }
+				gold >= create_duchy_title_value
+			}
+			trigger_else = {
+				gold >= create_kingdom_title_value
+			}
+		}
+		dap_create_title_now_effect = yes
+		scope:dap_new_title = { remove_variable = dap_confirm_pending }
+	}
+	option = {
+		name = dap_confirm.3.b
+		scope:dap_new_title = {
+			remove_variable = dap_confirm_pending
+			set_variable = { name = dap_confirm_pending value = 1 years = 5 }
+		}
+	}
+}

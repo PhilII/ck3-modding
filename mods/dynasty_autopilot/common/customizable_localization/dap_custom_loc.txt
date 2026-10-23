@@ -1,0 +1,268 @@
+﻿# Hand-written texts for the Dynasty Autopilot window (setting values are in dap_settings_generated.txt)
+
+dap_cl_member_status = {
+	type = character
+	text = {
+		trigger = { has_variable = dap_excluded }
+		localization_key = dap_status_excluded
+	}
+	text = {
+		trigger = { is_betrothed = yes }
+		localization_key = dap_status_betrothed
+	}
+	text = {
+		trigger = { has_variable = dap_override }
+		localization_key = dap_status_personal
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_status_default
+	}
+}
+
+dap_cl_excluded_button = {
+	type = character
+	text = {
+		trigger = { has_variable = dap_excluded }
+		localization_key = dap_include_button
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_exclude_button
+	}
+}
+
+# Outcome of the latest search for this family member
+dap_cl_member_result = {
+	type = character
+	text = {
+		trigger = { is_betrothed = yes }
+		localization_key = dap_result_betrothed
+	}
+	text = {
+		trigger = { has_variable = dap_awaiting_choice }
+		localization_key = dap_result_asked
+	}
+	text = {
+		trigger = { NOT = { has_variable = dap_last_result } }
+		localization_key = dap_result_none
+	}
+	text = {
+		trigger = { var:dap_last_result = flag:dap_result_waiting_adult }
+		localization_key = dap_result_waiting_adult
+	}
+	text = {
+		trigger = { var:dap_last_result = flag:dap_result_low_prestige }
+		localization_key = dap_result_low_prestige
+	}
+	text = {
+		trigger = { has_variable = dap_proposal_sent }
+		localization_key = dap_result_proposal_sent
+	}
+	text = {
+		trigger = { var:dap_last_result = flag:dap_result_declined }
+		localization_key = dap_result_declined
+	}
+	text = {
+		trigger = { var:dap_last_result = flag:dap_result_no_age_match }
+		localization_key = dap_result_no_age_match
+	}
+	text = {
+		trigger = { var:dap_last_result = flag:dap_result_blocked_traits }
+		localization_key = dap_result_blocked_traits
+	}
+	text = {
+		trigger = { var:dap_last_result = flag:dap_result_blocked_status }
+		localization_key = dap_result_blocked_status
+	}
+	text = {
+		trigger = { var:dap_last_result = flag:dap_result_blocked_faith }
+		localization_key = dap_result_blocked_faith
+	}
+	text = {
+		trigger = { var:dap_last_result = flag:dap_result_blocked_compatible }
+		localization_key = dap_result_blocked_compatible
+	}
+	text = {
+		trigger = { var:dap_last_result = flag:dap_result_blocked_combination }
+		localization_key = dap_result_blocked_combination
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_result_none
+	}
+}
+
+# Shown when the rules for this family member have been relaxed
+dap_cl_member_relaxed = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = dap_relax
+			var:dap_relax >= 1
+		}
+		localization_key = dap_relaxed_note
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_empty
+	}
+}
+
+# Guardian line in the Guardians tab
+dap_cl_guardian = {
+	type = character
+	text = {
+		trigger = { has_variable = dap_excluded }
+		localization_key = dap_guardian_excluded
+	}
+	text = {
+		trigger = { is_adult = yes }
+		localization_key = dap_guardian_adult
+	}
+	text = {
+		trigger = { num_of_relation_guardian = 0 }
+		localization_key = dap_guardian_none
+	}
+	text = {
+		trigger = {
+			has_variable = dap_guardian
+			any_relation = {
+				type = guardian
+				this = prev.var:dap_guardian
+			}
+		}
+		localization_key = dap_guardian_by_autopilot
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_guardian_has
+	}
+}
+
+# Focus line in the Education tab
+dap_cl_focus = {
+	type = character
+	text = {
+		trigger = { has_variable = dap_excluded }
+		localization_key = dap_guardian_excluded
+	}
+	text = {
+		trigger = { is_adult = yes }
+		localization_key = dap_guardian_adult
+	}
+	text = {
+		trigger = { has_focus = education_diplomacy }
+		localization_key = dap_focus_diplomacy
+	}
+	text = {
+		trigger = { has_focus = education_stewardship }
+		localization_key = dap_focus_stewardship
+	}
+	text = {
+		trigger = { has_focus = education_martial }
+		localization_key = dap_focus_martial
+	}
+	text = {
+		trigger = { has_focus = education_intrigue }
+		localization_key = dap_focus_intrigue
+	}
+	text = {
+		trigger = { has_focus = education_learning }
+		localization_key = dap_focus_learning
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_focus_none
+	}
+}
+
+# Last automated action, shown in the log
+dap_cl_log_action = {
+	type = character
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_matched }
+		localization_key = dap_log_matched
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_proposal }
+		localization_key = dap_log_proposal
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_broke_betrothal }
+		localization_key = dap_log_broke_betrothal
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_concubine }
+		localization_key = dap_log_concubine
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_invited }
+		localization_key = dap_log_invited
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_guardian }
+		localization_key = dap_log_guardian
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_focus }
+		localization_key = dap_log_focus
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_sway }
+		localization_key = dap_log_sway
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_council }
+		localization_key = dap_log_council
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_position }
+		localization_key = dap_log_position
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_ransomed }
+		localization_key = dap_log_ransomed
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_released }
+		localization_key = dap_log_released
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_land }
+		localization_key = dap_log_land
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_duchy }
+		localization_key = dap_log_duchy
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_created_title }
+		localization_key = dap_log_created_title
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_maa }
+		localization_key = dap_log_maa
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_revoke }
+		localization_key = dap_log_revoke
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_empty
+	}
+}
+
+# "Suggestion:" in front of log entries made in "Suggest only" mode
+dap_cl_log_prefix = {
+	type = character
+	text = {
+		trigger = { has_variable = dap_log_suggested }
+		localization_key = dap_log_suggested_prefix
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_empty
+	}
+}

@@ -1,0 +1,11 @@
+# CK3 reads script, GUI and localization files as UTF-8 with BOM and LF endings.
+# Keep line endings stable and never let git rewrite these files.
+*.txt text eol=lf
+*.gui text eol=lf
+*.yml text eol=lf
+*.mod text eol=lf
+*.py  text eol=lf
+*.md  text eol=lf
+
+*.dds binary
+*.png binary

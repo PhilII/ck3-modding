@@ -1,0 +1,890 @@
+﻿# Dynasty Autopilot - guardian, education and court modules, and the action log.
+# root = the player in every effect here.
+
+### Log
+
+# this = the character acted on; remembers the action for the log in the General tab
+dap_log_effect = {
+	if = {
+		limit = { exists = var:dap_log_target }
+		remove_variable = dap_log_target
+	}
+	dap_log_record_effect = { ACTION = $ACTION$ }
+}
+
+# this = the character acted on; as dap_log_effect, also naming the other character involved
+dap_log_with_target_effect = {
+	dap_log_record_effect = { ACTION = $ACTION$ }
+	set_variable = { name = dap_log_target value = $TARGET$ }
+}
+
+dap_log_record_effect = {
+	set_variable = { name = dap_log_action value = flag:$ACTION$ }
+	# In "Suggest only" mode the log entry is a suggestion, not something that happened
+	if = {
+		limit = { dap_dry_run_trigger = yes }
+		set_variable = { name = dap_log_suggested value = 1 }
+	}
+	else_if = {
+		limit = { exists = var:dap_log_suggested }
+		remove_variable = dap_log_suggested
+	}
+	root = {
+		if = {
+			limit = {
+				has_variable_list = dap_log
+				variable_list_size = { name = dap_log value >= 40 }
+			}
+			clear_variable_list = dap_log
+		}
+		if = {
+			limit = {
+				NOT = { is_target_in_variable_list = { name = dap_log target = prev } }
+			}
+			add_to_variable_list = { name = dap_log target = prev }
+		}
+	}
+}
+
+### Guardians
+
+# this = ward; save scope:dap_ward and the rules (scope:cfg) that apply to them
+dap_save_ward_scopes_effect = {
+	save_scope_as = dap_ward
+	if = {
+		limit = { has_variable = dap_override }
+		dap_ensure_rules_effect = yes
+		save_scope_as = cfg
+	}
+	else = {
+		root = { save_scope_as = cfg }
+	}
+}
+
+# this = ward; pick the best guardian and ask them through the vanilla interaction
+dap_assign_guardian_effect = {
+	root = {
+		every_courtier = {
+			limit = { dap_guardian_candidate_trigger = yes }
+			add_to_list = dap_guardian_pool
+		}
+		if = {
+			limit = { dap_guardian_candidate_trigger = yes }
+			add_to_list = dap_guardian_pool
+		}
+		every_spouse = {
+			limit = { dap_guardian_candidate_trigger = yes }
+			add_to_list = dap_guardian_pool
+		}
+		if = {
+			limit = { var:dap_guard_source = 1 }
+			every_vassal = {
+				limit = { dap_guardian_candidate_trigger = yes }
+				add_to_list = dap_guardian_pool
+			}
+		}
+	}
+	set_local_variable = { name = dap_guard_done value = 0 }
+	ordered_in_list = {
+		list = dap_guardian_pool
+		limit = {
+			NOT = { this = scope:dap_ward }
+			dap_guardian_candidate_trigger = yes
+		}
+		order_by = dap_guardian_score
+		max = 5
+		check_range_bounds = no
+		save_scope_as = dap_guardian
+		# The interaction is addressed to whoever holds the guardian's court
+		if = {
+			limit = { is_ruler = yes }
+			save_scope_as = dap_guardian_owner
+		}
+		else = {
+			employer ?= { save_scope_as = dap_guardian_owner }
+		}
+		if = {
+			limit = {
+				local_var:dap_guard_done = 0
+				exists = scope:dap_guardian_owner
+				scope:dap_ward = { num_of_relation_guardian = 0 }
+				root = {
+					is_character_interaction_potentially_accepted = {
+						recipient = scope:dap_guardian_owner
+						interaction = educate_child_interaction
+						secondary_actor = scope:dap_guardian
+						secondary_recipient = scope:dap_ward
+					}
+				}
+			}
+			if = {
+				limit = { dap_dry_run_trigger = no }
+				root = {
+					run_interaction = {
+						interaction = educate_child_interaction
+						actor = root
+						recipient = scope:dap_guardian_owner
+						secondary_actor = scope:dap_guardian
+						secondary_recipient = scope:dap_ward
+						execute_threshold = accept
+					}
+				}
+				scope:dap_ward = { set_variable = { name = dap_guardian value = scope:dap_guardian } }
+			}
+			set_local_variable = { name = dap_guard_done value = 1 }
+			scope:dap_ward = {
+				dap_log_with_target_effect = { ACTION = dap_log_guardian TARGET = scope:dap_guardian }
+			}
+		}
+	}
+}
+
+# this = player; one pass of the guardian module
+dap_run_guardians_effect = {
+	if = {
+		limit = { var:dap_guard_enabled = 1 }
+		every_courtier = {
+			limit = {
+				dap_is_family_member_trigger = yes
+				is_adult = no
+				NOT = { has_variable = dap_excluded }
+				trigger_if = {
+					limit = { root.primary_heir ?= this }
+					root.var:dap_guard_heir < 2
+				}
+			}
+			dap_save_ward_scopes_effect = yes
+			# Replace an unfit guardian first
+			if = {
+				limit = {
+					root.var:dap_guard_replace = 1
+					any_relation = {
+						type = guardian
+						dap_guardian_unfit_trigger = yes
+					}
+				}
+				every_relation = {
+					type = guardian
+					limit = { dap_guardian_unfit_trigger = yes }
+					save_scope_as = dap_old_guardian
+					scope:dap_ward = { remove_relation_guardian = scope:dap_old_guardian }
+				}
+			}
+			if = {
+				limit = { num_of_relation_guardian = 0 }
+				dap_assign_guardian_effect = yes
+			}
+		}
+	}
+}
+
+### Education
+
+# this = child; the focus number to use (1 diplomacy, 2 stewardship, 3 martial, 4 intrigue, 5 learning)
+dap_set_focus_by_number_effect = {
+	if = {
+		limit = {
+			$NUMBER$ = 1
+			NOT = { has_focus = education_diplomacy }
+		}
+		if = {
+			limit = { dap_dry_run_trigger = no }
+			set_focus = education_diplomacy
+		}
+		dap_log_effect = { ACTION = dap_log_focus }
+	}
+	else_if = {
+		limit = {
+			$NUMBER$ = 2
+			NOT = { has_focus = education_stewardship }
+		}
+		if = {
+			limit = { dap_dry_run_trigger = no }
+			set_focus = education_stewardship
+		}
+		dap_log_effect = { ACTION = dap_log_focus }
+	}
+	else_if = {
+		limit = {
+			$NUMBER$ = 3
+			NOT = { has_focus = education_martial }
+		}
+		if = {
+			limit = { dap_dry_run_trigger = no }
+			set_focus = education_martial
+		}
+		dap_log_effect = { ACTION = dap_log_focus }
+	}
+	else_if = {
+		limit = {
+			$NUMBER$ = 4
+			NOT = { has_focus = education_intrigue }
+		}
+		if = {
+			limit = { dap_dry_run_trigger = no }
+			set_focus = education_intrigue
+		}
+		dap_log_effect = { ACTION = dap_log_focus }
+	}
+	else_if = {
+		limit = {
+			$NUMBER$ = 5
+			NOT = { has_focus = education_learning }
+		}
+		if = {
+			limit = { dap_dry_run_trigger = no }
+			set_focus = education_learning
+		}
+		dap_log_effect = { ACTION = dap_log_focus }
+	}
+}
+
+# this = player; one pass of the education module
+dap_run_education_effect = {
+	if = {
+		limit = { var:dap_edu_enabled = 1 }
+		every_courtier = {
+			limit = {
+				dap_is_family_member_trigger = yes
+				is_adult = no
+				NOT = { has_variable = dap_excluded }
+				OR = {
+					dap_has_education_focus_trigger = no
+					root.var:dap_edu_override = 1
+				}
+			}
+			dap_save_ward_scopes_effect = yes
+			if = {
+				limit = { scope:cfg.var:dap_edu_focus < 8 }
+				dap_set_focus_by_number_effect = { NUMBER = dap_wanted_focus_value }
+			}
+		}
+	}
+}
+
+### Court
+
+# this = player; Sway the vassal who likes you least
+dap_run_sway_effect = {
+	if = {
+		limit = { var:dap_court_sway >= 1 }
+		ordered_vassal = {
+			limit = {
+				is_ai = yes
+				trigger_if = {
+					limit = { root.var:dap_court_sway = 1 }
+					opinion = { target = root value < 0 }
+				}
+				trigger_else = {
+					opinion = { target = root value < 20 }
+				}
+				save_temporary_scope_as = dap_sway_target
+				root = {
+					can_start_scheme = {
+						type = sway
+						target_character = scope:dap_sway_target
+					}
+				}
+			}
+			order_by = dap_dislike_of_root_value
+			max = 1
+			save_scope_as = dap_sway_target
+			if = {
+				limit = { dap_dry_run_trigger = no }
+				root = {
+					start_scheme = {
+						type = sway
+						target_character = scope:dap_sway_target
+					}
+				}
+			}
+			dap_log_effect = { ACTION = dap_log_sway }
+		}
+	}
+}
+
+# this = player; fill or improve one council seat
+dap_fill_council_seat_effect = {
+	if = {
+		limit = {
+			OR = {
+				NOT = { exists = cp:$SEAT$ }
+				root.var:dap_court_council = 2
+			}
+		}
+		every_courtier = {
+			limit = {
+				is_ai = yes
+				is_councillor = no
+				$CAN_BE$ = { COURT_OWNER = root }
+			}
+			add_to_list = dap_council_pool_$SEAT$
+		}
+		every_vassal = {
+			limit = {
+				is_ai = yes
+				is_councillor = no
+				$CAN_BE$ = { COURT_OWNER = root }
+			}
+			add_to_list = dap_council_pool_$SEAT$
+		}
+		ordered_in_list = {
+			list = dap_council_pool_$SEAT$
+			order_by = $SKILL$
+			max = 1
+			check_range_bounds = no
+			save_scope_as = dap_councillor
+			if = {
+				limit = {
+					trigger_if = {
+						limit = { exists = root.cp:$SEAT$ }
+						$SKILL$ >= {
+							value = root.cp:$SEAT$.$SKILL$
+							add = 4
+						}
+					}
+				}
+				if = {
+					limit = { dap_dry_run_trigger = no }
+					root = {
+						assign_councillor_type = {
+							type = $SEAT$
+							target = scope:dap_councillor
+							remove_existing_councillor = yes
+						}
+					}
+				}
+				dap_log_effect = { ACTION = dap_log_council }
+			}
+		}
+	}
+}
+
+dap_run_council_effect = {
+	if = {
+		limit = {
+			var:dap_court_council >= 1
+			tgp_has_access_to_ministry_trigger = no
+		}
+		dap_fill_council_seat_effect = { SEAT = councillor_chancellor CAN_BE = can_be_chancellor_trigger SKILL = diplomacy }
+		dap_fill_council_seat_effect = { SEAT = councillor_steward CAN_BE = can_be_steward_trigger SKILL = stewardship }
+		dap_fill_council_seat_effect = { SEAT = councillor_marshal CAN_BE = can_be_marshal_trigger SKILL = martial }
+		dap_fill_council_seat_effect = { SEAT = councillor_spymaster CAN_BE = can_be_spymaster_trigger SKILL = intrigue }
+	}
+}
+
+# this = player; the highest prowess courtiers are always knights
+dap_run_knights_effect = {
+	if = {
+		limit = { var:dap_court_knights = 1 }
+		every_courtier = {
+			limit = { can_be_knight_trigger = { ARMY_OWNER = root } }
+			add_to_list = dap_knight_pool
+		}
+		ordered_in_list = {
+			list = dap_knight_pool
+			order_by = prowess
+			max = root.max_number_of_knights
+			check_range_bounds = no
+			if = {
+				limit = { dap_dry_run_trigger = no }
+				set_knight_status = force
+			}
+		}
+	}
+}
+
+# this = player; appoint the most apt candidate to an empty position
+dap_fill_court_position_effect = {
+	if = {
+		limit = {
+			can_employ_court_position_type = $POSITION$
+			NOT = { employs_court_position = $POSITION$ }
+			dap_can_spend_trigger = { AMOUNT = 50 }
+		}
+		ordered_courtier = {
+			limit = {
+				is_ai = yes
+				can_be_employed_as = $POSITION$
+			}
+			order_by = aptitude:$POSITION$
+			max = 1
+			save_scope_as = dap_appointee
+			if = {
+				limit = { dap_dry_run_trigger = no }
+				root = {
+					appoint_court_position = {
+						recipient = scope:dap_appointee
+						court_position = $POSITION$
+					}
+				}
+			}
+			dap_log_effect = { ACTION = dap_log_position }
+		}
+	}
+}
+
+dap_run_court_positions_effect = {
+	if = {
+		limit = { var:dap_court_positions >= 1 }
+		dap_fill_court_position_effect = { POSITION = court_physician_court_position }
+		dap_fill_court_position_effect = { POSITION = bodyguard_court_position }
+		dap_fill_court_position_effect = { POSITION = champion_court_position }
+		dap_fill_court_position_effect = { POSITION = court_tutor_court_position }
+		dap_fill_court_position_effect = { POSITION = master_of_horse_court_position }
+	}
+	if = {
+		limit = { var:dap_court_positions = 2 }
+		dap_fill_court_position_effect = { POSITION = master_of_hunt_court_position }
+		dap_fill_court_position_effect = { POSITION = seneschal_court_position }
+		dap_fill_court_position_effect = { POSITION = antiquarian_court_position }
+		dap_fill_court_position_effect = { POSITION = court_scholar_court_position }
+		dap_fill_court_position_effect = { POSITION = court_poet_court_position }
+		dap_fill_court_position_effect = { POSITION = court_musician_court_position }
+		dap_fill_court_position_effect = { POSITION = court_jester_court_position }
+		dap_fill_court_position_effect = { POSITION = court_gardener_court_position }
+		dap_fill_court_position_effect = { POSITION = court_artificer_court_position }
+		dap_fill_court_position_effect = { POSITION = royal_architect_court_position }
+		dap_fill_court_position_effect = { POSITION = high_almoner_court_position }
+		dap_fill_court_position_effect = { POSITION = cupbearer_court_position }
+		dap_fill_court_position_effect = { POSITION = food_taster_court_position }
+		dap_fill_court_position_effect = { POSITION = executioner_court_position }
+		dap_fill_court_position_effect = { POSITION = lady_in_waiting_court_position }
+		dap_fill_court_position_effect = { POSITION = travel_leader_court_position }
+		dap_fill_court_position_effect = { POSITION = wet_nurse_court_position }
+	}
+}
+
+# this = player; ransom prisoners whose family pays, release long-held ones
+dap_run_prisoners_effect = {
+	if = {
+		limit = { var:dap_court_prisoners >= 1 }
+		every_prisoner = {
+			limit = { is_ai = yes }
+			save_scope_as = dap_prisoner
+			if = {
+				limit = {
+					root = {
+						is_character_interaction_potentially_accepted = {
+							recipient = scope:dap_prisoner
+							interaction = ransom_interaction
+							required_response = yes
+						}
+					}
+				}
+				if = {
+					limit = { dap_dry_run_trigger = yes }
+					dap_log_effect = { ACTION = dap_log_ransomed }
+				}
+				else = {
+					root = {
+						run_interaction = {
+							interaction = ransom_interaction
+							actor = root
+							recipient = scope:dap_prisoner
+							execute_threshold = accept
+						}
+					}
+					if = {
+						limit = { is_imprisoned = no }
+						dap_log_effect = { ACTION = dap_log_ransomed }
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					root.var:dap_court_prisoners = 2
+					time_in_prison = { years >= 5 }
+				}
+				if = {
+					limit = { dap_dry_run_trigger = no }
+					release_from_prison = yes
+				}
+				dap_log_effect = { ACTION = dap_log_released }
+			}
+		}
+	}
+}
+
+# this = player; grant one county to the most relevant family member, house member or courtier
+dap_grant_one_county_effect = {
+	if = {
+		limit = { dap_domain_too_big_trigger = yes }
+		clear_saved_scope = dap_grantee
+		clear_saved_scope = dap_granted_county
+		every_courtier = {
+			limit = { dap_grantee_candidate_trigger = yes }
+			add_to_list = dap_grantee_pool
+		}
+		every_vassal = {
+			limit = { dap_grantee_candidate_trigger = yes }
+			add_to_list = dap_grantee_pool
+		}
+		ordered_in_list = {
+			list = dap_grantee_pool
+			limit = { dap_grantee_candidate_trigger = yes }
+			order_by = dap_grantee_score
+			max = 1
+			check_range_bounds = no
+			save_scope_as = dap_grantee
+		}
+		if = {
+			limit = { NOT = { exists = scope:dap_grantee } }
+			set_local_variable = { name = dap_grant_stuck value = 1 }
+		}
+		if = {
+			limit = { exists = scope:dap_grantee }
+			# Duchies where the receiver already holds land, for "Keep holdings together"
+			scope:dap_grantee = {
+				every_held_title = {
+					limit = { tier = tier_county }
+					de_jure_liege ?= { add_to_list = dap_grantee_duchies }
+				}
+			}
+			ordered_held_title = {
+				limit = { dap_grantable_county_trigger = yes }
+				order_by = dap_county_spare_value
+				max = 1
+				check_range_bounds = no
+				save_scope_as = dap_granted_county
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:dap_grantee
+				exists = scope:dap_granted_county
+			}
+			if = {
+				limit = { dap_dry_run_trigger = no }
+				create_title_and_vassal_change = {
+					type = granted
+					save_scope_as = change
+					add_claim_on_loss = no
+				}
+				scope:dap_granted_county = {
+					change_title_holder = {
+						holder = scope:dap_grantee
+						change = scope:change
+					}
+				}
+				resolve_title_and_vassal_change = scope:change
+				scope:dap_grantee = { dap_set_new_vassal_contract_effect = yes }
+			}
+			scope:dap_grantee = { dap_log_effect = { ACTION = dap_log_land } }
+		}
+	}
+}
+
+# this = new vassal; feudal contract per "Contract for new vassals"
+dap_set_new_vassal_contract_effect = {
+	if = {
+		limit = {
+			root.var:dap_grant_contract >= 1
+			is_vassal_of = root
+			has_government = feudal_government
+		}
+		if = {
+			limit = { root.var:dap_grant_contract = 1 }
+			vassal_contract_set_obligation_level = { type = feudal_government_taxes level = feudal_tax_high }
+		}
+		else = {
+			vassal_contract_set_obligation_level = { type = feudal_government_levies level = feudal_levies_high }
+		}
+	}
+}
+
+# this = player; give scope:dap_duchy to scope:dap_duke now
+dap_grant_duchy_now_effect = {
+	create_title_and_vassal_change = {
+		type = granted
+		save_scope_as = change
+		add_claim_on_loss = no
+	}
+	scope:dap_duchy = {
+		change_title_holder = {
+			holder = scope:dap_duke
+			change = scope:change
+		}
+	}
+	resolve_title_and_vassal_change = scope:change
+	scope:dap_duke = { dap_log_effect = { ACTION = dap_log_duchy } }
+}
+
+# this = player; duchy titles go to the vassal holding most of their counties
+dap_grant_duchies_effect = {
+	if = {
+		limit = { var:dap_grant_duchies = 1 }
+		every_held_title = {
+			limit = {
+				tier = tier_duchy
+				NOT = { this = root.primary_title }
+				NOT = { root.capital_county.de_jure_liege ?= this }
+				is_leased_out = no
+				is_noble_family_title = no
+				NOT = { exists = var:ceremonial_title }
+				NOT = { exists = var:dap_confirm_pending }
+			}
+			save_scope_as = dap_duchy
+			root = {
+				clear_saved_scope = dap_duke
+				ordered_vassal = {
+					limit = {
+						is_ai = yes
+						dap_duchy_counties_held_value >= 1
+						can_be_granted_titles_by = { RULER = root }
+						NOT = { root.primary_heir ?= this }
+					}
+					order_by = dap_duchy_counties_held_value
+					max = 1
+					check_range_bounds = no
+					save_scope_as = dap_duke
+				}
+			}
+			if = {
+				limit = { exists = scope:dap_duke }
+				if = {
+					limit = { dap_dry_run_trigger = yes }
+					scope:dap_duke = { dap_log_effect = { ACTION = dap_log_duchy } }
+				}
+				else_if = {
+					limit = { root = { dap_should_confirm_trigger = yes } }
+					set_variable = { name = dap_confirm_pending value = 1 days = 90 }
+					root = { trigger_event = dap_confirm.2 }
+				}
+				else = {
+					root = { dap_grant_duchy_now_effect = yes }
+				}
+			}
+		}
+	}
+}
+
+# this = player; pay for and create scope:dap_new_title
+dap_create_title_now_effect = {
+	if = {
+		limit = { scope:dap_new_title = { tier = tier_duchy } }
+		remove_short_term_gold = create_duchy_title_value
+	}
+	else = {
+		remove_short_term_gold = create_kingdom_title_value
+	}
+	create_title_and_vassal_change = {
+		type = created
+		save_scope_as = change
+		add_claim_on_loss = no
+	}
+	scope:dap_new_title = {
+		change_title_holder = {
+			holder = root
+			change = scope:change
+		}
+	}
+	resolve_title_and_vassal_change = scope:change
+	dap_log_effect = { ACTION = dap_log_created_title }
+}
+
+# this = player; create de jure titles the realm mostly controls
+dap_create_titles_effect = {
+	if = {
+		limit = { var:dap_create_titles >= 1 }
+		every_realm_county = {
+			de_jure_liege ?= {
+				if = {
+					limit = {
+						tier = tier_duchy
+						NOT = { exists = holder }
+					}
+					add_to_list = dap_title_candidates
+				}
+				if = {
+					limit = { root.var:dap_create_titles = 2 }
+					de_jure_liege ?= {
+						if = {
+							limit = {
+								tier = tier_kingdom
+								NOT = { exists = holder }
+							}
+							add_to_list = dap_title_candidates
+						}
+					}
+				}
+			}
+		}
+		ordered_in_list = {
+			list = dap_title_candidates
+			limit = {
+				NOT = { exists = var:dap_confirm_pending }
+				dap_realm_controls_title_trigger = yes
+			}
+			order_by = dap_title_tier_value
+			max = 1
+			check_range_bounds = no
+			save_scope_as = dap_new_title
+			if = {
+				limit = {
+					root = {
+						trigger_if = {
+							limit = { scope:dap_new_title = { tier = tier_duchy } }
+							dap_can_spend_trigger = { AMOUNT = create_duchy_title_value }
+						}
+						trigger_else = {
+							dap_can_spend_trigger = { AMOUNT = create_kingdom_title_value }
+						}
+					}
+				}
+				if = {
+					limit = { dap_dry_run_trigger = yes }
+					root = { dap_log_effect = { ACTION = dap_log_created_title } }
+				}
+				else_if = {
+					limit = { root = { dap_should_confirm_trigger = yes } }
+					set_variable = { name = dap_confirm_pending value = 1 days = 90 }
+					root = { trigger_event = dap_confirm.3 }
+				}
+				else = {
+					root = { dap_create_title_now_effect = yes }
+				}
+			}
+		}
+	}
+}
+
+# this = player; one men-at-arms regiment of the chosen type when there is room and gold
+dap_recruit_maa_effect = {
+	if = {
+		limit = {
+			var:dap_maa_type >= 1
+			maa_regiments_count < maa_regiments_max_count
+		}
+		if = {
+			limit = {
+				var:dap_maa_type = 1
+				dap_can_spend_trigger = { AMOUNT = heavy_infantry_recruitment_cost }
+			}
+			dap_recruit_maa_type_effect = { TYPE = armored_footmen COST = heavy_infantry_recruitment_cost }
+		}
+		else_if = {
+			limit = {
+				var:dap_maa_type = 2
+				dap_can_spend_trigger = { AMOUNT = pikemen_recruitment_cost }
+			}
+			dap_recruit_maa_type_effect = { TYPE = pikemen_unit COST = pikemen_recruitment_cost }
+		}
+		else_if = {
+			limit = {
+				var:dap_maa_type = 3
+				dap_can_spend_trigger = { AMOUNT = bowmen_recruitment_cost }
+			}
+			dap_recruit_maa_type_effect = { TYPE = bowmen COST = bowmen_recruitment_cost }
+		}
+		else_if = {
+			limit = {
+				var:dap_maa_type = 4
+				dap_can_spend_trigger = { AMOUNT = light_cavalry_recruitment_cost }
+			}
+			dap_recruit_maa_type_effect = { TYPE = light_horsemen COST = light_cavalry_recruitment_cost }
+		}
+		else_if = {
+			limit = {
+				var:dap_maa_type = 5
+				dap_can_spend_trigger = { AMOUNT = heavy_cavalry_recruitment_cost }
+			}
+			dap_recruit_maa_type_effect = { TYPE = armored_horsemen COST = heavy_cavalry_recruitment_cost }
+		}
+	}
+}
+
+dap_recruit_maa_type_effect = {
+	if = {
+		limit = { dap_dry_run_trigger = no }
+		remove_short_term_gold = $COST$
+		create_maa_regiment = {
+			type = $TYPE$
+			check_can_recruit = yes
+		}
+	}
+	dap_log_effect = { ACTION = dap_log_maa }
+}
+
+# this = player; list vassals with a valid revoke reason who dislike you
+dap_suggest_revokes_effect = {
+	if = {
+		limit = { var:dap_revoke_suggest = 1 }
+		every_vassal = {
+			limit = {
+				is_ai = yes
+				opinion = { target = root value < -25 }
+				root = { has_revoke_title_reason = prev }
+			}
+			dap_log_record_effect = { ACTION = dap_log_revoke }
+			set_variable = { name = dap_log_suggested value = 1 }
+		}
+	}
+}
+
+# this = player; once a year, point out unused gold and free building slots
+dap_building_reminder_effect = {
+	if = {
+		limit = {
+			var:dap_build_reminder = 1
+			NOT = { has_variable = dap_build_reminder_cooldown }
+			dap_can_spend_trigger = { AMOUNT = 300 }
+			any_held_title = {
+				tier = tier_county
+				title_province = { has_free_building_slot = yes }
+			}
+		}
+		set_variable = { name = dap_build_reminder_cooldown value = 1 days = 360 }
+		send_interface_toast = {
+			type = event_toast_effect_neutral
+			title = dap_build_reminder_title
+			desc = dap_build_reminder_desc
+		}
+	}
+}
+
+dap_run_land_effect = {
+	if = {
+		limit = { var:dap_grant_when >= 1 }
+		set_local_variable = { name = dap_grant_stuck value = 0 }
+		# Up to ten counties a season; each call stops once the domain is small enough
+		dap_grant_one_county_effect = yes
+		dap_grant_one_county_effect = yes
+		dap_grant_one_county_effect = yes
+		dap_grant_one_county_effect = yes
+		dap_grant_one_county_effect = yes
+		dap_grant_one_county_effect = yes
+		dap_grant_one_county_effect = yes
+		dap_grant_one_county_effect = yes
+		dap_grant_one_county_effect = yes
+		dap_grant_one_county_effect = yes
+		# Still too big and nobody may receive land: tell the player once a year
+		if = {
+			limit = {
+				local_var:dap_grant_stuck = 1
+				dap_domain_too_big_trigger = yes
+				NOT = { has_variable = dap_grant_stuck_cooldown }
+			}
+			set_variable = { name = dap_grant_stuck_cooldown value = 1 days = 360 }
+			send_interface_toast = {
+				type = event_toast_effect_bad
+				title = dap_grant_stuck_title
+				desc = dap_grant_stuck_desc
+			}
+		}
+	}
+	dap_grant_duchies_effect = yes
+	dap_create_titles_effect = yes
+	dap_suggest_revokes_effect = yes
+}
+
+dap_run_court_effect = {
+	dap_recruit_maa_effect = yes
+	dap_building_reminder_effect = yes
+	dap_run_sway_effect = yes
+	dap_run_council_effect = yes
+	dap_run_knights_effect = yes
+	dap_run_court_positions_effect = yes
+	dap_run_prisoners_effect = yes
+	dap_run_land_effect = yes
+}

@@ -1,0 +1,14 @@
+﻿# Appends to vanilla; never adds a trigger or effect to the vanilla on_action
+quarterly_playable_pulse = {
+	on_actions = { dap_quarterly_pulse }
+}
+
+dap_quarterly_pulse = {
+	trigger = {
+		is_ai = no
+		has_variable = dap_initialized
+	}
+	effect = {
+		dap_run_all_effect = yes
+	}
+}

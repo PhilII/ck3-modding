@@ -1,0 +1,23 @@
+name: Check mod
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generated files are up to date
+        run: |
+          python3 tools/build_dap.py
+          git diff --exit-code -- mods/ || (echo "Run 'python3 tools/build_dap.py' and commit the result." && exit 1)
+
+      - name: Static checks
+        run: python3 tools/check_mod.py

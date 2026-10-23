@@ -1,0 +1,487 @@
+﻿######################################################################
+# Dynasty Autopilot settings window
+#
+# Opened by setting the player variable dap_window_open (see
+# dap_open_window_effect). Created on map load through
+# gui/scripted_widgets/dap_widgets.txt.
+#
+# Setting rows come from dap_settings_generated.gui. Each generated section
+# reads and writes the datacontext Character, so the window decides whose
+# settings a section shows by setting datacontext around it.
+#
+# To add a new automation module: add it to tools/dap_settings.py, run
+# tools/build_dap.py, then add a tab button and a tab body below.
+######################################################################
+
+types DapTypes
+{
+	type dap_section_header = hbox {
+		layoutpolicy_horizontal = expanding
+		margin = { 8 0 }
+		margin_top = 12
+		margin_bottom = 4
+
+		text_single = {
+			using = Font_Size_Medium
+			default_format = "#high"
+			block "title" {
+				text = "DEFAULT_TEXT"
+			}
+		}
+
+		expand = {}
+	}
+
+	type dap_setting_row = hbox {
+		layoutpolicy_horizontal = expanding
+		margin = { 8 2 }
+
+		text_single = {
+			layoutpolicy_horizontal = expanding
+			align = left|nobaseline
+			block "label" {
+				text = "DEFAULT_TEXT"
+			}
+		}
+
+		button_standard = {
+			size = { 290 30 }
+			block "value" {}
+			block "tooltip" {}
+			block "onclick" {}
+			block "onrightclick" {}
+		}
+	}
+}
+
+types DapLogTypes
+{
+	# The log in the General tab; datacontext is the player
+	type dap_log_view = vbox {
+		layoutpolicy_horizontal = expanding
+
+		dap_section_header = {
+			blockoverride "title" {
+				text = "dap_log_title"
+			}
+		}
+
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			margin = { 8 2 }
+			button_standard_small = {
+				size = { 120 26 }
+				text = "dap_log_clear"
+				onclick = "[GetScriptedGui( 'dap_clear_log' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			}
+			expand = {}
+		}
+
+		text_single = {
+			margin = { 8 4 }
+			visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('dap_log') )]"
+			text = "dap_log_empty"
+		}
+
+		vbox = {
+			layoutpolicy_horizontal = expanding
+			datamodel = "[GetPlayer.MakeScope.GetList('dap_log')]"
+
+			item = {
+				hbox = {
+					layoutpolicy_horizontal = expanding
+					datacontext = "[Scope.GetCharacter]"
+					margin = { 8 2 }
+					spacing = 8
+
+					portrait_head_small = {}
+
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							align = left|nobaseline
+							text = "dap_member_name"
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 4
+							text_single = {
+								align = left|nobaseline
+								text = "[Character.Custom( 'dap_cl_log_prefix' )][Character.Custom( 'dap_cl_log_action' )]"
+							}
+							text_single = {
+								align = left|nobaseline
+								visible = "[Character.MakeScope.Var('dap_log_target').IsSet]"
+								text = "dap_log_target"
+							}
+							expand = {}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+window = {
+	name = "dap_window"
+	size = { 980 800 }
+	parentanchor = center
+	layer = middle
+	movable = yes
+	visible = "[GetPlayer.MakeScope.Var('dap_window_open').IsSet]"
+
+	using = Window_Background
+	using = Window_Decoration
+
+	state = {
+		name = _show
+		using = Animation_FadeIn_Quick
+		on_start = "[GetVariableSystem.Set( 'dap_tab', 'general' )]"
+		on_start = "[GetVariableSystem.Set( 'dap_view', 'rules' )]"
+	}
+
+	state = {
+		name = _hide
+		using = Animation_FadeOut_Quick
+	}
+
+	vbox = {
+		using = Window_Margins
+
+		header_pattern = {
+			layoutpolicy_horizontal = expanding
+
+			blockoverride "header_text" {
+				text = "dap_window_title"
+			}
+
+			blockoverride "button_close" {
+				onclick = "[GetScriptedGui( 'dap_close_window' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			}
+		}
+
+		### One tab per module (generated)
+		dap_tab_buttons = {}
+
+		vbox = {
+			layoutpolicy_horizontal = expanding
+			layoutpolicy_vertical = expanding
+			margin = { 10 10 }
+			spacing = 8
+
+			hbox = {
+				layoutpolicy_horizontal = expanding
+				spacing = 8
+
+				### View switch, only in tabs with per-person rules
+				hbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 8
+					using = dap_rules_tab_visible
+
+					button_tab = {
+						layoutpolicy_horizontal = expanding
+						text = "dap_view_rules"
+						onclick = "[GetVariableSystem.Set( 'dap_view', 'rules' )]"
+						down = "[GetVariableSystem.HasValue( 'dap_view', 'rules' )]"
+					}
+					button_tab = {
+						layoutpolicy_horizontal = expanding
+						text = "dap_view_general"
+						onclick = "[GetVariableSystem.Set( 'dap_view', 'general' )]"
+						down = "[GetVariableSystem.HasValue( 'dap_view', 'general' )]"
+					}
+				}
+				expand = {}
+				button_standard = {
+					size = { 240 40 }
+					text = "dap_search_now"
+					tooltip = "dap_search_now_tt"
+					onclick = "[GetScriptedGui( 'dap_search_now' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
+			}
+
+			### Module-wide settings of the current tab (and the log in the General tab)
+			scrollbox = {
+				layoutpolicy_horizontal = expanding
+				layoutpolicy_vertical = expanding
+				using = dap_show_settings_view
+
+				blockoverride "scrollbox_content" {
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						datacontext = "[GetPlayer]"
+
+						dap_settings_view = {}
+						dap_log_view = {
+							visible = "[GetVariableSystem.HasValue( 'dap_tab', 'general' )]"
+						}
+					}
+				}
+			}
+
+			hbox = {
+				using = dap_show_rules_view
+				layoutpolicy_horizontal = expanding
+				layoutpolicy_vertical = expanding
+				spacing = 12
+
+				### Left column: whose rules to edit
+				vbox = {
+					layoutpolicy_vertical = expanding
+					size = { 310 0 }
+					background = { using = Background_Area }
+
+					dap_section_header = {
+						blockoverride "title" {
+							text = "dap_rules_for"
+						}
+					}
+
+					button_standard = {
+						size = { 290 34 }
+						text = "dap_default_rules"
+						tooltip = "dap_default_rules_tt"
+						down = "[GetPlayer.MakeScope.Var('dap_edit_target').Char.IsLocalPlayer]"
+						onclick = "[GetScriptedGui( 'dap_select_target' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', GetPlayer.MakeScope ).End )]"
+					}
+
+					scrollbox = {
+						layoutpolicy_horizontal = expanding
+						layoutpolicy_vertical = expanding
+
+						blockoverride "scrollbox_content" {
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								datamodel = "[GetPlayer.MakeScope.GetList('dap_family')]"
+
+								item = {
+									widget = {
+										size = { 290 76 }
+										datacontext = "[Scope.GetCharacter]"
+
+										button_standard = {
+											size = { 100% 100% }
+											down = "[ObjectsEqual( Character.Self, GetPlayer.MakeScope.Var('dap_edit_target').Char.Self )]"
+											onclick = "[GetScriptedGui( 'dap_select_target' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+										}
+
+										portrait_head_small = {
+											position = { 4 0 }
+										}
+
+										vbox = {
+											position = { 70 4 }
+											size = { 216 68 }
+
+											text_single = {
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												text = "dap_member_name"
+											}
+											text_single = {
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												text = "[Character.Custom( 'dap_cl_member_status' )]"
+											}
+											text_single = {
+												visible = "[GetVariableSystem.HasValue( 'dap_tab', 'marriage' )]"
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												elide = right
+												text = "dap_member_result"
+												tooltip = "dap_member_result"
+											}
+											text_single = {
+												visible = "[GetVariableSystem.HasValue( 'dap_tab', 'guardians' )]"
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												elide = right
+												text = "dap_member_guardian"
+												tooltip = "dap_member_guardian"
+											}
+											text_single = {
+												visible = "[GetVariableSystem.HasValue( 'dap_tab', 'education' )]"
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												elide = right
+												text = "dap_member_focus"
+												tooltip = "dap_member_focus"
+											}
+										}
+									}
+								}
+							}
+						}
+
+						blockoverride "scrollbox_empty" {
+							visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('dap_family') )]"
+							text = "dap_no_family"
+						}
+					}
+				}
+
+				### Right column: rules of the selected character
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+					datacontext = "[GetPlayer.MakeScope.Var('dap_edit_target').Char]"
+
+					# Default rules intro
+					text_multi = {
+						layoutpolicy_horizontal = expanding
+						autoresize = yes
+						margin = { 8 4 }
+						max_width = 560
+						visible = "[Character.IsLocalPlayer]"
+						text = "dap_default_rules_desc"
+					}
+
+					# Family member header
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						margin = { 8 4 }
+						spacing = 10
+						visible = "[Not( Character.IsLocalPlayer )]"
+
+						portrait_head_small = {}
+
+						vbox = {
+							layoutpolicy_horizontal = expanding
+
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								align = left|nobaseline
+								using = Font_Size_Medium
+								text = "dap_member_name"
+							}
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								align = left|nobaseline
+								text = "[Character.Custom( 'dap_cl_member_status' )]"
+							}
+							text_single = {
+								visible = "[GetVariableSystem.HasValue( 'dap_tab', 'marriage' )]"
+								layoutpolicy_horizontal = expanding
+								align = left|nobaseline
+								text = "dap_member_result"
+							}
+							text_single = {
+								visible = "[GetVariableSystem.HasValue( 'dap_tab', 'guardians' )]"
+								layoutpolicy_horizontal = expanding
+								align = left|nobaseline
+								text = "dap_member_guardian"
+							}
+							text_single = {
+								visible = "[GetVariableSystem.HasValue( 'dap_tab', 'education' )]"
+								layoutpolicy_horizontal = expanding
+								align = left|nobaseline
+								text = "dap_member_focus"
+							}
+						}
+
+						button_standard = {
+							size = { 170 30 }
+							text = "[Character.Custom( 'dap_cl_excluded_button' )]"
+							tooltip = "dap_toggle_excluded_tt"
+							onclick = "[GetScriptedGui( 'dap_toggle_excluded' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+						}
+
+						button_standard = {
+							size = { 170 30 }
+							visible = "[Character.MakeScope.Var('dap_override').IsSet]"
+							text = "dap_use_defaults"
+							tooltip = "dap_use_defaults_tt"
+							onclick = "[GetScriptedGui( 'dap_use_defaults' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+						}
+					}
+
+					# Family member still on default rules
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						margin = { 8 20 }
+						spacing = 10
+						visible = "[And( Not( Character.IsLocalPlayer ), Not( Character.MakeScope.Var('dap_override').IsSet ) )]"
+
+						text_multi = {
+							autoresize = yes
+							max_width = 540
+							text = "dap_uses_defaults_desc"
+						}
+
+						button_standard = {
+							size = { 260 34 }
+							text = "dap_make_personal"
+							tooltip = "dap_make_personal_tt"
+							onclick = "[GetScriptedGui( 'dap_make_personal' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+						}
+					}
+
+					# The rules themselves
+					scrollbox = {
+						layoutpolicy_horizontal = expanding
+						layoutpolicy_vertical = expanding
+						visible = "[Or( Character.IsLocalPlayer, Character.MakeScope.Var('dap_override').IsSet )]"
+
+						blockoverride "scrollbox_content" {
+							vbox = {
+								layoutpolicy_horizontal = expanding
+
+								dap_section_header = {
+									blockoverride "title" {
+										text = "dap_presets_label"
+									}
+								}
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									margin = { 8 2 }
+									dap_presets_row = {}
+									expand = {}
+								}
+
+								dap_section_header = {
+									blockoverride "title" {
+										text = "dap_slots_label"
+									}
+								}
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									margin = { 8 2 }
+									dap_slots_row = {}
+									expand = {}
+								}
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									margin = { 8 4 }
+									spacing = 6
+
+									button_standard = {
+										size = { 200 30 }
+										text = "dap_apply_to_family"
+										tooltip = "dap_apply_to_family_tt"
+										onclick = "[GetScriptedGui( 'dap_apply_to_family' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).End )]"
+									}
+									button_standard = {
+										size = { 200 30 }
+										text = "dap_reset_family"
+										tooltip = "dap_reset_family_tt"
+										onclick = "[GetScriptedGui( 'dap_reset_family' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+									}
+									expand = {}
+								}
+
+								dap_rules_view = {}
+							}
+						}
+					}
+
+					expand = {}
+				}
+			}
+		}
+
+		expand = {}
+	}
+}

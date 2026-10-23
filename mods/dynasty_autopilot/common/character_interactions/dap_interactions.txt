@@ -1,0 +1,26 @@
+﻿dap_marriage_rules_interaction = {
+	category = interaction_category_friendly
+	icon = icon_marriage
+	desc = dap_marriage_rules_interaction_desc
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = { is_ai = no }
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			OR = {
+				is_child_of = scope:actor
+				is_grandchild_of = scope:actor
+				AND = {
+					exists = dynasty
+					dynasty = scope:actor.dynasty
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		scope:recipient = { save_scope_as = target }
+		scope:actor = { trigger_event = dap_window.1 }
+	}
+}

@@ -1,0 +1,72 @@
+﻿namespace = dap_choice
+
+# "Ask me first" mode: the three best candidates who would accept.
+# root = player, scope:subject = family member, scope:cfg = active rules,
+# scope:dap_offer_1..3 = candidates (2 and 3 may be missing)
+dap_choice.1 = {
+	type = character_event
+	title = dap_choice.1.t
+	desc = dap_choice.1.desc
+	theme = marriage
+	left_portrait = {
+		character = scope:subject
+		animation = personality_bold
+	}
+	lower_left_portrait = scope:dap_offer_1
+	lower_center_portrait = scope:dap_offer_2
+	lower_right_portrait = scope:dap_offer_3
+
+	trigger = {
+		exists = scope:subject
+		exists = scope:dap_offer_1
+	}
+
+	option = {
+		name = dap_choice.1.a
+		trigger = {
+			dap_choice_offer_still_valid_trigger = { OFFER = scope:dap_offer_1 }
+		}
+		scope:dap_offer_1 = { dap_arrange_match_effect = yes }
+	}
+	option = {
+		name = dap_choice.1.b
+		trigger = {
+			exists = scope:dap_offer_2
+			dap_choice_offer_still_valid_trigger = { OFFER = scope:dap_offer_2 }
+		}
+		scope:dap_offer_2 = { dap_arrange_match_effect = yes }
+	}
+	option = {
+		name = dap_choice.1.c
+		trigger = {
+			exists = scope:dap_offer_3
+			dap_choice_offer_still_valid_trigger = { OFFER = scope:dap_offer_3 }
+		}
+		scope:dap_offer_3 = { dap_arrange_match_effect = yes }
+	}
+	option = {
+		name = dap_choice.1.later
+		custom_tooltip = dap_choice.1.later_tt
+	}
+	option = {
+		name = dap_choice.1.exclude
+		scope:subject = {
+			set_variable = { name = dap_excluded value = 1 }
+			remove_variable = dap_awaiting_choice
+		}
+	}
+
+	after = {
+		scope:subject = {
+			if = {
+				limit = {
+					OR = {
+						is_married = yes
+						is_betrothed = yes
+					}
+				}
+				remove_variable = dap_awaiting_choice
+			}
+		}
+	}
+}

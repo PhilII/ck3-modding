@@ -1,0 +1,706 @@
+﻿# Dynasty Autopilot - scripted triggers
+# Saved scopes used throughout:
+#   root          = the player running the automation
+#   scope:subject = the family member being married off
+#   scope:cfg     = the character holding the active rule set (root, or the subject when it has its own rules)
+
+# this = a character; could they still have children?
+dap_can_have_children_trigger = {
+	NOT = { has_trait = infertile }
+	trigger_if = {
+		limit = { is_female = yes }
+		fertility >= 0.1
+	}
+}
+
+# this = a character; is it a family member at your court covered by the "Family members managed" setting?
+dap_is_family_member_trigger = {
+	NOT = { this = root }
+	is_ai = yes
+	exists = matchmaker
+	OR = {
+		matchmaker = root
+		# Landed family who arrange their own marriages, such as a landed primary heir
+		AND = {
+			root.var:dap_landed_family = 1
+			is_ruler = yes
+			is_vassal_or_below_of = root
+			matchmaker = this
+		}
+	}
+	OR = {
+		is_child_of = root
+		AND = {
+			root.var:dap_who >= 1
+			is_grandchild_of = root
+		}
+		AND = {
+			root.var:dap_who >= 2
+			exists = dynasty
+			dynasty = root.dynasty
+		}
+	}
+}
+
+# this = family member; may they take a spouse now? (unmarried, a free extra spouse slot, or a fertile widow)
+dap_is_marriageable_family_trigger = {
+	dap_is_family_member_trigger = yes
+	is_concubine = no
+	OR = {
+		is_married = no
+		AND = {
+			root.var:dap_extra_spouses = 1
+			allowed_more_spouses = yes
+		}
+	}
+	trigger_if = {
+		limit = {
+			any_former_spouse = { always = yes }
+		}
+		root.var:dap_remarry = 1
+		dap_can_have_children_trigger = yes
+	}
+}
+
+# this = a character; shown in the window's family list (anyone marriageable, plus every child)
+dap_is_listed_family_trigger = {
+	dap_is_family_member_trigger = yes
+	OR = {
+		is_adult = no
+		dap_is_marriageable_family_trigger = yes
+	}
+}
+
+# this = a character; is it a family member the autopilot should try to marry off now?
+dap_is_managed_subject_trigger = {
+	dap_is_marriageable_family_trigger = yes
+	is_betrothed = no
+	can_marry_trigger = yes
+	NOT = { has_variable = dap_excluded }
+	NOT = { has_variable = dap_awaiting_choice }
+	NOT = { has_variable = dap_proposal_sent }
+	trigger_if = {
+		limit = { root.var:dap_skip_heir = 1 }
+		NOT = { root.primary_heir ?= this }
+	}
+}
+
+# this = subject; should the marriage keep the children in our dynasty through the mother?
+dap_wants_matrilineal_trigger = {
+	scope:cfg.var:dap_lineality = 0
+	is_female = yes
+	exists = dynasty
+	dynasty = root.dynasty
+}
+
+# Has scope:subject gone long enough without a match to drop rule group $LEVEL$?
+dap_relaxed_trigger = {
+	scope:subject = {
+		has_variable = dap_relax
+		var:dap_relax >= $LEVEL$
+	}
+}
+
+# this = candidate; minimum rank in a congenital trait group, read from scope:cfg
+dap_trait_min_trigger = {
+	trigger_if = {
+		limit = { scope:cfg.var:$VAR$ = 1 }
+		has_trait_rank = { trait = $GROUP$ rank >= 1 }
+	}
+	trigger_else_if = {
+		limit = { scope:cfg.var:$VAR$ = 2 }
+		has_trait_rank = { trait = $GROUP$ rank >= 2 }
+	}
+	trigger_else_if = {
+		limit = { scope:cfg.var:$VAR$ = 3 }
+		has_trait_rank = { trait = $GROUP$ rank >= 3 }
+	}
+	trigger_else = { always = yes }
+}
+
+### Rule groups (this = candidate). Split by group so a failed search can report which group blocked it.
+
+# Cheap checks that are never relaxed
+dap_rule_basic_trigger = {
+	trigger_if = {
+		limit = {
+			scope:cfg.var:dap_same_sex = 1
+			scope:subject = { allowed_to_marry_same_sex_trigger = yes }
+			allowed_to_marry_same_sex_trigger = yes
+		}
+		always = yes
+	}
+	trigger_else = {
+		sex_opposite_of = scope:subject
+	}
+	NOT = { this = scope:subject }
+	exists = matchmaker
+	matchmaker = { is_ai = yes }
+	trigger_if = {
+		limit = {
+			root.var:dap_own_court = 0
+			NOT = { has_variable = dap_invited }
+		}
+		NOT = { matchmaker = root }
+	}
+}
+
+# Never relaxed
+dap_rule_age_trigger = {
+	trigger_if = {
+		limit = { age > scope:subject.age }
+		dap_age_gap_value <= dap_max_older_value
+	}
+	trigger_else_if = {
+		limit = { age < scope:subject.age }
+		dap_age_gap_value <= dap_max_younger_value
+	}
+	trigger_else = { always = yes }
+	trigger_if = {
+		limit = {
+			is_female = yes
+			scope:cfg.var:dap_female_max_age >= 1
+		}
+		age <= dap_female_max_age_value
+	}
+	trigger_if = {
+		limit = { scope:cfg.var:dap_fertility = 1 }
+		dap_can_have_children_trigger = yes
+	}
+	trigger_else_if = {
+		limit = { scope:cfg.var:dap_fertility = 2 }
+		NOT = { has_trait = infertile }
+		OR = {
+			has_trait = fecund
+			fertility >= 0.45
+		}
+	}
+	trigger_else = { always = yes }
+}
+
+# Relaxed first
+dap_rule_traits_trigger = {
+	trigger_if = {
+		limit = { dap_relaxed_trigger = { LEVEL = 1 } }
+		always = yes
+	}
+	trigger_else = {
+		dap_trait_min_trigger = { GROUP = intellect_good VAR = dap_intellect }
+		dap_trait_min_trigger = { GROUP = beauty_good VAR = dap_beauty }
+		dap_trait_min_trigger = { GROUP = physique_good VAR = dap_physique }
+		trigger_if = {
+			limit = { scope:cfg.var:dap_required_trait = 1 }
+			has_trait = fecund
+		}
+		trigger_else_if = {
+			limit = { scope:cfg.var:dap_required_trait = 2 }
+			has_trait = giant
+		}
+		trigger_else_if = {
+			limit = { scope:cfg.var:dap_required_trait = 3 }
+			has_trait = pure_blooded
+		}
+		trigger_else = { always = yes }
+		trigger_if = {
+			limit = { scope:cfg.var:dap_genetic_min = 1 }
+			num_of_good_genetic_traits >= 1
+		}
+		trigger_else_if = {
+			limit = { scope:cfg.var:dap_genetic_min = 2 }
+			num_of_good_genetic_traits >= 2
+		}
+		trigger_else = { always = yes }
+		trigger_if = {
+			limit = { scope:cfg.var:dap_no_bad_genetic = 1 }
+			num_of_bad_genetic_traits = 0
+		}
+	}
+}
+
+# Relaxed second
+dap_rule_status_trigger = {
+	trigger_if = {
+		limit = { dap_relaxed_trigger = { LEVEL = 2 } }
+		always = yes
+	}
+	trigger_else = {
+		trigger_if = {
+			limit = { scope:cfg.var:dap_status >= 1 }
+			is_lowborn = no
+		}
+		trigger_if = {
+			limit = { scope:cfg.var:dap_status = 2 }
+			OR = {
+				is_landed = yes
+				any_close_family_member = { is_landed = yes }
+			}
+		}
+		trigger_if = {
+			limit = { scope:cfg.var:dap_status = 3 }
+			OR = {
+				highest_held_title_tier >= tier_duchy
+				any_close_family_member = { highest_held_title_tier >= tier_duchy }
+			}
+		}
+		trigger_if = {
+			limit = { scope:cfg.var:dap_same_culture = 1 }
+			culture = scope:subject.culture
+		}
+		trigger_if = {
+			limit = { scope:cfg.var:dap_realm = 1 }
+			top_liege = root.top_liege
+		}
+		trigger_else_if = {
+			limit = { scope:cfg.var:dap_realm = 2 }
+			NOT = { top_liege = root.top_liege }
+		}
+		trigger_else = { always = yes }
+		trigger_if = {
+			limit = { scope:cfg.var:dap_alliance = 1 }
+			matchmaker = { is_landed = yes }
+			OR = {
+				this = matchmaker
+				is_close_family_of = matchmaker
+			}
+		}
+	}
+}
+
+# Relaxed last
+dap_rule_faith_trigger = {
+	trigger_if = {
+		limit = { dap_relaxed_trigger = { LEVEL = 3 } }
+		always = yes
+	}
+	trigger_else = {
+		trigger_if = {
+			limit = { scope:cfg.var:dap_same_faith = 1 }
+			faith = scope:subject.faith
+		}
+		trigger_if = {
+			limit = { scope:cfg.var:dap_skill_focus = 1 }
+			diplomacy >= dap_skill_min_value
+		}
+		trigger_else_if = {
+			limit = { scope:cfg.var:dap_skill_focus = 2 }
+			martial >= dap_skill_min_value
+		}
+		trigger_else_if = {
+			limit = { scope:cfg.var:dap_skill_focus = 3 }
+			stewardship >= dap_skill_min_value
+		}
+		trigger_else_if = {
+			limit = { scope:cfg.var:dap_skill_focus = 4 }
+			intrigue >= dap_skill_min_value
+		}
+		trigger_else_if = {
+			limit = { scope:cfg.var:dap_skill_focus = 5 }
+			learning >= dap_skill_min_value
+		}
+		trigger_else = { always = yes }
+		trigger_if = {
+			limit = { scope:cfg.var:dap_reject_traits = 1 }
+			NOR = {
+				has_trait = craven
+				has_trait = lunatic_1
+				has_trait = lunatic_genetic
+				has_trait = possessed_1
+				has_trait = possessed_genetic
+				has_trait = deviant
+				has_trait = cannibal
+			}
+		}
+	}
+}
+
+# Expensive checks that are never relaxed; run last
+dap_rule_compatible_trigger = {
+	trigger_if = {
+		limit = { scope:cfg.var:dap_avoid_rivals = 1 }
+		NOT = { has_relation_rival = root }
+		matchmaker = {
+			NOT = { has_relation_rival = root }
+			NOT = { is_at_war_with = root }
+		}
+	}
+	trigger_if = {
+		limit = { scope:cfg.var:dap_avoid_inbreeding = 1 }
+		NOT = { is_close_or_extended_family_of = scope:subject }
+	}
+
+	# A ruling family never accepts a matrilineal match for its own male line,
+	# so skip those up front instead of proposing something that is refused
+	save_temporary_scope_as = dap_rule_candidate
+	trigger_if = {
+		limit = {
+			scope:subject = { dap_wants_matrilineal_trigger = yes }
+		}
+		NOT = {
+			matchmaker = {
+				is_ruler = yes
+				exists = dynasty
+				scope:dap_rule_candidate = { exists = dynasty }
+				dynasty = scope:dap_rule_candidate.dynasty
+			}
+		}
+	}
+
+	can_marry_trigger = yes
+	scope:subject = { can_marry_character_trigger = { CHARACTER = scope:dap_rule_candidate } }
+}
+
+# this = candidate; does it pass every rule in scope:cfg? Cheap groups first.
+dap_candidate_meets_rules_trigger = {
+	dap_rule_basic_trigger = yes
+	dap_rule_age_trigger = yes
+	dap_rule_traits_trigger = yes
+	dap_rule_status_trigger = yes
+	dap_rule_faith_trigger = yes
+	dap_rule_compatible_trigger = yes
+}
+
+# this = candidate; would the candidate's matchmaker say yes right now?
+dap_candidate_accepts_trigger = {
+	save_temporary_scope_as = dap_candidate
+	trigger_if = {
+		limit = { matchmaker = root }
+		always = yes
+	}
+	trigger_else = {
+		dap_candidate_accepts_interaction_trigger = yes
+	}
+}
+
+dap_candidate_accepts_interaction_trigger = {
+	scope:subject.matchmaker = {
+		is_character_interaction_potentially_accepted = {
+			recipient = scope:dap_candidate.matchmaker
+			interaction = arrange_marriage_interaction
+			secondary_actor = scope:subject
+			secondary_recipient = scope:dap_candidate
+			required_response = yes
+		}
+	}
+}
+
+# this = candidate; might their family say yes to a proposal? (they decide after it is sent)
+dap_candidate_might_accept_trigger = {
+	save_temporary_scope_as = dap_candidate
+	NOT = { matchmaker = root }
+	scope:subject.matchmaker = {
+		is_character_interaction_potentially_accepted = {
+			recipient = scope:dap_candidate.matchmaker
+			interaction = arrange_marriage_interaction
+			secondary_actor = scope:subject
+			secondary_recipient = scope:dap_candidate
+			required_response = maybe
+		}
+	}
+}
+
+# this = player; is there enough prestige left to spend on matches?
+dap_prestige_allows_trigger = {
+	trigger_if = {
+		limit = { var:dap_min_prestige = 1 }
+		prestige >= 100
+	}
+	trigger_else_if = {
+		limit = { var:dap_min_prestige = 2 }
+		prestige >= 300
+	}
+	trigger_else_if = {
+		limit = { var:dap_min_prestige = 3 }
+		prestige >= 1000
+	}
+	trigger_else = { always = yes }
+}
+
+# Is the offered candidate $OFFER$ still free and willing? (checked when the player picks in dap_choice.1)
+dap_choice_offer_still_valid_trigger = {
+	scope:subject = {
+		is_alive = yes
+		is_betrothed = no
+		can_marry_trigger = yes
+	}
+	$OFFER$ = {
+		is_alive = yes
+		is_married = no
+		is_betrothed = no
+		dap_candidate_accepts_trigger = yes
+	}
+}
+
+# this = player; should the autopilot look for a spouse for the player now?
+dap_wants_own_marriage_trigger = {
+	var:dap_self >= 1
+	is_adult = yes
+	is_betrothed = no
+	can_marry_trigger = yes
+	NOT = { has_variable = dap_awaiting_choice }
+}
+
+# this = candidate; may they become the player's concubine under the active rules? (scope:subject = scope:cfg = root)
+dap_concubine_candidate_trigger = {
+	is_ai = yes
+	sex_opposite_of = root
+	dap_rule_age_trigger = yes
+	dap_rule_traits_trigger = yes
+	dap_rule_faith_trigger = yes
+	NOT = { is_close_or_extended_family_of = root }
+	can_become_concubine_of_character_trigger = { CHARACTER = root }
+}
+
+### Guardians and education
+
+# this = character; would they teach a child well? Mirrors "Unwanted guardian traits"
+dap_guardian_unwanted_trigger = {
+	OR = {
+		has_trait = lunatic_1
+		has_trait = lunatic_genetic
+		has_trait = possessed_1
+		has_trait = possessed_genetic
+		has_trait = craven
+		has_trait = wrathful
+		has_trait = deceitful
+		has_trait = lazy
+		has_trait = drunkard
+	}
+}
+
+# this = current guardian of scope:dap_ward; should they be replaced?
+dap_guardian_unfit_trigger = {
+	OR = {
+		is_imprisoned = yes
+		has_relation_rival = root
+		is_at_war_with = root
+		AND = {
+			scope:cfg.var:dap_guard_reject = 1
+			dap_guardian_unwanted_trigger = yes
+		}
+	}
+}
+
+# this = possible guardian of scope:dap_ward
+dap_guardian_candidate_trigger = {
+	is_adult = yes
+	is_imprisoned = no
+	NOT = { this = scope:dap_ward }
+	num_of_relation_ward < 2
+	NOT = { has_relation_rival = root }
+	trigger_if = {
+		limit = { this = root }
+		root.var:dap_guard_not_me = 0
+	}
+	trigger_if = {
+		limit = { scope:cfg.var:dap_guard_reject = 1 }
+		dap_guardian_unwanted_trigger = no
+	}
+}
+
+dap_has_education_focus_trigger = {
+	OR = {
+		has_focus = education_diplomacy
+		has_focus = education_stewardship
+		has_focus = education_martial
+		has_focus = education_intrigue
+		has_focus = education_learning
+	}
+}
+
+
+# this = pool character; the basic rule for someone not yet at any court
+dap_rule_basic_pool_trigger = {
+	trigger_if = {
+		limit = {
+			scope:cfg.var:dap_same_sex = 1
+			scope:subject = { allowed_to_marry_same_sex_trigger = yes }
+			allowed_to_marry_same_sex_trigger = yes
+		}
+		always = yes
+	}
+	trigger_else = {
+		sex_opposite_of = scope:subject
+	}
+	NOT = { this = scope:subject }
+	can_marry_trigger = yes
+}
+
+# this = the current partner of an autopilot betrothal; do they still meet the rules?
+dap_betrothal_still_good_trigger = {
+	is_alive = yes
+	dap_rule_traits_trigger = yes
+	trigger_if = {
+		limit = { scope:cfg.var:dap_avoid_rivals = 1 }
+		NOT = { has_relation_rival = root }
+		trigger_if = {
+			limit = { exists = matchmaker }
+			matchmaker = {
+				NOT = { has_relation_rival = root }
+				NOT = { is_at_war_with = root }
+			}
+		}
+	}
+	trigger_if = {
+		limit = { scope:cfg.var:dap_reject_traits = 1 }
+		NOR = {
+			has_trait = craven
+			has_trait = lunatic_1
+			has_trait = lunatic_genetic
+			has_trait = possessed_1
+			has_trait = possessed_genetic
+			has_trait = deviant
+			has_trait = cannibal
+		}
+	}
+}
+
+# this = subject; should the player pick the match instead of the autopilot?
+dap_should_ask_trigger = {
+	OR = {
+		scope:cfg.var:dap_mode = 1
+		AND = {
+			scope:cfg.var:dap_mode = 2
+			is_child_of = root
+		}
+		AND = {
+			root.var:dap_skip_heir = 2
+			root.primary_heir ?= this
+		}
+	}
+}
+
+
+### Granting titles
+
+# this = player; is the domain larger than "Grant counties" allows?
+dap_domain_too_big_trigger = {
+	trigger_if = {
+		limit = { var:dap_grant_when = 1 }
+		domain_size > domain_limit
+	}
+	trigger_else_if = {
+		limit = { var:dap_grant_when = 2 }
+		domain_size > {
+			value = domain_limit
+			subtract = 1
+		}
+	}
+	trigger_else_if = {
+		limit = { var:dap_grant_when = 3 }
+		domain_size > {
+			value = domain_limit
+			subtract = 2
+		}
+	}
+	trigger_else = { always = no }
+}
+
+# this = courtier or vassal; may they receive a county under "Who receives them"?
+dap_grantee_candidate_trigger = {
+	is_ai = yes
+	is_adult = yes
+	is_imprisoned = no
+	# Unlanded courtiers, or landed vassals still below "Counties per person"
+	trigger_if = {
+		limit = { is_landed = yes }
+		is_vassal_of = root
+		OR = {
+			is_child_of = root
+			house ?= root.house
+		}
+		trigger_if = {
+			limit = { root.var:dap_grant_max_each < 3 }
+			dap_counties_held_value <= root.var:dap_grant_max_each
+		}
+	}
+	trigger_if = {
+		limit = { root.var:dap_grant_loyalty = 1 }
+		opinion = { target = root value >= 0 }
+	}
+	trigger_else_if = {
+		limit = { root.var:dap_grant_loyalty = 2 }
+		opinion = { target = root value >= 25 }
+	}
+	trigger_else = { always = yes }
+	NOT = { root.primary_heir ?= this }
+	can_be_granted_titles_by = { RULER = root }
+	trigger_if = {
+		limit = { root.var:dap_grant_to = 0 }
+		is_child_of = root
+	}
+	trigger_else_if = {
+		limit = { root.var:dap_grant_to = 1 }
+		OR = {
+			is_child_of = root
+			house ?= root.house
+		}
+	}
+	trigger_else = { always = yes }
+}
+
+# this = title held by the player; can it be given away?
+dap_grantable_county_trigger = {
+	tier = tier_county
+	NOT = { this = root.capital_county }
+	trigger_if = {
+		limit = { root.var:dap_grant_keep_core = 1 }
+		NOT = { de_jure_liege ?= root.capital_county.de_jure_liege }
+	}
+	is_leased_out = no
+	is_noble_family_title = no
+	is_nomad_title = no
+	has_clerical_region = no
+	NOT = { exists = var:ceremonial_title }
+}
+
+### Global controls
+
+# Is the current module in "Suggest only" mode? (set by dap_run_all_effect)
+dap_dry_run_trigger = {
+	exists = local_var:dap_dry
+	local_var:dap_dry = 1
+}
+
+# this = player; can $AMOUNT$ gold be spent without dipping below the gold reserve?
+dap_can_spend_trigger = {
+	gold >= {
+		value = dap_gold_reserve_value
+		add = $AMOUNT$
+	}
+}
+
+# this = player; should automation wait, per "Pause automation"?
+dap_paused_trigger = {
+	OR = {
+		AND = {
+			var:dap_pause >= 1
+			is_at_war = yes
+		}
+		AND = {
+			var:dap_pause = 2
+			OR = {
+				is_imprisoned = yes
+				has_any_disease_trigger = yes
+			}
+		}
+	}
+}
+
+# this = player; ask before a big decision?
+dap_should_confirm_trigger = {
+	var:dap_confirm = 1
+	NOT = { dap_dry_run_trigger = yes }
+}
+
+# this = de jure title; do the player and their vassals hold more than half of its counties?
+dap_realm_controls_title_trigger = {
+	any_de_jure_county = {
+		percent > 0.5
+		holder ?= {
+			OR = {
+				this = root
+				is_vassal_or_below_of = root
+			}
+		}
+	}
+}

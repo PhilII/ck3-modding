@@ -1,0 +1,646 @@
+﻿# Dynasty Autopilot - script values
+# this = candidate, with scope:subject and scope:cfg saved (see dap_triggers.txt)
+
+dap_age_gap_value = {
+	if = {
+		limit = { age >= scope:subject.age }
+		value = age
+		subtract = scope:subject.age
+	}
+	else = {
+		value = scope:subject.age
+		subtract = age
+	}
+}
+
+# Setting index -> years: 0 any, 1 none, 2 five, 3 ten, 4 fifteen
+dap_max_older_value = {
+	if = {
+		limit = { scope:cfg.var:dap_max_older = 1 }
+		value = 0
+	}
+	else_if = {
+		limit = { scope:cfg.var:dap_max_older = 2 }
+		value = 5
+	}
+	else_if = {
+		limit = { scope:cfg.var:dap_max_older = 3 }
+		value = 10
+	}
+	else_if = {
+		limit = { scope:cfg.var:dap_max_older = 4 }
+		value = 15
+	}
+	else = {
+		value = 999
+	}
+}
+
+dap_max_younger_value = {
+	if = {
+		limit = { scope:cfg.var:dap_max_younger = 1 }
+		value = 0
+	}
+	else_if = {
+		limit = { scope:cfg.var:dap_max_younger = 2 }
+		value = 5
+	}
+	else_if = {
+		limit = { scope:cfg.var:dap_max_younger = 3 }
+		value = 10
+	}
+	else_if = {
+		limit = { scope:cfg.var:dap_max_younger = 4 }
+		value = 15
+	}
+	else = {
+		value = 999
+	}
+}
+
+# Setting index -> age: 1 = 30, 2 = 35, 3 = 40
+dap_female_max_age_value = {
+	value = 25
+	add = {
+		value = scope:cfg.var:dap_female_max_age
+		multiply = 5
+	}
+}
+
+# Setting index -> skill: 0 = 8, 1 = 12, 2 = 16, 3 = 20
+dap_skill_min_value = {
+	value = 8
+	add = {
+		value = scope:cfg.var:dap_skill_min
+		multiply = 4
+	}
+}
+
+dap_power_value = {
+	value = 0
+	if = {
+		limit = { is_landed = yes }
+		add = highest_held_title_tier
+	}
+	else_if = {
+		limit = {
+			matchmaker = { is_landed = yes }
+		}
+		add = matchmaker.highest_held_title_tier
+		multiply = 0.5
+	}
+}
+
+dap_skills_value = {
+	value = diplomacy
+	add = martial
+	add = stewardship
+	add = intrigue
+	add = learning
+}
+
+# Tier of the landed title the candidate stands to inherit from their matchmaker, if any
+dap_heir_value = {
+	value = 0
+	if = {
+		limit = {
+			matchmaker = { is_landed = yes }
+			is_primary_heir_of = matchmaker
+		}
+		add = matchmaker.highest_held_title_tier
+	}
+}
+
+# Good inheritable trait groups the candidate carries without showing
+dap_hidden_traits_value = {
+	value = 0
+	if = {
+		limit = { has_inactive_trait = intellect_good }
+		add = 1
+	}
+	if = {
+		limit = { has_inactive_trait = beauty_good }
+		add = 1
+	}
+	if = {
+		limit = { has_inactive_trait = physique_good }
+		add = 1
+	}
+	if = {
+		limit = { has_inactive_trait = fecund }
+		add = 1
+	}
+}
+
+# Good inheritable trait groups the candidate has and scope:subject lacks
+dap_complement_value = {
+	value = 0
+	if = {
+		limit = {
+			has_trait_rank = { trait = intellect_good rank >= 1 }
+			scope:subject = { has_trait_rank = { trait = intellect_good rank < 1 } }
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_trait_rank = { trait = beauty_good rank >= 1 }
+			scope:subject = { has_trait_rank = { trait = beauty_good rank < 1 } }
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_trait_rank = { trait = physique_good rank >= 1 }
+			scope:subject = { has_trait_rank = { trait = physique_good rank < 1 } }
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_trait = fecund
+			scope:subject = { NOT = { has_trait = fecund } }
+		}
+		add = 1
+	}
+}
+
+# Higher is better; used to rank candidates that already pass every requirement
+dap_candidate_score = {
+	value = 100
+
+	add = {
+		value = num_of_good_genetic_traits
+		multiply = 15
+	}
+	subtract = {
+		value = num_of_bad_genetic_traits
+		multiply = 40
+	}
+	add = {
+		value = dap_power_value
+		multiply = 10
+	}
+	add = {
+		value = dap_skills_value
+		multiply = 0.5
+	}
+	add = {
+		value = fertility
+		multiply = 30
+	}
+	subtract = {
+		value = dap_age_gap_value
+		multiply = 2
+	}
+	if = {
+		limit = { faith = scope:subject.faith }
+		add = 10
+	}
+	if = {
+		limit = { culture = scope:subject.culture }
+		add = 5
+	}
+
+	# Priority setting adds extra weight to one area
+	if = {
+		limit = { scope:cfg.var:dap_priority = 1 }
+		add = {
+			value = num_of_good_genetic_traits
+			multiply = 45
+		}
+	}
+	else_if = {
+		limit = { scope:cfg.var:dap_priority = 2 }
+		add = {
+			value = dap_power_value
+			multiply = 30
+		}
+	}
+	else_if = {
+		limit = { scope:cfg.var:dap_priority = 3 }
+		add = {
+			value = dap_skills_value
+			multiply = 1.5
+		}
+	}
+
+	# Optional preferences
+	if = {
+		limit = { scope:cfg.var:dap_heiress = 1 }
+		add = {
+			value = dap_heir_value
+			multiply = 60
+		}
+	}
+	if = {
+		limit = {
+			scope:cfg.var:dap_prefer_neighbors = 1
+			exists = top_liege
+			top_liege = {
+				any_neighboring_top_suzerain_realm_owner = { this = root.top_liege }
+			}
+		}
+		add = 40
+	}
+	if = {
+		limit = { scope:cfg.var:dap_prefer_allies = 1 }
+		add = dap_ally_value
+	}
+	if = {
+		limit = { scope:cfg.var:dap_prefer_opinion = 1 }
+		if = {
+			limit = { opinion = { target = root value >= 50 } }
+			add = 40
+		}
+		else_if = {
+			limit = { opinion = { target = root value >= 20 } }
+			add = 20
+		}
+		else_if = {
+			limit = { opinion = { target = root value < 0 } }
+			subtract = 30
+		}
+	}
+	if = {
+		limit = { scope:cfg.var:dap_carriers = 1 }
+		add = {
+			value = dap_hidden_traits_value
+			multiply = 8
+		}
+	}
+	if = {
+		limit = { scope:cfg.var:dap_complement = 1 }
+		add = {
+			value = dap_complement_value
+			multiply = 25
+		}
+	}
+}
+
+### Guardians, education and court
+
+# this = possible guardian of scope:dap_ward, under scope:cfg
+dap_guardian_score = {
+	value = 0
+	if = {
+		limit = { scope:cfg.var:dap_guard_priority = 0 }
+		if = {
+			limit = { scope:dap_ward = { has_focus = education_diplomacy } }
+			add = { value = diplomacy multiply = 3 }
+		}
+		else_if = {
+			limit = { scope:dap_ward = { has_focus = education_stewardship } }
+			add = { value = stewardship multiply = 3 }
+		}
+		else_if = {
+			limit = { scope:dap_ward = { has_focus = education_martial } }
+			add = { value = martial multiply = 3 }
+		}
+		else_if = {
+			limit = { scope:dap_ward = { has_focus = education_intrigue } }
+			add = { value = intrigue multiply = 3 }
+		}
+		else_if = {
+			limit = { scope:dap_ward = { has_focus = education_learning } }
+			add = { value = learning multiply = 3 }
+		}
+		else = {
+			add = dap_skills_value
+		}
+	}
+	else_if = {
+		limit = { scope:cfg.var:dap_guard_priority = 1 }
+		add = dap_skills_value
+	}
+	else = {
+		add = { value = dap_skills_value multiply = 0.3 }
+		add = { value = dap_good_teacher_traits_value multiply = 10 }
+	}
+	# "Me or my spouse if good enough" for the primary heir
+	if = {
+		limit = {
+			root.var:dap_guard_heir = 1
+			root.primary_heir ?= scope:dap_ward
+			OR = {
+				this = root
+				is_spouse_of = root
+			}
+		}
+		add = 15
+	}
+}
+
+# Personality traits a guardian tends to pass on that most rulers want
+dap_good_teacher_traits_value = {
+	value = 0
+	if = { limit = { has_trait = diligent } add = 1 }
+	if = { limit = { has_trait = just } add = 1 }
+	if = { limit = { has_trait = honest } add = 1 }
+	if = { limit = { has_trait = patient } add = 1 }
+	if = { limit = { has_trait = temperate } add = 1 }
+	if = { limit = { has_trait = brave } add = 1 }
+	if = { limit = { has_trait = calm } add = 1 }
+	if = { limit = { has_trait = gregarious } add = 1 }
+}
+
+# this = child; 0 natural talent, 1 council need, 2-6 diplomacy, stewardship, martial, intrigue, learning
+dap_focus_mode_value = {
+	if = {
+		limit = { scope:cfg.var:dap_edu_focus = 0 }
+		if = {
+			limit = { root.primary_heir ?= this }
+			value = root.var:dap_edu_heir
+		}
+		else_if = {
+			limit = { is_male = yes }
+			value = root.var:dap_edu_sons
+		}
+		else = {
+			value = root.var:dap_edu_daughters
+		}
+	}
+	else = {
+		# Per-person values are shifted by one ("By role" comes first)
+		value = scope:cfg.var:dap_edu_focus
+		subtract = 1
+	}
+}
+
+# Skill of the councillor responsible for each skill; an empty seat counts as 0
+dap_council_diplomacy_value = {
+	value = 0
+	if = {
+		limit = { exists = root.cp:councillor_chancellor }
+		value = root.cp:councillor_chancellor.diplomacy
+	}
+}
+dap_council_stewardship_value = {
+	value = 0
+	if = {
+		limit = { exists = root.cp:councillor_steward }
+		value = root.cp:councillor_steward.stewardship
+	}
+}
+dap_council_martial_value = {
+	value = 0
+	if = {
+		limit = { exists = root.cp:councillor_marshal }
+		value = root.cp:councillor_marshal.martial
+	}
+}
+dap_council_intrigue_value = {
+	value = 0
+	if = {
+		limit = { exists = root.cp:councillor_spymaster }
+		value = root.cp:councillor_spymaster.intrigue
+	}
+}
+dap_council_learning_value = {
+	value = 0
+	if = {
+		limit = { exists = root.cp:councillor_court_chaplain }
+		value = root.cp:councillor_court_chaplain.learning
+	}
+}
+
+# this = child; focus number 1-5 (diplomacy, stewardship, martial, intrigue, learning)
+dap_wanted_focus_value = {
+	if = {
+		limit = { dap_focus_mode_value >= 2 }
+		value = dap_focus_mode_value
+		subtract = 1
+	}
+	else_if = {
+		limit = { dap_focus_mode_value = 1 }
+		# The weakest council skill
+		if = {
+			limit = {
+				dap_council_diplomacy_value <= dap_council_stewardship_value
+				dap_council_diplomacy_value <= dap_council_martial_value
+				dap_council_diplomacy_value <= dap_council_intrigue_value
+				dap_council_diplomacy_value <= dap_council_learning_value
+			}
+			value = 1
+		}
+		else_if = {
+			limit = {
+				dap_council_stewardship_value <= dap_council_martial_value
+				dap_council_stewardship_value <= dap_council_intrigue_value
+				dap_council_stewardship_value <= dap_council_learning_value
+			}
+			value = 2
+		}
+		else_if = {
+			limit = {
+				dap_council_martial_value <= dap_council_intrigue_value
+				dap_council_martial_value <= dap_council_learning_value
+			}
+			value = 3
+		}
+		else_if = {
+			limit = { dap_council_intrigue_value <= dap_council_learning_value }
+			value = 4
+		}
+		else = {
+			value = 5
+		}
+	}
+	# Natural talent: the childhood trait's affinity, else the strongest skill
+	else_if = {
+		limit = { has_diplomacy_education_affinity_childhood_trait_trigger = yes }
+		value = 1
+	}
+	else_if = {
+		limit = { has_stewardship_education_affinity_childhood_trait_trigger = yes }
+		value = 2
+	}
+	else_if = {
+		limit = { has_martial_education_affinity_childhood_trait_trigger = yes }
+		value = 3
+	}
+	else_if = {
+		limit = { has_intrigue_education_affinity_childhood_trait_trigger = yes }
+		value = 4
+	}
+	else_if = {
+		limit = { has_learning_education_affinity_childhood_trait_trigger = yes }
+		value = 5
+	}
+	else_if = {
+		limit = {
+			diplomacy >= stewardship
+			diplomacy >= martial
+			diplomacy >= intrigue
+			diplomacy >= learning
+		}
+		value = 1
+	}
+	else_if = {
+		limit = {
+			stewardship >= martial
+			stewardship >= intrigue
+			stewardship >= learning
+		}
+		value = 2
+	}
+	else_if = {
+		limit = {
+			martial >= intrigue
+			martial >= learning
+		}
+		value = 3
+	}
+	else_if = {
+		limit = { intrigue >= learning }
+		value = 4
+	}
+	else = {
+		value = 5
+	}
+}
+
+# this = vassal; higher for those who like the player less
+dap_dislike_of_root_value = {
+	value = "opinion(root)"
+	multiply = -1
+}
+
+# this = county title held by the player; higher = given away first, per "Which counties go first"
+dap_county_spare_value = {
+	value = 100
+	subtract = development_level
+	# "Keep holdings together": counties in a duchy where the receiver already holds land
+	if = {
+		limit = {
+			root.var:dap_grant_cluster = 1
+			de_jure_liege ?= { is_in_list = dap_grantee_duchies }
+		}
+		add = 5000
+	}
+	if = {
+		limit = { root.var:dap_grant_which = 1 }
+		add = {
+			value = 1000
+			subtract = {
+				value = title_held_years
+				multiply = 10
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root.var:dap_grant_which = 2
+			NOT = { de_jure_liege ?= root.capital_county.de_jure_liege }
+		}
+		add = 1000
+	}
+	else_if = {
+		limit = {
+			root.var:dap_grant_which = 3
+			OR = {
+				NOT = { culture ?= root.culture }
+				NOT = { faith ?= root.faith }
+			}
+		}
+		add = 1000
+	}
+}
+
+# this = candidate; families worth binding: strong vassals and war allies
+dap_ally_value = {
+	value = 0
+	if = {
+		limit = {
+			exists = matchmaker
+			matchmaker = {
+				is_landed = yes
+				is_vassal_of = root
+			}
+		}
+		add = {
+			value = matchmaker.highest_held_title_tier
+			multiply = 10
+		}
+	}
+	if = {
+		limit = {
+			exists = matchmaker
+			matchmaker = { is_allied_in_war = root }
+		}
+		add = 40
+	}
+}
+
+# this = courtier; children first, then house members, then the rest; skills break ties
+dap_grantee_score = {
+	value = dap_skills_value
+	if = {
+		limit = {
+			root.var:dap_grant_same = 1
+			culture = root.culture
+			faith = root.faith
+		}
+		add = 100
+	}
+	# Unlanded people first, so land is spread before anyone gets a second county
+	if = {
+		limit = { is_landed = no }
+		add = 50
+	}
+	if = {
+		limit = { is_child_of = root }
+		add = 300
+	}
+	else_if = {
+		limit = { house ?= root.house }
+		add = 200
+	}
+}
+
+# this = vassal; how many counties of scope:dap_duchy they hold
+dap_duchy_counties_held_value = {
+	value = 0
+	every_held_title = {
+		limit = {
+			tier = tier_county
+			de_jure_liege ?= scope:dap_duchy
+		}
+		add = 1
+	}
+}
+
+# this = player; gold the automation must leave untouched
+dap_gold_reserve_value = {
+	value = 0
+	if = {
+		limit = { var:dap_gold_reserve = 1 }
+		value = 100
+	}
+	else_if = {
+		limit = { var:dap_gold_reserve = 2 }
+		value = 300
+	}
+	else_if = {
+		limit = { var:dap_gold_reserve = 3 }
+		value = 1000
+	}
+}
+
+# this = character; counties they hold
+dap_counties_held_value = {
+	value = 0
+	every_held_title = {
+		limit = { tier = tier_county }
+		add = 1
+	}
+}
+
+# this = title; 3 for duchies, 4 for kingdoms (kingdoms are created first)
+dap_title_tier_value = {
+	value = 3
+	if = {
+		limit = { tier = tier_kingdom }
+		value = 4
+	}
+}

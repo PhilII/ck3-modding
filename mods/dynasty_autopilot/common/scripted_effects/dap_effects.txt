@@ -1,0 +1,811 @@
+﻿# Dynasty Autopilot - scripted effects
+# See dap_triggers.txt for the saved scopes (root, scope:subject, scope:cfg).
+
+# Default values, copy/clear and per-setting stepping live in dap_settings_generated.txt
+
+# this = player; sets up the player's own settings the first time
+dap_init_player_effect = {
+	if = {
+		limit = { NOT = { has_variable = dap_initialized } }
+		set_variable = { name = dap_initialized value = 1 }
+		dap_set_default_player_settings_effect = yes
+		dap_set_default_rules_effect = yes
+		dap_declare_setting_flags_effect = yes
+	}
+	# Saves started on an older version miss settings added since
+	dap_ensure_player_settings_effect = yes
+	dap_ensure_rules_effect = yes
+}
+
+# this = player; the family members listed in the window
+dap_refresh_family_effect = {
+	clear_variable_list = dap_family
+	every_courtier = {
+		limit = { dap_is_listed_family_trigger = yes }
+		root = { add_to_variable_list = { name = dap_family target = prev } }
+	}
+	every_courtier_away = {
+		limit = { dap_is_listed_family_trigger = yes }
+		root = { add_to_variable_list = { name = dap_family target = prev } }
+	}
+	every_vassal = {
+		limit = { dap_is_listed_family_trigger = yes }
+		root = { add_to_variable_list = { name = dap_family target = prev } }
+	}
+	# The selected family member may have married or left; fall back to the default rules
+	if = {
+		limit = {
+			has_variable = dap_edit_target
+			NOT = { var:dap_edit_target = root }
+			NOT = { is_target_in_variable_list = { name = dap_family target = var:dap_edit_target } }
+		}
+		set_variable = { name = dap_edit_target value = root }
+	}
+}
+
+# this = player; scope:target = whose rules to show first
+dap_open_window_effect = {
+	dap_init_player_effect = yes
+	set_variable = { name = dap_edit_target value = scope:target }
+	scope:target = {
+		if = {
+			limit = { has_variable = dap_override }
+			dap_ensure_rules_effect = yes
+		}
+	}
+	dap_refresh_family_effect = yes
+	set_variable = { name = dap_window_open value = 1 }
+}
+
+# Steps a setting to its next value, wrapping back to 0 after MAX
+dap_cycle_effect = {
+	if = {
+		limit = { var:$VAR$ >= $MAX$ }
+		set_variable = { name = $VAR$ value = 0 }
+	}
+	else = {
+		change_variable = { name = $VAR$ add = 1 }
+	}
+}
+
+# Steps a setting to its previous value, wrapping to MAX below 0
+dap_cycle_back_effect = {
+	if = {
+		limit = { var:$VAR$ <= 0 }
+		set_variable = { name = $VAR$ value = $MAX$ }
+	}
+	else = {
+		change_variable = { name = $VAR$ add = -1 }
+	}
+}
+
+# this = subject; remembers the outcome of the latest search, shown in the window
+dap_set_result_effect = {
+	set_variable = { name = dap_last_result value = flag:$RESULT$ }
+}
+
+# this = candidate; arrange the match with scope:subject (or only suggest it)
+dap_arrange_match_effect = {
+	if = {
+		limit = { dap_dry_run_trigger = yes }
+		save_scope_as = dap_partner
+		set_local_variable = { name = dap_done value = 1 }
+		scope:subject = { dap_log_with_target_effect = { ACTION = dap_log_matched TARGET = scope:dap_partner } }
+	}
+	else = {
+		dap_arrange_match_now_effect = yes
+	}
+}
+
+dap_arrange_match_now_effect = {
+	save_scope_as = dap_partner
+	# Every caller has already checked that the partner's family says yes, so the match is made
+	# directly: same result as the vanilla interaction, without an acceptance letter per match
+	# (vanilla charges nothing for a normal match either)
+	scope:subject = {
+		if = {
+			limit = {
+				OR = {
+					is_adult = no
+					scope:dap_partner = { is_adult = no }
+				}
+			}
+			if = {
+				limit = { dap_wants_matrilineal_trigger = yes }
+				create_betrothal_matrilineal = scope:dap_partner
+			}
+			else = {
+				create_betrothal = scope:dap_partner
+			}
+		}
+		else_if = {
+			limit = { dap_wants_matrilineal_trigger = yes }
+			marry_matrilineal = scope:dap_partner
+		}
+		else = {
+			marry = scope:dap_partner
+		}
+	}
+	# The partner was free before, so their state tells whether it worked (the subject may already be married)
+	if = {
+		limit = {
+			scope:dap_partner = {
+				OR = {
+					is_married = yes
+					is_betrothed = yes
+				}
+			}
+		}
+		set_local_variable = { name = dap_done value = 1 }
+		scope:subject = {
+			dap_set_result_effect = { RESULT = dap_result_matched }
+			set_variable = { name = dap_auto_partner value = scope:dap_partner }
+			dap_log_with_target_effect = { ACTION = dap_log_matched TARGET = scope:dap_partner }
+			remove_variable = dap_failed_quarters
+			remove_variable = dap_relax
+			remove_variable = dap_awaiting_choice
+		}
+		root = {
+			if = {
+				limit = { NOT = { has_variable = dap_stat_matched } }
+				set_variable = { name = dap_stat_matched value = 0 }
+			}
+			change_variable = { name = dap_stat_matched add = 1 }
+			# Summed up in one message at the end of the pass (dap_run_marriages_effect)
+			if = {
+				limit = { NOT = { has_variable = dap_pass_matches } }
+				set_variable = { name = dap_pass_matches value = 0 }
+			}
+			change_variable = { name = dap_pass_matches add = 1 }
+		}
+	}
+}
+
+# this = subject; work out which rule group left no candidates
+dap_diagnose_effect = {
+	if = {
+		limit = {
+			NOT = {
+				any_in_list = {
+					list = dap_pool
+					dap_rule_basic_trigger = yes
+					dap_rule_age_trigger = yes
+				}
+			}
+		}
+		dap_set_result_effect = { RESULT = dap_result_no_age_match }
+	}
+	else_if = {
+		limit = {
+			NOT = {
+				any_in_list = {
+					list = dap_pool
+					dap_rule_basic_trigger = yes
+					dap_rule_age_trigger = yes
+					dap_rule_traits_trigger = yes
+				}
+			}
+		}
+		dap_set_result_effect = { RESULT = dap_result_blocked_traits }
+	}
+	else_if = {
+		limit = {
+			NOT = {
+				any_in_list = {
+					list = dap_pool
+					dap_rule_basic_trigger = yes
+					dap_rule_age_trigger = yes
+					dap_rule_status_trigger = yes
+				}
+			}
+		}
+		dap_set_result_effect = { RESULT = dap_result_blocked_status }
+	}
+	else_if = {
+		limit = {
+			NOT = {
+				any_in_list = {
+					list = dap_pool
+					dap_rule_basic_trigger = yes
+					dap_rule_age_trigger = yes
+					dap_rule_faith_trigger = yes
+				}
+			}
+		}
+		dap_set_result_effect = { RESULT = dap_result_blocked_faith }
+	}
+	else_if = {
+		limit = {
+			NOT = {
+				any_in_list = {
+					list = dap_pool
+					dap_rule_basic_trigger = yes
+					dap_rule_age_trigger = yes
+					dap_rule_compatible_trigger = yes
+				}
+			}
+		}
+		dap_set_result_effect = { RESULT = dap_result_blocked_compatible }
+	}
+	else = {
+		dap_set_result_effect = { RESULT = dap_result_blocked_combination }
+	}
+}
+
+# this = subject; count a failed season and relax the rules once the wait is long enough
+dap_note_failure_effect = {
+	if = {
+		limit = { NOT = { has_variable = dap_failed_quarters } }
+		set_variable = { name = dap_failed_quarters value = 0 }
+	}
+	change_variable = { name = dap_failed_quarters add = 1 }
+	if = {
+		limit = {
+			scope:cfg.var:dap_relax_after >= 1
+			var:dap_failed_quarters >= {
+				value = scope:cfg.var:dap_relax_after
+				multiply = 4
+			}
+		}
+		set_variable = {
+			name = dap_relax
+			value = {
+				value = var:dap_failed_quarters
+				subtract = {
+					value = scope:cfg.var:dap_relax_after
+					multiply = 4
+				}
+				divide = 4
+				floor = yes
+				add = 1
+				max = 3
+			}
+		}
+	}
+}
+
+# this = subject; find and arrange (or offer) the best acceptable match
+dap_try_marry_subject_effect = {
+	save_scope_as = subject
+	# Clear outcomes that no longer apply: a widow's old match, or an offer or proposal that expired
+	if = {
+		limit = {
+			has_variable = dap_last_result
+			OR = {
+				var:dap_last_result = flag:dap_result_matched
+				AND = {
+					var:dap_last_result = flag:dap_result_asked
+					NOT = { has_variable = dap_awaiting_choice }
+				}
+				AND = {
+					var:dap_last_result = flag:dap_result_proposal_sent
+					NOT = { has_variable = dap_proposal_sent }
+				}
+			}
+		}
+		remove_variable = dap_last_result
+	}
+	if = {
+		limit = { has_variable = dap_override }
+		dap_ensure_rules_effect = yes
+		save_scope_as = cfg
+	}
+	else = {
+		root = { save_scope_as = cfg }
+	}
+	if = {
+		limit = {
+			scope:cfg.var:dap_timing = 1
+			is_adult = no
+		}
+		dap_set_result_effect = { RESULT = dap_result_waiting_adult }
+	}
+	else_if = {
+		limit = {
+			root = { dap_prestige_allows_trigger = no }
+		}
+		dap_set_result_effect = { RESULT = dap_result_low_prestige }
+	}
+	else = {
+		set_local_variable = { name = dap_offers value = 0 }
+		set_local_variable = { name = dap_done value = 0 }
+		clear_saved_scope = dap_offer_1
+		clear_saved_scope = dap_offer_2
+		clear_saved_scope = dap_offer_3
+
+		# Only candidates whose family would say yes are ranked, so the best willing match wins
+		ordered_in_list = {
+			list = dap_pool
+			limit = {
+				dap_candidate_meets_rules_trigger = yes
+				dap_candidate_accepts_trigger = yes
+			}
+			order_by = dap_candidate_score
+			max = 3
+			check_range_bounds = no
+
+			if = {
+				limit = {
+					is_married = no
+					is_betrothed = no
+					local_var:dap_done = 0
+				}
+				if = {
+					limit = { scope:subject = { dap_should_ask_trigger = no } }
+					dap_arrange_match_effect = yes
+				}
+				else_if = {
+					limit = { local_var:dap_offers < 3 }
+					change_local_variable = { name = dap_offers add = 1 }
+					if = {
+						limit = { local_var:dap_offers = 1 }
+						save_scope_as = dap_offer_1
+					}
+					else_if = {
+						limit = { local_var:dap_offers = 2 }
+						save_scope_as = dap_offer_2
+					}
+					else = {
+						save_scope_as = dap_offer_3
+					}
+				}
+			}
+		}
+
+		# A match made above was already recorded by dap_arrange_match_effect
+		if = {
+			limit = {
+				local_var:dap_done = 0
+				local_var:dap_offers >= 1
+			}
+			set_variable = { name = dap_awaiting_choice value = 1 years = 1 }
+			dap_set_result_effect = { RESULT = dap_result_asked }
+			root = { trigger_event = dap_choice.1 }
+		}
+		else_if = {
+			limit = {
+				local_var:dap_done = 0
+				dap_dry_run_trigger = no
+				dap_should_ask_trigger = no
+				dap_wants_matrilineal_trigger = no
+			}
+			# Nobody says yes outright: send a real proposal to the best family that might, and let them answer
+			ordered_in_list = {
+				list = dap_pool
+				limit = {
+					dap_candidate_meets_rules_trigger = yes
+					dap_candidate_might_accept_trigger = yes
+				}
+				order_by = dap_candidate_score
+				max = 1
+				check_range_bounds = no
+				save_scope_as = dap_partner
+				scope:subject.matchmaker = {
+					save_scope_as = dap_matchmaker
+					run_interaction = {
+						interaction = arrange_marriage_interaction
+						actor = scope:dap_matchmaker
+						recipient = scope:dap_partner.matchmaker
+						secondary_actor = scope:subject
+						secondary_recipient = scope:dap_partner
+						send_threshold = maybe
+					}
+				}
+				set_local_variable = { name = dap_done value = 1 }
+				scope:subject = {
+					set_variable = { name = dap_proposal_sent value = 1 days = 45 }
+					dap_set_result_effect = { RESULT = dap_result_proposal_sent }
+					dap_log_with_target_effect = { ACTION = dap_log_proposal TARGET = scope:dap_partner }
+				}
+			}
+		}
+		if = {
+			limit = {
+				local_var:dap_done = 0
+				local_var:dap_offers = 0
+			}
+			if = {
+				limit = {
+					any_in_list = {
+						list = dap_pool
+						dap_candidate_meets_rules_trigger = yes
+					}
+				}
+				dap_set_result_effect = { RESULT = dap_result_declined }
+			}
+			else = {
+				dap_diagnose_effect = yes
+				if = {
+					limit = { root.var:dap_invite = 1 }
+					dap_invite_candidate_effect = yes
+				}
+			}
+			dap_note_failure_effect = yes
+		}
+	}
+}
+
+# this = player; one full automation pass
+dap_run_marriages_effect = {
+	dap_init_player_effect = yes
+	# Reset here, not after the message, so the message can still read this pass's count
+	set_variable = { name = dap_pass_matches value = 0 }
+	every_courtier = {
+		limit = { dap_is_managed_subject_trigger = yes }
+		add_to_list = dap_subjects
+	}
+	every_courtier_away = {
+		limit = { dap_is_managed_subject_trigger = yes }
+		add_to_list = dap_subjects
+	}
+	every_vassal = {
+		limit = { dap_is_managed_subject_trigger = yes }
+		add_to_list = dap_subjects
+	}
+	if = {
+		limit = {
+			OR = {
+				any_in_list = { list = dap_subjects }
+				dap_wants_own_marriage_trigger = yes
+				var:dap_betrothal_review = 2
+			}
+		}
+		# One pass over everyone, so each subject only searches unmarried characters
+		every_living_character = {
+			limit = {
+				is_ai = yes
+				is_married = no
+				is_betrothed = no
+				age <= 50
+			}
+			add_to_list = dap_pool
+		}
+		every_in_list = {
+			list = dap_subjects
+			dap_try_marry_subject_effect = yes
+		}
+	}
+	if = {
+		limit = { var:dap_betrothal_review >= 1 }
+		every_courtier = {
+			limit = {
+				dap_is_family_member_trigger = yes
+				is_betrothed = yes
+				has_variable = dap_auto_partner
+				exists = betrothed
+				betrothed = var:dap_auto_partner
+			}
+			dap_review_betrothal_effect = yes
+		}
+	}
+	dap_run_own_matches_effect = yes
+	if = {
+		limit = {
+			has_variable = dap_pass_matches
+			var:dap_pass_matches > 0
+		}
+		send_interface_toast = {
+			type = event_toast_effect_good
+			title = dap_toast_matches_title
+			desc = dap_toast_matches_desc
+		}
+	}
+}
+
+# this = player; the player's own extra spouses and concubines, under the rules picked in "My own marriages"
+dap_run_own_matches_effect = {
+	if = {
+		limit = {
+			OR = {
+				dap_wants_own_marriage_trigger = yes
+				AND = {
+					var:dap_concubines = 1
+					is_adult = yes
+					allowed_more_concubines = yes
+				}
+			}
+		}
+		# Saved rule sets are loaded into the player's own rule variables for the duration
+		if = {
+			limit = { var:dap_self >= 2 }
+			dap_stash_rules_effect = yes
+			if = {
+				limit = { var:dap_self = 2 }
+				dap_load_slot_effect = { SLOT = 1 }
+			}
+			else_if = {
+				limit = { var:dap_self = 3 }
+				dap_load_slot_effect = { SLOT = 2 }
+			}
+			else = {
+				dap_load_slot_effect = { SLOT = 3 }
+			}
+		}
+		if = {
+			limit = { dap_wants_own_marriage_trigger = yes }
+			dap_try_marry_subject_effect = yes
+		}
+		if = {
+			limit = { var:dap_concubines = 1 }
+			dap_take_concubines_effect = yes
+		}
+		if = {
+			limit = { has_variable = dap_stash_dap_status }
+			dap_restore_rules_effect = yes
+		}
+	}
+}
+
+# this = player; fill free concubine slots from the court and the dungeon, best candidates first
+dap_take_concubines_effect = {
+	save_scope_as = subject
+	save_scope_as = cfg
+	every_courtier = {
+		limit = { dap_concubine_candidate_trigger = yes }
+		add_to_list = dap_concubine_pool
+	}
+	every_prisoner = {
+		limit = { dap_concubine_candidate_trigger = yes }
+		add_to_list = dap_concubine_pool
+	}
+	if = {
+		limit = {
+			var:dap_invite = 1
+			NOT = { any_in_list = { list = dap_concubine_pool } }
+		}
+		random_pool_character = {
+			province = root.capital_province
+			limit = {
+				is_ai = yes
+				is_adult = yes
+				is_married = no
+				is_betrothed = no
+				sex_opposite_of = root
+				dap_rule_age_trigger = yes
+				dap_rule_traits_trigger = yes
+				dap_rule_faith_trigger = yes
+				NOT = { is_close_or_extended_family_of = root }
+			}
+			save_scope_as = dap_invitee
+			if = {
+				limit = { dap_dry_run_trigger = no }
+				root = { add_courtier = scope:dap_invitee }
+			}
+			dap_log_effect = { ACTION = dap_log_invited }
+		}
+	}
+	ordered_in_list = {
+		list = dap_concubine_pool
+		order_by = dap_candidate_score
+		max = 5
+		check_range_bounds = no
+		save_scope_as = dap_concubine
+		if = {
+			limit = {
+				dap_dry_run_trigger = yes
+				root = { allowed_more_concubines = yes }
+			}
+			dap_log_effect = { ACTION = dap_log_concubine }
+		}
+		else_if = {
+			limit = {
+				root = {
+					allowed_more_concubines = yes
+					is_character_interaction_valid = {
+						recipient = scope:dap_concubine
+						interaction = make_concubine_interaction
+					}
+				}
+			}
+			root = {
+				run_interaction = {
+					interaction = make_concubine_interaction
+					actor = root
+					recipient = scope:dap_concubine
+					secondary_actor = root
+					secondary_recipient = scope:dap_concubine
+					execute_threshold = accept
+				}
+			}
+			if = {
+				limit = { is_concubine = yes }
+				dap_log_effect = { ACTION = dap_log_concubine }
+				root = {
+					send_interface_toast = {
+						type = event_toast_effect_good
+						title = dap_toast_concubine_title
+						left_icon = root
+						right_icon = scope:dap_concubine
+					}
+				}
+			}
+		}
+	}
+}
+
+# this = player; once a year, sum up the autopilot's work
+dap_yearly_report_effect = {
+	if = {
+		limit = {
+			var:dap_report = 1
+			NOT = { has_variable = dap_report_cooldown }
+		}
+		set_variable = { name = dap_report_cooldown value = 1 days = 360 }
+		set_variable = { name = dap_stat_waiting value = 0 }
+		every_courtier = {
+			limit = {
+				dap_is_managed_subject_trigger = yes
+			}
+			root = { change_variable = { name = dap_stat_waiting add = 1 } }
+		}
+		if = {
+			limit = { NOT = { has_variable = dap_stat_matched } }
+			set_variable = { name = dap_stat_matched value = 0 }
+		}
+		set_variable = { name = dap_report_matched value = var:dap_stat_matched }
+		set_variable = { name = dap_stat_matched value = 0 }
+		if = {
+			limit = {
+				OR = {
+					var:dap_report_matched > 0
+					var:dap_stat_waiting > 0
+				}
+			}
+			send_interface_toast = {
+				type = event_toast_effect_neutral
+				title = dap_report_title
+				desc = dap_report_desc
+			}
+		}
+	}
+}
+
+# this = player; scope:holder's rules become personal rules for every listed family member
+dap_apply_rules_to_family_effect = {
+	every_in_list = {
+		variable = dap_family
+		limit = { NOT = { this = scope:holder } }
+		dap_copy_rules_effect = { FROM = scope:holder }
+	}
+}
+
+# this = subject; bring a fitting wanderer to court, to be matched next season
+dap_invite_candidate_effect = {
+	random_pool_character = {
+		province = root.capital_province
+		limit = {
+			is_ai = yes
+			is_married = no
+			is_betrothed = no
+			dap_rule_basic_pool_trigger = yes
+			dap_rule_age_trigger = yes
+			dap_rule_traits_trigger = yes
+			dap_rule_faith_trigger = yes
+		}
+		save_scope_as = dap_invitee
+		if = {
+			limit = { dap_dry_run_trigger = no }
+			root = { add_courtier = scope:dap_invitee }
+			set_variable = { name = dap_invited value = 1 }
+		}
+		dap_log_effect = { ACTION = dap_log_invited }
+	}
+}
+
+# this = family member betrothed by the autopilot; break bad betrothals, upgrade to much better ones
+dap_review_betrothal_effect = {
+	save_scope_as = subject
+	if = {
+		limit = { has_variable = dap_override }
+		dap_ensure_rules_effect = yes
+		save_scope_as = cfg
+	}
+	else = {
+		root = { save_scope_as = cfg }
+	}
+	betrothed = { save_scope_as = dap_current_partner }
+	if = {
+		limit = {
+			scope:dap_current_partner = { dap_betrothal_still_good_trigger = no }
+		}
+		dap_break_betrothal_effect = { UPGRADE = no }
+	}
+	else_if = {
+		limit = { root.var:dap_betrothal_review = 2 }
+		scope:dap_current_partner = {
+			set_local_variable = { name = dap_partner_score value = dap_candidate_score }
+		}
+		# Acceptance cannot be checked while betrothed, so only the rules decide whether to try
+		if = {
+			limit = {
+				any_in_list = {
+					list = dap_pool
+					dap_rule_basic_trigger = yes
+					dap_rule_age_trigger = yes
+					dap_rule_traits_trigger = yes
+					dap_rule_status_trigger = yes
+					dap_rule_faith_trigger = yes
+					dap_candidate_score >= {
+						value = local_var:dap_partner_score
+						add = 60
+					}
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						dap_dry_run_trigger = yes
+						root = { dap_should_confirm_trigger = yes }
+					}
+				}
+				dap_break_betrothal_effect = { UPGRADE = yes }
+			}
+			else = {
+				break_betrothal = scope:dap_current_partner
+				remove_variable = dap_auto_partner
+				dap_log_with_target_effect = { ACTION = dap_log_broke_betrothal TARGET = scope:dap_current_partner }
+				dap_try_marry_subject_effect = yes
+			}
+			# Nobody better said yes: go back to the old match
+			if = {
+				limit = {
+					is_betrothed = no
+					is_married = no
+					scope:dap_current_partner = {
+						is_betrothed = no
+						is_married = no
+						dap_candidate_accepts_trigger = yes
+					}
+				}
+				scope:dap_current_partner = { dap_arrange_match_effect = yes }
+			}
+		}
+	}
+}
+
+# this = player; every module once (seasonal pulse and the "Run now" button)
+dap_run_all_effect = {
+	dap_init_player_effect = yes
+	if = {
+		limit = {
+			var:dap_master = 1
+			dap_paused_trigger = no
+		}
+		if = {
+			limit = { var:dap_enabled = 1 }
+			set_local_variable = { name = dap_dry value = var:dap_marriage_suggest }
+			dap_run_marriages_effect = yes
+			dap_yearly_report_effect = yes
+		}
+		set_local_variable = { name = dap_dry value = var:dap_guard_suggest }
+		dap_run_guardians_effect = yes
+		set_local_variable = { name = dap_dry value = var:dap_edu_suggest }
+		dap_run_education_effect = yes
+		set_local_variable = { name = dap_dry value = var:dap_court_suggest }
+		dap_run_court_effect = yes
+		remove_local_variable = dap_dry
+	}
+}
+
+# this = subject betrothed to scope:dap_current_partner; break it now, ask first, or only suggest
+dap_break_betrothal_effect = {
+	if = {
+		limit = { dap_dry_run_trigger = yes }
+		dap_log_with_target_effect = { ACTION = dap_log_broke_betrothal TARGET = scope:dap_current_partner }
+	}
+	else_if = {
+		limit = {
+			root = { dap_should_confirm_trigger = yes }
+			NOT = { has_variable = dap_confirm_pending }
+		}
+		set_variable = { name = dap_confirm_pending value = 1 days = 90 }
+		save_scope_value_as = { name = dap_upgrade value = $UPGRADE$ }
+		root = { trigger_event = dap_confirm.1 }
+	}
+	else_if = {
+		limit = { root = { dap_should_confirm_trigger = no } }
+		break_betrothal = scope:dap_current_partner
+		remove_variable = dap_auto_partner
+		dap_log_with_target_effect = { ACTION = dap_log_broke_betrothal TARGET = scope:dap_current_partner }
+	}
+}

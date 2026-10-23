@@ -1,0 +1,12 @@
+﻿namespace = dap_window
+
+# Opens the settings window from contexts where root is not the player (e.g. interactions).
+# scope:target = whose rules to show first
+dap_window.1 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		dap_open_window_effect = yes
+	}
+}

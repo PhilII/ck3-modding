@@ -1,0 +1,26 @@
+﻿dap_open_menu_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_family_tree.dds"
+	}
+	desc = dap_open_menu_decision_desc
+	selection_tooltip = dap_open_menu_decision_tooltip
+	sort_order = 1
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+	}
+
+	effect = {
+		custom_tooltip = dap_open_menu_decision_tooltip
+		# hidden_effect keeps the decision tooltip from evaluating the window setup on every hover
+		hidden_effect = {
+			save_scope_as = target
+			dap_open_window_effect = yes
+		}
+	}
+
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}

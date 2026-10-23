@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Temporary files from scripts
+*.tmp
+
+# Dev-only test scaffolding (see CK3_MODDING_GUIDE.md); never commit it
+mods/*/common/on_action/*zz_devtest*
+mods/*/events/*zz_devtest*
+mods/*/gui/*zz_devtest*
+
+# Local tooling output
+ck3strings.txt
