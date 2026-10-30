@@ -51,6 +51,13 @@ dap_set_default_player_settings_effect = {
 	set_variable = { name = dap_maa_type value = 0 }
 	set_variable = { name = dap_build_reminder value = 0 }
 	set_variable = { name = dap_court_prisoners value = 0 }
+	set_variable = { name = dap_faith_enabled value = 0 }
+	set_variable = { name = dap_faith_suggest value = 0 }
+	set_variable = { name = dap_faith_chaplain value = 0 }
+	set_variable = { name = dap_faith_task value = 0 }
+	set_variable = { name = dap_faith_order value = 0 }
+	set_variable = { name = dap_faith_family value = 0 }
+	set_variable = { name = dap_faith_spouses value = 0 }
 }
 
 # this = rule holder; default rule values
@@ -89,6 +96,7 @@ dap_set_default_rules_effect = {
 	set_variable = { name = dap_relax_after value = 0 }
 	set_variable = { name = dap_guard_priority value = 0 }
 	set_variable = { name = dap_guard_reject value = 1 }
+	set_variable = { name = dap_guard_faith value = 0 }
 	set_variable = { name = dap_edu_focus value = 0 }
 }
 
@@ -129,6 +137,7 @@ dap_copy_rules_effect = {
 	set_variable = { name = dap_relax_after value = $FROM$.var:dap_relax_after }
 	set_variable = { name = dap_guard_priority value = $FROM$.var:dap_guard_priority }
 	set_variable = { name = dap_guard_reject value = $FROM$.var:dap_guard_reject }
+	set_variable = { name = dap_guard_faith value = $FROM$.var:dap_guard_faith }
 	set_variable = { name = dap_edu_focus value = $FROM$.var:dap_edu_focus }
 }
 
@@ -169,6 +178,7 @@ dap_clear_rules_effect = {
 	remove_variable = dap_relax_after
 	remove_variable = dap_guard_priority
 	remove_variable = dap_guard_reject
+	remove_variable = dap_guard_faith
 	remove_variable = dap_edu_focus
 }
 
@@ -374,6 +384,34 @@ dap_ensure_player_settings_effect = {
 		limit = { NOT = { has_variable = dap_court_prisoners } }
 		set_variable = { name = dap_court_prisoners value = 0 }
 	}
+	if = {
+		limit = { NOT = { has_variable = dap_faith_enabled } }
+		set_variable = { name = dap_faith_enabled value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_faith_suggest } }
+		set_variable = { name = dap_faith_suggest value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_faith_chaplain } }
+		set_variable = { name = dap_faith_chaplain value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_faith_task } }
+		set_variable = { name = dap_faith_task value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_faith_order } }
+		set_variable = { name = dap_faith_order value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_faith_family } }
+		set_variable = { name = dap_faith_family value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_faith_spouses } }
+		set_variable = { name = dap_faith_spouses value = 0 }
+	}
 }
 
 # this = rule holder; adds rules introduced after the save was started
@@ -515,6 +553,10 @@ dap_ensure_rules_effect = {
 		set_variable = { name = dap_guard_reject value = 1 }
 	}
 	if = {
+		limit = { NOT = { has_variable = dap_guard_faith } }
+		set_variable = { name = dap_guard_faith value = 0 }
+	}
+	if = {
 		limit = { NOT = { has_variable = dap_edu_focus } }
 		set_variable = { name = dap_edu_focus value = 0 }
 	}
@@ -580,6 +622,7 @@ dap_declare_setting_flags_effect = {
 	set_local_variable = { name = dap_setting_flag value = flag:dap_guard_replace }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_guard_priority }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_guard_reject }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_guard_faith }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_edu_enabled }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_edu_suggest }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_edu_override }
@@ -607,6 +650,13 @@ dap_declare_setting_flags_effect = {
 	set_local_variable = { name = dap_setting_flag value = flag:dap_maa_type }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_build_reminder }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_court_prisoners }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_faith_enabled }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_faith_suggest }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_faith_chaplain }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_faith_task }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_faith_order }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_faith_family }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_faith_spouses }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_breeding }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_power }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_cheap }
@@ -693,6 +743,7 @@ dap_save_slot_effect = {
 		set_variable = { name = dap_slot$SLOT$_dap_relax_after value = scope:holder.var:dap_relax_after }
 		set_variable = { name = dap_slot$SLOT$_dap_guard_priority value = scope:holder.var:dap_guard_priority }
 		set_variable = { name = dap_slot$SLOT$_dap_guard_reject value = scope:holder.var:dap_guard_reject }
+		set_variable = { name = dap_slot$SLOT$_dap_guard_faith value = scope:holder.var:dap_guard_faith }
 		set_variable = { name = dap_slot$SLOT$_dap_edu_focus value = scope:holder.var:dap_edu_focus }
 	}
 }
@@ -735,6 +786,7 @@ dap_load_slot_effect = {
 		set_variable = { name = dap_relax_after value = root.var:dap_slot$SLOT$_dap_relax_after }
 		set_variable = { name = dap_guard_priority value = root.var:dap_slot$SLOT$_dap_guard_priority }
 		set_variable = { name = dap_guard_reject value = root.var:dap_slot$SLOT$_dap_guard_reject }
+		set_variable = { name = dap_guard_faith value = root.var:dap_slot$SLOT$_dap_guard_faith }
 		set_variable = { name = dap_edu_focus value = root.var:dap_slot$SLOT$_dap_edu_focus }
 	}
 }
@@ -775,6 +827,7 @@ dap_stash_rules_effect = {
 	set_variable = { name = dap_stash_dap_relax_after value = var:dap_relax_after }
 	set_variable = { name = dap_stash_dap_guard_priority value = var:dap_guard_priority }
 	set_variable = { name = dap_stash_dap_guard_reject value = var:dap_guard_reject }
+	set_variable = { name = dap_stash_dap_guard_faith value = var:dap_guard_faith }
 	set_variable = { name = dap_stash_dap_edu_focus value = var:dap_edu_focus }
 }
 
@@ -848,6 +901,8 @@ dap_restore_rules_effect = {
 	remove_variable = dap_stash_dap_guard_priority
 	set_variable = { name = dap_guard_reject value = var:dap_stash_dap_guard_reject }
 	remove_variable = dap_stash_dap_guard_reject
+	set_variable = { name = dap_guard_faith value = var:dap_stash_dap_guard_faith }
+	remove_variable = dap_stash_dap_guard_faith
 	set_variable = { name = dap_edu_focus value = var:dap_stash_dap_edu_focus }
 	remove_variable = dap_stash_dap_edu_focus
 }
@@ -1119,6 +1174,10 @@ dap_setting_next_effect = {
 		dap_cycle_effect = { VAR = dap_guard_reject MAX = 1 }
 	}
 	else_if = {
+		limit = { scope:setting = flag:dap_guard_faith }
+		dap_cycle_effect = { VAR = dap_guard_faith MAX = 1 }
+	}
+	else_if = {
 		limit = { scope:setting = flag:dap_edu_enabled }
 		dap_cycle_effect = { VAR = dap_edu_enabled MAX = 1 }
 	}
@@ -1225,6 +1284,34 @@ dap_setting_next_effect = {
 	else_if = {
 		limit = { scope:setting = flag:dap_court_prisoners }
 		dap_cycle_effect = { VAR = dap_court_prisoners MAX = 2 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_enabled }
+		dap_cycle_effect = { VAR = dap_faith_enabled MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_suggest }
+		dap_cycle_effect = { VAR = dap_faith_suggest MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_chaplain }
+		dap_cycle_effect = { VAR = dap_faith_chaplain MAX = 2 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_task }
+		dap_cycle_effect = { VAR = dap_faith_task MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_order }
+		dap_cycle_effect = { VAR = dap_faith_order MAX = 2 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_family }
+		dap_cycle_effect = { VAR = dap_faith_family MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_spouses }
+		dap_cycle_effect = { VAR = dap_faith_spouses MAX = 1 }
 	}
 }
 
@@ -1463,6 +1550,10 @@ dap_setting_prev_effect = {
 		dap_cycle_back_effect = { VAR = dap_guard_reject MAX = 1 }
 	}
 	else_if = {
+		limit = { scope:setting = flag:dap_guard_faith }
+		dap_cycle_back_effect = { VAR = dap_guard_faith MAX = 1 }
+	}
+	else_if = {
 		limit = { scope:setting = flag:dap_edu_enabled }
 		dap_cycle_back_effect = { VAR = dap_edu_enabled MAX = 1 }
 	}
@@ -1569,6 +1660,34 @@ dap_setting_prev_effect = {
 	else_if = {
 		limit = { scope:setting = flag:dap_court_prisoners }
 		dap_cycle_back_effect = { VAR = dap_court_prisoners MAX = 2 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_enabled }
+		dap_cycle_back_effect = { VAR = dap_faith_enabled MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_suggest }
+		dap_cycle_back_effect = { VAR = dap_faith_suggest MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_chaplain }
+		dap_cycle_back_effect = { VAR = dap_faith_chaplain MAX = 2 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_task }
+		dap_cycle_back_effect = { VAR = dap_faith_task MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_order }
+		dap_cycle_back_effect = { VAR = dap_faith_order MAX = 2 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_family }
+		dap_cycle_back_effect = { VAR = dap_faith_family MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_spouses }
+		dap_cycle_back_effect = { VAR = dap_faith_spouses MAX = 1 }
 	}
 }
 

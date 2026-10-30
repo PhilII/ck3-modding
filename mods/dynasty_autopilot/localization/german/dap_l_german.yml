@@ -133,6 +133,8 @@
  dap_log_created_title: "Created a new title"
  dap_log_maa: "Recruited a men-at-arms regiment"
  dap_log_revoke: "Hostile vassal; you have a valid reason to revoke a title"
+ dap_log_convert_county: "Set to convert #V [Character.MakeScope.Var('dap_log_county').Title.GetBaseNameNoTier]#!"
+ dap_log_converted: "Adopted your faith"
  dap_build_reminder_title: "Gold to spend on buildings"
  dap_build_reminder_desc: "You have gold above your reserve and free building slots in your domain."
  dap_result_proposal_sent: "#V Proposal sent, waiting for an answer#!"

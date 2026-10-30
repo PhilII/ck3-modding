@@ -477,6 +477,10 @@ dap_guardian_unfit_trigger = {
 			scope:cfg.var:dap_guard_reject = 1
 			dap_guardian_unwanted_trigger = yes
 		}
+		AND = {
+			scope:cfg.var:dap_guard_faith = 1
+			faith != root.faith
+		}
 	}
 }
 
@@ -494,6 +498,10 @@ dap_guardian_candidate_trigger = {
 	trigger_if = {
 		limit = { scope:cfg.var:dap_guard_reject = 1 }
 		dap_guardian_unwanted_trigger = no
+	}
+	trigger_if = {
+		limit = { scope:cfg.var:dap_guard_faith = 1 }
+		faith = root.faith
 	}
 }
 
@@ -703,4 +711,11 @@ dap_realm_controls_title_trigger = {
 			}
 		}
 	}
+}
+
+# this = county in root's realm; could root's chaplain convert it to root's faith and rite?
+dap_convertible_county_trigger = {
+	is_landless_type_title = no
+	exists = rite
+	rite != root.rite
 }

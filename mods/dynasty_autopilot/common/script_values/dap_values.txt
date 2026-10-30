@@ -644,3 +644,19 @@ dap_title_tier_value = {
 		value = 4
 	}
 }
+
+# this = county; higher is converted first, per "Which counties go first"
+dap_convert_county_score = {
+	value = development_level
+	if = {
+		limit = { root.var:dap_faith_order = 2 }
+		multiply = -1
+	}
+	else_if = {
+		limit = {
+			root.var:dap_faith_order = 0
+			de_jure_liege ?= root.capital_county.de_jure_liege
+		}
+		add = 1000
+	}
+}

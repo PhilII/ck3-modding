@@ -1107,6 +1107,22 @@ dap_cl_dap_guard_reject = {
 	}
 }
 
+dap_cl_dap_guard_faith = {
+	type = character
+	text = {
+		trigger = { var:dap_guard_faith = 0 }
+		localization_key = dap_val_dap_guard_faith_0
+	}
+	text = {
+		trigger = { var:dap_guard_faith = 1 }
+		localization_key = dap_val_dap_guard_faith_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
 dap_cl_dap_edu_enabled = {
 	type = character
 	text = {
@@ -1692,6 +1708,126 @@ dap_cl_dap_court_prisoners = {
 	text = {
 		trigger = { var:dap_court_prisoners = 2 }
 		localization_key = dap_val_dap_court_prisoners_2
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_faith_enabled = {
+	type = character
+	text = {
+		trigger = { var:dap_faith_enabled = 0 }
+		localization_key = dap_val_dap_faith_enabled_0
+	}
+	text = {
+		trigger = { var:dap_faith_enabled = 1 }
+		localization_key = dap_val_dap_faith_enabled_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_faith_suggest = {
+	type = character
+	text = {
+		trigger = { var:dap_faith_suggest = 0 }
+		localization_key = dap_val_dap_faith_suggest_0
+	}
+	text = {
+		trigger = { var:dap_faith_suggest = 1 }
+		localization_key = dap_val_dap_faith_suggest_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_faith_chaplain = {
+	type = character
+	text = {
+		trigger = { var:dap_faith_chaplain = 0 }
+		localization_key = dap_val_dap_faith_chaplain_0
+	}
+	text = {
+		trigger = { var:dap_faith_chaplain = 1 }
+		localization_key = dap_val_dap_faith_chaplain_1
+	}
+	text = {
+		trigger = { var:dap_faith_chaplain = 2 }
+		localization_key = dap_val_dap_faith_chaplain_2
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_faith_task = {
+	type = character
+	text = {
+		trigger = { var:dap_faith_task = 0 }
+		localization_key = dap_val_dap_faith_task_0
+	}
+	text = {
+		trigger = { var:dap_faith_task = 1 }
+		localization_key = dap_val_dap_faith_task_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_faith_order = {
+	type = character
+	text = {
+		trigger = { var:dap_faith_order = 0 }
+		localization_key = dap_val_dap_faith_order_0
+	}
+	text = {
+		trigger = { var:dap_faith_order = 1 }
+		localization_key = dap_val_dap_faith_order_1
+	}
+	text = {
+		trigger = { var:dap_faith_order = 2 }
+		localization_key = dap_val_dap_faith_order_2
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_faith_family = {
+	type = character
+	text = {
+		trigger = { var:dap_faith_family = 0 }
+		localization_key = dap_val_dap_faith_family_0
+	}
+	text = {
+		trigger = { var:dap_faith_family = 1 }
+		localization_key = dap_val_dap_faith_family_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_faith_spouses = {
+	type = character
+	text = {
+		trigger = { var:dap_faith_spouses = 0 }
+		localization_key = dap_val_dap_faith_spouses_0
+	}
+	text = {
+		trigger = { var:dap_faith_spouses = 1 }
+		localization_key = dap_val_dap_faith_spouses_1
 	}
 	text = {
 		fallback = yes

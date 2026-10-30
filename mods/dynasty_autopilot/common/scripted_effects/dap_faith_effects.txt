@@ -1,0 +1,115 @@
+﻿# Dynasty Autopilot - faith module: court chaplain and family conversion.
+# root = the player in every effect here.
+
+### Court Chaplain
+
+# this = player; fill or improve the chaplain seat, unless the clergy appoints it
+dap_run_chaplain_seat_effect = {
+	if = {
+		limit = {
+			var:dap_faith_chaplain >= 1
+			tgp_has_access_to_ministry_trigger = no
+			can_appoint_own_court_chaplain_trigger = yes
+		}
+		dap_fill_council_seat_effect = { SEAT = councillor_court_chaplain CAN_BE = can_be_court_chaplain_trigger SKILL = learning MODE = dap_faith_chaplain }
+	}
+}
+
+# this = player; set the chaplain to convert the next county, never interrupting a conversion
+dap_run_chaplain_task_effect = {
+	if = {
+		limit = {
+			var:dap_faith_task = 1
+			exists = cp:councillor_court_chaplain
+			cp:councillor_court_chaplain = {
+				faith = root.faith
+				NOT = { is_performing_council_task = task_conversion }
+			}
+		}
+		cp:councillor_court_chaplain = { save_scope_as = dap_chaplain }
+		every_realm_county = {
+			limit = { dap_convertible_county_trigger = yes }
+			add_to_list = dap_convert_pool
+		}
+		ordered_in_list = {
+			list = dap_convert_pool
+			order_by = dap_convert_county_score
+			max = 1
+			check_range_bounds = no
+			save_scope_as = dap_convert_county
+			if = {
+				limit = { dap_dry_run_trigger = no }
+				scope:dap_chaplain = {
+					set_council_task = {
+						task_type = task_conversion
+						target = scope:dap_convert_county.title_province
+					}
+				}
+			}
+			scope:dap_chaplain = {
+				dap_log_effect = { ACTION = dap_log_convert_county }
+				set_variable = { name = dap_log_county value = scope:dap_convert_county }
+			}
+		}
+	}
+}
+
+### Family
+
+# this = courtier of root; ask them to adopt root's faith if they would accept
+dap_ask_conversion_effect = {
+	save_scope_as = dap_convertee
+	if = {
+		limit = {
+			is_ruler = no
+			is_courtier_of = root
+			faith != root.faith
+			root = {
+				is_character_interaction_potentially_accepted = {
+					recipient = scope:dap_convertee
+					interaction = ask_for_conversion_courtier_interaction
+					required_response = yes
+				}
+			}
+		}
+		# run_interaction does nothing for this interaction (verified in 1.20.1.2), so run its accept effect
+		if = {
+			limit = { dap_dry_run_trigger = no }
+			root = { save_scope_as = actor }
+			scope:dap_convertee = { save_scope_as = recipient }
+			demand_conversion_interaction_effect = yes
+		}
+		dap_log_effect = { ACTION = dap_log_converted }
+	}
+}
+
+dap_run_family_faith_effect = {
+	if = {
+		limit = { var:dap_faith_family = 1 }
+		every_courtier = {
+			limit = {
+				dap_is_family_member_trigger = yes
+				NOT = { has_variable = dap_excluded }
+			}
+			dap_ask_conversion_effect = yes
+		}
+	}
+	if = {
+		limit = { var:dap_faith_spouses = 1 }
+		every_spouse = {
+			dap_ask_conversion_effect = yes
+		}
+		every_concubine = {
+			dap_ask_conversion_effect = yes
+		}
+	}
+}
+
+dap_run_faith_effect = {
+	if = {
+		limit = { var:dap_faith_enabled = 1 }
+		dap_run_chaplain_seat_effect = yes
+		dap_run_chaplain_task_effect = yes
+		dap_run_family_faith_effect = yes
+	}
+}

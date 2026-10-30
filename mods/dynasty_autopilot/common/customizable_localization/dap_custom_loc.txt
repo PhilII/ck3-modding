@@ -249,6 +249,14 @@ dap_cl_log_action = {
 		localization_key = dap_log_revoke
 	}
 	text = {
+		trigger = { var:dap_log_action = flag:dap_log_convert_county }
+		localization_key = dap_log_convert_county
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_converted }
+		localization_key = dap_log_converted
+	}
+	text = {
 		fallback = yes
 		localization_key = dap_empty
 	}

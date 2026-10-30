@@ -11,9 +11,10 @@ Everything runs once per season (or immediately with **Run now**) and is recorde
 |---|---|
 | General | Master switch, which family members are managed, gold reserve, pause during war/illness/captivity, asking before big decisions, the action log |
 | Marriage | Matches for children, grandchildren or the whole dynasty at court; your own spouses and concubines; extra spouses where faith allows; widows; betrothal reviews; inviting candidates; "ask me first" |
-| Guardians | Best guardian per child (by focus skill, total skills or personality), replacing unfit guardians |
+| Guardians | Best guardian per child (by focus skill, total skills or personality, optionally of your faith), replacing unfit guardians |
 | Education | Education focus by role (heir, sons, daughters), natural talent, council needs or a fixed skill |
 | Court | Sway hostile vassals, fill council seats and court positions, knights, prisoners, granting counties and duchies, creating titles, recruiting men-at-arms, building reminder |
+| Faith | Fill the Court Chaplain seat, have the chaplain convert counties of another faith or rite (capital duchy or most/least developed first), ask family members and spouses who would accept to adopt your faith |
 
 Every module has a **Mode** setting: *Act* or *Suggest only* (log what it would do without doing it).
 

@@ -783,6 +783,8 @@ dap_run_all_effect = {
 		dap_run_education_effect = yes
 		set_local_variable = { name = dap_dry value = var:dap_court_suggest }
 		dap_run_court_effect = yes
+		set_local_variable = { name = dap_dry value = var:dap_faith_suggest }
+		dap_run_faith_effect = yes
 		remove_local_variable = dap_dry
 	}
 }

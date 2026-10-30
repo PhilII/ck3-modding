@@ -9,6 +9,10 @@ dap_log_effect = {
 		limit = { exists = var:dap_log_target }
 		remove_variable = dap_log_target
 	}
+	if = {
+		limit = { exists = var:dap_log_county }
+		remove_variable = dap_log_county
+	}
 	dap_log_record_effect = { ACTION = $ACTION$ }
 }
 
@@ -303,13 +307,13 @@ dap_run_sway_effect = {
 	}
 }
 
-# this = player; fill or improve one council seat
+# this = player; fill or improve one council seat ($MODE$ = the setting whose value 2 allows replacing)
 dap_fill_council_seat_effect = {
 	if = {
 		limit = {
 			OR = {
 				NOT = { exists = cp:$SEAT$ }
-				root.var:dap_court_council = 2
+				root.var:$MODE$ = 2
 			}
 		}
 		every_courtier = {
@@ -366,10 +370,10 @@ dap_run_council_effect = {
 			var:dap_court_council >= 1
 			tgp_has_access_to_ministry_trigger = no
 		}
-		dap_fill_council_seat_effect = { SEAT = councillor_chancellor CAN_BE = can_be_chancellor_trigger SKILL = diplomacy }
-		dap_fill_council_seat_effect = { SEAT = councillor_steward CAN_BE = can_be_steward_trigger SKILL = stewardship }
-		dap_fill_council_seat_effect = { SEAT = councillor_marshal CAN_BE = can_be_marshal_trigger SKILL = martial }
-		dap_fill_council_seat_effect = { SEAT = councillor_spymaster CAN_BE = can_be_spymaster_trigger SKILL = intrigue }
+		dap_fill_council_seat_effect = { SEAT = councillor_chancellor CAN_BE = can_be_chancellor_trigger SKILL = diplomacy MODE = dap_court_council }
+		dap_fill_council_seat_effect = { SEAT = councillor_steward CAN_BE = can_be_steward_trigger SKILL = stewardship MODE = dap_court_council }
+		dap_fill_council_seat_effect = { SEAT = councillor_marshal CAN_BE = can_be_marshal_trigger SKILL = martial MODE = dap_court_council }
+		dap_fill_council_seat_effect = { SEAT = councillor_spymaster CAN_BE = can_be_spymaster_trigger SKILL = intrigue MODE = dap_court_council }
 	}
 }
 
