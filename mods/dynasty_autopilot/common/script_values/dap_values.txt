@@ -660,3 +660,20 @@ dap_convert_county_score = {
 		add = 1000
 	}
 }
+
+# this = player; piety kept back by "Piety reserve"
+dap_piety_reserve_value = {
+	value = 0
+	if = {
+		limit = { var:dap_piety_reserve = 1 }
+		value = 100
+	}
+	else_if = {
+		limit = { var:dap_piety_reserve = 2 }
+		value = 300
+	}
+	else_if = {
+		limit = { var:dap_piety_reserve = 3 }
+		value = 1000
+	}
+}

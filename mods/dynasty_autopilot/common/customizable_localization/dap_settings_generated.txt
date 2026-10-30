@@ -1835,3 +1835,79 @@ dap_cl_dap_faith_spouses = {
 	}
 }
 
+dap_cl_dap_faith_vassals = {
+	type = character
+	text = {
+		trigger = { var:dap_faith_vassals = 0 }
+		localization_key = dap_val_dap_faith_vassals_0
+	}
+	text = {
+		trigger = { var:dap_faith_vassals = 1 }
+		localization_key = dap_val_dap_faith_vassals_1
+	}
+	text = {
+		trigger = { var:dap_faith_vassals = 2 }
+		localization_key = dap_val_dap_faith_vassals_2
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_piety_reserve = {
+	type = character
+	text = {
+		trigger = { var:dap_piety_reserve = 0 }
+		localization_key = dap_val_dap_piety_reserve_0
+	}
+	text = {
+		trigger = { var:dap_piety_reserve = 1 }
+		localization_key = dap_val_dap_piety_reserve_1
+	}
+	text = {
+		trigger = { var:dap_piety_reserve = 2 }
+		localization_key = dap_val_dap_piety_reserve_2
+	}
+	text = {
+		trigger = { var:dap_piety_reserve = 3 }
+		localization_key = dap_val_dap_piety_reserve_3
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_hof_gold = {
+	type = character
+	text = {
+		trigger = { var:dap_hof_gold = 0 }
+		localization_key = dap_val_dap_hof_gold_0
+	}
+	text = {
+		trigger = { var:dap_hof_gold = 1 }
+		localization_key = dap_val_dap_hof_gold_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_excomm_alert = {
+	type = character
+	text = {
+		trigger = { var:dap_excomm_alert = 0 }
+		localization_key = dap_val_dap_excomm_alert_0
+	}
+	text = {
+		trigger = { var:dap_excomm_alert = 1 }
+		localization_key = dap_val_dap_excomm_alert_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+

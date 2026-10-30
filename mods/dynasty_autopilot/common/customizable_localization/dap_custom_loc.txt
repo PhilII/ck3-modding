@@ -257,6 +257,10 @@ dap_cl_log_action = {
 		localization_key = dap_log_converted
 	}
 	text = {
+		trigger = { var:dap_log_action = flag:dap_log_hof_gold }
+		localization_key = dap_log_hof_gold
+	}
+	text = {
 		fallback = yes
 		localization_key = dap_empty
 	}

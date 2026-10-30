@@ -1,4 +1,4 @@
-﻿# Dynasty Autopilot - faith module: court chaplain and family conversion.
+﻿# Dynasty Autopilot - faith module: court chaplain, conversion, piety and Head of Faith.
 # root = the player in every effect here.
 
 ### Court Chaplain
@@ -105,11 +105,116 @@ dap_run_family_faith_effect = {
 	}
 }
 
+# this = vassal ruler of root; ask them to adopt root's faith, with family and capital, if they would accept
+dap_ask_vassal_conversion_effect = {
+	save_scope_as = dap_convertee
+	if = {
+		limit = {
+			faith != root.faith
+			root = {
+				is_character_interaction_potentially_accepted = {
+					recipient = scope:dap_convertee
+					interaction = demand_conversion_vassal_ruler_interaction
+					required_response = yes
+				}
+			}
+		}
+		# As for courtiers, run the interaction's accept effect directly
+		if = {
+			limit = { dap_dry_run_trigger = no }
+			root = { save_scope_as = actor }
+			scope:dap_convertee = { save_scope_as = recipient }
+			demand_conversion_vassal_ruler_interaction_effect = yes
+		}
+		dap_log_effect = { ACTION = dap_log_converted }
+	}
+}
+
+dap_run_vassal_faith_effect = {
+	if = {
+		limit = { var:dap_faith_vassals >= 1 }
+		every_vassal = {
+			limit = {
+				is_ai = yes
+				trigger_if = {
+					limit = { root.var:dap_faith_vassals = 1 }
+					dap_is_kin_trigger = yes
+				}
+			}
+			dap_ask_vassal_conversion_effect = yes
+		}
+	}
+}
+
+### Piety and Head of Faith
+
+# this = player; ask the Head of Faith for gold if they would agree and piety is above the reserve
+dap_ask_hof_gold_effect = {
+	if = {
+		limit = {
+			var:dap_hof_gold = 1
+			NOT = { has_variable = dap_hof_gold_cooldown }
+			exists = faith.religious_head
+			NOT = { faith.religious_head = root }
+			piety >= {
+				value = dap_piety_reserve_value
+				add = major_piety_value
+			}
+		}
+		faith.religious_head = { save_scope_as = dap_hof }
+		if = {
+			limit = {
+				is_character_interaction_potentially_accepted = {
+					recipient = scope:dap_hof
+					interaction = hof_ask_for_gold_interaction
+					required_response = yes
+				}
+			}
+			if = {
+				limit = { dap_dry_run_trigger = no }
+				save_scope_as = actor
+				scope:dap_hof = { save_scope_as = recipient }
+				save_scope_value_as = { name = hook value = no }
+				hof_ask_for_gold_interaction_effect = yes
+				set_variable = { name = dap_hof_gold_cooldown value = 1 years = 3 }
+			}
+			scope:dap_hof = { dap_log_effect = { ACTION = dap_log_hof_gold } }
+		}
+	}
+}
+
+# this = player; one toast per excommunication
+dap_excomm_alert_effect = {
+	if = {
+		limit = {
+			has_trait = excommunicated
+			var:dap_excomm_alert = 1
+			NOT = { has_variable = dap_excomm_warned }
+		}
+		set_variable = dap_excomm_warned
+		send_interface_toast = {
+			type = event_toast_effect_bad
+			title = dap_excomm_title
+			desc = dap_excomm_desc
+		}
+	}
+	else_if = {
+		limit = {
+			has_variable = dap_excomm_warned
+			NOT = { has_trait = excommunicated }
+		}
+		remove_variable = dap_excomm_warned
+	}
+}
+
 dap_run_faith_effect = {
 	if = {
 		limit = { var:dap_faith_enabled = 1 }
 		dap_run_chaplain_seat_effect = yes
 		dap_run_chaplain_task_effect = yes
 		dap_run_family_faith_effect = yes
+		dap_run_vassal_faith_effect = yes
+		dap_ask_hof_gold_effect = yes
+		dap_excomm_alert_effect = yes
 	}
 }

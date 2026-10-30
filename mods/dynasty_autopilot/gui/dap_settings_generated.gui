@@ -842,12 +842,49 @@ types DapSettingsGenerated
 			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_faith_spouses' ) ).End )]" }
 			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_faith_spouses' ) ).End )]" }
 		}
+		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_faith_vassals" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_faith_vassals_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_faith_vassals' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_faith_vassals' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_faith_vassals' ) ).End )]" }
+		}
+	}
+
+	type dap_section_faith_piety = vbox {
+		layoutpolicy_horizontal = expanding
+
+		dap_section_header = {
+			blockoverride "title" { text = "dap_section_faith_piety" }
+		}
+		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_piety_reserve" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_piety_reserve_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_piety_reserve' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_piety_reserve' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_piety_reserve' ) ).End )]" }
+		}
+		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_hof_gold" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_hof_gold_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_hof_gold' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_hof_gold' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_hof_gold' ) ).End )]" }
+		}
+		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_excomm_alert" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_excomm_alert_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_excomm_alert' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_excomm_alert' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_excomm_alert' ) ).End )]" }
+		}
 	}
 
 	type dap_module_faith_player = vbox {
 		layoutpolicy_horizontal = expanding
 		dap_section_faith_chaplain = {}
 		dap_section_faith_family = {}
+		dap_section_faith_piety = {}
 	}
 
 	type dap_module_faith_rules = vbox {

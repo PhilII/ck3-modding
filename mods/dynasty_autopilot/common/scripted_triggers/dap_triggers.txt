@@ -28,6 +28,11 @@ dap_is_family_member_trigger = {
 			matchmaker = this
 		}
 	}
+	dap_is_kin_trigger = yes
+}
+
+# this = a character; related to root closely enough, per "Family members managed"
+dap_is_kin_trigger = {
 	OR = {
 		is_child_of = root
 		AND = {
