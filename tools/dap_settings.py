@@ -666,6 +666,41 @@ MODULES = [
                 ],
             },
             {
+                "id": "tasks",
+                "title": "Council Tasks",
+                "holder": "player",
+                "settings": [
+                    {
+                        "key": "dap_task_chancellor",
+                        "label": "Chancellor",
+                        "tooltip": "Switch to Domestic Affairs while a direct vassal's opinion of you is below the chosen level, and back to Foreign Affairs once every direct vassal is 20 above it. Skipped when your council is a ministry.",
+                        "default": 0,
+                        "values": ["Leave to me", "Domestic Affairs below 0 opinion", "Domestic Affairs below 20 opinion"],
+                    },
+                    {
+                        "key": "dap_task_steward",
+                        "label": "Steward",
+                        "tooltip": "Collect Taxes while your gold is below your gold reserve, and back to the other task once you have 300 gold above it. Otherwise develop your capital, or first promote your culture in counties of another culture. A task with progress is never interrupted, except to collect taxes.",
+                        "default": 0,
+                        "values": ["Leave to me", "Taxes when short, else develop capital", "Taxes when short, else promote culture"],
+                    },
+                    {
+                        "key": "dap_task_marshal",
+                        "label": "Marshal",
+                        "tooltip": "Increase Control in the county with the lowest control, your own domain first, once a county falls below 90. The marshal stays until it is back at full control. Otherwise the chosen task.",
+                        "default": 0,
+                        "values": ["Leave to me", "Increase control, else Organize Army", "Increase control, else Train Commanders"],
+                    },
+                    {
+                        "key": "dap_task_spymaster",
+                        "label": "Spymaster",
+                        "tooltip": "Disrupt Schemes while an exposed hostile scheme targets you or a family member at your court. Otherwise Find Secrets at your own court.",
+                        "default": 0,
+                        "values": ["Leave to me", "Disrupt exposed schemes, else Find Secrets"],
+                    },
+                ],
+            },
+            {
                 "id": "titles",
                 "title": "Granting Titles",
                 "holder": "player",

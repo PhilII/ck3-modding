@@ -640,6 +640,42 @@ types DapSettingsGenerated
 		}
 	}
 
+	type dap_section_court_tasks = vbox {
+		layoutpolicy_horizontal = expanding
+
+		dap_section_header = {
+			blockoverride "title" { text = "dap_section_court_tasks" }
+		}
+		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_task_chancellor" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_task_chancellor_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_task_chancellor' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_task_chancellor' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_task_chancellor' ) ).End )]" }
+		}
+		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_task_steward" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_task_steward_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_task_steward' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_task_steward' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_task_steward' ) ).End )]" }
+		}
+		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_task_marshal" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_task_marshal_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_task_marshal' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_task_marshal' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_task_marshal' ) ).End )]" }
+		}
+		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_task_spymaster" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_task_spymaster_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_task_spymaster' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_task_spymaster' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_task_spymaster' ) ).End )]" }
+		}
+	}
+
 	type dap_section_court_titles = vbox {
 		layoutpolicy_horizontal = expanding
 
@@ -771,6 +807,7 @@ types DapSettingsGenerated
 	type dap_module_court_player = vbox {
 		layoutpolicy_horizontal = expanding
 		dap_section_court_people = {}
+		dap_section_court_tasks = {}
 		dap_section_court_titles = {}
 		dap_section_court_realm = {}
 	}

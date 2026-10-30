@@ -724,3 +724,18 @@ dap_convertible_county_trigger = {
 	exists = rite
 	rite != root.rite
 }
+
+# this = character; is an exposed hostile scheme aimed at them?
+dap_exposed_hostile_scheme_trigger = {
+	any_targeting_scheme = {
+		hostile_scheme_trigger = yes
+		is_scheme_exposed = yes
+	}
+}
+
+# this = county in root's realm; could the steward promote root's culture there?
+dap_promote_culture_county_trigger = {
+	is_landless_type_title = no
+	exists = culture
+	culture != root.culture
+}

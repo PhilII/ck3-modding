@@ -887,6 +887,7 @@ dap_run_court_effect = {
 	dap_building_reminder_effect = yes
 	dap_run_sway_effect = yes
 	dap_run_council_effect = yes
+	dap_run_council_tasks_effect = yes
 	dap_run_knights_effect = yes
 	dap_run_court_positions_effect = yes
 	dap_run_prisoners_effect = yes

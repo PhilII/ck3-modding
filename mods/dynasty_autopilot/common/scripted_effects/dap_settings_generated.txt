@@ -35,6 +35,10 @@ dap_set_default_player_settings_effect = {
 	set_variable = { name = dap_court_sway value = 0 }
 	set_variable = { name = dap_court_council value = 0 }
 	set_variable = { name = dap_court_knights value = 0 }
+	set_variable = { name = dap_task_chancellor value = 0 }
+	set_variable = { name = dap_task_steward value = 0 }
+	set_variable = { name = dap_task_marshal value = 0 }
+	set_variable = { name = dap_task_spymaster value = 0 }
 	set_variable = { name = dap_grant_when value = 0 }
 	set_variable = { name = dap_grant_which value = 0 }
 	set_variable = { name = dap_grant_to value = 1 }
@@ -326,6 +330,22 @@ dap_ensure_player_settings_effect = {
 	if = {
 		limit = { NOT = { has_variable = dap_court_knights } }
 		set_variable = { name = dap_court_knights value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_task_chancellor } }
+		set_variable = { name = dap_task_chancellor value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_task_steward } }
+		set_variable = { name = dap_task_steward value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_task_marshal } }
+		set_variable = { name = dap_task_marshal value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_task_spymaster } }
+		set_variable = { name = dap_task_spymaster value = 0 }
 	}
 	if = {
 		limit = { NOT = { has_variable = dap_grant_when } }
@@ -669,6 +689,10 @@ dap_declare_setting_flags_effect = {
 	set_local_variable = { name = dap_setting_flag value = flag:dap_court_sway }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_court_council }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_court_knights }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_task_chancellor }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_task_steward }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_task_marshal }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_task_spymaster }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_grant_when }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_grant_which }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_grant_to }
@@ -986,6 +1010,10 @@ dap_inherit_settings_effect = {
 	set_variable = { name = dap_court_sway value = $FROM$.var:dap_court_sway }
 	set_variable = { name = dap_court_council value = $FROM$.var:dap_court_council }
 	set_variable = { name = dap_court_knights value = $FROM$.var:dap_court_knights }
+	set_variable = { name = dap_task_chancellor value = $FROM$.var:dap_task_chancellor }
+	set_variable = { name = dap_task_steward value = $FROM$.var:dap_task_steward }
+	set_variable = { name = dap_task_marshal value = $FROM$.var:dap_task_marshal }
+	set_variable = { name = dap_task_spymaster value = $FROM$.var:dap_task_spymaster }
 	set_variable = { name = dap_grant_when value = $FROM$.var:dap_grant_when }
 	set_variable = { name = dap_grant_which value = $FROM$.var:dap_grant_which }
 	set_variable = { name = dap_grant_to value = $FROM$.var:dap_grant_to }
@@ -1489,6 +1517,22 @@ dap_setting_next_effect = {
 		dap_cycle_effect = { VAR = dap_court_knights MAX = 1 }
 	}
 	else_if = {
+		limit = { scope:setting = flag:dap_task_chancellor }
+		dap_cycle_effect = { VAR = dap_task_chancellor MAX = 2 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_task_steward }
+		dap_cycle_effect = { VAR = dap_task_steward MAX = 2 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_task_marshal }
+		dap_cycle_effect = { VAR = dap_task_marshal MAX = 2 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_task_spymaster }
+		dap_cycle_effect = { VAR = dap_task_spymaster MAX = 1 }
+	}
+	else_if = {
 		limit = { scope:setting = flag:dap_grant_when }
 		dap_cycle_effect = { VAR = dap_grant_when MAX = 3 }
 	}
@@ -1891,6 +1935,22 @@ dap_setting_prev_effect = {
 	else_if = {
 		limit = { scope:setting = flag:dap_court_knights }
 		dap_cycle_back_effect = { VAR = dap_court_knights MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_task_chancellor }
+		dap_cycle_back_effect = { VAR = dap_task_chancellor MAX = 2 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_task_steward }
+		dap_cycle_back_effect = { VAR = dap_task_steward MAX = 2 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_task_marshal }
+		dap_cycle_back_effect = { VAR = dap_task_marshal MAX = 2 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_task_spymaster }
+		dap_cycle_back_effect = { VAR = dap_task_spymaster MAX = 1 }
 	}
 	else_if = {
 		limit = { scope:setting = flag:dap_grant_when }

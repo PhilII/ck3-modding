@@ -1395,6 +1395,82 @@ dap_cl_dap_court_knights = {
 	}
 }
 
+dap_cl_dap_task_chancellor = {
+	type = character
+	text = {
+		trigger = { var:dap_task_chancellor = 0 }
+		localization_key = dap_val_dap_task_chancellor_0
+	}
+	text = {
+		trigger = { var:dap_task_chancellor = 1 }
+		localization_key = dap_val_dap_task_chancellor_1
+	}
+	text = {
+		trigger = { var:dap_task_chancellor = 2 }
+		localization_key = dap_val_dap_task_chancellor_2
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_task_steward = {
+	type = character
+	text = {
+		trigger = { var:dap_task_steward = 0 }
+		localization_key = dap_val_dap_task_steward_0
+	}
+	text = {
+		trigger = { var:dap_task_steward = 1 }
+		localization_key = dap_val_dap_task_steward_1
+	}
+	text = {
+		trigger = { var:dap_task_steward = 2 }
+		localization_key = dap_val_dap_task_steward_2
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_task_marshal = {
+	type = character
+	text = {
+		trigger = { var:dap_task_marshal = 0 }
+		localization_key = dap_val_dap_task_marshal_0
+	}
+	text = {
+		trigger = { var:dap_task_marshal = 1 }
+		localization_key = dap_val_dap_task_marshal_1
+	}
+	text = {
+		trigger = { var:dap_task_marshal = 2 }
+		localization_key = dap_val_dap_task_marshal_2
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_task_spymaster = {
+	type = character
+	text = {
+		trigger = { var:dap_task_spymaster = 0 }
+		localization_key = dap_val_dap_task_spymaster_0
+	}
+	text = {
+		trigger = { var:dap_task_spymaster = 1 }
+		localization_key = dap_val_dap_task_spymaster_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
 dap_cl_dap_grant_when = {
 	type = character
 	text = {

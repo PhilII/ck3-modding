@@ -677,3 +677,13 @@ dap_piety_reserve_value = {
 		value = 1000
 	}
 }
+
+# this = county; lowest control first, counties held by root before their vassals'
+dap_control_county_score = {
+	value = 100
+	subtract = county_control
+	if = {
+		limit = { holder ?= root }
+		add = 1000
+	}
+}

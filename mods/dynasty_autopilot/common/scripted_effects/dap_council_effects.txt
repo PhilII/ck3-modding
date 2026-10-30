@@ -1,0 +1,235 @@
+﻿# Dynasty Autopilot - council tasks for the chancellor, steward, marshal and spymaster.
+# root = the player in every effect here. The chaplain's task is in dap_faith_effects.txt.
+
+# this = councillor; switch to the general task $TASK$ unless already on it
+dap_switch_task_effect = {
+	if = {
+		limit = { NOT = { is_performing_council_task = $TASK$ } }
+		if = {
+			limit = { dap_dry_run_trigger = no }
+			set_council_task = { task_type = $TASK$ }
+		}
+		dap_log_effect = { ACTION = dap_log_$TASK$ }
+	}
+}
+
+# this = councillor; switch to the county task $TASK$ in scope:dap_task_county unless already on it
+dap_switch_county_task_effect = {
+	if = {
+		limit = {
+			NAND = {
+				is_performing_council_task = $TASK$
+				councillor_task_target ?= scope:dap_task_county.title_province
+			}
+		}
+		if = {
+			limit = { dap_dry_run_trigger = no }
+			set_council_task = {
+				task_type = $TASK$
+				target = scope:dap_task_county.title_province
+			}
+		}
+		dap_log_effect = { ACTION = dap_log_$TASK$ }
+		set_variable = { name = dap_log_county value = scope:dap_task_county }
+	}
+}
+
+### Chancellor
+
+dap_run_chancellor_task_effect = {
+	if = {
+		limit = {
+			var:dap_task_chancellor >= 1
+			exists = cp:councillor_chancellor
+		}
+		# Opinion below which Domestic Affairs starts; it stops 20 above it
+		set_local_variable = { name = dap_low_opinion value = 0 }
+		if = {
+			limit = { var:dap_task_chancellor = 2 }
+			set_local_variable = { name = dap_low_opinion value = 20 }
+		}
+		cp:councillor_chancellor = {
+			if = {
+				limit = {
+					root = {
+						any_vassal = {
+							opinion = { target = root value < local_var:dap_low_opinion }
+						}
+					}
+				}
+				dap_switch_task_effect = { TASK = task_domestic_affairs }
+			}
+			else_if = {
+				limit = {
+					is_performing_council_task = task_domestic_affairs
+					root = {
+						any_vassal = {
+							opinion = {
+								target = root
+								value < {
+									value = local_var:dap_low_opinion
+									add = 20
+								}
+							}
+						}
+					}
+				}
+				# Keep going until every vassal is comfortably above the level
+			}
+			else = {
+				dap_switch_task_effect = { TASK = task_foreign_affairs }
+			}
+		}
+	}
+}
+
+### Steward
+
+dap_run_steward_task_effect = {
+	if = {
+		limit = {
+			var:dap_task_steward >= 1
+			exists = cp:councillor_steward
+		}
+		set_local_variable = { name = dap_reserve value = dap_gold_reserve_value }
+		cp:councillor_steward = {
+			if = {
+				limit = { root.gold < local_var:dap_reserve }
+				dap_switch_task_effect = { TASK = task_collect_taxes }
+			}
+			else_if = {
+				limit = {
+					is_performing_council_task = task_collect_taxes
+					root.gold < {
+						value = local_var:dap_reserve
+						add = 300
+					}
+				}
+				# Keep collecting until there is a margin above the reserve
+			}
+			else_if = {
+				limit = {
+					OR = {
+						is_performing_council_task = task_develop_county
+						AND = {
+							is_performing_council_task = task_promote_culture
+							councillor_task_target.county ?= { dap_promote_culture_county_trigger = yes }
+						}
+					}
+				}
+				# A task with progress is never interrupted
+			}
+			else_if = {
+				limit = {
+					root.var:dap_task_steward = 2
+					root = { any_realm_county = { dap_promote_culture_county_trigger = yes } }
+				}
+				root = {
+					ordered_realm_county = {
+						limit = { dap_promote_culture_county_trigger = yes }
+						order_by = development_level
+						max = 1
+						check_range_bounds = no
+						save_scope_as = dap_task_county
+					}
+				}
+				dap_switch_county_task_effect = { TASK = task_promote_culture }
+			}
+			else_if = {
+				limit = { exists = root.capital_county }
+				root.capital_county = { save_scope_as = dap_task_county }
+				dap_switch_county_task_effect = { TASK = task_develop_county }
+			}
+		}
+	}
+}
+
+### Marshal
+
+dap_run_marshal_task_effect = {
+	if = {
+		limit = {
+			var:dap_task_marshal >= 1
+			exists = cp:councillor_marshal
+		}
+		cp:councillor_marshal = {
+			if = {
+				limit = {
+					is_performing_council_task = task_increase_control
+					councillor_task_target.county ?= { county_control < 100 }
+				}
+				# Stays until the county is back at full control
+			}
+			else_if = {
+				limit = {
+					root = { any_realm_county = { county_control < 90 } }
+				}
+				root = {
+					ordered_realm_county = {
+						limit = { county_control < 90 }
+						order_by = dap_control_county_score
+						max = 1
+						check_range_bounds = no
+						save_scope_as = dap_task_county
+					}
+				}
+				dap_switch_county_task_effect = { TASK = task_increase_control }
+			}
+			else_if = {
+				limit = { root.var:dap_task_marshal = 2 }
+				dap_switch_task_effect = { TASK = task_train_commanders }
+			}
+			else = {
+				dap_switch_task_effect = { TASK = task_organize_levies }
+			}
+		}
+	}
+}
+
+### Spymaster
+
+dap_run_spymaster_task_effect = {
+	if = {
+		limit = {
+			var:dap_task_spymaster = 1
+			exists = cp:councillor_spymaster
+		}
+		cp:councillor_spymaster = {
+			if = {
+				limit = {
+					root = {
+						OR = {
+							dap_exposed_hostile_scheme_trigger = yes
+							any_courtier = {
+								dap_is_kin_trigger = yes
+								dap_exposed_hostile_scheme_trigger = yes
+							}
+						}
+					}
+				}
+				dap_switch_task_effect = { TASK = task_disrupt_schemes }
+			}
+			else_if = {
+				limit = { NOT = { is_performing_council_task = task_find_secrets } }
+				if = {
+					limit = { dap_dry_run_trigger = no }
+					set_council_task = {
+						task_type = task_find_secrets
+						target = root
+					}
+				}
+				dap_log_effect = { ACTION = dap_log_task_find_secrets }
+			}
+		}
+	}
+}
+
+dap_run_council_tasks_effect = {
+	if = {
+		limit = { tgp_has_access_to_ministry_trigger = no }
+		dap_run_chancellor_task_effect = yes
+		dap_run_steward_task_effect = yes
+		dap_run_marshal_task_effect = yes
+		dap_run_spymaster_task_effect = yes
+	}
+}

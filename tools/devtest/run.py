@@ -55,6 +55,7 @@ TEST_VALUES = {
     "dap_grant_when": 3, "dap_grant_to": 2, "dap_grant_max_each": 3, "dap_grant_contract": 1,
     "dap_grant_duchies": 1, "dap_create_titles": 2, "dap_revoke_suggest": 1,
     "dap_court_positions": 2, "dap_maa_type": 1, "dap_build_reminder": 1, "dap_court_prisoners": 2,
+    "dap_task_chancellor": 2, "dap_task_steward": 2, "dap_task_marshal": 1, "dap_task_spymaster": 1,
     "dap_faith_enabled": 1, "dap_faith_chaplain": 2, "dap_faith_task": 1, "dap_faith_family": 1,
     "dap_faith_spouses": 1, "dap_faith_vassals": 2, "dap_hof_gold": 1, "dap_excomm_alert": 1,
     "dap_faith_warn_heir": 1, "dap_faith_warn_vassals": 1, "dap_faith_report": 1,
@@ -151,6 +152,14 @@ SUITE_SETUP = """\
 			set_character_faith = faith:norse_pagan
 			add_opinion = { target = root modifier = hate_opinion opinion = -80 }
 		}
+		# Council tasks: a county with low control (the hating vassal above covers the chancellor)
+		ordered_realm_county = {
+			limit = { NOT = { this = root.capital_county } }
+			order_by = development_level
+			max = 1
+			change_county_control = -60
+			save_scope_as = dap_t_low_control
+		}
 		# Court: an empty council seat and a prisoner
 		cp:councillor_chancellor ?= { save_scope_as = dap_t_chancellor }
 		if = {
@@ -162,6 +171,69 @@ SUITE_SETUP = """\
 """
 
 SUITE_CHECKS = """\
+		if = {
+			limit = { cp:councillor_chancellor ?= { is_performing_council_task = task_domestic_affairs } }
+			debug_log = "DAPTEST OK chancellor on Domestic Affairs (a vassal hates you)"
+		}
+		else = { debug_log = "DAPTEST FAIL chancellor not on Domestic Affairs" }
+		if = {
+			limit = {
+				cp:councillor_steward ?= {
+					OR = {
+						is_performing_council_task = task_promote_culture
+						is_performing_council_task = task_develop_county
+					}
+				}
+			}
+			debug_log = "DAPTEST OK steward promoting culture or developing"
+		}
+		else = { debug_log = "DAPTEST FAIL steward not on culture or development" }
+		if = {
+			limit = { cp:councillor_marshal ?= { is_performing_council_task = task_increase_control } }
+			debug_log = "DAPTEST OK marshal increasing control"
+		}
+		else = { debug_log = "DAPTEST FAIL marshal not increasing control" }
+		if = {
+			limit = { cp:councillor_spymaster ?= { is_performing_council_task = task_find_secrets } }
+			debug_log = "DAPTEST OK spymaster finding secrets"
+		}
+		else = { debug_log = "DAPTEST FAIL spymaster not finding secrets" }
+		# Running again with nothing changed must not switch any task
+		clear_variable_list = dap_log
+		dap_run_council_tasks_effect = yes
+		if = {
+			limit = { has_variable_list = dap_log variable_list_size = { name = dap_log value > 0 } }
+			debug_log = "DAPTEST FAIL council tasks switched again with nothing changed"
+			every_in_list = {
+				variable = dap_log
+				debug_log = "DAPTEST   switched again:"
+				debug_log_scopes = yes
+			}
+		}
+		else = { debug_log = "DAPTEST OK council tasks stay put on a second run" }
+		# Broke, and an exposed murder plot: the steward must collect taxes, the spymaster disrupt
+		remove_short_term_gold = gold
+		set_variable = { name = dap_gold_reserve value = 3 }
+		create_character = { age = 30 gender = male faith = root.faith culture = root.culture employer = root save_scope_as = dap_t_plotter }
+		scope:dap_t_plotter = {
+			start_scheme = { type = murder target_character = root }
+			random_scheme = { expose_scheme = yes }
+		}
+		dap_run_council_tasks_effect = yes
+		if = {
+			limit = { cp:councillor_steward ?= { is_performing_council_task = task_collect_taxes } }
+			debug_log = "DAPTEST OK steward collecting taxes when broke"
+		}
+		else = { debug_log = "DAPTEST FAIL steward not collecting taxes when broke" }
+		if = {
+			limit = { dap_exposed_hostile_scheme_trigger = yes }
+			if = {
+				limit = { cp:councillor_spymaster ?= { is_performing_council_task = task_disrupt_schemes } }
+				debug_log = "DAPTEST OK spymaster disrupting an exposed scheme"
+			}
+			else = { debug_log = "DAPTEST FAIL spymaster not disrupting an exposed scheme" }
+		}
+		else = { debug_log = "DAPTEST note could not set up an exposed scheme" }
 		scope:dap_t_kid1 = {
 			if = {
 				limit = { any_relation = { type = guardian } }

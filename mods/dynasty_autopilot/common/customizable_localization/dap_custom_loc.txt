@@ -273,6 +273,46 @@ dap_cl_log_action = {
 		localization_key = dap_log_hostile_faith
 	}
 	text = {
+		trigger = { var:dap_log_action = flag:dap_log_task_foreign_affairs }
+		localization_key = dap_log_task_foreign_affairs
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_task_domestic_affairs }
+		localization_key = dap_log_task_domestic_affairs
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_task_collect_taxes }
+		localization_key = dap_log_task_collect_taxes
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_task_organize_levies }
+		localization_key = dap_log_task_organize_levies
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_task_train_commanders }
+		localization_key = dap_log_task_train_commanders
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_task_disrupt_schemes }
+		localization_key = dap_log_task_disrupt_schemes
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_task_find_secrets }
+		localization_key = dap_log_task_find_secrets
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_task_develop_county }
+		localization_key = dap_log_task_develop_county
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_task_promote_culture }
+		localization_key = dap_log_task_promote_culture
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_task_increase_control }
+		localization_key = dap_log_task_increase_control
+	}
+	text = {
 		fallback = yes
 		localization_key = dap_empty
 	}
