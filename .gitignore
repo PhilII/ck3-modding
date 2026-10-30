@@ -17,6 +17,8 @@ __pycache__/
 mods/*/common/on_action/*zz_devtest*
 mods/*/events/*zz_devtest*
 mods/*/gui/*zz_devtest*
+mods/*/gui/scripted_widgets/*zz_devtest*
+mods/*/common/scripted_effects/*zz_devtest*
 
 # Local tooling output
 ck3strings.txt

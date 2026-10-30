@@ -131,6 +131,17 @@ def build_effects():
         out.append(f"\tremove_variable = dap_stash_{st['key']}\n")
     out.append("}\n\n")
 
+    out.append("# this = new player character; takes over $FROM$'s settings, default rules and saved rule sets\n"
+               "dap_inherit_settings_effect = {\n\tset_variable = { name = dap_initialized value = 1 }\n")
+    for st in list(settings("player")) + list(settings("rules")):
+        out.append(f"\tset_variable = {{ name = {st['key']} value = $FROM$.var:{st['key']} }}\n")
+    for n in range(1, SAVE_SLOTS + 1):
+        out.append(f"\tif = {{\n\t\tlimit = {{ $FROM$ = {{ has_variable = dap_slot{n}_saved }} }}\n"
+                   f"\t\tset_variable = {{ name = dap_slot{n}_saved value = 1 }}\n")
+        for st in settings("rules"):
+            out.append(f"\t\tset_variable = {{ name = dap_slot{n}_{st['key']} value = $FROM$.var:dap_slot{n}_{st['key']} }}\n")
+        out.append("\t}\n")
+    out.append("}\n\n")
     for name, inner in (("dap_save_slot_by_flag_effect", "dap_save_slot_effect"),
                         ("dap_load_slot_by_flag_effect", "dap_load_slot_effect")):
         out.append(f"# scope:slot = flag naming the slot\n{name} = {{\n")

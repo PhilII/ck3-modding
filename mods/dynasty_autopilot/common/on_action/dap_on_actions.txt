@@ -12,3 +12,19 @@ dap_quarterly_pulse = {
 		dap_run_all_effect = yes
 	}
 }
+
+# When the player continues as their heir (or anyone else), the settings come along
+on_player_character_change = {
+	on_actions = { dap_player_change }
+}
+
+dap_player_change = {
+	trigger = {
+		exists = scope:previous_player_character
+		scope:previous_player_character = { has_variable = dap_initialized }
+	}
+	effect = {
+		dap_inherit_settings_effect = { FROM = scope:previous_player_character }
+		dap_init_player_effect = yes
+	}
+}
