@@ -1911,3 +1911,51 @@ dap_cl_dap_excomm_alert = {
 	}
 }
 
+dap_cl_dap_faith_warn_heir = {
+	type = character
+	text = {
+		trigger = { var:dap_faith_warn_heir = 0 }
+		localization_key = dap_val_dap_faith_warn_heir_0
+	}
+	text = {
+		trigger = { var:dap_faith_warn_heir = 1 }
+		localization_key = dap_val_dap_faith_warn_heir_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_faith_warn_vassals = {
+	type = character
+	text = {
+		trigger = { var:dap_faith_warn_vassals = 0 }
+		localization_key = dap_val_dap_faith_warn_vassals_0
+	}
+	text = {
+		trigger = { var:dap_faith_warn_vassals = 1 }
+		localization_key = dap_val_dap_faith_warn_vassals_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_faith_report = {
+	type = character
+	text = {
+		trigger = { var:dap_faith_report = 0 }
+		localization_key = dap_val_dap_faith_report_0
+	}
+	text = {
+		trigger = { var:dap_faith_report = 1 }
+		localization_key = dap_val_dap_faith_report_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+

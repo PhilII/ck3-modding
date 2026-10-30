@@ -14,7 +14,7 @@ Everything runs once per season (or immediately with **Run now**) and is recorde
 | Guardians | Best guardian per child (by focus skill, total skills or personality, optionally of your faith), replacing unfit guardians |
 | Education | Education focus by role (heir, sons, daughters), natural talent, council needs or a fixed skill |
 | Court | Sway hostile vassals, fill council seats and court positions, knights, prisoners, granting counties and duchies, creating titles, recruiting men-at-arms, building reminder |
-| Faith | Fill the Court Chaplain seat, have the chaplain convert counties of another faith or rite (capital duchy or most/least developed first), ask family members, spouses and vassals who would accept to adopt your faith, piety reserve, ask the Head of Faith for gold, excommunication alert |
+| Faith | Fill the Court Chaplain seat, have the chaplain convert counties of another faith or rite (capital duchy or most/least developed first), ask family members, spouses and vassals who would accept to adopt your faith, piety reserve, ask the Head of Faith for gold, excommunication alert, warnings about an heir of another faith or hostile-faith vassals, yearly faith report |
 
 Every module has a **Mode** setting: *Act* or *Suggest only* (log what it would do without doing it).
 

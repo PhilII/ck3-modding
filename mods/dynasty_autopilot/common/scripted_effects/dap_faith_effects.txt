@@ -1,4 +1,4 @@
-﻿# Dynasty Autopilot - faith module: court chaplain, conversion, piety and Head of Faith.
+﻿# Dynasty Autopilot - faith module: court chaplain, conversion, piety, Head of Faith and warnings.
 # root = the player in every effect here.
 
 ### Court Chaplain
@@ -207,6 +207,84 @@ dap_excomm_alert_effect = {
 	}
 }
 
+### Warnings
+
+# this = player; primary heir of another faith or rite
+dap_warn_heir_faith_effect = {
+	if = {
+		limit = {
+			var:dap_faith_warn_heir = 1
+			exists = primary_heir
+			primary_heir.rite != root.rite
+		}
+		primary_heir = {
+			if = {
+				limit = { faith != root.faith }
+				dap_log_effect = { ACTION = dap_log_heir_faith }
+			}
+			else = {
+				dap_log_effect = { ACTION = dap_log_heir_rite }
+			}
+		}
+	}
+}
+
+# this = player; vassals of a hostile or evil faith who dislike us
+dap_warn_vassal_faith_effect = {
+	if = {
+		limit = { var:dap_faith_warn_vassals = 1 }
+		every_vassal = {
+			limit = {
+				faith = {
+					faith_hostility_level = {
+						target = root.faith
+						value >= faith_hostile_level
+					}
+				}
+				opinion = { target = root value < 0 }
+			}
+			dap_log_effect = { ACTION = dap_log_hostile_faith }
+		}
+	}
+}
+
+# this = player; once a year, count realm counties of another faith or rite
+dap_faith_report_effect = {
+	if = {
+		limit = {
+			var:dap_faith_report = 1
+			NOT = { has_variable = dap_faith_report_cooldown }
+		}
+		set_variable = { name = dap_faith_report_cooldown value = 1 days = 360 }
+		set_variable = { name = dap_report_other_faith value = 0 }
+		set_variable = { name = dap_report_other_rite value = 0 }
+		every_realm_county = {
+			limit = { is_landless_type_title = no }
+			if = {
+				limit = { faith != root.faith }
+				root = { change_variable = { name = dap_report_other_faith add = 1 } }
+			}
+			else_if = {
+				limit = { rite != root.rite }
+				root = { change_variable = { name = dap_report_other_rite add = 1 } }
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					var:dap_report_other_faith > 0
+					var:dap_report_other_rite > 0
+				}
+			}
+			send_interface_toast = {
+				type = event_toast_effect_neutral
+				title = dap_faith_report_title
+				desc = dap_faith_report_desc
+			}
+		}
+	}
+}
+
 dap_run_faith_effect = {
 	if = {
 		limit = { var:dap_faith_enabled = 1 }
@@ -216,5 +294,8 @@ dap_run_faith_effect = {
 		dap_run_vassal_faith_effect = yes
 		dap_ask_hof_gold_effect = yes
 		dap_excomm_alert_effect = yes
+		dap_warn_heir_faith_effect = yes
+		dap_warn_vassal_faith_effect = yes
+		dap_faith_report_effect = yes
 	}
 }

@@ -895,6 +895,34 @@ MODULES = [
                     },
                 ],
             },
+            {
+                "id": "warnings",
+                "title": "Warnings",
+                "holder": "player",
+                "settings": [
+                    {
+                        "key": "dap_faith_warn_heir",
+                        "label": "Heir of another faith",
+                        "tooltip": "List your primary heir in the log (General tab) when they follow another faith or rite than you.",
+                        "default": 1,
+                        "values": ["Off", "On"],
+                    },
+                    {
+                        "key": "dap_faith_warn_vassals",
+                        "label": "Vassals of a hostile faith",
+                        "tooltip": "List vassals in the log whose faith is hostile or evil towards yours and who dislike you (below 0 opinion).",
+                        "default": 1,
+                        "values": ["Off", "On"],
+                    },
+                    {
+                        "key": "dap_faith_report",
+                        "label": "Yearly faith report",
+                        "tooltip": "Once a year, counts the counties in your realm that follow another faith, or your faith with another rite.",
+                        "default": 1,
+                        "values": ["Off", "On"],
+                    },
+                ],
+            },
         ],
     },
 ]

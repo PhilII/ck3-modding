@@ -62,6 +62,9 @@ dap_set_default_player_settings_effect = {
 	set_variable = { name = dap_piety_reserve value = 1 }
 	set_variable = { name = dap_hof_gold value = 0 }
 	set_variable = { name = dap_excomm_alert value = 1 }
+	set_variable = { name = dap_faith_warn_heir value = 1 }
+	set_variable = { name = dap_faith_warn_vassals value = 1 }
+	set_variable = { name = dap_faith_report value = 1 }
 }
 
 # this = rule holder; default rule values
@@ -432,6 +435,18 @@ dap_ensure_player_settings_effect = {
 		limit = { NOT = { has_variable = dap_excomm_alert } }
 		set_variable = { name = dap_excomm_alert value = 1 }
 	}
+	if = {
+		limit = { NOT = { has_variable = dap_faith_warn_heir } }
+		set_variable = { name = dap_faith_warn_heir value = 1 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_faith_warn_vassals } }
+		set_variable = { name = dap_faith_warn_vassals value = 1 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_faith_report } }
+		set_variable = { name = dap_faith_report value = 1 }
+	}
 }
 
 # this = rule holder; adds rules introduced after the save was started
@@ -681,6 +696,9 @@ dap_declare_setting_flags_effect = {
 	set_local_variable = { name = dap_setting_flag value = flag:dap_piety_reserve }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_hof_gold }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_excomm_alert }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_faith_warn_heir }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_faith_warn_vassals }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_faith_report }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_breeding }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_power }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_cheap }
@@ -1353,6 +1371,18 @@ dap_setting_next_effect = {
 		limit = { scope:setting = flag:dap_excomm_alert }
 		dap_cycle_effect = { VAR = dap_excomm_alert MAX = 1 }
 	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_warn_heir }
+		dap_cycle_effect = { VAR = dap_faith_warn_heir MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_warn_vassals }
+		dap_cycle_effect = { VAR = dap_faith_warn_vassals MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_report }
+		dap_cycle_effect = { VAR = dap_faith_report MAX = 1 }
+	}
 }
 
 # this = setting holder; scope:setting = flag naming the setting
@@ -1744,6 +1774,18 @@ dap_setting_prev_effect = {
 	else_if = {
 		limit = { scope:setting = flag:dap_excomm_alert }
 		dap_cycle_back_effect = { VAR = dap_excomm_alert MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_warn_heir }
+		dap_cycle_back_effect = { VAR = dap_faith_warn_heir MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_warn_vassals }
+		dap_cycle_back_effect = { VAR = dap_faith_warn_vassals MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_faith_report }
+		dap_cycle_back_effect = { VAR = dap_faith_report MAX = 1 }
 	}
 }
 
