@@ -3,8 +3,9 @@
 Usage:
   python3 tools/devtest/run.py suite            # one tick: scenario setup, one run, checks
   python3 tools/devtest/run.py soak --years 30  # many years at full speed in observer mode
+  python3 tools/devtest/run.py build            # a mod widget starts a real construction (ADR 0001)
 
-Both modes:
+All modes:
   - refuse to start if CK3 is already running (the user may be playing)
   - write temporary zz_devtest files into the mod, launch CK3 as the ruler of
     --play, wait for "DAPTEST done", a crash or the timeout, then print every
@@ -15,6 +16,9 @@ The soak mode adds a GUI widget that switches to observer mode, unpauses and
 sets top speed by itself, so no clicks are needed and events never stop time.
 The ruler you start as keeps being automated by the harness (marked with
 dap_devtest_ai), and is followed through successions.
+
+The build mode adds a GUI widget that, like a button in the mod's window, asks
+for a construction; the mod then presses the holding view's real Build button.
 """
 
 import argparse
@@ -40,6 +44,7 @@ FILES = {
     "events": "events/zz_devtest_events.txt",
     "gui": "gui/zz_devtest_autorun.gui",
     "widgets": "gui/scripted_widgets/zz_devtest_widgets.txt",
+    "sguis": "common/scripted_guis/zz_devtest_sguis.txt",
 }
 
 # Every player setting switched to a value that lets its feature act.
@@ -329,7 +334,9 @@ dap_devtest.1 = {
 		dap_init_player_effect = yes
 """ + apply_test_values())
     out.append("\t\tdap_devtest_zero_counts_effect = yes\n")
-    if mode == "suite":
+    if mode == "build":
+        out.append("\t\tadd_gold = 5000\n\t\tdebug_log = \"DAPTEST build test set up\"\n")
+    elif mode == "suite":
         out.append(SUITE_SETUP)
         out.append("\t\tclear_variable_list = dap_log\n\t\tdap_run_all_effect = yes\n\t\tdap_devtest_count_effect = yes\n")
         out.append(SUITE_CHECKS)
@@ -431,6 +438,103 @@ widget = {
 """
 
 
+# A widget asks for a construction a few seconds after the map is up, as a button
+# in the mod's window would, then checks it once the holding view pressed Build.
+BUILD_GUI = """\
+widget = {
+	name = "dap_devtest_autorun"
+	size = { 1 1 }
+	alwaystransparent = yes
+
+	widget = {
+		size = { 1 1 }
+		alwaystransparent = yes
+		state = {
+			name = request
+			trigger_on_create = yes
+			delay = 5
+			on_finish = "[GetScriptedGui( 'dap_devtest_build_request' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			next = give_up
+		}
+		state = {
+			name = give_up
+			delay = 30
+			on_finish = "[GetScriptedGui( 'dap_devtest_build_timeout' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+		}
+	}
+
+	widget = {
+		size = { 1 1 }
+		alwaystransparent = yes
+		state = {
+			name = check
+			trigger_when = "[GetPlayer.MakeScope.Var( 'dap_build_last_province' ).IsSet]"
+			delay = 1
+			on_finish = "[GetScriptedGui( 'dap_devtest_build_check' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+		}
+	}
+}
+"""
+
+BUILD_SGUIS = """\
+dap_devtest_build_request = {
+	scope = character
+	effect = {
+		dap_build_prototype_effect = yes
+		if = {
+			limit = { has_variable = dap_build_building }
+			var:dap_build_province = { save_scope_as = holding }
+			debug_log = "DAPTEST asked for a construction"
+			debug_log_scopes = yes
+		}
+		else = {
+			debug_log = "DAPTEST FAIL no holding with a free slot for the prototype"
+			debug_log = "DAPTEST done"
+		}
+	}
+}
+
+dap_devtest_build_check = {
+	scope = character
+	effect = {
+		var:dap_build_last_province = { save_scope_as = holding }
+		save_scope_value_as = { name = paid value = var:dap_build_last_paid }
+		save_scope_value_as = { name = base_cost value = cheap_building_tier_1_cost }
+		debug_log = "DAPTEST holding view pressed Build"
+		debug_log_scopes = yes
+		if = {
+			limit = { scope:holding = { has_ongoing_construction = yes } }
+			debug_log = "DAPTEST OK construction under way in the picked holding"
+		}
+		else = { debug_log = "DAPTEST FAIL no construction under way in the picked holding" }
+		if = {
+			limit = { var:dap_build_last_paid > 0 }
+			debug_log = "DAPTEST OK gold was paid for it"
+		}
+		else = { debug_log = "DAPTEST FAIL no gold was paid" }
+		# Norway in 1066 has no building discounts, so the real price is the base price
+		if = {
+			limit = { var:dap_build_last_paid = cheap_building_tier_1_cost }
+			debug_log = "DAPTEST OK paid the price once, not once per press"
+		}
+		else = { debug_log = "DAPTEST FAIL paid something other than the price" }
+		debug_log = "DAPTEST done"
+	}
+}
+
+dap_devtest_build_timeout = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { has_variable = dap_build_last_province } }
+			debug_log = "DAPTEST FAIL the holding view never pressed Build"
+			debug_log = "DAPTEST done"
+		}
+	}
+}
+"""
+
+
 def write(rel, text):
     path = os.path.join(MOD, rel)
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -456,7 +560,7 @@ def ck3_running():
 def main():
     sys.stdout.reconfigure(line_buffering=True)
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("mode", choices=["suite", "soak"])
+    parser.add_argument("mode", choices=["suite", "soak", "build"])
     parser.add_argument("--years", type=int, default=30, help="soak length in game years")
     parser.add_argument("--play", default="k_norway", help="title whose ruler you start as")
     parser.add_argument("--seed", type=int, default=1066, help="random seed, for repeatable runs")
@@ -468,7 +572,7 @@ def main():
 
     flags = log_flags()
     events, effects = events_file(args.mode, args.years, flags)
-    timeout = args.timeout or (420 if args.mode == "suite" else 420 + args.years * 75)
+    timeout = args.timeout or (420 + args.years * 75 if args.mode == "soak" else 420)
     debug_log = os.path.join(LOGS, "debug.log")
     error_log = os.path.join(LOGS, "error.log")
 
@@ -478,6 +582,10 @@ def main():
         write("common/scripted_effects/zz_devtest_effects.txt", effects)
         if args.mode == "soak":
             write(FILES["gui"], AUTORUN_GUI)
+            write(FILES["widgets"], "gui/zz_devtest_autorun.gui = dap_devtest_autorun\n")
+        elif args.mode == "build":
+            write(FILES["gui"], BUILD_GUI)
+            write(FILES["sguis"], BUILD_SGUIS)
             write(FILES["widgets"], "gui/zz_devtest_autorun.gui = dap_devtest_autorun\n")
 
         started = time.time()

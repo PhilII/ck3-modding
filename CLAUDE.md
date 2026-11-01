@@ -14,7 +14,7 @@ Before writing any Crusader Kings III mod code, read `CK3_MODDING_GUIDE.md` in t
 - Run `python3 tools/check_mod.py` before committing; CI runs it plus a check that generated files are up to date.
 - Window: `gui/dap_window.gui`; button actions: `common/scripted_guis/dap_scripted_guis.txt`.
 - Never restart or screenshot CK3 without asking if the user may be using it.
-- In-game tests: `python3 tools/devtest/run.py suite` (one tick, ~1.5 min: sets up a scenario per feature, runs once, prints OK/FAIL and mod errors) and `python3 tools/devtest/run.py soak --years 30` (observer mode at top speed, no clicks needed, ~1 game year per minute; counts how often each log action fired). Both refuse to start while CK3 runs, and always close it and delete their temporary `zz_devtest` files. Run long soaks detached (`nohup … & disown`).
+- In-game tests: `python3 tools/devtest/run.py suite` (one tick, ~1.5 min: sets up a scenario per feature, runs once, prints OK/FAIL and mod errors) and `python3 tools/devtest/run.py soak --years 30` (observer mode at top speed, no clicks needed, ~1 game year per minute; counts how often each log action fired). `python3 tools/devtest/run.py build` (~1 min) proves a real construction through the holding view's Build button (ADR 0001). All modes refuse to start while CK3 runs, and always close it and delete their temporary `zz_devtest` files. Run long soaks detached (`nohup … & disown`).
 - Launch CK3 by running `ck3.app/Contents/MacOS/ck3` directly with `nohup … & disown` (not `open`), so macOS does not ask for Documents access; close test runs with `pkill -9 -x ck3`.
 
 ## Agent skills

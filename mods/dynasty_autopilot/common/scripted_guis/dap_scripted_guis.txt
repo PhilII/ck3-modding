@@ -140,3 +140,24 @@ dap_clear_log = {
 		clear_variable_list = dap_log
 	}
 }
+
+# Automatic building (ADR 0001), used by gui/00_dap_building_item.gui inside the vanilla
+# holding view. scope:province = the province the holding view shows.
+dap_build_pending = {
+	scope = character
+	saved_scopes = { province }
+	is_shown = {
+		dap_build_pending_trigger = yes
+	}
+}
+
+dap_build_started = {
+	scope = character
+	saved_scopes = { province }
+	is_valid = {
+		dap_build_pending_trigger = yes
+	}
+	effect = {
+		dap_build_started_effect = yes
+	}
+}

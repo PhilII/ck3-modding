@@ -33,7 +33,7 @@ Presets (Bloodline, Power, Quick) and three save slots are available, plus copy-
 
 ## Compatibility
 
-No vanilla files are overridden. It appends to `quarterly_playable_pulse` and adds its own window through `gui/scripted_widgets`. Safe to add mid-game; removing it mid-game leaves harmless unused variables.
+No vanilla files are overridden. It appends to `quarterly_playable_pulse` and adds its own window through `gui/scripted_widgets`. One vanilla GUI type is redefined: the holding view's building slot (`widget_building_item`, in `gui/00_dap_building_item.gui`), so the mod can press the real Build button. UI mods that also redefine that type conflict with it. Safe to add mid-game; removing it mid-game leaves harmless unused variables.
 
 ## Development
 

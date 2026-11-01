@@ -1,0 +1,191 @@
+﻿# Dynasty Autopilot: the vanilla holding view's building slot (type widget_building_item
+# from gui/window_county_view.gui, game version 1.20.1.2), copied unchanged except for the
+# dap_auto_build widget at the end, which presses the real Build button (ADR 0001).
+# No mod widget can reach the holding view's buildings, so this one type is overridden.
+# The first definition of a type wins, so this file's name must sort before vanilla's.
+# Re-copy the vanilla type after game patches that change it.
+
+types DapCountyViewTypes
+{
+	type widget_building_item = widget {
+		size = { 55 55 }
+		enabled = "[GUIBuildingItem.IsBuildingButtonEnabled]"
+
+		tooltip = "[GUIBuildingItem.GetTooltip]"
+		using = tooltip_ne
+
+		button_standard = {
+			name = "building_button"
+			size = { 100% 100% }
+			onclick = "[GUIBuildingItem.OnClick]"
+			down = "[GUIBuildingItem.IsHighlighted]"
+			tooltip = "[GUIBuildingItem.GetTooltip]"
+			using = tooltip_ne
+
+			block "shortcut" {}
+			block "building_frame" {}
+
+			button_icon = {
+				name = "build_new_icon"
+				visible = "[And(And(GUIBuildingItem.IsBuildNewIconShown, GUIBuildingItem.IsBuildingButtonEnabled), Not(GUIBuildingItem.HasLevel))]"
+				parentanchor = center
+				size = { 28 28 }
+				alpha = 0.7
+				texture = "gfx/interface/icons/flat_icons/plus.dds"
+				alwaystransparent = yes
+			}
+
+			icon_building = {
+				name = "building_icon"
+				visible = "[And( Not( GUIBuildingItem.CanUpgrade ), Not( GUIBuildingItem.IsBuildingRuined ) )]"
+				parentanchor = center
+				size = { 45 40 }
+				texture = "[GUIBuildingItem.GetCurrentOrConstrucingBuilding.GetTypeIcon]"
+			}
+
+			icon_building = {
+				name = "ruined_building_icon"
+				visible = "[GUIBuildingItem.IsBuildingRuined]"
+				parentanchor = center
+				size = { 45 40 }
+				texture = "gfx/interface/icons/flat_icons/ruined_building.dds"
+			}
+
+			highlight_icon_building = {
+				name = "building_icon_can_upgrade"
+				visible = "[GUIBuildingItem.CanUpgrade]"
+				parentanchor = center
+				size = { 45 40 }
+				texture = "[GUIBuildingItem.GetCurrentOrConstrucingBuilding.GetTypeIcon]"
+			}
+
+			text_single = {
+				visible = "[And( GUIBuildingItem.HasLevel, Not( GUIBuildingItem.IsConstructing ) ) ]"
+				text = "[GUIBuildingItem.GetCurrentOrConstrucingBuilding.GetLevel]"
+				parentanchor = bottom|right
+				position = { -6 -2 }
+				fontsize = 15
+				default_format = "#low;bold"
+				align = nobaseline
+
+				background = {
+					using = Background_Area_ExtraDark
+					margin = { 5 0 }
+				}
+			}
+
+			warning_icon = {
+				name = "reduced_by_fixable_situation"
+				visible = "[GUIBuildingItem.IsBuildingDisabled]"
+				position = { 3 3 }
+				size = { 20 20 }
+			}
+		}
+
+		icon = {
+			name = "building_slot"
+			size = { 100% 100% }
+			using = Background_Area
+			visible = "[GUIBuildingItem.IsBuildingSlotShown]"
+		}
+
+		flowcontainer = {
+			visible = "[And( GUIBuildingItem.HasLevel, GUIBuildingItem.IsConstructing ) ]"
+			parentanchor = bottom|hcenter
+			position = { 0 -3 }
+			direction = vertical
+			ignoreinvisible = yes
+
+			widget = {
+				size = { 15 15 }
+				parentanchor = right
+
+				text_single= {
+					visible = "[GUIBuildingItem.HasLevel]"
+					parentanchor = center
+					position = { -1 0 }
+
+					text = "[GUIBuildingItem.GetCurrentOrConstrucingBuilding.GetLevel]"
+					fontsize = 15
+					default_format = "#low;bold"
+					align = nobaseline
+
+					background = {
+						using = Background_Area_ExtraDark
+						margin = { 5 0 }
+					}
+				}
+			}
+
+			progressbar_standard = {
+				name = "construct_progressbar"
+				visible = "[GUIBuildingItem.IsConstructing]"
+				parentanchor = hcenter
+				alwaystransparent = yes
+				size = { 51 10 }
+				value = "[GUIBuildingItem.GetConstructingProgress]"
+				direction = horizontal
+			}
+		}
+
+		flowcontainer = {
+			visible = "[And( Not( GUIBuildingItem.HasLevel ), GUIBuildingItem.IsConstructing ) ]"
+			parentanchor = bottom|hcenter
+			position = { 0 -3 }
+			direction = vertical
+			ignoreinvisible = yes
+
+			progressbar_standard = {
+				name = "construct_progressbar"
+				visible = "[GUIBuildingItem.IsConstructing]"
+				parentanchor = hcenter
+				alwaystransparent = yes
+				size = { 51 10 }
+				value = "[GUIBuildingItem.GetConstructingProgress]"
+				direction = horizontal
+			}
+		}
+
+		# Dynasty Autopilot (ADR 0001): while the mod has asked for a construction in this
+		# holding, open a free slot and press Build on the building it picked. Only the
+		# opened (highlighted) slot presses, and the view closes a moment later: closing
+		# it while another press is still queued crashes the game.
+		widget = {
+			name = "dap_auto_build"
+			size = { 0 0 }
+			alwaystransparent = yes
+
+			state = {
+				name = open_free_slot
+				trigger_when = "[And( And( And( GUIBuildingItem.IsBuildNewIconShown, GUIBuildingItem.IsBuildingButtonEnabled ), Not( GUIBuildingItem.HasLevel ) ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) )]"
+				on_finish = "[GUIBuildingItem.OnClick]"
+			}
+
+			flowcontainer = {
+				visible = "[And( GUIBuildingItem.IsHighlighted, GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) )]"
+				datamodel = "[HoldingView.GetPotentialBuildings]"
+				alwaystransparent = yes
+
+				item = {
+					widget = {
+						size = { 0 0 }
+						alwaystransparent = yes
+
+						state = {
+							name = press_build
+							trigger_when = "[And( And( And( GUIBuildingItem.IsHighlighted, GUIPotentialBuildingItem.CanConstruct ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) ), EqualTo_string( GUIPotentialBuildingItem.GetBuilding.GetKey, GetPlayer.MakeScope.Var( 'dap_build_building' ).GetFlagName ) )]"
+							on_finish = "[GUIPotentialBuildingItem.Construct]"
+							on_finish = "[GetScriptedGui( 'dap_build_started' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End )]"
+							next = close_view
+						}
+						state = {
+							name = close_view
+							delay = 0.5
+							on_finish = "[HoldingView.Close]"
+						}
+					}
+				}
+			}
+		}
+	}
+}

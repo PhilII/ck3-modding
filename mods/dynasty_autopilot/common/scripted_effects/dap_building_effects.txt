@@ -1,0 +1,64 @@
+﻿# Dynasty Autopilot - automatic building through the real Build button (ADR 0001).
+# root = the player in every effect here.
+#
+# Route: the mod remembers which building it wants in which holding, then opens the
+# vanilla holding view for that holding. gui/00_dap_building_item.gui (an override of
+# the holding view's building slot type) opens a free slot and presses Build on that
+# building, then calls the dap_build_started scripted GUI, which runs
+# dap_build_started_effect.
+
+# Asks for a construction of scope:dap_build_building (flag:<building key>) in
+# scope:dap_build_province, and opens the holding view so it can be pressed. The
+# request lapses after a day, so one that could not be pressed never fires later,
+# when the player opens that holding's view themselves.
+dap_build_request_effect = {
+	if = {
+		limit = { has_variable = dap_build_last_province }
+		remove_variable = dap_build_last_province
+		remove_variable = dap_build_last_paid
+	}
+	set_variable = { name = dap_build_province value = scope:dap_build_province days = 1 }
+	set_variable = { name = dap_build_building value = scope:dap_build_building days = 1 }
+	set_variable = { name = dap_build_gold_before value = gold days = 1 }
+	scope:dap_build_province = { open_view_data = holding_view }
+}
+
+# The holding view pressed Build for the request in scope:province; the last
+# construction's holding and price stay until the next request
+dap_build_started_effect = {
+	set_variable = { name = dap_build_last_province value = scope:province }
+	set_variable = { name = dap_build_last_paid value = var:dap_build_gold_before }
+	change_variable = { name = dap_build_last_paid subtract = gold }
+	remove_variable = dap_build_province
+	remove_variable = dap_build_building
+	remove_variable = dap_build_gold_before
+}
+
+# Prototype pick until the building data and value model exist (issue #3 replaces it):
+# military camps (any terrain, cheap) in a holding of the player's own with a free slot.
+# Gold reserve and per-season limits are not checked yet.
+dap_build_prototype_effect = {
+	ordered_directly_owned_province = {
+		limit = {
+			has_free_building_slot = yes
+			has_ongoing_construction = no
+			NOT = { has_building_or_higher = military_camps_01 }
+			building_requirement_castle_city_church = { LEVEL = 01 }
+		}
+		order_by = combined_building_level
+		save_scope_as = dap_build_province
+	}
+	if = {
+		limit = {
+			exists = scope:dap_build_province
+			# Vanilla's building_requirement_tribal: tribes build other buildings
+			NOR = {
+				government_has_flag = government_is_tribal
+				government_has_flag = government_is_nomadic
+				government_has_flag = government_is_wanua
+			}
+		}
+		save_scope_value_as = { name = dap_build_building value = flag:military_camps_01 }
+		dap_build_request_effect = yes
+	}
+}

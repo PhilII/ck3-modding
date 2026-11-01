@@ -739,3 +739,9 @@ dap_promote_culture_county_trigger = {
 	exists = culture
 	culture != root.culture
 }
+
+# this = player; has the mod asked for a construction in scope:province (ADR 0001)?
+dap_build_pending_trigger = {
+	has_variable = dap_build_building
+	var:dap_build_province ?= scope:province
+}
