@@ -836,6 +836,8 @@ dap_building_reminder_effect = {
 	if = {
 		limit = {
 			var:dap_build_reminder = 1
+			# The automatic builder does the building itself
+			NOT = { var:dap_build_enabled ?= 1 }
 			NOT = { has_variable = dap_build_reminder_cooldown }
 			dap_can_spend_trigger = { AMOUNT = 300 }
 			any_held_title = {

@@ -11,8 +11,9 @@ Before writing any Crusader Kings III mod code, read `CK3_MODDING_GUIDE.md` in t
 ## Dynasty Autopilot (mods/dynasty_autopilot)
 - Loaded via `mod/dynasty_autopilot.mod` with an absolute `path` to this folder.
 - Menu settings are declared in `tools/dap_settings.py`; run `python3 tools/build_dap.py` after editing it. Files named `*_generated*` are output: never edit them by hand.
-- Building data (`dap_buildings_generated.txt`: requirement triggers, picks, names) is generated from the installed game's building files by `python3 tools/build_buildings.py`; CI cannot run it, so rerun it after game patches and commit the output.
+- Building data (`dap_buildings_generated.txt`: every regular building's requirement triggers, cost, construction time, next level and focus scores by reach; names) is generated from the installed game's building files by `python3 tools/build_buildings.py`; CI cannot run it, so rerun it after game patches and commit the output.
 - Run `python3 tools/check_mod.py` before committing; CI runs it plus a check that generated files are up to date.
+- Automatic building queues its picks; `gui/dap_build_driver.gui` opens the holding view for one at a time and the slot override (`gui/00_dap_building_item.gui`) presses Build or Upgrade (ADR 0001).
 - Window: `gui/dap_window.gui`; button actions: `common/scripted_guis/dap_scripted_guis.txt`.
 - Never restart or screenshot CK3 without asking if the user may be using it.
 - In-game tests: `python3 tools/devtest/run.py suite` (one tick, ~1.5 min: sets up a scenario per feature, runs once, prints OK/FAIL and mod errors) and `python3 tools/devtest/run.py soak --years 30` (observer mode at top speed, no clicks needed, ~1 game year per minute; counts how often each log action fired). `python3 tools/devtest/run.py build` (~1 min) proves a real construction through the holding view's Build button (ADR 0001). All modes refuse to start while CK3 runs, and always close it and delete their temporary `zz_devtest` files. Run long soaks detached (`nohup … & disown`).

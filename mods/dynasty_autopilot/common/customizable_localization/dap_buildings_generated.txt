@@ -7,16 +7,68 @@ dap_cl_log_building = {
 		localization_key = building_breweries_01
 	}
 	text = {
+		trigger = { var:dap_log_building ?= flag:camel_farms_01 }
+		localization_key = building_camel_farms_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:caravanserai_01 }
+		localization_key = building_caravanserai_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cereal_fields_01 }
+		localization_key = building_cereal_fields_01
+	}
+	text = {
 		trigger = { var:dap_log_building ?= flag:common_tradeport_01 }
 		localization_key = building_common_tradeport_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:curtain_walls_01 }
+		localization_key = building_curtain_walls_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:elephant_pens_01 }
+		localization_key = building_elephant_pens_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:farm_estates_01 }
+		localization_key = building_farm_estates_01
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:guild_halls_01 }
 		localization_key = building_guild_halls_01
 	}
 	text = {
+		trigger = { var:dap_log_building ?= flag:hill_farms_01 }
+		localization_key = building_hill_farms_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hillside_grazing_01 }
+		localization_key = building_hillside_grazing_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hospices_01 }
+		localization_key = building_hospices_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hunting_grounds_01 }
+		localization_key = building_hunting_grounds_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:logging_camps_01 }
+		localization_key = building_logging_camps_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:market_villages_01 }
+		localization_key = building_market_villages_01
+	}
+	text = {
 		trigger = { var:dap_log_building ?= flag:megalith_01 }
 		localization_key = building_megalith_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:monastic_schools_01 }
+		localization_key = building_monastic_schools_01
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:murex_farm_01 }
@@ -27,28 +79,1076 @@ dap_cl_log_building = {
 		localization_key = building_orchards_01
 	}
 	text = {
+		trigger = { var:dap_log_building ?= flag:outposts_01 }
+		localization_key = building_outposts_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:paddy_fields_01 }
+		localization_key = building_paddy_fields_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:pastures_01 }
+		localization_key = building_pastures_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:peat_quarries_01 }
+		localization_key = building_peat_quarries_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:plantations_01 }
+		localization_key = building_plantations_01
+	}
+	text = {
 		trigger = { var:dap_log_building ?= flag:qanats_01 }
 		localization_key = building_qanats_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:quarries_01 }
+		localization_key = building_quarries_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:smiths_01 }
+		localization_key = building_smiths_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:spice_plantation_01 }
+		localization_key = building_spice_plantation_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:stilted_granaries_01 }
+		localization_key = building_stilted_granaries_01
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:vihara_halls_01 }
 		localization_key = building_vihara_halls_01
 	}
 	text = {
-		trigger = { var:dap_log_building ?= flag:waterworks_01 }
-		localization_key = building_waterworks_01
-	}
-	text = {
-		trigger = { var:dap_log_building ?= flag:caravanserai_01 }
-		localization_key = building_caravanserai_01
+		trigger = { var:dap_log_building ?= flag:water_temples_01 }
+		localization_key = building_water_temples_01
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:watermills_01 }
 		localization_key = building_watermills_01
 	}
 	text = {
+		trigger = { var:dap_log_building ?= flag:waterworks_01 }
+		localization_key = building_waterworks_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wind_furnace_01 }
+		localization_key = building_wind_furnace_01
+	}
+	text = {
 		trigger = { var:dap_log_building ?= flag:windmills_01 }
 		localization_key = building_windmills_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:workshops_01 }
+		localization_key = building_workshops_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:breweries_02 }
+		localization_key = building_breweries_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:breweries_03 }
+		localization_key = building_breweries_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:breweries_04 }
+		localization_key = building_breweries_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:breweries_05 }
+		localization_key = building_breweries_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:breweries_06 }
+		localization_key = building_breweries_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:breweries_07 }
+		localization_key = building_breweries_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:breweries_08 }
+		localization_key = building_breweries_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:camel_farms_02 }
+		localization_key = building_camel_farms_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:camel_farms_03 }
+		localization_key = building_camel_farms_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:camel_farms_04 }
+		localization_key = building_camel_farms_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:camel_farms_05 }
+		localization_key = building_camel_farms_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:camel_farms_06 }
+		localization_key = building_camel_farms_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:camel_farms_07 }
+		localization_key = building_camel_farms_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:camel_farms_08 }
+		localization_key = building_camel_farms_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:caravanserai_02 }
+		localization_key = building_caravanserai_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:caravanserai_03 }
+		localization_key = building_caravanserai_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:caravanserai_04 }
+		localization_key = building_caravanserai_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:caravanserai_05 }
+		localization_key = building_caravanserai_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:caravanserai_06 }
+		localization_key = building_caravanserai_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:caravanserai_07 }
+		localization_key = building_caravanserai_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:caravanserai_08 }
+		localization_key = building_caravanserai_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:castle_02 }
+		localization_key = building_castle_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:castle_03 }
+		localization_key = building_castle_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:castle_04 }
+		localization_key = building_castle_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cereal_fields_02 }
+		localization_key = building_cereal_fields_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cereal_fields_03 }
+		localization_key = building_cereal_fields_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cereal_fields_04 }
+		localization_key = building_cereal_fields_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cereal_fields_05 }
+		localization_key = building_cereal_fields_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cereal_fields_06 }
+		localization_key = building_cereal_fields_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cereal_fields_07 }
+		localization_key = building_cereal_fields_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cereal_fields_08 }
+		localization_key = building_cereal_fields_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:city_02 }
+		localization_key = building_city_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:city_03 }
+		localization_key = building_city_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:city_04 }
+		localization_key = building_city_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:common_tradeport_02 }
+		localization_key = building_common_tradeport_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:common_tradeport_03 }
+		localization_key = building_common_tradeport_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:common_tradeport_04 }
+		localization_key = building_common_tradeport_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:common_tradeport_05 }
+		localization_key = building_common_tradeport_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:common_tradeport_06 }
+		localization_key = building_common_tradeport_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:common_tradeport_07 }
+		localization_key = building_common_tradeport_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:common_tradeport_08 }
+		localization_key = building_common_tradeport_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:curtain_walls_02 }
+		localization_key = building_curtain_walls_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:curtain_walls_03 }
+		localization_key = building_curtain_walls_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:curtain_walls_04 }
+		localization_key = building_curtain_walls_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:curtain_walls_05 }
+		localization_key = building_curtain_walls_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:curtain_walls_06 }
+		localization_key = building_curtain_walls_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:curtain_walls_07 }
+		localization_key = building_curtain_walls_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:curtain_walls_08 }
+		localization_key = building_curtain_walls_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:elephant_pens_02 }
+		localization_key = building_elephant_pens_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:elephant_pens_03 }
+		localization_key = building_elephant_pens_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:elephant_pens_04 }
+		localization_key = building_elephant_pens_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:elephant_pens_05 }
+		localization_key = building_elephant_pens_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:elephant_pens_06 }
+		localization_key = building_elephant_pens_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:elephant_pens_07 }
+		localization_key = building_elephant_pens_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:elephant_pens_08 }
+		localization_key = building_elephant_pens_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:farm_estates_02 }
+		localization_key = building_farm_estates_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:farm_estates_03 }
+		localization_key = building_farm_estates_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:farm_estates_04 }
+		localization_key = building_farm_estates_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:farm_estates_05 }
+		localization_key = building_farm_estates_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:farm_estates_06 }
+		localization_key = building_farm_estates_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:farm_estates_07 }
+		localization_key = building_farm_estates_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:farm_estates_08 }
+		localization_key = building_farm_estates_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:guild_halls_02 }
+		localization_key = building_guild_halls_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:guild_halls_03 }
+		localization_key = building_guild_halls_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:guild_halls_04 }
+		localization_key = building_guild_halls_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:guild_halls_05 }
+		localization_key = building_guild_halls_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:guild_halls_06 }
+		localization_key = building_guild_halls_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:guild_halls_07 }
+		localization_key = building_guild_halls_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:guild_halls_08 }
+		localization_key = building_guild_halls_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hill_farms_02 }
+		localization_key = building_hill_farms_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hill_farms_03 }
+		localization_key = building_hill_farms_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hill_farms_04 }
+		localization_key = building_hill_farms_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hill_farms_05 }
+		localization_key = building_hill_farms_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hill_farms_06 }
+		localization_key = building_hill_farms_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hill_farms_07 }
+		localization_key = building_hill_farms_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hill_farms_08 }
+		localization_key = building_hill_farms_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hillside_grazing_02 }
+		localization_key = building_hillside_grazing_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hillside_grazing_03 }
+		localization_key = building_hillside_grazing_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hillside_grazing_04 }
+		localization_key = building_hillside_grazing_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hillside_grazing_05 }
+		localization_key = building_hillside_grazing_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hillside_grazing_06 }
+		localization_key = building_hillside_grazing_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hillside_grazing_07 }
+		localization_key = building_hillside_grazing_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hillside_grazing_08 }
+		localization_key = building_hillside_grazing_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hospices_02 }
+		localization_key = building_hospices_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hospices_03 }
+		localization_key = building_hospices_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hospices_04 }
+		localization_key = building_hospices_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hospices_05 }
+		localization_key = building_hospices_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hospices_06 }
+		localization_key = building_hospices_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hospices_07 }
+		localization_key = building_hospices_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hospices_08 }
+		localization_key = building_hospices_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hunting_grounds_02 }
+		localization_key = building_hunting_grounds_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hunting_grounds_03 }
+		localization_key = building_hunting_grounds_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hunting_grounds_04 }
+		localization_key = building_hunting_grounds_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hunting_grounds_05 }
+		localization_key = building_hunting_grounds_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hunting_grounds_06 }
+		localization_key = building_hunting_grounds_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hunting_grounds_07 }
+		localization_key = building_hunting_grounds_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hunting_grounds_08 }
+		localization_key = building_hunting_grounds_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:logging_camps_02 }
+		localization_key = building_logging_camps_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:logging_camps_03 }
+		localization_key = building_logging_camps_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:logging_camps_04 }
+		localization_key = building_logging_camps_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:logging_camps_05 }
+		localization_key = building_logging_camps_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:logging_camps_06 }
+		localization_key = building_logging_camps_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:logging_camps_07 }
+		localization_key = building_logging_camps_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:logging_camps_08 }
+		localization_key = building_logging_camps_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:market_villages_02 }
+		localization_key = building_market_villages_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:megalith_02 }
+		localization_key = building_megalith_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:megalith_03 }
+		localization_key = building_megalith_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:megalith_04 }
+		localization_key = building_megalith_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:megalith_05 }
+		localization_key = building_megalith_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:megalith_06 }
+		localization_key = building_megalith_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:megalith_07 }
+		localization_key = building_megalith_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:megalith_08 }
+		localization_key = building_megalith_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:monastic_schools_02 }
+		localization_key = building_monastic_schools_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:monastic_schools_03 }
+		localization_key = building_monastic_schools_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:monastic_schools_04 }
+		localization_key = building_monastic_schools_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:monastic_schools_05 }
+		localization_key = building_monastic_schools_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:monastic_schools_06 }
+		localization_key = building_monastic_schools_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:monastic_schools_07 }
+		localization_key = building_monastic_schools_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:monastic_schools_08 }
+		localization_key = building_monastic_schools_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:murex_farm_02 }
+		localization_key = building_murex_farm_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:murex_farm_03 }
+		localization_key = building_murex_farm_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:murex_farm_04 }
+		localization_key = building_murex_farm_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:murex_farm_05 }
+		localization_key = building_murex_farm_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:murex_farm_06 }
+		localization_key = building_murex_farm_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:murex_farm_07 }
+		localization_key = building_murex_farm_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:murex_farm_08 }
+		localization_key = building_murex_farm_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:orchards_02 }
+		localization_key = building_orchards_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:orchards_03 }
+		localization_key = building_orchards_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:orchards_04 }
+		localization_key = building_orchards_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:orchards_05 }
+		localization_key = building_orchards_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:orchards_06 }
+		localization_key = building_orchards_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:orchards_07 }
+		localization_key = building_orchards_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:orchards_08 }
+		localization_key = building_orchards_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:outposts_02 }
+		localization_key = building_outposts_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:outposts_03 }
+		localization_key = building_outposts_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:outposts_04 }
+		localization_key = building_outposts_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:outposts_05 }
+		localization_key = building_outposts_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:outposts_06 }
+		localization_key = building_outposts_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:outposts_07 }
+		localization_key = building_outposts_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:outposts_08 }
+		localization_key = building_outposts_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:paddy_fields_02 }
+		localization_key = building_paddy_fields_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:paddy_fields_03 }
+		localization_key = building_paddy_fields_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:paddy_fields_04 }
+		localization_key = building_paddy_fields_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:paddy_fields_05 }
+		localization_key = building_paddy_fields_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:paddy_fields_06 }
+		localization_key = building_paddy_fields_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:paddy_fields_07 }
+		localization_key = building_paddy_fields_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:paddy_fields_08 }
+		localization_key = building_paddy_fields_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:pastures_02 }
+		localization_key = building_pastures_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:pastures_03 }
+		localization_key = building_pastures_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:pastures_04 }
+		localization_key = building_pastures_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:pastures_05 }
+		localization_key = building_pastures_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:pastures_06 }
+		localization_key = building_pastures_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:pastures_07 }
+		localization_key = building_pastures_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:pastures_08 }
+		localization_key = building_pastures_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:peat_quarries_02 }
+		localization_key = building_peat_quarries_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:peat_quarries_03 }
+		localization_key = building_peat_quarries_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:peat_quarries_04 }
+		localization_key = building_peat_quarries_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:peat_quarries_05 }
+		localization_key = building_peat_quarries_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:peat_quarries_06 }
+		localization_key = building_peat_quarries_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:peat_quarries_07 }
+		localization_key = building_peat_quarries_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:peat_quarries_08 }
+		localization_key = building_peat_quarries_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:plantations_02 }
+		localization_key = building_plantations_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:plantations_03 }
+		localization_key = building_plantations_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:plantations_04 }
+		localization_key = building_plantations_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:plantations_05 }
+		localization_key = building_plantations_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:plantations_06 }
+		localization_key = building_plantations_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:plantations_07 }
+		localization_key = building_plantations_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:plantations_08 }
+		localization_key = building_plantations_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:qanats_02 }
+		localization_key = building_qanats_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:qanats_03 }
+		localization_key = building_qanats_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:qanats_04 }
+		localization_key = building_qanats_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:qanats_05 }
+		localization_key = building_qanats_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:qanats_06 }
+		localization_key = building_qanats_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:qanats_07 }
+		localization_key = building_qanats_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:qanats_08 }
+		localization_key = building_qanats_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:quarries_02 }
+		localization_key = building_quarries_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:quarries_03 }
+		localization_key = building_quarries_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:quarries_04 }
+		localization_key = building_quarries_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:quarries_05 }
+		localization_key = building_quarries_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:quarries_06 }
+		localization_key = building_quarries_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:quarries_07 }
+		localization_key = building_quarries_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:quarries_08 }
+		localization_key = building_quarries_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ramparts_02 }
+		localization_key = building_ramparts_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:smiths_02 }
+		localization_key = building_smiths_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:smiths_03 }
+		localization_key = building_smiths_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:smiths_04 }
+		localization_key = building_smiths_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:smiths_05 }
+		localization_key = building_smiths_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:smiths_06 }
+		localization_key = building_smiths_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:smiths_07 }
+		localization_key = building_smiths_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:smiths_08 }
+		localization_key = building_smiths_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:spice_plantation_02 }
+		localization_key = building_spice_plantation_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:spice_plantation_03 }
+		localization_key = building_spice_plantation_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:spice_plantation_04 }
+		localization_key = building_spice_plantation_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:spice_plantation_05 }
+		localization_key = building_spice_plantation_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:spice_plantation_06 }
+		localization_key = building_spice_plantation_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:spice_plantation_07 }
+		localization_key = building_spice_plantation_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:spice_plantation_08 }
+		localization_key = building_spice_plantation_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:stilted_granaries_02 }
+		localization_key = building_stilted_granaries_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:stilted_granaries_03 }
+		localization_key = building_stilted_granaries_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:stilted_granaries_04 }
+		localization_key = building_stilted_granaries_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:temple_02 }
+		localization_key = building_temple_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:temple_03 }
+		localization_key = building_temple_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:temple_04 }
+		localization_key = building_temple_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:temple_citadel_02 }
+		localization_key = building_temple_citadel_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:temple_citadel_03 }
+		localization_key = building_temple_citadel_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:temple_citadel_04 }
+		localization_key = building_temple_citadel_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:vihara_halls_02 }
+		localization_key = building_vihara_halls_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:vihara_halls_03 }
+		localization_key = building_vihara_halls_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:vihara_halls_04 }
+		localization_key = building_vihara_halls_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:vihara_halls_05 }
+		localization_key = building_vihara_halls_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:vihara_halls_06 }
+		localization_key = building_vihara_halls_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:vihara_halls_07 }
+		localization_key = building_vihara_halls_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:vihara_halls_08 }
+		localization_key = building_vihara_halls_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:water_temples_02 }
+		localization_key = building_water_temples_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:water_temples_03 }
+		localization_key = building_water_temples_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:water_temples_04 }
+		localization_key = building_water_temples_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watermills_02 }
+		localization_key = building_watermills_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watermills_03 }
+		localization_key = building_watermills_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watermills_04 }
+		localization_key = building_watermills_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watermills_05 }
+		localization_key = building_watermills_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watermills_06 }
+		localization_key = building_watermills_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watermills_07 }
+		localization_key = building_watermills_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watermills_08 }
+		localization_key = building_watermills_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:waterworks_02 }
+		localization_key = building_waterworks_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:waterworks_03 }
+		localization_key = building_waterworks_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:waterworks_04 }
+		localization_key = building_waterworks_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:waterworks_05 }
+		localization_key = building_waterworks_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:waterworks_06 }
+		localization_key = building_waterworks_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:waterworks_07 }
+		localization_key = building_waterworks_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:waterworks_08 }
+		localization_key = building_waterworks_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wind_furnace_02 }
+		localization_key = building_wind_furnace_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wind_furnace_03 }
+		localization_key = building_wind_furnace_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wind_furnace_04 }
+		localization_key = building_wind_furnace_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wind_furnace_05 }
+		localization_key = building_wind_furnace_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wind_furnace_06 }
+		localization_key = building_wind_furnace_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wind_furnace_07 }
+		localization_key = building_wind_furnace_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wind_furnace_08 }
+		localization_key = building_wind_furnace_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:windmills_02 }
+		localization_key = building_windmills_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:windmills_03 }
+		localization_key = building_windmills_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:windmills_04 }
+		localization_key = building_windmills_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:windmills_05 }
+		localization_key = building_windmills_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:windmills_06 }
+		localization_key = building_windmills_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:windmills_07 }
+		localization_key = building_windmills_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:windmills_08 }
+		localization_key = building_windmills_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:workshops_02 }
+		localization_key = building_workshops_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:workshops_03 }
+		localization_key = building_workshops_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:workshops_04 }
+		localization_key = building_workshops_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:workshops_05 }
+		localization_key = building_workshops_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:workshops_06 }
+		localization_key = building_workshops_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:workshops_07 }
+		localization_key = building_workshops_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:workshops_08 }
+		localization_key = building_workshops_08
 	}
 	text = {
 		fallback = yes

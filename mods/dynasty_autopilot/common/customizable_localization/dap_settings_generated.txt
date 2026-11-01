@@ -2051,6 +2051,42 @@ dap_cl_dap_build_enabled = {
 	}
 }
 
+dap_cl_dap_build_suggest = {
+	type = character
+	text = {
+		trigger = { var:dap_build_suggest = 0 }
+		localization_key = dap_val_dap_build_suggest_0
+	}
+	text = {
+		trigger = { var:dap_build_suggest = 1 }
+		localization_key = dap_val_dap_build_suggest_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_build_income = {
+	type = character
+	text = {
+		trigger = { var:dap_build_income = 0 }
+		localization_key = dap_val_dap_build_income_0
+	}
+	text = {
+		trigger = { var:dap_build_income = 1 }
+		localization_key = dap_val_dap_build_income_1
+	}
+	text = {
+		trigger = { var:dap_build_income = 2 }
+		localization_key = dap_val_dap_build_income_2
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
 dap_cl_dap_build_development = {
 	type = character
 	text = {
@@ -2064,6 +2100,30 @@ dap_cl_dap_build_development = {
 	text = {
 		trigger = { var:dap_build_development = 2 }
 		localization_key = dap_val_dap_build_development_2
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_build_per_season = {
+	type = character
+	text = {
+		trigger = { var:dap_build_per_season = 0 }
+		localization_key = dap_val_dap_build_per_season_0
+	}
+	text = {
+		trigger = { var:dap_build_per_season = 1 }
+		localization_key = dap_val_dap_build_per_season_1
+	}
+	text = {
+		trigger = { var:dap_build_per_season = 2 }
+		localization_key = dap_val_dap_build_per_season_2
+	}
+	text = {
+		trigger = { var:dap_build_per_season = 3 }
+		localization_key = dap_val_dap_build_per_season_3
 	}
 	text = {
 		fallback = yes

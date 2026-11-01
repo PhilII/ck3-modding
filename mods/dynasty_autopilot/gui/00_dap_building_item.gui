@@ -147,24 +147,42 @@ types DapCountyViewTypes
 		}
 
 		# Dynasty Autopilot (ADR 0001): while the mod has asked for a construction in this
-		# holding, open a free slot and press Build on the building it picked. Only the
-		# opened (highlighted) slot presses, and the view closes a moment later: closing
-		# it while another press is still queued crashes the game.
+		# holding, open the slot it is for and press Build (a new building in a free slot) or
+		# Upgrade (a building there, or the holding's main building) on the building it
+		# picked, then closes the panel as vanilla's buttons do (or the panel stays open for the
+		# next holding). Only the opened (highlighted) slot presses, and the view closes a
+		# moment later: closing it while another press is still queued crashes the game.
 		widget = {
 			name = "dap_auto_build"
 			size = { 0 0 }
 			alwaystransparent = yes
 
+			# A new building: open a free slot. Regular slots only: they are
+			# HoldingView.GetBuildings items; the duchy capital, special and great building
+			# slots are not in a datamodel (index -1)
 			state = {
 				name = open_free_slot
-				# Regular slots only: they are HoldingView.GetBuildings items; the duchy capital,
-				# special and great building slots are not in a datamodel (index -1)
-				trigger_when = "[And( And( And( And( GUIBuildingItem.IsBuildNewIconShown, GUIBuildingItem.IsBuildingButtonEnabled ), Not( GUIBuildingItem.HasLevel ) ), GreaterThanOrEqualTo_int32( PdxGuiWidget.AccessParent.GetIndexInDataModel, '(int32)0' ) ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) )]"
+				trigger_when = "[And( And( And( And( And( GUIBuildingItem.IsBuildNewIconShown, GUIBuildingItem.IsBuildingButtonEnabled ), Not( GUIBuildingItem.HasLevel ) ), GreaterThanOrEqualTo_int32( PdxGuiWidget.AccessParent.GetIndexInDataModel, '(int32)0' ) ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) ), EqualTo_string( GetPlayer.MakeScope.Var( 'dap_build_from' ).GetFlagName, 'none' ) )]"
 				on_finish = "[GUIBuildingItem.OnClick]"
 			}
 
+			# An upgrade: open the slot with the building to upgrade
+			state = {
+				name = open_upgrade_slot
+				trigger_when = "[And( And( And( And( GUIBuildingItem.HasLevel, Not( GUIBuildingItem.IsConstructing ) ), GreaterThanOrEqualTo_int32( PdxGuiWidget.AccessParent.GetIndexInDataModel, '(int32)0' ) ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) ), EqualTo_string( GUIBuildingItem.GetCurrentOrConstrucingBuilding.GetKey, GetPlayer.MakeScope.Var( 'dap_build_from' ).GetFlagName ) )]"
+				on_finish = "[GUIBuildingItem.OnClick]"
+			}
+
+			# An upgrade of the main building (castle, city, temple...), which has no slot of
+			# its own here: the first regular slot opens it
+			state = {
+				name = open_main_building
+				trigger_when = "[And( And( And( EqualTo_int32( PdxGuiWidget.AccessParent.GetIndexInDataModel, '(int32)0' ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) ), Not( HoldingView.GetGUIHoldingBuilding.IsConstructing ) ), EqualTo_string( HoldingView.GetGUIHoldingBuilding.GetCurrentOrConstrucingBuilding.GetKey, GetPlayer.MakeScope.Var( 'dap_build_from' ).GetFlagName ) )]"
+				on_finish = "[HoldingView.GetGUIHoldingBuilding.OnClick]"
+			}
+
 			flowcontainer = {
-				visible = "[And( GUIBuildingItem.IsHighlighted, GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) )]"
+				visible = "[And( And( GUIBuildingItem.IsHighlighted, GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) ), EqualTo_string( GetPlayer.MakeScope.Var( 'dap_build_from' ).GetFlagName, 'none' ) )]"
 				datamodel = "[HoldingView.GetPotentialBuildings]"
 				alwaystransparent = yes
 
@@ -177,6 +195,7 @@ types DapCountyViewTypes
 							name = press_build
 							trigger_when = "[And( And( And( GUIBuildingItem.IsHighlighted, GUIPotentialBuildingItem.CanConstruct ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) ), EqualTo_string( GUIPotentialBuildingItem.GetBuilding.GetKey, GetPlayer.MakeScope.Var( 'dap_build_building' ).GetFlagName ) )]"
 							on_finish = "[GUIPotentialBuildingItem.Construct]"
+							on_finish = "[HoldingView.CloseSubwindows]"
 							on_finish = "[GetScriptedGui( 'dap_build_started' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End )]"
 							next = close_view
 						}
@@ -186,6 +205,30 @@ types DapCountyViewTypes
 							on_finish = "[HoldingView.Close]"
 						}
 					}
+				}
+			}
+
+			# The opened building's upgrade track: press Upgrade when its next level is the
+			# building asked for. Only in the opened slot, or in the first slot for the main
+			# building
+			widget = {
+				size = { 0 0 }
+				alwaystransparent = yes
+				visible = "[And( And( GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ), Not( EqualTo_string( GetPlayer.MakeScope.Var( 'dap_build_from' ).GetFlagName, 'none' ) ) ), Or( GUIBuildingItem.IsHighlighted, And( HoldingView.GetGUIHoldingBuilding.IsHighlighted, EqualTo_int32( PdxGuiWidget.AccessParent.AccessParent.GetIndexInDataModel, '(int32)0' ) ) ) )]"
+				datacontext = "[HoldingView.GetTrack]"
+
+				state = {
+					name = press_upgrade
+					trigger_when = "[And( And( And( And( GUITrackItem.CanConstructNextBuilding, Not( GUITrackItem.IsUpgradingWithGreatProject ) ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) ), EqualTo_string( GUITrackItem.GetNextBuilding.GetKey, GetPlayer.MakeScope.Var( 'dap_build_building' ).GetFlagName ) ), Or( GUIBuildingItem.IsHighlighted, And( HoldingView.GetGUIHoldingBuilding.IsHighlighted, EqualTo_int32( PdxGuiWidget.AccessParent.AccessParent.GetIndexInDataModel, '(int32)0' ) ) ) )]"
+					on_finish = "[GUITrackItem.OnClick]"
+					on_finish = "[HoldingView.CloseSubwindows]"
+					on_finish = "[GetScriptedGui( 'dap_build_started' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End )]"
+					next = close_view
+				}
+				state = {
+					name = close_view
+					delay = 0.5
+					on_finish = "[HoldingView.Close]"
 				}
 			}
 		}

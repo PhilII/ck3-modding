@@ -745,3 +745,10 @@ dap_build_pending_trigger = {
 	has_variable = dap_build_building
 	var:dap_build_province ?= scope:province
 }
+
+# this = player; constructions are queued and none is waiting for the holding view
+dap_build_next_trigger = {
+	is_ai = no
+	NOT = { has_variable = dap_build_building }
+	any_in_list = { variable = dap_build_queue }
+}

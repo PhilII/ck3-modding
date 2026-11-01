@@ -317,6 +317,10 @@ dap_cl_log_action = {
 		localization_key = dap_log_built
 	}
 	text = {
+		trigger = { var:dap_log_action = flag:dap_log_build_suggested }
+		localization_key = dap_log_build_suggested
+	}
+	text = {
 		fallback = yes
 		localization_key = dap_empty
 	}

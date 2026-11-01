@@ -972,11 +972,32 @@ types DapSettingsGenerated
 			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_enabled' ) ).End )]" }
 		}
 		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_build_suggest" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_build_suggest_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_build_suggest' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_suggest' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_suggest' ) ).End )]" }
+		}
+		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_build_income" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_build_income_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_build_income' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_income' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_income' ) ).End )]" }
+		}
+		dap_setting_row = {
 			blockoverride "label" { text = "dap_setting_dap_build_development" }
 			blockoverride "tooltip" { tooltip = "dap_setting_dap_build_development_tt" }
 			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_build_development' )]" }
 			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_development' ) ).End )]" }
 			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_development' ) ).End )]" }
+		}
+		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_build_per_season" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_build_per_season_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_build_per_season' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_per_season' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_per_season' ) ).End )]" }
 		}
 	}
 

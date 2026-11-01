@@ -36,6 +36,7 @@ ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 MOD = os.path.join(ROOT, "mods", "dynasty_autopilot")
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 from dap_settings import MODULES  # noqa: E402
+import build_buildings  # noqa: E402
 
 STEAM_GAME = os.path.expanduser("~/Library/Application Support/Steam/steamapps/common/Crusader Kings III")
 BINARIES = os.path.join(STEAM_GAME, "binaries")
@@ -48,6 +49,7 @@ FILES = {
     "gui": "gui/zz_devtest_autorun.gui",
     "widgets": "gui/scripted_widgets/zz_devtest_widgets.txt",
     "sguis": "common/scripted_guis/zz_devtest_sguis.txt",
+    "triggers": "common/scripted_triggers/zz_devtest_triggers.txt",
 }
 
 # Every player setting switched to a value that lets its feature act.
@@ -61,13 +63,14 @@ TEST_VALUES = {
     "dap_edu_enabled": 1, "dap_edu_override": 1,
     "dap_court_sway": 2, "dap_court_council": 2, "dap_court_knights": 1,
     "dap_grant_when": 3, "dap_grant_to": 2, "dap_grant_max_each": 3, "dap_grant_contract": 1,
-    "dap_grant_duchies": 1, "dap_create_titles": 2, "dap_revoke_suggest": 1,
+    "dap_grant_duchies": 1, "dap_grant_keep_core": 1, "dap_create_titles": 2, "dap_revoke_suggest": 1,
     "dap_court_positions": 2, "dap_maa_type": 1, "dap_build_reminder": 1, "dap_court_prisoners": 2,
     "dap_task_chancellor": 2, "dap_task_steward": 2, "dap_task_marshal": 1, "dap_task_spymaster": 1,
     "dap_faith_enabled": 1, "dap_faith_chaplain": 2, "dap_faith_task": 1, "dap_faith_family": 1,
     "dap_faith_spouses": 1, "dap_faith_vassals": 2, "dap_hof_gold": 1, "dap_excomm_alert": 1,
     "dap_faith_warn_heir": 1, "dap_faith_warn_vassals": 1, "dap_faith_report": 1,
-    "dap_build_enabled": 1, "dap_build_development": 2,
+    "dap_build_enabled": 1, "dap_build_suggest": 0, "dap_build_income": 2, "dap_build_development": 2,
+    "dap_build_per_season": 3,
 }
 
 
@@ -177,20 +180,77 @@ SUITE_SETUP = """\
 		}
 		create_character = { age = 30 gender = male faith = root.faith culture = root.culture location = root.capital_province save_scope_as = dap_t_prisoner }
 		imprison = { target = scope:dap_t_prisoner type = dungeon }
-		# A free slot in the capital's holding for the seasonal run below, and a development
-		# building that may go there (Norway's watermills need this innovation in 1066)
-		culture = { add_innovation = innovation_windmills }
+		# Buildings. Innovations so that upgrades can be built (castle_02, level 2 farms)
+		culture = {
+			add_innovation = innovation_windmills
+			add_innovation = innovation_battlements
+		}
+		if = {
+			limit = { culture = { NOT = { has_innovation = innovation_crop_rotation } } }
+			culture = { add_innovation = innovation_crop_rotation }
+		}
+		# A free slot in the capital's holding for a new building
 		capital_province = {
 			if = {
 				limit = { has_free_building_slot = no }
 				add_province_modifier = extra_building_slot
 			}
 		}
+		# Another castle with no buildings that serve a focus and every slot full of buildings
+		# that serve none: only the main building's upgrade (castle_02) is left there
+		ordered_directly_owned_province = {
+			limit = {
+				NOT = { this = root.capital_province }
+				has_building = castle_01
+				has_ongoing_construction = no
+				# castle_02 needs the innovation in the holding's own culture
+				culture = root.culture
+			}
+			# The holding with the fewest buildings, so the castle's upgrade has no rivals
+			order_by = {
+				value = 0
+				subtract = num_buildings
+				# The capital's duchy first: "keep core" stops the land module granting it away
+				# before the builder runs
+				if = {
+					limit = { county.de_jure_liege ?= root.capital_county.de_jure_liege }
+					add = 100
+				}
+			}
+			save_scope_as = dap_t_main_upgrade
+			dap_devtest_remove_focus_buildings_effect = yes
+			dap_devtest_fill_slots_effect = yes
+		}
+		# A third holding with a level 1 income building and every other slot full: its upgrade
+		# beats anything else there
+		ordered_directly_owned_province = {
+			limit = {
+				NOT = { this = root.capital_province }
+				NOT = { this = scope:dap_t_main_upgrade }
+				has_ongoing_construction = no
+			}
+			order_by = {
+				value = 0
+				subtract = num_buildings
+				# The capital's duchy first: "keep core" stops the land module granting it away
+				# before the builder runs
+				if = {
+					limit = { county.de_jure_liege ?= root.capital_county.de_jure_liege }
+					add = 100
+				}
+			}
+			save_scope_as = dap_t_upgrade
+			province_owner = { save_scope_as = holder }
+			county = { save_scope_as = county }
+			dap_devtest_add_upgradable_effect = yes
+			dap_devtest_fill_slots_effect = yes
+		}
 		# Buildings: nothing is asked for with the switch off, or without gold above the reserve
 		set_variable = { name = dap_build_enabled value = 0 }
 		dap_run_buildings_effect = yes
+		dap_devtest_queued_effect = yes
 		if = {
-			limit = { has_variable = dap_build_building }
+			limit = { local_var:dap_t_queued > 0 }
 			debug_log = "DAPTEST FAIL a building was asked for with automatic building off"
 		}
 		else = { debug_log = "DAPTEST OK no building with automatic building off" }
@@ -199,42 +259,165 @@ SUITE_SETUP = """\
 		remove_short_term_gold = gold
 		add_gold = dap_gold_reserve_value
 		dap_run_buildings_effect = yes
+		dap_devtest_queued_effect = yes
 		if = {
-			limit = { has_variable = dap_build_building }
+			limit = { local_var:dap_t_queued > 0 }
 			debug_log = "DAPTEST FAIL a building was asked for without gold above the reserve"
 		}
 		else = { debug_log = "DAPTEST OK no building without gold above the reserve" }
+		# Only 300 gold above the reserve: what is asked for costs no more than that
+		add_gold = 300
+		dap_run_buildings_effect = yes
+		dap_devtest_queued_effect = yes
+		if = {
+			limit = {
+				local_var:dap_t_queued >= 1
+				local_var:dap_t_queued_cost <= 300
+			}
+			debug_log = "DAPTEST OK constructions asked for stay within the gold above the reserve"
+		}
+		else = {
+			save_scope_value_as = { name = queued value = local_var:dap_t_queued }
+			save_scope_value_as = { name = cost value = local_var:dap_t_queued_cost }
+			debug_log = "DAPTEST FAIL constructions asked for do not fit the gold above the reserve"
+			debug_log_scopes = yes
+		}
+		dap_devtest_cancel_builds_effect = yes
 		set_variable = { name = dap_gold_reserve value = 0 }
 		add_gold = 5000
+		# One construction per season: one is asked for, and a second run asks for nothing more
+		set_variable = { name = dap_build_per_season value = 0 }
+		dap_run_buildings_effect = yes
+		dap_run_buildings_effect = yes
+		dap_devtest_queued_effect = yes
+		if = {
+			limit = { local_var:dap_t_queued = 1 }
+			debug_log = "DAPTEST OK one construction with one allowed per season"
+		}
+		else = {
+			save_scope_value_as = { name = queued value = local_var:dap_t_queued }
+			debug_log = "DAPTEST FAIL not one construction with one allowed per season"
+			debug_log_scopes = yes
+		}
+		dap_devtest_cancel_builds_effect = yes
+		# Suggest only: nothing asked for, a suggestion in the log. Income alone and
+		# development alone pick buildings serving that focus, and not the same ones
+		set_variable = { name = dap_build_per_season value = 3 }
+		set_variable = { name = dap_build_suggest value = 1 }
+		set_local_variable = { name = dap_dry value = 1 }
+		set_variable = { name = dap_build_development value = 0 }
+		dap_run_buildings_effect = yes
+		dap_devtest_queued_effect = yes
+		if = {
+			limit = {
+				local_var:dap_t_queued = 0
+				NOT = { any_in_list = { variable = dap_build_queue } }
+				var:dap_log_action ?= flag:dap_log_build_suggested
+			}
+			debug_log = "DAPTEST OK Suggest only asks for nothing and logs a suggestion"
+		}
+		else = { debug_log = "DAPTEST FAIL Suggest only asked for a construction or logged no suggestion" }
+		every_directly_owned_province = {
+			limit = { has_variable = dap_bc_building }
+			set_variable = { name = dap_t_income_pick value = var:dap_bc_building }
+		}
+		if = {
+			limit = {
+				any_directly_owned_province = { has_variable = dap_t_income_pick }
+				NOT = { any_directly_owned_province = { has_variable = dap_bc_building dap_devtest_income_pick_trigger = no } }
+			}
+			debug_log = "DAPTEST OK income alone picks income buildings"
+		}
+		else = { debug_log = "DAPTEST FAIL income alone picks a building that gives no income" }
+		set_variable = { name = dap_build_income value = 0 }
+		set_variable = { name = dap_build_development value = 2 }
+		dap_run_buildings_effect = yes
+		if = {
+			limit = {
+				any_directly_owned_province = { has_variable = dap_bc_building }
+				NOT = { any_directly_owned_province = { has_variable = dap_bc_building dap_devtest_development_pick_trigger = no } }
+			}
+			debug_log = "DAPTEST OK development alone picks development buildings"
+		}
+		else = { debug_log = "DAPTEST FAIL development alone picks a building that gives no development" }
+		if = {
+			limit = {
+				any_directly_owned_province = {
+					has_variable = dap_t_income_pick
+					NOT = { var:dap_bc_building ?= var:dap_t_income_pick }
+				}
+			}
+			debug_log = "DAPTEST OK income and development weights pick different buildings"
+		}
+		else = { debug_log = "DAPTEST FAIL income and development weights pick the same buildings everywhere" }
+		every_directly_owned_province = {
+			limit = { has_variable = dap_t_income_pick }
+			save_scope_as = holding
+			debug_log = "DAPTEST   holding; its income pick, then its development pick:"
+			debug_log_scopes = yes
+			dap_devtest_name_income_pick_effect = yes
+			dap_devtest_name_pick_effect = yes
+			remove_variable = dap_t_income_pick
+		}
+		remove_local_variable = dap_dry
+		set_variable = { name = dap_build_suggest value = 0 }
+		set_variable = { name = dap_build_income value = 2 }
+		set_variable = { name = dap_build_per_season value = 3 }
+		clear_variable_list = dap_log
 """
 
 SUITE_CHECKS = """\
-		# The seasonal run asked for a development building in the capital; the holding
-		# view presses Build after this tick (dap_devtest_suite_build_check)
+		# The seasonal run asked for constructions in the capital (a new building), and upgrades
+		# in the full holdings; the holding view presses them after this tick
+		# (dap_devtest_suite_build_check). A second run with nothing changed asks for nothing new.
+		dap_devtest_queued_effect = yes
+		set_local_variable = { name = dap_t_first_run value = local_var:dap_t_queued }
+		dap_run_buildings_effect = yes
+		dap_devtest_queued_effect = yes
 		if = {
-			limit = {
-				has_variable = dap_build_building
-				var:dap_build_province ?= root.capital_province
-			}
-			debug_log = "DAPTEST OK the seasonal run asked for a building in the capital"
+			limit = { local_var:dap_t_queued = local_var:dap_t_first_run }
+			debug_log = "DAPTEST OK a second run with nothing changed asks for nothing new"
 		}
-		else = {
-			debug_log = "DAPTEST FAIL the seasonal run asked for no building in the capital"
-			capital_province = {
-				dap_pick_building_in_province_effect = yes
-				if = {
-					limit = { has_free_building_slot = no }
-					debug_log = "DAPTEST   the capital has no free slot"
-				}
-				if = {
-					limit = { has_ongoing_construction = yes }
-					debug_log = "DAPTEST   the capital has a construction under way"
-				}
-			}
+		else = { debug_log = "DAPTEST FAIL a second run with nothing changed asked for more" }
+		capital_province = {
 			if = {
-				limit = { NOT = { exists = scope:dap_build_building } }
-				debug_log = "DAPTEST   no development building can be built in the capital"
+				limit = { dap_devtest_waiting_trigger = yes var:dap_bc_from ?= flag:none }
+				debug_log = "DAPTEST OK the seasonal run asked for a new building in the capital"
 			}
+			else = {
+				debug_log = "DAPTEST FAIL the seasonal run asked for no new building in the capital"
+				dap_devtest_explain_effect = yes
+			}
+		}
+		scope:dap_t_main_upgrade ?= {
+			if = {
+				limit = { dap_devtest_waiting_trigger = yes var:dap_bc_from ?= flag:castle_01 }
+				debug_log = "DAPTEST OK the seasonal run asked for the main building's upgrade in a full holding"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL the seasonal run asked for no main building upgrade in a full holding"
+				dap_devtest_explain_effect = yes
+			}
+		}
+		scope:dap_t_upgrade ?= {
+			if = {
+				limit = {
+					dap_devtest_waiting_trigger = yes
+					exists = var:dap_bc_from
+					NOT = { var:dap_bc_from = flag:none }
+					NOT = { var:dap_bc_from = flag:castle_01 }
+				}
+				debug_log = "DAPTEST OK the seasonal run asked for a building's upgrade where it beats any new building"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL the seasonal run asked for no building upgrade where it beats any new building"
+				dap_devtest_explain_effect = yes
+			}
+		}
+		# Remember what was asked for, to check it once pressed
+		every_directly_owned_province = {
+			limit = { dap_devtest_waiting_trigger = yes }
+			root = { add_to_variable_list = { name = dap_t_asked target = prev } }
 		}
 		if = {
 			limit = { cp:councillor_chancellor ?= { is_performing_council_task = task_domestic_affairs } }
@@ -619,19 +802,21 @@ dap_devtest_pick_camps_effect = {
 	}
 	if = {
 		limit = { exists = scope:dap_build_province }
-		save_scope_value_as = { name = dap_build_building value = flag:military_camps_01 }
-		dap_build_request_effect = yes
+		set_variable = { name = dap_build_building value = flag:military_camps_01 days = 1 }
+		set_variable = { name = dap_build_from value = flag:none days = 1 }
+		dap_build_open_effect = yes
 	}
 }
 """
 
-# The suite's seasonal run asked for a construction; once the holding view pressed
-# Build (or it never did), check it, then go on to the succession test.
+# The suite's seasonal run asked for constructions; once the holding view pressed
+# every one (or gave up), check them, then go on to the succession test.
 SUITE_GUI = """\
 widget = {
 	name = "dap_devtest_autorun"
 	size = { 1 1 }
 	alwaystransparent = yes
+	visible = "[GetPlayer.IsValid]"
 
 	widget = {
 		size = { 1 1 }
@@ -639,7 +824,7 @@ widget = {
 		state = {
 			name = give_up
 			trigger_on_create = yes
-			delay = 60
+			delay = 120
 			on_finish = "[GetScriptedGui( 'dap_devtest_suite_build_timeout' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 		}
 	}
@@ -648,9 +833,19 @@ widget = {
 		size = { 1 1 }
 		alwaystransparent = yes
 		state = {
+			name = watch_requests
+			trigger_when = "[GetPlayer.MakeScope.Var( 'dap_build_building' ).IsSet]"
+			on_finish = "[GetScriptedGui( 'dap_devtest_log_request' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+		}
+	}
+
+	widget = {
+		size = { 1 1 }
+		alwaystransparent = yes
+		state = {
 			name = check
-			trigger_when = "[GetPlayer.MakeScope.Var( 'dap_build_last_province' ).IsSet]"
-			delay = 1
+			trigger_when = "[GetScriptedGui( 'dap_devtest_suite_queue_done' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			delay = 2
 			on_finish = "[GetScriptedGui( 'dap_devtest_suite_build_check' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 		}
 	}
@@ -658,19 +853,53 @@ widget = {
 """
 
 SUITE_SGUIS = """\
+dap_devtest_suite_queue_done = {
+	scope = character
+	is_shown = {
+		exists = global_var:dap_devtest_requested
+		NOT = { has_variable = dap_build_building }
+		NOT = { any_in_list = { variable = dap_build_queue } }
+	}
+}
+
+dap_devtest_log_request = {
+	scope = character
+	effect = {
+		set_global_variable = { name = dap_devtest_requested value = yes }
+		var:dap_build_province ?= { save_scope_as = holding }
+		debug_log = "DAPTEST   the driver asked the holding view for:"
+		debug_log_scopes = yes
+		dap_devtest_name_request_effect = yes
+	}
+}
+
 dap_devtest_suite_build_check = {
 	scope = character
 	effect = {
 		set_global_variable = { name = dap_devtest_build_checked value = yes }
-		var:dap_build_last_province = { save_scope_as = holding }
-		debug_log = "DAPTEST holding view pressed Build"
+		save_scope_value_as = { name = asked value = { value = 0 every_in_list = { variable = dap_t_asked add = 1 } } }
+		debug_log = "DAPTEST holding view pressed Build or Upgrade for every queued construction"
 		debug_log_scopes = yes
 		if = {
 			limit = {
-				var:dap_build_last_province = capital_province
-				capital_province = { has_ongoing_construction = yes }
+				any_in_list = { variable = dap_t_asked }
+				NOT = { any_in_list = { variable = dap_t_asked has_ongoing_construction = no } }
 			}
-			debug_log = "DAPTEST OK a development building is under construction in the capital"
+			debug_log = "DAPTEST OK every construction asked for is under way"
+		}
+		else = {
+			debug_log = "DAPTEST FAIL a construction asked for is not under way"
+			every_in_list = {
+				variable = dap_t_asked
+				limit = { has_ongoing_construction = no }
+				save_scope_as = holding
+				debug_log = "DAPTEST   not under way:"
+				debug_log_scopes = yes
+			}
+		}
+		if = {
+			limit = { capital_province = { has_ongoing_construction = yes } }
+			debug_log = "DAPTEST OK a new building is under construction in the capital"
 		}
 		else = { debug_log = "DAPTEST FAIL no construction under way in the capital" }
 		if = {
@@ -678,11 +907,28 @@ dap_devtest_suite_build_check = {
 				is_target_in_variable_list = { name = dap_log target = root }
 				var:dap_log_action ?= flag:dap_log_built
 				has_variable = dap_log_building
-				var:dap_log_province ?= capital_province
+				has_variable = dap_log_province
 			}
 			debug_log = "DAPTEST OK the log names the building and the holding"
 		}
 		else = { debug_log = "DAPTEST FAIL the log does not name the building and the holding" }
+		# Another run, the season's count forgotten and gold to spare: holdings with
+		# construction under way are skipped
+		remove_variable = dap_build_season_count
+		add_gold = 5000
+		dap_run_buildings_effect = yes
+		if = {
+			limit = {
+				any_in_list = {
+					variable = dap_t_asked
+					has_ongoing_construction = yes
+					has_variable = dap_build_queued
+				}
+			}
+			debug_log = "DAPTEST FAIL a holding with construction under way was asked for again"
+		}
+		else = { debug_log = "DAPTEST OK holdings with construction under way are skipped" }
+		dap_devtest_cancel_builds_effect = yes
 		dap_devtest_succession_effect = yes
 	}
 }
@@ -699,6 +945,124 @@ dap_devtest_suite_build_timeout = {
 	}
 }
 """
+
+
+def building_helpers():
+    """(effects, triggers) for the suite's building scenarios, from the generated building data."""
+    found, _ = build_buildings.candidates(build_buildings.DEFAULT_GAME)
+    first = [c for c in found if not c["previous"] and not c["main"]]
+    fillers = [c["key"] for c in first if not any(v > 0 for v in c["scores"].values())]
+    income = lambda c: sum(c["scores"][k] for k in ("INCOME_HOLDING", "INCOME_HOLDER", "INCOME_COUNTY")) > 0
+    upgradable = [c["previous"] for c in found
+                  if c["previous"] and income(c) and any(f["key"] == c["previous"] for f in first)]
+    effects = ["""
+# this = province; fills its free slots with buildings that serve no focus
+dap_devtest_fill_slots_effect = {
+	while = {
+		count = 12
+		if = {
+			limit = { has_free_building_slot = yes }
+"""]
+    for i, key in enumerate(fillers):
+        effects.append(f"\t\t\t{'if' if i == 0 else 'else_if'} = {{\n\t\t\t\tlimit = {{ NOT = {{ has_building_or_higher = {key} }} }}\n"
+                       f"\t\t\t\tadd_building = {key}\n\t\t\t}}\n")
+    effects.append("\t\t}\n\t}\n}\n")
+    effects.append("""
+# this = province, scope:holder and scope:county saved; adds a level 1 income building that
+# can be built there and has an upgrade
+dap_devtest_add_upgradable_effect = {
+""")
+    for i, key in enumerate(upgradable):
+        effects.append(f"\t{'if' if i == 0 else 'else_if'} = {{\n\t\tlimit = {{ dap_can_build_{key}_trigger = yes }}\n"
+                       f"\t\tadd_building = {key}\n\t}}\n")
+    effects.append("}\n")
+    effects.append("""
+# this = player; how many constructions are asked for (queued or waiting for the holding
+# view) in local_var:dap_t_queued, and their price in local_var:dap_t_queued_cost
+dap_devtest_queued_effect = {
+	set_local_variable = { name = dap_t_queued value = 0 }
+	set_local_variable = { name = dap_t_queued_cost value = 0 }
+	every_directly_owned_province = {
+		limit = { has_variable = dap_build_queued }
+		change_local_variable = { name = dap_t_queued add = 1 }
+		change_local_variable = { name = dap_t_queued_cost add = var:dap_bc_cost }
+	}
+}
+
+# this = player; forgets every construction asked for, and the season's count
+dap_devtest_cancel_builds_effect = {
+	if = {
+		limit = { has_variable = dap_build_building }
+		remove_variable = dap_build_province
+		remove_variable = dap_build_building
+		remove_variable = dap_build_from
+		remove_variable = dap_build_gold_before
+	}
+	every_directly_owned_province = {
+		limit = { has_variable = dap_build_queued }
+		remove_variable = dap_build_queued
+	}
+	clear_variable_list = dap_build_queue
+	if = {
+		limit = { has_variable = dap_build_season_count }
+		remove_variable = dap_build_season_count
+	}
+}
+
+# this = province; why the builder did not ask for what the test expected
+dap_devtest_explain_effect = {
+	save_scope_as = holding
+	debug_log_scopes = yes
+	if = {
+		limit = { has_free_building_slot = no }
+		debug_log = "DAPTEST   no free slot"
+	}
+	if = {
+		limit = { has_ongoing_construction = yes }
+		debug_log = "DAPTEST   construction already under way"
+	}
+	if = {
+		limit = { has_variable = dap_bc_building }
+		debug_log = "DAPTEST   its pick:"
+		dap_devtest_name_pick_effect = yes
+	}
+	else = { debug_log = "DAPTEST   nothing there serves a focus" }
+	if = {
+		limit = { NOT = { province_owner = root } }
+		debug_log = "DAPTEST   no longer in your domain (granted away by the land module?)"
+	}
+}
+""")
+
+    keys = [c["key"] for c in found] + ["none"]
+
+    def chain(var):
+        return "".join(f"\t{'if' if i == 0 else 'else_if'} = {{\n\t\tlimit = {{ var:{var} ?= flag:{key} }}\n"
+                       f"\t\tdebug_log = \"DAPTEST     {var}: {key}\"\n\t}}\n" for i, key in enumerate(keys))
+
+    effects.append("\n# this = player; logs the building asked for\n"
+                   f"dap_devtest_name_request_effect = {{\n{chain('dap_build_building')}{chain('dap_build_from')}}}\n")
+    effects.append("\n# this = province; logs its income-only pick\n"
+                   f"dap_devtest_name_income_pick_effect = {{\n{chain('dap_t_income_pick')}}}\n")
+    effects.append("\n# this = province; removes every building there that serves a focus\n"
+                   "dap_devtest_remove_focus_buildings_effect = {\n"
+                   + "".join(f"\tif = {{\n\t\tlimit = {{ has_building = {c['key']} }}\n\t\tremove_building = {c['key']}\n\t}}\n"
+                             for c in found if not c["main"] and any(v > 0 for v in c["scores"].values()))
+                   + "}\n")
+    effects.append("\n# this = province; logs its pick\n"
+                   f"dap_devtest_name_pick_effect = {{\n{chain('dap_bc_building')}{chain('dap_bc_from')}}}\n")
+
+    def pick_trigger(name, keys):
+        lines = "".join(f"\t\tvar:dap_bc_building = flag:{k}\n" for k in keys)
+        return f"{name} = {{\n\texists = var:dap_bc_building\n\tOR = {{\n{lines}\t}}\n}}\n\n"
+
+    triggers = ["# this = province; its pick serves the focus\n",
+                pick_trigger("dap_devtest_income_pick_trigger", [c["key"] for c in found if income(c)]),
+                pick_trigger("dap_devtest_development_pick_trigger",
+                             [c["key"] for c in found if c["scores"]["DEVELOPMENT_COUNTY"] > 0]),
+                "# this = province; a construction is asked for there\n"
+                "dap_devtest_waiting_trigger = {\n\thas_variable = dap_build_queued\n}\n"]
+    return "".join(effects), "".join(triggers)
 
 
 def write(rel, text):
@@ -754,6 +1118,9 @@ def main():
             write(FILES["sguis"], BUILD_SGUIS)
             write(FILES["widgets"], "gui/zz_devtest_autorun.gui = dap_devtest_autorun\n")
         else:
+            helpers, triggers = building_helpers()
+            write("common/scripted_effects/zz_devtest_effects.txt", effects + helpers)
+            write(FILES["triggers"], triggers)
             write(FILES["gui"], SUITE_GUI)
             write(FILES["sguis"], SUITE_SGUIS)
             write(FILES["widgets"], "gui/zz_devtest_autorun.gui = dap_devtest_autorun\n")

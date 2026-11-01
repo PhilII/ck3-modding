@@ -8,6 +8,7 @@ The game itself is not needed. Checks:
   - localization files start with the right l_<language>: header
   - every dap_* scripted effect, trigger and script value that is used is defined
   - every dap_* localization key used by GUI, custom localization or events exists
+  - the generated building data classifies known buildings by reach as expected
   - no dev-test scaffolding or debug_log lines are left in the mod
 Exits with status 1 if anything fails.
 """
@@ -120,6 +121,39 @@ def check_localization_keys():
                     errors.append(f"{rel(path)}: localization key '{key}' is missing")
 
 
+def generated_building_scores():
+    """BUILDING -> its score parameters, from the generated building candidates."""
+    path = os.path.join(MOD, "common", "scripted_effects", "dap_buildings_generated.txt")
+    scores = {}
+    for call in re.findall(r"dap_consider_building_effect = \{([^}]*)\}", read(path)):
+        params = dict(re.findall(r"(\w+) = (\S+)", call))
+        scores[params["BUILDING"]] = params
+    return scores
+
+
+# Known classifications that a game patch could silently break: (building, reach, focus) pairs
+# that must score above zero, and ones that must not
+KNOWN_SCORES = {
+    "watermills_01": {"DEVELOPMENT_COUNTY": True, "INCOME_HOLDING": True, "INCOME_COUNTY": False},
+    "guild_halls_01": {"DEVELOPMENT_COUNTY": True},
+    "farm_estates_01": {"INCOME_HOLDING": True, "INCOME_COUNTY": False, "DEVELOPMENT_COUNTY": False},
+    "watermills_02": {"DEVELOPMENT_COUNTY": True, "INCOME_HOLDING": True},
+    "castle_02": {"INCOME_HOLDING": True},
+}
+
+
+def check_building_classifications():
+    scores = generated_building_scores()
+    for building, expected in KNOWN_SCORES.items():
+        if building not in scores:
+            errors.append(f"generated building data: {building} is not a candidate")
+            continue
+        for param, positive in expected.items():
+            if (float(scores[building].get(param, 0)) > 0) != positive:
+                errors.append(f"generated building data: {building} {param} should be "
+                              f"{'above zero' if positive else 'zero'}, is {scores[building].get(param)}")
+
+
 def check_no_dev_leftovers():
     for path in files(*TEXT_EXTENSIONS):
         if "zz_devtest" in os.path.basename(path):
@@ -136,6 +170,7 @@ if __name__ == "__main__":
     check_localization_headers()
     check_script_references()
     check_localization_keys()
+    check_building_classifications()
     check_no_dev_leftovers()
     for error in errors:
         print("ERROR", error)

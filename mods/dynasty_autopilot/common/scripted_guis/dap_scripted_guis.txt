@@ -151,6 +151,17 @@ dap_build_pending = {
 	}
 }
 
+# Used by gui/dap_build_driver.gui: ask for the next queued construction
+dap_build_next = {
+	scope = character
+	is_shown = {
+		dap_build_next_trigger = yes
+	}
+	effect = {
+		dap_build_next_effect = yes
+	}
+}
+
 dap_build_started = {
 	scope = character
 	saved_scopes = { province }

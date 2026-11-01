@@ -24,4 +24,10 @@ Things learned on the way:
 - Every slot instance holds the widget, so only the highlighted slot may press Build, and the view must close in a later GUI state: closing it while another press is queued crashed the game in `CHoldingView::Construct`.
 - The holding view opens on screen for a moment while this runs.
 
+Upgrades (issue 4) go the same way: the widget opens the slot holding the building to upgrade (`GUIBuildingItem.GetCurrentOrConstrucingBuilding`), or, for the holding's main building, which has no slot of its own, `HoldingView.GetGUIHoldingBuilding` from the first regular slot; then it presses `GUITrackItem.OnClick` on `HoldingView.GetTrack` when its next building is the one wanted. Several constructions a season are queued, and a small always-present widget (`gui/dap_build_driver.gui`) asks for the next one a second after the last was pressed, so only one view is ever opened at a time:
+
+- Opening the holding view twice in one tick (once per run) loses the request, so script only queues and the driver alone opens the view.
+- Each press must be followed by `HoldingView.CloseSubwindows`, as vanilla's buttons do; without it the open panel carries over to the next holding and its upgrade is never pressed.
+- A delayed GUI state cannot time out an unpressed request: its delay did not restart on a re-trigger, so it fired at once and cut short upgrades still being pressed. An unpressed request lapses after a day instead.
+
 Simulation was not needed. Re-copy the type after game patches that change it.

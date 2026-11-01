@@ -1,0 +1,23 @@
+﻿# Dynasty Autopilot: asks for the automatic builder's queued constructions one at a time
+# (ADR 0001). The holding view presses one and closes half a second later, so the next is
+# asked for a second after the last was pressed. (A delayed GUI state cannot time out an
+# unpressed request: its delay does not restart reliably, so it cut short requests that
+# were still being pressed; the request lapses after a day instead.)
+widget = {
+	name = "dap_build_driver"
+	size = { 0 0 }
+	alwaystransparent = yes
+	# No player for a moment at succession
+	visible = "[GetPlayer.IsValid]"
+
+	widget = {
+		size = { 0 0 }
+		alwaystransparent = yes
+		state = {
+			name = next
+			trigger_when = "[GetScriptedGui( 'dap_build_next' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			delay = 1
+			on_finish = "[GetScriptedGui( 'dap_build_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+		}
+	}
+}
