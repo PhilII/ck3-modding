@@ -11,6 +11,7 @@ Before writing any Crusader Kings III mod code, read `CK3_MODDING_GUIDE.md` in t
 ## Dynasty Autopilot (mods/dynasty_autopilot)
 - Loaded via `mod/dynasty_autopilot.mod` with an absolute `path` to this folder.
 - Menu settings are declared in `tools/dap_settings.py`; run `python3 tools/build_dap.py` after editing it. Files named `*_generated*` are output: never edit them by hand.
+- Building data (`dap_buildings_generated.txt`: requirement triggers, picks, names) is generated from the installed game's building files by `python3 tools/build_buildings.py`; CI cannot run it, so rerun it after game patches and commit the output.
 - Run `python3 tools/check_mod.py` before committing; CI runs it plus a check that generated files are up to date.
 - Window: `gui/dap_window.gui`; button actions: `common/scripted_guis/dap_scripted_guis.txt`.
 - Never restart or screenshot CK3 without asking if the user may be using it.

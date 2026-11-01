@@ -813,7 +813,7 @@ MODULES = [
                     {
                         "key": "dap_build_reminder",
                         "label": "Building reminder",
-                        "tooltip": "The game has no way for mods to start a construction, so this reminds you once a year when you have gold above your reserve and free building slots.",
+                        "tooltip": "Reminds you once a year when you have gold above your reserve and free building slots.",
                         "default": 0,
                         "values": ["Off", "On"],
                     },
@@ -955,6 +955,33 @@ MODULES = [
                         "tooltip": "Once a year, counts the counties in your realm that follow another faith, or your faith with another rite.",
                         "default": 1,
                         "values": ["Off", "On"],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        "id": "buildings",
+        "tab": "Buildings",
+        "sections": [
+            {
+                "id": "general",
+                "title": "Automatic building",
+                "holder": "player",
+                "settings": [
+                    {
+                        "key": "dap_build_enabled",
+                        "label": "Automatic building",
+                        "tooltip": "When on, once every season, a new building is started in a free slot of your capital's holding when you have gold above your reserve. It presses the real Build button, so it costs what it costs you, and the holding view opens for a moment while it does.",
+                        "default": 0,
+                        "values": ["#N Off#!", "#P On#!"],
+                    },
+                    {
+                        "key": "dap_build_development",
+                        "label": "Development",
+                        "tooltip": "Build buildings that make the whole county's development grow faster.",
+                        "default": 2,
+                        "values": ["Off", "Low", "High"],
                     },
                 ],
             },

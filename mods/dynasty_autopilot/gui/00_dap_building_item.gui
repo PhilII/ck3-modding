@@ -157,7 +157,9 @@ types DapCountyViewTypes
 
 			state = {
 				name = open_free_slot
-				trigger_when = "[And( And( And( GUIBuildingItem.IsBuildNewIconShown, GUIBuildingItem.IsBuildingButtonEnabled ), Not( GUIBuildingItem.HasLevel ) ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) )]"
+				# Regular slots only: they are HoldingView.GetBuildings items; the duchy capital,
+				# special and great building slots are not in a datamodel (index -1)
+				trigger_when = "[And( And( And( And( GUIBuildingItem.IsBuildNewIconShown, GUIBuildingItem.IsBuildingButtonEnabled ), Not( GUIBuildingItem.HasLevel ) ), GreaterThanOrEqualTo_int32( PdxGuiWidget.AccessParent.GetIndexInDataModel, '(int32)0' ) ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) )]"
 				on_finish = "[GUIBuildingItem.OnClick]"
 			}
 

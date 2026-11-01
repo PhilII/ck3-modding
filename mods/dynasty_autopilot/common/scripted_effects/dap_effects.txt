@@ -785,6 +785,10 @@ dap_run_all_effect = {
 		dap_run_court_effect = yes
 		set_local_variable = { name = dap_dry value = var:dap_faith_suggest }
 		dap_run_faith_effect = yes
+		# Last: the holding view it may open must not hide what the others did.
+		# No Suggest only mode for buildings yet, so it always acts
+		set_local_variable = { name = dap_dry value = 0 }
+		dap_run_buildings_effect = yes
 		remove_local_variable = dap_dry
 	}
 }

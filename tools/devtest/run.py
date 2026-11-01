@@ -1,7 +1,8 @@
 """Runs Dynasty Autopilot in the real game and reports what every feature did.
 
 Usage:
-  python3 tools/devtest/run.py suite            # one tick: scenario setup, one run, checks
+  python3 tools/devtest/run.py suite            # one tick: scenario setup, one run, checks;
+                                                # then the construction the run asked for
   python3 tools/devtest/run.py soak --years 30  # many years at full speed in observer mode
   python3 tools/devtest/run.py build            # a mod widget starts a real construction (ADR 0001)
 
@@ -19,6 +20,8 @@ dap_devtest_ai), and is followed through successions.
 
 The build mode adds a GUI widget that, like a button in the mod's window, asks
 for a construction; the mod then presses the holding view's real Build button.
+The suite adds a GUI widget that waits for the construction its seasonal run
+asked for, checks it, and only then runs the succession test.
 """
 
 import argparse
@@ -64,6 +67,7 @@ TEST_VALUES = {
     "dap_faith_enabled": 1, "dap_faith_chaplain": 2, "dap_faith_task": 1, "dap_faith_family": 1,
     "dap_faith_spouses": 1, "dap_faith_vassals": 2, "dap_hof_gold": 1, "dap_excomm_alert": 1,
     "dap_faith_warn_heir": 1, "dap_faith_warn_vassals": 1, "dap_faith_report": 1,
+    "dap_build_enabled": 1, "dap_build_development": 2,
 }
 
 
@@ -173,9 +177,65 @@ SUITE_SETUP = """\
 		}
 		create_character = { age = 30 gender = male faith = root.faith culture = root.culture location = root.capital_province save_scope_as = dap_t_prisoner }
 		imprison = { target = scope:dap_t_prisoner type = dungeon }
+		# A free slot in the capital's holding for the seasonal run below, and a development
+		# building that may go there (Norway's watermills need this innovation in 1066)
+		culture = { add_innovation = innovation_windmills }
+		capital_province = {
+			if = {
+				limit = { has_free_building_slot = no }
+				add_province_modifier = extra_building_slot
+			}
+		}
+		# Buildings: nothing is asked for with the switch off, or without gold above the reserve
+		set_variable = { name = dap_build_enabled value = 0 }
+		dap_run_buildings_effect = yes
+		if = {
+			limit = { has_variable = dap_build_building }
+			debug_log = "DAPTEST FAIL a building was asked for with automatic building off"
+		}
+		else = { debug_log = "DAPTEST OK no building with automatic building off" }
+		set_variable = { name = dap_build_enabled value = 1 }
+		set_variable = { name = dap_gold_reserve value = 3 }
+		remove_short_term_gold = gold
+		add_gold = dap_gold_reserve_value
+		dap_run_buildings_effect = yes
+		if = {
+			limit = { has_variable = dap_build_building }
+			debug_log = "DAPTEST FAIL a building was asked for without gold above the reserve"
+		}
+		else = { debug_log = "DAPTEST OK no building without gold above the reserve" }
+		set_variable = { name = dap_gold_reserve value = 0 }
+		add_gold = 5000
 """
 
 SUITE_CHECKS = """\
+		# The seasonal run asked for a development building in the capital; the holding
+		# view presses Build after this tick (dap_devtest_suite_build_check)
+		if = {
+			limit = {
+				has_variable = dap_build_building
+				var:dap_build_province ?= root.capital_province
+			}
+			debug_log = "DAPTEST OK the seasonal run asked for a building in the capital"
+		}
+		else = {
+			debug_log = "DAPTEST FAIL the seasonal run asked for no building in the capital"
+			capital_province = {
+				dap_pick_building_in_province_effect = yes
+				if = {
+					limit = { has_free_building_slot = no }
+					debug_log = "DAPTEST   the capital has no free slot"
+				}
+				if = {
+					limit = { has_ongoing_construction = yes }
+					debug_log = "DAPTEST   the capital has a construction under way"
+				}
+			}
+			if = {
+				limit = { NOT = { exists = scope:dap_build_building } }
+				debug_log = "DAPTEST   no development building can be built in the capital"
+			}
+		}
 		if = {
 			limit = { cp:councillor_chancellor ?= { is_performing_council_task = task_domestic_affairs } }
 			debug_log = "DAPTEST OK chancellor on Domestic Affairs (a vassal hates you)"
@@ -280,22 +340,27 @@ SUITE_CHECKS = """\
 			debug_log = "DAPTEST OK marriage arranged or proposed"
 		}
 		else = { debug_log = "DAPTEST FAIL no marriage for adult children" }
+		# The Build button must still be affordable after the broke-steward check
+		add_gold = 5000
 """
 
 
-# Last: the player dies; the heir must take over the settings (on_player_character_change)
-SUITE_SUCCESSION = """\
-		remove_variable = dap_devtest_ai
-		primary_heir ?= { save_scope_as = dap_t_heir }
-		if = {
-			limit = { exists = scope:dap_t_heir }
-			death = natural
-			scope:dap_t_heir = { trigger_event = dap_devtest.30 }
-		}
-		else = {
-			debug_log = "DAPTEST note no heir, succession not tested"
-			debug_log = "DAPTEST done"
-		}
+# Last, once the construction is checked: the player dies; the heir must take over the
+# settings (on_player_character_change)
+SUITE_SUCCESSION = """
+dap_devtest_succession_effect = {
+	remove_variable = dap_devtest_ai
+	primary_heir ?= { save_scope_as = dap_t_heir }
+	if = {
+		limit = { exists = scope:dap_t_heir }
+		death = natural
+		scope:dap_t_heir = { trigger_event = dap_devtest.30 }
+	}
+	else = {
+		debug_log = "DAPTEST note no heir, succession not tested"
+		debug_log = "DAPTEST done"
+	}
+}
 """
 
 SUITE_AFTER_DEATH = """
@@ -341,7 +406,6 @@ dap_devtest.1 = {
         out.append("\t\tclear_variable_list = dap_log\n\t\tdap_run_all_effect = yes\n\t\tdap_devtest_count_effect = yes\n")
         out.append(SUITE_CHECKS)
         out.append("\t\tdap_devtest_report_effect = yes\n")
-        out.append(SUITE_SUCCESSION)
     else:
         out.append(f"\t\tset_variable = {{ name = dap_devtest_pulses_left value = {years * 4} }}\n")
         out.append("\t\tdebug_log = \"DAPTEST soak started\"\n")
@@ -396,6 +460,10 @@ dap_devtest_follow_heir_effect = {
 	debug_log = "DAPTEST succession"
 }
 """)
+    if mode == "build":
+        effects += BUILD_PICK
+    elif mode == "suite":
+        effects += SUITE_SUCCESSION
     return "".join(out), effects + "".join(follow)
 
 
@@ -480,7 +548,7 @@ BUILD_SGUIS = """\
 dap_devtest_build_request = {
 	scope = character
 	effect = {
-		dap_build_prototype_effect = yes
+		dap_devtest_pick_camps_effect = yes
 		if = {
 			limit = { has_variable = dap_build_building }
 			var:dap_build_province = { save_scope_as = holding }
@@ -529,6 +597,104 @@ dap_devtest_build_timeout = {
 			limit = { NOT = { has_variable = dap_build_last_province } }
 			debug_log = "DAPTEST FAIL the holding view never pressed Build"
 			debug_log = "DAPTEST done"
+		}
+	}
+}
+"""
+
+
+# A fixed pick with a known price (military camps cost cheap_building_tier_1_cost in
+# Norway in 1066): a holding of the player's own with a free slot
+BUILD_PICK = """
+dap_devtest_pick_camps_effect = {
+	ordered_directly_owned_province = {
+		limit = {
+			has_free_building_slot = yes
+			has_ongoing_construction = no
+			NOT = { has_building_or_higher = military_camps_01 }
+			building_requirement_castle_city_church = { LEVEL = 01 }
+		}
+		order_by = combined_building_level
+		save_scope_as = dap_build_province
+	}
+	if = {
+		limit = { exists = scope:dap_build_province }
+		save_scope_value_as = { name = dap_build_building value = flag:military_camps_01 }
+		dap_build_request_effect = yes
+	}
+}
+"""
+
+# The suite's seasonal run asked for a construction; once the holding view pressed
+# Build (or it never did), check it, then go on to the succession test.
+SUITE_GUI = """\
+widget = {
+	name = "dap_devtest_autorun"
+	size = { 1 1 }
+	alwaystransparent = yes
+
+	widget = {
+		size = { 1 1 }
+		alwaystransparent = yes
+		state = {
+			name = give_up
+			trigger_on_create = yes
+			delay = 60
+			on_finish = "[GetScriptedGui( 'dap_devtest_suite_build_timeout' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+		}
+	}
+
+	widget = {
+		size = { 1 1 }
+		alwaystransparent = yes
+		state = {
+			name = check
+			trigger_when = "[GetPlayer.MakeScope.Var( 'dap_build_last_province' ).IsSet]"
+			delay = 1
+			on_finish = "[GetScriptedGui( 'dap_devtest_suite_build_check' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+		}
+	}
+}
+"""
+
+SUITE_SGUIS = """\
+dap_devtest_suite_build_check = {
+	scope = character
+	effect = {
+		set_global_variable = { name = dap_devtest_build_checked value = yes }
+		var:dap_build_last_province = { save_scope_as = holding }
+		debug_log = "DAPTEST holding view pressed Build"
+		debug_log_scopes = yes
+		if = {
+			limit = {
+				var:dap_build_last_province = capital_province
+				capital_province = { has_ongoing_construction = yes }
+			}
+			debug_log = "DAPTEST OK a development building is under construction in the capital"
+		}
+		else = { debug_log = "DAPTEST FAIL no construction under way in the capital" }
+		if = {
+			limit = {
+				is_target_in_variable_list = { name = dap_log target = root }
+				var:dap_log_action ?= flag:dap_log_built
+				has_variable = dap_log_building
+				var:dap_log_province ?= capital_province
+			}
+			debug_log = "DAPTEST OK the log names the building and the holding"
+		}
+		else = { debug_log = "DAPTEST FAIL the log does not name the building and the holding" }
+		dap_devtest_succession_effect = yes
+	}
+}
+
+dap_devtest_suite_build_timeout = {
+	scope = character
+	effect = {
+		if = {
+			limit = { NOT = { exists = global_var:dap_devtest_build_checked } }
+			set_global_variable = { name = dap_devtest_build_checked value = yes }
+			debug_log = "DAPTEST FAIL the holding view never pressed Build"
+			dap_devtest_succession_effect = yes
 		}
 	}
 }
@@ -586,6 +752,10 @@ def main():
         elif args.mode == "build":
             write(FILES["gui"], BUILD_GUI)
             write(FILES["sguis"], BUILD_SGUIS)
+            write(FILES["widgets"], "gui/zz_devtest_autorun.gui = dap_devtest_autorun\n")
+        else:
+            write(FILES["gui"], SUITE_GUI)
+            write(FILES["sguis"], SUITE_SGUIS)
             write(FILES["widgets"], "gui/zz_devtest_autorun.gui = dap_devtest_autorun\n")
 
         started = time.time()

@@ -313,6 +313,10 @@ dap_cl_log_action = {
 		localization_key = dap_log_task_increase_control
 	}
 	text = {
+		trigger = { var:dap_log_action = flag:dap_log_built }
+		localization_key = dap_log_built
+	}
+	text = {
 		fallback = yes
 		localization_key = dap_empty
 	}

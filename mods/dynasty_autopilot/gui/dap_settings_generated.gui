@@ -958,6 +958,37 @@ types DapSettingsGenerated
 		layoutpolicy_horizontal = expanding
 	}
 
+	type dap_section_buildings_general = vbox {
+		layoutpolicy_horizontal = expanding
+
+		dap_section_header = {
+			blockoverride "title" { text = "dap_section_buildings_general" }
+		}
+		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_build_enabled" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_build_enabled_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_build_enabled' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_enabled' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_enabled' ) ).End )]" }
+		}
+		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_build_development" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_build_development_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_build_development' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_development' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_development' ) ).End )]" }
+		}
+	}
+
+	type dap_module_buildings_player = vbox {
+		layoutpolicy_horizontal = expanding
+		dap_section_buildings_general = {}
+	}
+
+	type dap_module_buildings_rules = vbox {
+		layoutpolicy_horizontal = expanding
+	}
+
 	type dap_tab_buttons = hbox {
 		layoutpolicy_horizontal = expanding
 		margin = { 10 0 }
@@ -997,6 +1028,12 @@ types DapSettingsGenerated
 			onclick = "[GetVariableSystem.Set( 'dap_tab', 'faith' )]"
 			down = "[GetVariableSystem.HasValue( 'dap_tab', 'faith' )]"
 		}
+		button_tab = {
+			layoutpolicy_horizontal = expanding
+			text = "dap_tab_buildings"
+			onclick = "[GetVariableSystem.Set( 'dap_tab', 'buildings' )]"
+			down = "[GetVariableSystem.HasValue( 'dap_tab', 'buildings' )]"
+		}
 	}
 
 	type dap_settings_view = vbox {
@@ -1018,6 +1055,9 @@ types DapSettingsGenerated
 		}
 		dap_module_faith_player = {
 			visible = "[GetVariableSystem.HasValue( 'dap_tab', 'faith' )]"
+		}
+		dap_module_buildings_player = {
+			visible = "[GetVariableSystem.HasValue( 'dap_tab', 'buildings' )]"
 		}
 	}
 

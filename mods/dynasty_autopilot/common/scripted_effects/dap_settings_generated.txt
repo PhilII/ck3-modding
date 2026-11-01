@@ -69,6 +69,8 @@ dap_set_default_player_settings_effect = {
 	set_variable = { name = dap_faith_warn_heir value = 1 }
 	set_variable = { name = dap_faith_warn_vassals value = 1 }
 	set_variable = { name = dap_faith_report value = 1 }
+	set_variable = { name = dap_build_enabled value = 0 }
+	set_variable = { name = dap_build_development value = 2 }
 }
 
 # this = rule holder; default rule values
@@ -467,6 +469,14 @@ dap_ensure_player_settings_effect = {
 		limit = { NOT = { has_variable = dap_faith_report } }
 		set_variable = { name = dap_faith_report value = 1 }
 	}
+	if = {
+		limit = { NOT = { has_variable = dap_build_enabled } }
+		set_variable = { name = dap_build_enabled value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_build_development } }
+		set_variable = { name = dap_build_development value = 2 }
+	}
 }
 
 # this = rule holder; adds rules introduced after the save was started
@@ -723,6 +733,8 @@ dap_declare_setting_flags_effect = {
 	set_local_variable = { name = dap_setting_flag value = flag:dap_faith_warn_heir }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_faith_warn_vassals }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_faith_report }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_build_enabled }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_build_development }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_breeding }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_power }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_cheap }
@@ -1044,6 +1056,8 @@ dap_inherit_settings_effect = {
 	set_variable = { name = dap_faith_warn_heir value = $FROM$.var:dap_faith_warn_heir }
 	set_variable = { name = dap_faith_warn_vassals value = $FROM$.var:dap_faith_warn_vassals }
 	set_variable = { name = dap_faith_report value = $FROM$.var:dap_faith_report }
+	set_variable = { name = dap_build_enabled value = $FROM$.var:dap_build_enabled }
+	set_variable = { name = dap_build_development value = $FROM$.var:dap_build_development }
 	set_variable = { name = dap_status value = $FROM$.var:dap_status }
 	set_variable = { name = dap_same_faith value = $FROM$.var:dap_same_faith }
 	set_variable = { name = dap_same_culture value = $FROM$.var:dap_same_culture }
@@ -1652,6 +1666,14 @@ dap_setting_next_effect = {
 		limit = { scope:setting = flag:dap_faith_report }
 		dap_cycle_effect = { VAR = dap_faith_report MAX = 1 }
 	}
+	else_if = {
+		limit = { scope:setting = flag:dap_build_enabled }
+		dap_cycle_effect = { VAR = dap_build_enabled MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_build_development }
+		dap_cycle_effect = { VAR = dap_build_development MAX = 2 }
+	}
 }
 
 # this = setting holder; scope:setting = flag naming the setting
@@ -2071,6 +2093,14 @@ dap_setting_prev_effect = {
 	else_if = {
 		limit = { scope:setting = flag:dap_faith_report }
 		dap_cycle_back_effect = { VAR = dap_faith_report MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_build_enabled }
+		dap_cycle_back_effect = { VAR = dap_build_enabled MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_build_development }
+		dap_cycle_back_effect = { VAR = dap_build_development MAX = 2 }
 	}
 }
 

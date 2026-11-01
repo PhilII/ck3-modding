@@ -2035,3 +2035,39 @@ dap_cl_dap_faith_report = {
 	}
 }
 
+dap_cl_dap_build_enabled = {
+	type = character
+	text = {
+		trigger = { var:dap_build_enabled = 0 }
+		localization_key = dap_val_dap_build_enabled_0
+	}
+	text = {
+		trigger = { var:dap_build_enabled = 1 }
+		localization_key = dap_val_dap_build_enabled_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
+dap_cl_dap_build_development = {
+	type = character
+	text = {
+		trigger = { var:dap_build_development = 0 }
+		localization_key = dap_val_dap_build_development_0
+	}
+	text = {
+		trigger = { var:dap_build_development = 1 }
+		localization_key = dap_val_dap_build_development_1
+	}
+	text = {
+		trigger = { var:dap_build_development = 2 }
+		localization_key = dap_val_dap_build_development_2
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+

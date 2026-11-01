@@ -148,6 +148,7 @@
  dap_log_task_develop_county: "Council task set to #V $task_develop_county$#!: [Character.MakeScope.Var('dap_log_county').Title.GetBaseNameNoTier]"
  dap_log_task_promote_culture: "Council task set to #V $task_promote_culture$#!: [Character.MakeScope.Var('dap_log_county').Title.GetBaseNameNoTier]"
  dap_log_task_increase_control: "Council task set to #V $task_increase_control$#!: [Character.MakeScope.Var('dap_log_county').Title.GetBaseNameNoTier]"
+ dap_log_built: "Started building #V [Character.Custom( 'dap_cl_log_building' )]#! in #V [Character.MakeScope.Var('dap_log_province').Province.GetName]#!"
  dap_faith_report_title: "Dynasty Autopilot: faith in your realm"
  dap_faith_report_desc: "Counties of another faith: #V [ROOT.Char.MakeScope.Var('dap_report_other_faith').GetValue|0]#!\nCounties of your faith but another rite: #V [ROOT.Char.MakeScope.Var('dap_report_other_rite').GetValue|0]#!\nSet your chaplain to convert them in the #V Faith#! tab."
  dap_excomm_title: "You are excommunicated"

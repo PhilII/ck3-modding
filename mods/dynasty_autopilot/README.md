@@ -15,8 +15,9 @@ Everything runs once per season (or immediately with **Run now**) and is recorde
 | Education | Education focus by role (heir, sons, daughters), natural talent, council needs or a fixed skill |
 | Court | Sway hostile vassals, fill council seats and court positions, set council tasks (Domestic Affairs for unhappy vassals, taxes when short of gold, development or culture, control in unruly counties, disrupting exposed schemes), knights, prisoners, granting counties and duchies, creating titles, recruiting men-at-arms, building reminder |
 | Faith | Fill the Court Chaplain seat, have the chaplain convert counties of another faith or rite (capital duchy or most/least developed first), ask family members, spouses and vassals who would accept to adopt your faith, piety reserve, ask the Head of Faith for gold, excommunication alert, warnings about an heir of another faith or hostile-faith vassals, yearly faith report |
+| Buildings | Starts a development building in a free slot of your capital's holding once a season, with gold above your reserve, by pressing the real Build button |
 
-Every module has a **Mode** setting: *Act* or *Suggest only* (log what it would do without doing it).
+Every module except Buildings (planned) has a **Mode** setting: *Act* or *Suggest only* (log what it would do without doing it).
 
 ## Rules
 
@@ -28,7 +29,7 @@ Presets (Bloodline, Power, Quick) and three save slots are available, plus copy-
 
 - **Childhood personality choices**: they live in vanilla event files; automating them would mean overwriting those events. Use *Pick me as guardian: Never* to avoid them.
 - **Revoking titles**: the vanilla revoke interaction cannot be run from script with a specific title, and doing it directly would skip the vassal's right to refuse. Hostile vassals you could revoke from are listed in the log instead.
-- **Building**: mods cannot start a construction, only add finished buildings for free. A yearly reminder is sent instead.
+- **Building** only starts new development buildings in the capital's holding so far; other holdings, upgrades and other building focuses are planned.
 - **Concubines** come only from your court and prisoners, as in vanilla. Sunni Islam in 1.20 has no concubines.
 
 ## Compatibility
@@ -38,3 +39,4 @@ No vanilla files are overridden. It appends to `quarterly_playable_pulse` and ad
 ## Development
 
 Settings live in `tools/dap_settings.py` (outside the mod folder). Run `python3 tools/build_dap.py` to regenerate the `*_generated*` files and the copies of the English text for other languages.
+Building data (`dap_buildings_generated.txt`) comes from the installed game: run `python3 tools/build_buildings.py` after game patches.
