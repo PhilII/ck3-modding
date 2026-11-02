@@ -642,3 +642,3775 @@ dap_holding_development_buildings_value = {
 		add = 1
 	}
 }
+
+# this = province; what barracks_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_barracks_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.175
+	}
+}
+
+# this = province; what camel_farms_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_camel_farms_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:camel_cavalry }
+		add = 0.306
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.219
+	}
+}
+
+# this = province; what curtain_walls_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_curtain_walls_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.175
+	}
+}
+
+# this = province; what elephant_pens_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_elephant_pens_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:elephant_cavalry }
+		add = 0.350
+	}
+}
+
+# this = province; what hill_forts_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hill_forts_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.175
+	}
+}
+
+# this = province; what hillside_grazing_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hillside_grazing_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.131
+	}
+}
+
+# this = province; what horse_pastures_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_horse_pastures_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.481
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.262
+	}
+}
+
+# this = province; what kora_kora_yards_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_kora_kora_yards_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.350
+	}
+}
+
+# this = province; what military_camps_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_military_camps_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.350
+	}
+}
+
+# this = province; what outposts_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_outposts_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.219
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.350
+	}
+}
+
+# this = province; what powder_magazine_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_powder_magazine_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:gunpowder }
+		add = 0.350
+	}
+}
+
+# this = province; what ramparts_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_ramparts_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.087
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.219
+	}
+}
+
+# this = province; what regimental_grounds_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_regimental_grounds_01_value = {
+	value = 0.262
+}
+
+# this = province; what smiths_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_smiths_01_value = {
+	value = 0.131
+}
+
+# this = province; what stables_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_stables_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.306
+	}
+}
+
+# this = province; what stilted_granaries_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_stilted_granaries_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.175
+	}
+}
+
+# this = province; what wantilan_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wantilan_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.262
+	}
+}
+
+# this = province; what war_camps_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_war_camps_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.306
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.306
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.306
+	}
+}
+
+# this = province; what warrior_lodges_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_warrior_lodges_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.131
+	}
+}
+
+# this = province; what watchtowers_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_watchtowers_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.175
+	}
+}
+
+# this = province; what water_temples_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_water_temples_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.262
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.262
+	}
+}
+
+# this = province; what wind_furnace_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wind_furnace_01_value = {
+	value = 0.350
+}
+
+# this = province; what barracks_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_barracks_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.088
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.088
+	}
+}
+
+# this = province; what barracks_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_barracks_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.262
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.262
+	}
+}
+
+# this = province; what barracks_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_barracks_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.175
+	}
+}
+
+# this = province; what barracks_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_barracks_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.175
+	}
+}
+
+# this = province; what barracks_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_barracks_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.175
+	}
+}
+
+# this = province; what barracks_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_barracks_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.175
+	}
+}
+
+# this = province; what barracks_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_barracks_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.175
+	}
+}
+
+# this = province; what camel_farms_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_camel_farms_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:camel_cavalry }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.066
+	}
+}
+
+# this = province; what camel_farms_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_camel_farms_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:camel_cavalry }
+		add = 0.437
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.241
+	}
+}
+
+# this = province; what camel_farms_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_camel_farms_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:camel_cavalry }
+		add = 0.262
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.109
+	}
+}
+
+# this = province; what camel_farms_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_camel_farms_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:camel_cavalry }
+		add = 0.262
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.109
+	}
+}
+
+# this = province; what camel_farms_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_camel_farms_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:camel_cavalry }
+		add = 0.262
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.109
+	}
+}
+
+# this = province; what camel_farms_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_camel_farms_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:camel_cavalry }
+		add = 0.263
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.109
+	}
+}
+
+# this = province; what camel_farms_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_camel_farms_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:camel_cavalry }
+		add = 0.262
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.109
+	}
+}
+
+# this = province; what castle_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_castle_02_value = {
+	value = 0.088
+}
+
+# this = province; what castle_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_castle_03_value = {
+	value = 0.087
+}
+
+# this = province; what castle_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_castle_04_value = {
+	value = 0.087
+}
+
+# this = province; what curtain_walls_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_curtain_walls_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what curtain_walls_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_curtain_walls_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what curtain_walls_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_curtain_walls_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what curtain_walls_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_curtain_walls_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what curtain_walls_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_curtain_walls_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what curtain_walls_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_curtain_walls_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what curtain_walls_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_curtain_walls_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what elephant_pens_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_elephant_pens_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:elephant_cavalry }
+		add = 0.175
+	}
+}
+
+# this = province; what elephant_pens_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_elephant_pens_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:elephant_cavalry }
+		add = 0.175
+	}
+}
+
+# this = province; what elephant_pens_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_elephant_pens_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:elephant_cavalry }
+		add = 0.175
+	}
+}
+
+# this = province; what elephant_pens_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_elephant_pens_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:elephant_cavalry }
+		add = 0.175
+	}
+}
+
+# this = province; what elephant_pens_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_elephant_pens_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:elephant_cavalry }
+		add = 0.175
+	}
+}
+
+# this = province; what elephant_pens_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_elephant_pens_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:elephant_cavalry }
+		add = 0.175
+	}
+}
+
+# this = province; what elephant_pens_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_elephant_pens_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:elephant_cavalry }
+		add = 0.175
+	}
+}
+
+# this = province; what hill_farms_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hill_farms_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.017
+	}
+}
+
+# this = province; what hill_farms_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hill_farms_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.017
+	}
+}
+
+# this = province; what hill_forts_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hill_forts_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.044
+	}
+}
+
+# this = province; what hill_forts_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hill_forts_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.044
+	}
+}
+
+# this = province; what hill_forts_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hill_forts_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.044
+	}
+}
+
+# this = province; what hill_forts_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hill_forts_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.044
+	}
+}
+
+# this = province; what hill_forts_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hill_forts_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.044
+	}
+}
+
+# this = province; what hill_forts_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hill_forts_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.044
+	}
+}
+
+# this = province; what hill_forts_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hill_forts_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.044
+	}
+}
+
+# this = province; what hillside_grazing_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hillside_grazing_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.131
+	}
+}
+
+# this = province; what hillside_grazing_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hillside_grazing_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.066
+	}
+}
+
+# this = province; what hillside_grazing_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hillside_grazing_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.066
+	}
+}
+
+# this = province; what hillside_grazing_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hillside_grazing_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.066
+	}
+}
+
+# this = province; what hillside_grazing_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hillside_grazing_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.066
+	}
+}
+
+# this = province; what hillside_grazing_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hillside_grazing_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.066
+	}
+}
+
+# this = province; what hillside_grazing_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hillside_grazing_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.066
+	}
+}
+
+# this = province; what horse_pastures_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_horse_pastures_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.153
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.088
+	}
+}
+
+# this = province; what horse_pastures_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_horse_pastures_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.153
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.087
+	}
+}
+
+# this = province; what horse_pastures_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_horse_pastures_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.153
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.087
+	}
+}
+
+# this = province; what horse_pastures_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_horse_pastures_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.153
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.087
+	}
+}
+
+# this = province; what horse_pastures_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_horse_pastures_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.153
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.087
+	}
+}
+
+# this = province; what horse_pastures_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_horse_pastures_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.153
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.087
+	}
+}
+
+# this = province; what horse_pastures_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_horse_pastures_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.153
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.087
+	}
+}
+
+# this = province; what hospices_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hospices_03_value = {
+	value = 0.009
+}
+
+# this = province; what hospices_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hospices_04_value = {
+	value = 0.009
+}
+
+# this = province; what hospices_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hospices_05_value = {
+	value = 0.009
+}
+
+# this = province; what hospices_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hospices_06_value = {
+	value = 0.009
+}
+
+# this = province; what hospices_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hospices_07_value = {
+	value = 0.009
+}
+
+# this = province; what hospices_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hospices_08_value = {
+	value = 0.009
+}
+
+# this = province; what kora_kora_yards_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_kora_kora_yards_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.175
+	}
+}
+
+# this = province; what kora_kora_yards_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_kora_kora_yards_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.175
+	}
+}
+
+# this = province; what kora_kora_yards_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_kora_kora_yards_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.175
+	}
+}
+
+# this = province; what military_camps_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_military_camps_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.088
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.175
+	}
+}
+
+# this = province; what military_camps_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_military_camps_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.219
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.437
+	}
+}
+
+# this = province; what military_camps_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_military_camps_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.262
+	}
+}
+
+# this = province; what military_camps_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_military_camps_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.262
+	}
+}
+
+# this = province; what military_camps_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_military_camps_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.262
+	}
+}
+
+# this = province; what military_camps_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_military_camps_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.262
+	}
+}
+
+# this = province; what military_camps_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_military_camps_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.262
+	}
+}
+
+# this = province; what outposts_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_outposts_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.109
+	}
+}
+
+# this = province; what outposts_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_outposts_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.109
+	}
+}
+
+# this = province; what outposts_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_outposts_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.109
+	}
+}
+
+# this = province; what outposts_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_outposts_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.109
+	}
+}
+
+# this = province; what outposts_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_outposts_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.109
+	}
+}
+
+# this = province; what outposts_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_outposts_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.109
+	}
+}
+
+# this = province; what outposts_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_outposts_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.109
+	}
+}
+
+# this = province; what plantations_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_plantations_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.017
+	}
+}
+
+# this = province; what powder_magazine_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_powder_magazine_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:gunpowder }
+		add = 0.175
+	}
+}
+
+# this = province; what powder_magazine_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_powder_magazine_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:gunpowder }
+		add = 0.175
+	}
+}
+
+# this = province; what powder_magazine_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_powder_magazine_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:gunpowder }
+		add = 0.175
+	}
+}
+
+# this = province; what powder_magazine_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_powder_magazine_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:gunpowder }
+		add = 0.175
+	}
+}
+
+# this = province; what powder_magazine_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_powder_magazine_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:gunpowder }
+		add = 0.175
+	}
+}
+
+# this = province; what powder_magazine_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_powder_magazine_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:gunpowder }
+		add = 0.175
+	}
+}
+
+# this = province; what powder_magazine_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_powder_magazine_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:gunpowder }
+		add = 0.175
+	}
+}
+
+# this = province; what quarries_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_quarries_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.017
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.017
+	}
+}
+
+# this = province; what quarries_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_quarries_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.070
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.017
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.017
+	}
+}
+
+# this = province; what ramparts_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_ramparts_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.022
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.066
+	}
+}
+
+# this = province; what ramparts_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_ramparts_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.022
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.066
+	}
+}
+
+# this = province; what ramparts_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_ramparts_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.022
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.066
+	}
+}
+
+# this = province; what ramparts_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_ramparts_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.022
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.066
+	}
+}
+
+# this = province; what ramparts_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_ramparts_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.022
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.066
+	}
+}
+
+# this = province; what ramparts_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_ramparts_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.022
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.066
+	}
+}
+
+# this = province; what ramparts_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_ramparts_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.022
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.066
+	}
+}
+
+# this = province; what regimental_grounds_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_regimental_grounds_02_value = {
+	value = 0.088
+}
+
+# this = province; what regimental_grounds_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_regimental_grounds_03_value = {
+	value = 0.087
+}
+
+# this = province; what regimental_grounds_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_regimental_grounds_04_value = {
+	value = 0.087
+}
+
+# this = province; what regimental_grounds_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_regimental_grounds_05_value = {
+	value = 0.087
+}
+
+# this = province; what regimental_grounds_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_regimental_grounds_06_value = {
+	value = 0.087
+}
+
+# this = province; what regimental_grounds_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_regimental_grounds_07_value = {
+	value = 0.087
+}
+
+# this = province; what regimental_grounds_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_regimental_grounds_08_value = {
+	value = 0.087
+}
+
+# this = province; what smiths_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_smiths_02_value = {
+	value = 0.044
+}
+
+# this = province; what smiths_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_smiths_03_value = {
+	value = 0.175
+}
+
+# this = province; what smiths_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_smiths_04_value = {
+	value = 0.087
+}
+
+# this = province; what smiths_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_smiths_05_value = {
+	value = 0.087
+}
+
+# this = province; what smiths_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_smiths_06_value = {
+	value = 0.087
+}
+
+# this = province; what smiths_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_smiths_07_value = {
+	value = 0.087
+}
+
+# this = province; what smiths_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_smiths_08_value = {
+	value = 0.087
+}
+
+# this = province; what stables_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_stables_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.088
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.131
+	}
+}
+
+# this = province; what stables_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_stables_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.262
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.306
+	}
+}
+
+# this = province; what stables_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_stables_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.219
+	}
+}
+
+# this = province; what stables_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_stables_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.437
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.350
+	}
+}
+
+# this = province; what stables_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_stables_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.262
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.262
+	}
+}
+
+# this = province; what stables_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_stables_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.262
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.262
+	}
+}
+
+# this = province; what stables_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_stables_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.262
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.263
+	}
+}
+
+# this = province; what stilted_granaries_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_stilted_granaries_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.044
+	}
+}
+
+# this = province; what stilted_granaries_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_stilted_granaries_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.044
+	}
+}
+
+# this = province; what stilted_granaries_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_stilted_granaries_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.044
+	}
+}
+
+# this = province; what temple_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_temple_02_value = {
+	value = 0.044
+}
+
+# this = province; what temple_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_temple_03_value = {
+	value = 0.044
+}
+
+# this = province; what temple_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_temple_04_value = {
+	value = 0.044
+}
+
+# this = province; what tribe_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_tribe_02_value = {
+	value = 0.175
+}
+
+# this = province; what wantilan_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wantilan_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.088
+	}
+}
+
+# this = province; what wantilan_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wantilan_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.087
+	}
+}
+
+# this = province; what wantilan_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wantilan_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.087
+	}
+}
+
+# this = province; what war_camps_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_war_camps_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.131
+	}
+}
+
+# this = province; what warrior_lodges_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_warrior_lodges_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.131
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.131
+	}
+}
+
+# this = province; what warrior_lodges_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_warrior_lodges_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.066
+	}
+}
+
+# this = province; what warrior_lodges_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_warrior_lodges_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.066
+	}
+}
+
+# this = province; what warrior_lodges_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_warrior_lodges_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.066
+	}
+}
+
+# this = province; what warrior_lodges_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_warrior_lodges_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.066
+	}
+}
+
+# this = province; what warrior_lodges_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_warrior_lodges_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.066
+	}
+}
+
+# this = province; what warrior_lodges_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_warrior_lodges_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.066
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.066
+	}
+}
+
+# this = province; what watchtowers_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_watchtowers_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what watchtowers_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_watchtowers_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what watchtowers_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_watchtowers_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what watchtowers_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_watchtowers_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what watchtowers_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_watchtowers_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what watchtowers_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_watchtowers_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what watchtowers_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_watchtowers_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.044
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.044
+	}
+}
+
+# this = province; what water_temples_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_water_temples_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.088
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.088
+	}
+}
+
+# this = province; what water_temples_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_water_temples_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.087
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.087
+	}
+}
+
+# this = province; what water_temples_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_water_temples_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.087
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.087
+	}
+}
+
+# this = province; what wind_furnace_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wind_furnace_02_value = {
+	value = 0.175
+}
+
+# this = province; what wind_furnace_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wind_furnace_03_value = {
+	value = 0.175
+}
+
+# this = province; what wind_furnace_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wind_furnace_04_value = {
+	value = 0.175
+}
+
+# this = province; what wind_furnace_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wind_furnace_05_value = {
+	value = 0.175
+}
+
+# this = province; what wind_furnace_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wind_furnace_06_value = {
+	value = 0.175
+}
+
+# this = province; what wind_furnace_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wind_furnace_07_value = {
+	value = 0.175
+}
+
+# this = province; what wind_furnace_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wind_furnace_08_value = {
+	value = 0.175
+}
+
+# this = province; what workshops_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_workshops_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.175
+	}
+}
+
+# this = province; what workshops_04 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_workshops_04_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.088
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.088
+	}
+}
+
+# this = province; what workshops_05 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_workshops_05_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.087
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.087
+	}
+}
+
+# this = province; what workshops_06 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_workshops_06_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.087
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.087
+	}
+}
+
+# this = province; what workshops_07 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_workshops_07_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.087
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.087
+	}
+}
+
+# this = province; what workshops_08 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_workshops_08_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.087
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.087
+	}
+}
+
+# this = province; the stationed bonuses its buildings give archer_cavalry alone (a military
+# base's specialty follows them)
+dap_holding_archer_cavalry_stationed_value = {
+	value = 0
+	if = {
+		limit = { has_building = hillside_grazing_01 }
+		add = 0.150
+	}
+	if = {
+		limit = { has_building = horse_pastures_01 }
+		add = 0.550
+	}
+	if = {
+		limit = { has_building = war_camps_01 }
+		add = 0.350
+	}
+	if = {
+		limit = { has_building = hillside_grazing_02 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = hillside_grazing_03 }
+		add = 0.375
+	}
+	if = {
+		limit = { has_building = hillside_grazing_04 }
+		add = 0.450
+	}
+	if = {
+		limit = { has_building = hillside_grazing_05 }
+		add = 0.525
+	}
+	if = {
+		limit = { has_building = hillside_grazing_06 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = hillside_grazing_07 }
+		add = 0.675
+	}
+	if = {
+		limit = { has_building = hillside_grazing_08 }
+		add = 0.750
+	}
+	if = {
+		limit = { has_building = horse_pastures_02 }
+		add = 0.725
+	}
+	if = {
+		limit = { has_building = horse_pastures_03 }
+		add = 0.900
+	}
+	if = {
+		limit = { has_building = horse_pastures_04 }
+		add = 1.075
+	}
+	if = {
+		limit = { has_building = horse_pastures_05 }
+		add = 1.250
+	}
+	if = {
+		limit = { has_building = horse_pastures_06 }
+		add = 1.425
+	}
+	if = {
+		limit = { has_building = horse_pastures_07 }
+		add = 1.600
+	}
+	if = {
+		limit = { has_building = horse_pastures_08 }
+		add = 1.775
+	}
+	if = {
+		limit = { has_building = war_camps_02 }
+		add = 0.500
+	}
+}
+
+# this = province; how many men-at-arms types of base type archer_cavalry get a bonus on its terrain
+dap_terrain_fit_archer_cavalry_value = {
+	value = 0
+	if = {
+		limit = { terrain = desert_mountains }
+		add = 7
+	}
+	if = {
+		limit = { terrain = drylands }
+		add = 5
+	}
+	if = {
+		limit = { terrain = forest }
+		add = 2
+	}
+	if = {
+		limit = { terrain = hills }
+		add = 3
+	}
+	if = {
+		limit = { terrain = jungle }
+		add = 6
+	}
+	if = {
+		limit = { terrain = mountains }
+		add = 7
+	}
+	if = {
+		limit = { terrain = plains }
+		add = 8
+	}
+	if = {
+		limit = { terrain = steppe }
+		add = 6
+	}
+	if = {
+		limit = { terrain = taiga }
+		add = 1
+	}
+	if = {
+		limit = { terrain = terraced_hills }
+		add = 1
+	}
+	if = {
+		limit = { terrain = wetlands }
+		add = 7
+	}
+}
+
+# this = province; the stationed bonuses its buildings give archers alone (a military
+# base's specialty follows them)
+dap_holding_archers_stationed_value = {
+	value = 0
+	if = {
+		limit = { has_building = kora_kora_yards_01 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = military_camps_01 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = outposts_01 }
+		add = 0.250
+	}
+	if = {
+		limit = { has_building = ramparts_01 }
+		add = 0.100
+	}
+	if = {
+		limit = { has_building = wantilan_01 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = kora_kora_yards_02 }
+		add = 0.250
+	}
+	if = {
+		limit = { has_building = kora_kora_yards_03 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = kora_kora_yards_04 }
+		add = 0.350
+	}
+	if = {
+		limit = { has_building = military_camps_02 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = military_camps_03 }
+		add = 0.550
+	}
+	if = {
+		limit = { has_building = military_camps_04 }
+		add = 0.700
+	}
+	if = {
+		limit = { has_building = military_camps_05 }
+		add = 0.850
+	}
+	if = {
+		limit = { has_building = military_camps_06 }
+		add = 1.000
+	}
+	if = {
+		limit = { has_building = military_camps_07 }
+		add = 1.150
+	}
+	if = {
+		limit = { has_building = military_camps_08 }
+		add = 1.300
+	}
+	if = {
+		limit = { has_building = outposts_02 }
+		add = 0.325
+	}
+	if = {
+		limit = { has_building = outposts_03 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = outposts_04 }
+		add = 0.475
+	}
+	if = {
+		limit = { has_building = outposts_05 }
+		add = 0.550
+	}
+	if = {
+		limit = { has_building = outposts_06 }
+		add = 0.625
+	}
+	if = {
+		limit = { has_building = outposts_07 }
+		add = 0.700
+	}
+	if = {
+		limit = { has_building = outposts_08 }
+		add = 0.775
+	}
+	if = {
+		limit = { has_building = ramparts_02 }
+		add = 0.125
+	}
+	if = {
+		limit = { has_building = ramparts_03 }
+		add = 0.150
+	}
+	if = {
+		limit = { has_building = ramparts_04 }
+		add = 0.175
+	}
+	if = {
+		limit = { has_building = ramparts_05 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = ramparts_06 }
+		add = 0.225
+	}
+	if = {
+		limit = { has_building = ramparts_07 }
+		add = 0.250
+	}
+	if = {
+		limit = { has_building = ramparts_08 }
+		add = 0.275
+	}
+	if = {
+		limit = { has_building = wantilan_02 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = wantilan_03 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = wantilan_04 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = workshops_03 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = workshops_04 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = workshops_05 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = workshops_06 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = workshops_07 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = workshops_08 }
+		add = 0.700
+	}
+}
+
+# this = province; how many men-at-arms types of base type archers get a bonus on its terrain
+dap_terrain_fit_archers_value = {
+	value = 0
+	if = {
+		limit = { terrain = desert }
+		add = 4
+	}
+	if = {
+		limit = { terrain = drylands }
+		add = 4
+	}
+	if = {
+		limit = { terrain = farmlands }
+		add = 3
+	}
+	if = {
+		limit = { terrain = floodplains }
+		add = 1
+	}
+	if = {
+		limit = { terrain = forest }
+		add = 8
+	}
+	if = {
+		limit = { terrain = hills }
+		add = 13
+	}
+	if = {
+		limit = { terrain = jungle }
+		add = 3
+	}
+	if = {
+		limit = { terrain = mountains }
+		add = 3
+	}
+	if = {
+		limit = { terrain = oasis }
+		add = 1
+	}
+	if = {
+		limit = { terrain = plains }
+		add = 6
+	}
+	if = {
+		limit = { terrain = steppe }
+		add = 1
+	}
+	if = {
+		limit = { terrain = taiga }
+		add = 5
+	}
+	if = {
+		limit = { terrain = terraced_hills }
+		add = 2
+	}
+	if = {
+		limit = { terrain = wetlands }
+		add = 1
+	}
+}
+
+# this = province; the stationed bonuses its buildings give camel_cavalry alone (a military
+# base's specialty follows them)
+dap_holding_camel_cavalry_stationed_value = {
+	value = 0
+	if = {
+		limit = { has_building = camel_farms_01 }
+		add = 0.350
+	}
+	if = {
+		limit = { has_building = camel_farms_02 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = camel_farms_03 }
+		add = 1.000
+	}
+	if = {
+		limit = { has_building = camel_farms_04 }
+		add = 1.300
+	}
+	if = {
+		limit = { has_building = camel_farms_05 }
+		add = 1.600
+	}
+	if = {
+		limit = { has_building = camel_farms_06 }
+		add = 1.900
+	}
+	if = {
+		limit = { has_building = camel_farms_07 }
+		add = 2.200
+	}
+	if = {
+		limit = { has_building = camel_farms_08 }
+		add = 2.500
+	}
+}
+
+# this = province; how many men-at-arms types of base type camel_cavalry get a bonus on its terrain
+dap_terrain_fit_camel_cavalry_value = {
+	value = 0
+	if = {
+		limit = { terrain = desert }
+		add = 2
+	}
+	if = {
+		limit = { terrain = desert_mountains }
+		add = 2
+	}
+	if = {
+		limit = { terrain = drylands }
+		add = 2
+	}
+	if = {
+		limit = { terrain = floodplains }
+		add = 2
+	}
+	if = {
+		limit = { terrain = hills }
+		add = 2
+	}
+	if = {
+		limit = { terrain = mountains }
+		add = 2
+	}
+	if = {
+		limit = { terrain = oasis }
+		add = 2
+	}
+	if = {
+		limit = { terrain = wetlands }
+		add = 2
+	}
+}
+
+# this = province; the stationed bonuses its buildings give elephant_cavalry alone (a military
+# base's specialty follows them)
+dap_holding_elephant_cavalry_stationed_value = {
+	value = 0
+	if = {
+		limit = { has_building = elephant_pens_01 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = elephant_pens_02 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = elephant_pens_03 }
+		add = 0.800
+	}
+	if = {
+		limit = { has_building = elephant_pens_04 }
+		add = 1.000
+	}
+	if = {
+		limit = { has_building = elephant_pens_05 }
+		add = 1.200
+	}
+	if = {
+		limit = { has_building = elephant_pens_06 }
+		add = 1.400
+	}
+	if = {
+		limit = { has_building = elephant_pens_07 }
+		add = 1.600
+	}
+	if = {
+		limit = { has_building = elephant_pens_08 }
+		add = 1.800
+	}
+}
+
+# this = province; how many men-at-arms types of base type elephant_cavalry get a bonus on its terrain
+dap_terrain_fit_elephant_cavalry_value = {
+	value = 0
+	if = {
+		limit = { terrain = desert_mountains }
+		add = 3
+	}
+	if = {
+		limit = { terrain = jungle }
+		add = 3
+	}
+	if = {
+		limit = { terrain = mountains }
+		add = 3
+	}
+	if = {
+		limit = { terrain = terraced_hills }
+		add = 2
+	}
+	if = {
+		limit = { terrain = wetlands }
+		add = 3
+	}
+}
+
+# this = province; the stationed bonuses its buildings give gunpowder alone (a military
+# base's specialty follows them)
+dap_holding_gunpowder_stationed_value = {
+	value = 0
+	if = {
+		limit = { has_building = powder_magazine_01 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = powder_magazine_02 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = powder_magazine_03 }
+		add = 0.800
+	}
+	if = {
+		limit = { has_building = powder_magazine_04 }
+		add = 1.000
+	}
+	if = {
+		limit = { has_building = powder_magazine_05 }
+		add = 1.200
+	}
+	if = {
+		limit = { has_building = powder_magazine_06 }
+		add = 1.400
+	}
+	if = {
+		limit = { has_building = powder_magazine_07 }
+		add = 1.600
+	}
+	if = {
+		limit = { has_building = powder_magazine_08 }
+		add = 1.800
+	}
+}
+
+# this = province; how many men-at-arms types of base type gunpowder get a bonus on its terrain
+dap_terrain_fit_gunpowder_value = {
+	value = 0
+	if = {
+		limit = { terrain = floodplains }
+		add = 2
+	}
+	if = {
+		limit = { terrain = wetlands }
+		add = 2
+	}
+}
+
+# this = province; the stationed bonuses its buildings give heavy_cavalry alone (a military
+# base's specialty follows them)
+dap_holding_heavy_cavalry_stationed_value = {
+	value = 0
+	if = {
+		limit = { has_building = curtain_walls_01 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = hillside_grazing_01 }
+		add = 0.150
+	}
+	if = {
+		limit = { has_building = stables_01 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = curtain_walls_02 }
+		add = 0.250
+	}
+	if = {
+		limit = { has_building = curtain_walls_03 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = curtain_walls_04 }
+		add = 0.350
+	}
+	if = {
+		limit = { has_building = curtain_walls_05 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = curtain_walls_06 }
+		add = 0.450
+	}
+	if = {
+		limit = { has_building = curtain_walls_07 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = curtain_walls_08 }
+		add = 0.550
+	}
+	if = {
+		limit = { has_building = hillside_grazing_02 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = hillside_grazing_03 }
+		add = 0.375
+	}
+	if = {
+		limit = { has_building = hillside_grazing_04 }
+		add = 0.450
+	}
+	if = {
+		limit = { has_building = hillside_grazing_05 }
+		add = 0.525
+	}
+	if = {
+		limit = { has_building = hillside_grazing_06 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = hillside_grazing_07 }
+		add = 0.675
+	}
+	if = {
+		limit = { has_building = hillside_grazing_08 }
+		add = 0.750
+	}
+	if = {
+		limit = { has_building = quarries_08 }
+		add = 0.080
+	}
+	if = {
+		limit = { has_building = stables_02 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = stables_03 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = stables_04 }
+		add = 0.800
+	}
+	if = {
+		limit = { has_building = stables_05 }
+		add = 1.300
+	}
+	if = {
+		limit = { has_building = stables_06 }
+		add = 1.600
+	}
+	if = {
+		limit = { has_building = stables_07 }
+		add = 1.900
+	}
+	if = {
+		limit = { has_building = stables_08 }
+		add = 2.200
+	}
+}
+
+# this = province; how many men-at-arms types of base type heavy_cavalry get a bonus on its terrain
+dap_terrain_fit_heavy_cavalry_value = {
+	value = 0
+	if = {
+		limit = { terrain = desert }
+		add = 1
+	}
+	if = {
+		limit = { terrain = desert_mountains }
+		add = 11
+	}
+	if = {
+		limit = { terrain = drylands }
+		add = 11
+	}
+	if = {
+		limit = { terrain = farmlands }
+		add = 1
+	}
+	if = {
+		limit = { terrain = hills }
+		add = 11
+	}
+	if = {
+		limit = { terrain = jungle }
+		add = 4
+	}
+	if = {
+		limit = { terrain = mountains }
+		add = 12
+	}
+	if = {
+		limit = { terrain = oasis }
+		add = 1
+	}
+	if = {
+		limit = { terrain = plains }
+		add = 10
+	}
+	if = {
+		limit = { terrain = steppe }
+		add = 2
+	}
+	if = {
+		limit = { terrain = terraced_hills }
+		add = 2
+	}
+	if = {
+		limit = { terrain = wetlands }
+		add = 12
+	}
+}
+
+# this = province; the stationed bonuses its buildings give heavy_infantry alone (a military
+# base's specialty follows them)
+dap_holding_heavy_infantry_stationed_value = {
+	value = 0
+	if = {
+		limit = { has_building = barracks_01 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = war_camps_01 }
+		add = 0.350
+	}
+	if = {
+		limit = { has_building = warrior_lodges_01 }
+		add = 0.150
+	}
+	if = {
+		limit = { has_building = watchtowers_01 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = barracks_02 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = barracks_03 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = barracks_04 }
+		add = 0.800
+	}
+	if = {
+		limit = { has_building = barracks_05 }
+		add = 1.000
+	}
+	if = {
+		limit = { has_building = barracks_06 }
+		add = 1.200
+	}
+	if = {
+		limit = { has_building = barracks_07 }
+		add = 1.400
+	}
+	if = {
+		limit = { has_building = barracks_08 }
+		add = 1.600
+	}
+	if = {
+		limit = { has_building = quarries_07 }
+		add = 0.020
+	}
+	if = {
+		limit = { has_building = quarries_08 }
+		add = 0.040
+	}
+	if = {
+		limit = { has_building = war_camps_02 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = warrior_lodges_02 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = warrior_lodges_03 }
+		add = 0.375
+	}
+	if = {
+		limit = { has_building = warrior_lodges_04 }
+		add = 0.450
+	}
+	if = {
+		limit = { has_building = warrior_lodges_05 }
+		add = 0.525
+	}
+	if = {
+		limit = { has_building = warrior_lodges_06 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = warrior_lodges_07 }
+		add = 0.675
+	}
+	if = {
+		limit = { has_building = warrior_lodges_08 }
+		add = 0.750
+	}
+	if = {
+		limit = { has_building = watchtowers_02 }
+		add = 0.250
+	}
+	if = {
+		limit = { has_building = watchtowers_03 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = watchtowers_04 }
+		add = 0.350
+	}
+	if = {
+		limit = { has_building = watchtowers_05 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = watchtowers_06 }
+		add = 0.450
+	}
+	if = {
+		limit = { has_building = watchtowers_07 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = watchtowers_08 }
+		add = 0.550
+	}
+}
+
+# this = province; how many men-at-arms types of base type heavy_infantry get a bonus on its terrain
+dap_terrain_fit_heavy_infantry_value = {
+	value = 0
+	if = {
+		limit = { terrain = desert }
+		add = 1
+	}
+	if = {
+		limit = { terrain = desert_mountains }
+		add = 2
+	}
+	if = {
+		limit = { terrain = drylands }
+		add = 1
+	}
+	if = {
+		limit = { terrain = farmlands }
+		add = 5
+	}
+	if = {
+		limit = { terrain = forest }
+		add = 4
+	}
+	if = {
+		limit = { terrain = hills }
+		add = 7
+	}
+	if = {
+		limit = { terrain = jungle }
+		add = 4
+	}
+	if = {
+		limit = { terrain = mountains }
+		add = 4
+	}
+	if = {
+		limit = { terrain = plains }
+		add = 5
+	}
+	if = {
+		limit = { terrain = taiga }
+		add = 1
+	}
+	if = {
+		limit = { terrain = terraced_hills }
+		add = 3
+	}
+	if = {
+		limit = { terrain = wetlands }
+		add = 1
+	}
+}
+
+# this = province; the stationed bonuses its buildings give light_cavalry alone (a military
+# base's specialty follows them)
+dap_holding_light_cavalry_stationed_value = {
+	value = 0
+	if = {
+		limit = { has_building = camel_farms_01 }
+		add = 0.250
+	}
+	if = {
+		limit = { has_building = hillside_grazing_01 }
+		add = 0.150
+	}
+	if = {
+		limit = { has_building = horse_pastures_01 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = stables_01 }
+		add = 0.350
+	}
+	if = {
+		limit = { has_building = watchtowers_01 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = camel_farms_02 }
+		add = 0.325
+	}
+	if = {
+		limit = { has_building = camel_farms_03 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = camel_farms_04 }
+		add = 0.725
+	}
+	if = {
+		limit = { has_building = camel_farms_05 }
+		add = 0.850
+	}
+	if = {
+		limit = { has_building = camel_farms_06 }
+		add = 0.975
+	}
+	if = {
+		limit = { has_building = camel_farms_07 }
+		add = 1.100
+	}
+	if = {
+		limit = { has_building = camel_farms_08 }
+		add = 1.225
+	}
+	if = {
+		limit = { has_building = hillside_grazing_02 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = hillside_grazing_03 }
+		add = 0.375
+	}
+	if = {
+		limit = { has_building = hillside_grazing_04 }
+		add = 0.450
+	}
+	if = {
+		limit = { has_building = hillside_grazing_05 }
+		add = 0.525
+	}
+	if = {
+		limit = { has_building = hillside_grazing_06 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = hillside_grazing_07 }
+		add = 0.675
+	}
+	if = {
+		limit = { has_building = hillside_grazing_08 }
+		add = 0.750
+	}
+	if = {
+		limit = { has_building = horse_pastures_02 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = horse_pastures_03 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = horse_pastures_04 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = horse_pastures_05 }
+		add = 0.700
+	}
+	if = {
+		limit = { has_building = horse_pastures_06 }
+		add = 0.800
+	}
+	if = {
+		limit = { has_building = horse_pastures_07 }
+		add = 0.900
+	}
+	if = {
+		limit = { has_building = horse_pastures_08 }
+		add = 1.000
+	}
+	if = {
+		limit = { has_building = plantations_03 }
+		add = 0.020
+	}
+	if = {
+		limit = { has_building = plantations_04 }
+		add = 0.020
+	}
+	if = {
+		limit = { has_building = plantations_05 }
+		add = 0.020
+	}
+	if = {
+		limit = { has_building = plantations_06 }
+		add = 0.020
+	}
+	if = {
+		limit = { has_building = plantations_07 }
+		add = 0.020
+	}
+	if = {
+		limit = { has_building = plantations_08 }
+		add = 0.020
+	}
+	if = {
+		limit = { has_building = stables_02 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = stables_03 }
+		add = 0.850
+	}
+	if = {
+		limit = { has_building = stables_04 }
+		add = 1.100
+	}
+	if = {
+		limit = { has_building = stables_05 }
+		add = 1.500
+	}
+	if = {
+		limit = { has_building = stables_06 }
+		add = 1.800
+	}
+	if = {
+		limit = { has_building = stables_07 }
+		add = 2.100
+	}
+	if = {
+		limit = { has_building = stables_08 }
+		add = 2.400
+	}
+	if = {
+		limit = { has_building = watchtowers_02 }
+		add = 0.250
+	}
+	if = {
+		limit = { has_building = watchtowers_03 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = watchtowers_04 }
+		add = 0.350
+	}
+	if = {
+		limit = { has_building = watchtowers_05 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = watchtowers_06 }
+		add = 0.450
+	}
+	if = {
+		limit = { has_building = watchtowers_07 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = watchtowers_08 }
+		add = 0.550
+	}
+}
+
+# this = province; how many men-at-arms types of base type light_cavalry get a bonus on its terrain
+dap_terrain_fit_light_cavalry_value = {
+	value = 0
+	if = {
+		limit = { terrain = desert }
+		add = 4
+	}
+	if = {
+		limit = { terrain = desert_mountains }
+		add = 11
+	}
+	if = {
+		limit = { terrain = drylands }
+		add = 11
+	}
+	if = {
+		limit = { terrain = farmlands }
+		add = 1
+	}
+	if = {
+		limit = { terrain = floodplains }
+		add = 1
+	}
+	if = {
+		limit = { terrain = forest }
+		add = 3
+	}
+	if = {
+		limit = { terrain = hills }
+		add = 10
+	}
+	if = {
+		limit = { terrain = jungle }
+		add = 1
+	}
+	if = {
+		limit = { terrain = mountains }
+		add = 12
+	}
+	if = {
+		limit = { terrain = oasis }
+		add = 2
+	}
+	if = {
+		limit = { terrain = plains }
+		add = 11
+	}
+	if = {
+		limit = { terrain = steppe }
+		add = 1
+	}
+	if = {
+		limit = { terrain = taiga }
+		add = 1
+	}
+	if = {
+		limit = { terrain = wetlands }
+		add = 12
+	}
+}
+
+# this = province; the stationed bonuses its buildings give pikemen alone (a military
+# base's specialty follows them)
+dap_holding_pikemen_stationed_value = {
+	value = 0
+	if = {
+		limit = { has_building = barracks_01 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = hill_forts_01 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = warrior_lodges_01 }
+		add = 0.150
+	}
+	if = {
+		limit = { has_building = water_temples_01 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = barracks_02 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = barracks_03 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = barracks_04 }
+		add = 0.800
+	}
+	if = {
+		limit = { has_building = barracks_05 }
+		add = 1.000
+	}
+	if = {
+		limit = { has_building = barracks_06 }
+		add = 1.200
+	}
+	if = {
+		limit = { has_building = barracks_07 }
+		add = 1.400
+	}
+	if = {
+		limit = { has_building = barracks_08 }
+		add = 1.600
+	}
+	if = {
+		limit = { has_building = hill_forts_02 }
+		add = 0.250
+	}
+	if = {
+		limit = { has_building = hill_forts_03 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = hill_forts_04 }
+		add = 0.350
+	}
+	if = {
+		limit = { has_building = hill_forts_05 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = hill_forts_06 }
+		add = 0.450
+	}
+	if = {
+		limit = { has_building = hill_forts_07 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = hill_forts_08 }
+		add = 0.550
+	}
+	if = {
+		limit = { has_building = quarries_07 }
+		add = 0.020
+	}
+	if = {
+		limit = { has_building = quarries_08 }
+		add = 0.040
+	}
+	if = {
+		limit = { has_building = warrior_lodges_02 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = warrior_lodges_03 }
+		add = 0.375
+	}
+	if = {
+		limit = { has_building = warrior_lodges_04 }
+		add = 0.450
+	}
+	if = {
+		limit = { has_building = warrior_lodges_05 }
+		add = 0.525
+	}
+	if = {
+		limit = { has_building = warrior_lodges_06 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = warrior_lodges_07 }
+		add = 0.675
+	}
+	if = {
+		limit = { has_building = warrior_lodges_08 }
+		add = 0.750
+	}
+	if = {
+		limit = { has_building = water_temples_02 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = water_temples_03 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = water_temples_04 }
+		add = 0.600
+	}
+}
+
+# this = province; how many men-at-arms types of base type pikemen get a bonus on its terrain
+dap_terrain_fit_pikemen_value = {
+	value = 0
+	if = {
+		limit = { terrain = desert_mountains }
+		add = 10
+	}
+	if = {
+		limit = { terrain = farmlands }
+		add = 1
+	}
+	if = {
+		limit = { terrain = forest }
+		add = 1
+	}
+	if = {
+		limit = { terrain = hills }
+		add = 10
+	}
+	if = {
+		limit = { terrain = mountains }
+		add = 10
+	}
+	if = {
+		limit = { terrain = plains }
+		add = 4
+	}
+	if = {
+		limit = { terrain = terraced_hills }
+		add = 1
+	}
+}
+
+# this = province; the stationed bonuses its buildings give skirmishers alone (a military
+# base's specialty follows them)
+dap_holding_skirmishers_stationed_value = {
+	value = 0
+	if = {
+		limit = { has_building = hill_forts_01 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = kora_kora_yards_01 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = military_camps_01 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = outposts_01 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = ramparts_01 }
+		add = 0.250
+	}
+	if = {
+		limit = { has_building = stilted_granaries_01 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = war_camps_01 }
+		add = 0.350
+	}
+	if = {
+		limit = { has_building = warrior_lodges_01 }
+		add = 0.150
+	}
+	if = {
+		limit = { has_building = water_temples_01 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = hill_farms_02 }
+		add = 0.020
+	}
+	if = {
+		limit = { has_building = hill_farms_03 }
+		add = 0.020
+	}
+	if = {
+		limit = { has_building = hill_farms_04 }
+		add = 0.040
+	}
+	if = {
+		limit = { has_building = hill_farms_05 }
+		add = 0.040
+	}
+	if = {
+		limit = { has_building = hill_farms_06 }
+		add = 0.040
+	}
+	if = {
+		limit = { has_building = hill_farms_07 }
+		add = 0.040
+	}
+	if = {
+		limit = { has_building = hill_farms_08 }
+		add = 0.040
+	}
+	if = {
+		limit = { has_building = hill_forts_02 }
+		add = 0.250
+	}
+	if = {
+		limit = { has_building = hill_forts_03 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = hill_forts_04 }
+		add = 0.350
+	}
+	if = {
+		limit = { has_building = hill_forts_05 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = hill_forts_06 }
+		add = 0.450
+	}
+	if = {
+		limit = { has_building = hill_forts_07 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = hill_forts_08 }
+		add = 0.550
+	}
+	if = {
+		limit = { has_building = kora_kora_yards_02 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = kora_kora_yards_03 }
+		add = 0.800
+	}
+	if = {
+		limit = { has_building = kora_kora_yards_04 }
+		add = 1.000
+	}
+	if = {
+		limit = { has_building = military_camps_02 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = military_camps_03 }
+		add = 1.100
+	}
+	if = {
+		limit = { has_building = military_camps_04 }
+		add = 1.400
+	}
+	if = {
+		limit = { has_building = military_camps_05 }
+		add = 1.700
+	}
+	if = {
+		limit = { has_building = military_camps_06 }
+		add = 2.000
+	}
+	if = {
+		limit = { has_building = military_camps_07 }
+		add = 2.300
+	}
+	if = {
+		limit = { has_building = military_camps_08 }
+		add = 2.600
+	}
+	if = {
+		limit = { has_building = outposts_02 }
+		add = 0.525
+	}
+	if = {
+		limit = { has_building = outposts_03 }
+		add = 0.650
+	}
+	if = {
+		limit = { has_building = outposts_04 }
+		add = 0.775
+	}
+	if = {
+		limit = { has_building = outposts_05 }
+		add = 0.900
+	}
+	if = {
+		limit = { has_building = outposts_06 }
+		add = 1.025
+	}
+	if = {
+		limit = { has_building = outposts_07 }
+		add = 1.150
+	}
+	if = {
+		limit = { has_building = outposts_08 }
+		add = 1.275
+	}
+	if = {
+		limit = { has_building = ramparts_02 }
+		add = 0.325
+	}
+	if = {
+		limit = { has_building = ramparts_03 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = ramparts_04 }
+		add = 0.475
+	}
+	if = {
+		limit = { has_building = ramparts_05 }
+		add = 0.550
+	}
+	if = {
+		limit = { has_building = ramparts_06 }
+		add = 0.625
+	}
+	if = {
+		limit = { has_building = ramparts_07 }
+		add = 0.700
+	}
+	if = {
+		limit = { has_building = ramparts_08 }
+		add = 0.775
+	}
+	if = {
+		limit = { has_building = stilted_granaries_02 }
+		add = 0.250
+	}
+	if = {
+		limit = { has_building = stilted_granaries_03 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = stilted_granaries_04 }
+		add = 0.350
+	}
+	if = {
+		limit = { has_building = war_camps_02 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = warrior_lodges_02 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = warrior_lodges_03 }
+		add = 0.375
+	}
+	if = {
+		limit = { has_building = warrior_lodges_04 }
+		add = 0.450
+	}
+	if = {
+		limit = { has_building = warrior_lodges_05 }
+		add = 0.525
+	}
+	if = {
+		limit = { has_building = warrior_lodges_06 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = warrior_lodges_07 }
+		add = 0.675
+	}
+	if = {
+		limit = { has_building = warrior_lodges_08 }
+		add = 0.750
+	}
+	if = {
+		limit = { has_building = water_temples_02 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = water_temples_03 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = water_temples_04 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = workshops_03 }
+		add = 0.200
+	}
+	if = {
+		limit = { has_building = workshops_04 }
+		add = 0.300
+	}
+	if = {
+		limit = { has_building = workshops_05 }
+		add = 0.400
+	}
+	if = {
+		limit = { has_building = workshops_06 }
+		add = 0.500
+	}
+	if = {
+		limit = { has_building = workshops_07 }
+		add = 0.600
+	}
+	if = {
+		limit = { has_building = workshops_08 }
+		add = 0.700
+	}
+}
+
+# this = province; how many men-at-arms types of base type skirmishers get a bonus on its terrain
+dap_terrain_fit_skirmishers_value = {
+	value = 0
+	if = {
+		limit = { terrain = desert }
+		add = 1
+	}
+	if = {
+		limit = { terrain = desert_mountains }
+		add = 4
+	}
+	if = {
+		limit = { terrain = drylands }
+		add = 1
+	}
+	if = {
+		limit = { terrain = forest }
+		add = 5
+	}
+	if = {
+		limit = { terrain = hills }
+		add = 6
+	}
+	if = {
+		limit = { terrain = jungle }
+		add = 4
+	}
+	if = {
+		limit = { terrain = mountains }
+		add = 4
+	}
+	if = {
+		limit = { terrain = taiga }
+		add = 2
+	}
+	if = {
+		limit = { terrain = terraced_hills }
+		add = 1
+	}
+	if = {
+		limit = { terrain = wetlands }
+		add = 3
+	}
+}
+
+# this = province, root = the player; the most stationed bonuses its buildings give any
+# base type the player owns (a holding goes to the type it suits best)
+dap_best_owned_stationed_value = {
+	value = 0
+	if = {
+		limit = { root = { number_maa_regiments_of_base_type = { type = archer_cavalry value > 0 } } }
+		min = dap_holding_archer_cavalry_stationed_value
+	}
+	if = {
+		limit = { root = { number_maa_regiments_of_base_type = { type = archers value > 0 } } }
+		min = dap_holding_archers_stationed_value
+	}
+	if = {
+		limit = { root = { number_maa_regiments_of_base_type = { type = camel_cavalry value > 0 } } }
+		min = dap_holding_camel_cavalry_stationed_value
+	}
+	if = {
+		limit = { root = { number_maa_regiments_of_base_type = { type = elephant_cavalry value > 0 } } }
+		min = dap_holding_elephant_cavalry_stationed_value
+	}
+	if = {
+		limit = { root = { number_maa_regiments_of_base_type = { type = gunpowder value > 0 } } }
+		min = dap_holding_gunpowder_stationed_value
+	}
+	if = {
+		limit = { root = { number_maa_regiments_of_base_type = { type = heavy_cavalry value > 0 } } }
+		min = dap_holding_heavy_cavalry_stationed_value
+	}
+	if = {
+		limit = { root = { number_maa_regiments_of_base_type = { type = heavy_infantry value > 0 } } }
+		min = dap_holding_heavy_infantry_stationed_value
+	}
+	if = {
+		limit = { root = { number_maa_regiments_of_base_type = { type = light_cavalry value > 0 } } }
+		min = dap_holding_light_cavalry_stationed_value
+	}
+	if = {
+		limit = { root = { number_maa_regiments_of_base_type = { type = pikemen value > 0 } } }
+		min = dap_holding_pikemen_stationed_value
+	}
+	if = {
+		limit = { root = { number_maa_regiments_of_base_type = { type = skirmishers value > 0 } } }
+		min = dap_holding_skirmishers_stationed_value
+	}
+}

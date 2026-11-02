@@ -998,6 +998,13 @@ MODULES = [
                         "values": ["Off", "Low", "High"],
                     },
                     {
+                        "key": "dap_build_military",
+                        "label": "Military stacking",
+                        "tooltip": "Build military bases in your own domain: at most one holding per men-at-arms type you own, stacking the bonuses that regiments of that type get when stationed there. A type gets a second base only when its first has no free slots or upgrades left. A base's specialty follows what is already built there, then the terrain, unless you set it below. Station those regiments there yourself: the list below shows where. High counts three times as much as Low.",
+                        "default": 0,
+                        "values": ["Off", "Low", "High"],
+                    },
+                    {
                         "key": "dap_build_per_season",
                         "label": "Constructions per season",
                         "tooltip": "At most this many constructions are started each season, so buildings don't eat gold meant for men-at-arms or titles.",

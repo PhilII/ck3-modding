@@ -993,6 +993,13 @@ types DapSettingsGenerated
 			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_development' ) ).End )]" }
 		}
 		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_build_military" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_build_military_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_build_military' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_military' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_military' ) ).End )]" }
+		}
+		dap_setting_row = {
 			blockoverride "label" { text = "dap_setting_dap_build_per_season" }
 			blockoverride "tooltip" { tooltip = "dap_setting_dap_build_per_season_tt" }
 			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_build_per_season' )]" }

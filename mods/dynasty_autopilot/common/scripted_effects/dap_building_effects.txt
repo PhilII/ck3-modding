@@ -3,8 +3,9 @@
 #
 # Route: once a season the builder scores every new building and upgrade in the holdings it
 # may build in (dap_build_holdings: the player's own, and their vassal barons', cities' and
-# temples' holdings in the player's own counties), and queues the best (dap_build_queue, a
-# list of provinces, each holding its pick in var:dap_bc_*). gui/dap_build_driver.gui asks for them one at a time (the
+# temples' holdings in the player's own counties; military bases, dap_military_bases, are
+# among the player's own), and queues the best (dap_build_queue, a list of provinces, each
+# holding its pick in var:dap_bc_*). gui/dap_build_driver.gui asks for them one at a time (the
 # dap_build_next scripted GUI): the mod remembers which building it wants in which holding
 # and opens the vanilla holding view for that holding. gui/00_dap_building_item.gui (an
 # override of the holding view's building slot type) presses Build, or Upgrade, on that
@@ -75,9 +76,9 @@ dap_clear_building_pick_effect = {
 # this = province; picks the building worth the most for its cost there, new or upgrade,
 # into var:dap_bc_building (flag:<key>), var:dap_bc_from (flag:<key upgraded> or
 # flag:none), var:dap_bc_cost and var:dap_bc_value; no pick if nothing there serves an
-# active focus. Needs local_var:dap_w_income and local_var:dap_w_development, and
-# scope:dap_stack_income and scope:dap_stack_development (the stacking county of each
-# focus, if it has one).
+# active focus. Needs local_var:dap_w_income, local_var:dap_w_development and
+# local_var:dap_w_military, scope:dap_stack_income and scope:dap_stack_development (the
+# stacking county of each focus, if it has one), and the list dap_military_bases.
 dap_pick_building_in_province_effect = {
 	dap_clear_building_pick_effect = yes
 	province_owner = { save_scope_as = holder }
@@ -108,6 +109,13 @@ dap_pick_building_in_province_effect = {
 		limit = { scope:dap_stack_development ?= scope:county }
 		set_local_variable = { name = dap_stack_development value = 1 }
 	}
+	# Military stacking: stationed bonuses count only in a military base, for its specialty
+	set_local_variable = { name = dap_base_here value = 0 }
+	save_temporary_scope_as = dap_here
+	if = {
+		limit = { root = { is_target_in_variable_list = { name = dap_military_bases target = scope:dap_here } } }
+		set_local_variable = { name = dap_base_here value = 1 }
+	}
 	dap_consider_buildings_effect = yes
 }
 
@@ -115,7 +123,9 @@ dap_pick_building_in_province_effect = {
 # tools/build_buildings.py). Its value is what it gives the active focuses per 1000 gold,
 # each bonus as much as it reaches the player (dap_pick_building_in_province_effect).
 # With local_var:dap_room_pass set it is only noted whether a county-wide bonus of a focus
-# could still be stacked in this county (dap_build_room_income, dap_build_room_development).
+# could still be stacked in this county (dap_build_room_income, dap_build_room_development);
+# with local_var:dap_base_room_pass, whether this military base could still stack its
+# specialty (var:dap_base_room).
 dap_consider_building_effect = {
 	if = {
 		limit = { exists = local_var:dap_room_pass }
@@ -136,10 +146,19 @@ dap_consider_building_effect = {
 			root = { add_to_variable_list = { name = dap_build_room_development target = scope:county } }
 		}
 	}
+	else_if = {
+		limit = { exists = local_var:dap_base_room_pass }
+		set_local_variable = { name = dap_bv value = $MILITARY$ }
+		if = {
+			limit = { local_var:dap_bv > 0 }
+			set_variable = { name = dap_base_room value = 1 }
+		}
+	}
 	else = {
 		dap_score_building_effect = {
 			BUILDING = $BUILDING$ FROM = $FROM$ COST = $COST$ INCOME_HOLDING = $INCOME_HOLDING$
 			INCOME_HOLDER = $INCOME_HOLDER$ INCOME_COUNTY = $INCOME_COUNTY$ DEVELOPMENT_COUNTY = $DEVELOPMENT_COUNTY$
+			MILITARY = $MILITARY$
 		}
 	}
 }
@@ -165,6 +184,11 @@ dap_score_building_effect = {
 				multiply = local_var:dap_stack_development
 				multiply = local_var:dap_w_development
 			}
+			add = {
+				value = $MILITARY$
+				multiply = local_var:dap_base_here
+				multiply = local_var:dap_w_military
+			}
 			multiply = 1000
 			divide = $COST$
 		}
@@ -179,18 +203,21 @@ dap_score_building_effect = {
 	}
 }
 
-# this = player; focus weights (Off/Low/High = 0/1/3) as local variables
+# this = player; the weight of the focus setting var:$SETTING$ (Off/Low/High = 0/1/3) as
+# local_var:$WEIGHT$
+dap_focus_weight_effect = {
+	set_local_variable = { name = $WEIGHT$ value = var:$SETTING$ }
+	if = {
+		limit = { var:$SETTING$ = 2 }
+		set_local_variable = { name = $WEIGHT$ value = 3 }
+	}
+}
+
+# this = player; focus weights as local variables
 dap_building_weights_effect = {
-	set_local_variable = { name = dap_w_income value = var:dap_build_income }
-	if = {
-		limit = { var:dap_build_income = 2 }
-		set_local_variable = { name = dap_w_income value = 3 }
-	}
-	set_local_variable = { name = dap_w_development value = var:dap_build_development }
-	if = {
-		limit = { var:dap_build_development = 2 }
-		set_local_variable = { name = dap_w_development value = 3 }
-	}
+	dap_focus_weight_effect = { SETTING = dap_build_income WEIGHT = dap_w_income }
+	dap_focus_weight_effect = { SETTING = dap_build_development WEIGHT = dap_w_development }
+	dap_focus_weight_effect = { SETTING = dap_build_military WEIGHT = dap_w_military }
 }
 
 # this = player; the holdings the builder may build in, into the list dap_build_holdings:
@@ -210,6 +237,128 @@ dap_list_build_holdings_effect = {
 				province_owner = { is_vassal_of = root }
 			}
 			root = { add_to_variable_list = { name = dap_build_holdings target = prev } }
+		}
+	}
+}
+
+# this = province; no longer a military base the player set
+dap_clear_specialty_effect = {
+	if = {
+		limit = { has_variable = dap_specialty }
+		remove_variable = dap_specialty
+	}
+	if = {
+		limit = { has_variable = dap_specialty_set }
+		remove_variable = dap_specialty_set
+	}
+}
+
+# this = player; while Military stacking is on, the military bases into the list
+# dap_military_bases: holdings of the player's domain, each stacking the stationed bonuses
+# of one men-at-arms base type the player owns (its specialty, var:dap_specialty). Bases the
+# player set (var:dap_specialty_set) come first, then dap_military_base_for_type_effect for
+# every owned type; a holding forgets an automatic specialty that no base uses any more.
+# Specialties live on the holding, so they stay with it through succession.
+dap_update_military_bases_effect = {
+	clear_variable_list = dap_military_bases
+	if = {
+		limit = { var:dap_build_military >= 1 }
+		# Whether each earlier base still has room: a free slot, or an upgrade that stacks its
+		# specialty
+		every_directly_owned_province = {
+			limit = { has_variable = dap_base_room }
+			remove_variable = dap_base_room
+		}
+		set_local_variable = { name = dap_base_room_pass value = 1 }
+		every_directly_owned_province = {
+			limit = {
+				has_variable = dap_specialty
+				has_holding = yes
+			}
+			if = {
+				limit = { has_free_building_slot = yes }
+				set_variable = { name = dap_base_room value = 1 }
+			}
+			else = {
+				province_owner = { save_scope_as = holder }
+				county = { save_scope_as = county }
+				dap_consider_buildings_effect = yes
+			}
+		}
+		remove_local_variable = dap_base_room_pass
+		every_directly_owned_province = {
+			limit = {
+				has_holding = yes
+				has_variable = dap_specialty_set
+				dap_owns_specialty_trigger = yes
+			}
+			root = { add_to_variable_list = { name = dap_military_bases target = prev } }
+		}
+		dap_military_bases_for_owned_types_effect = yes
+		every_directly_owned_province = {
+			limit = {
+				has_variable = dap_specialty
+				NOT = { has_variable = dap_specialty_set }
+			}
+			save_temporary_scope_as = dap_here
+			if = {
+				limit = { root = { NOT = { is_target_in_variable_list = { name = dap_military_bases target = scope:dap_here } } } }
+				remove_variable = dap_specialty
+			}
+		}
+	}
+}
+
+# this = player; the military bases of base type $TYPE$, which the player owns: those the
+# player set to it, else the automatic ones from earlier runs; and a new one when there is
+# none yet, or when none has room left (no free slot, and no upgrade that stacks the type).
+# The new base is the holding of the domain, not yet a base, whose buildings already give
+# the type the most stationed bonuses, then whose terrain suits the type best; a holding
+# whose buildings suit another owned type better, or with no free slot, only as a last resort.
+dap_military_base_for_type_effect = {
+	if = {
+		limit = {
+			NOT = { any_in_list = { variable = dap_military_bases var:dap_specialty ?= flag:$TYPE$ } }
+		}
+		every_directly_owned_province = {
+			limit = {
+				has_holding = yes
+				NOT = { has_variable = dap_specialty_set }
+				var:dap_specialty ?= flag:$TYPE$
+			}
+			root = { add_to_variable_list = { name = dap_military_bases target = prev } }
+		}
+	}
+	if = {
+		limit = {
+			NOT = {
+				any_in_list = {
+					variable = dap_military_bases
+					var:dap_specialty ?= flag:$TYPE$
+					has_variable = dap_base_room
+				}
+			}
+		}
+		ordered_directly_owned_province = {
+			limit = {
+				has_holding = yes
+				NOT = { has_variable = dap_specialty }
+			}
+			order_by = {
+				value = dap_holding_$TYPE$_stationed_value
+				multiply = 1000
+				add = dap_terrain_fit_$TYPE$_value
+				if = {
+					limit = { dap_best_owned_stationed_value > dap_holding_$TYPE$_stationed_value }
+					subtract = 100000
+				}
+				if = {
+					limit = { has_free_building_slot = no }
+					subtract = 1000000
+				}
+			}
+			set_variable = { name = dap_specialty value = flag:$TYPE$ }
+			root = { add_to_variable_list = { name = dap_military_bases target = prev } }
 		}
 	}
 }
@@ -253,7 +402,8 @@ dap_choose_stacking_counties_effect = {
 
 # this = player; once a season, starts the new buildings and upgrades worth the most for
 # their cost in the holdings it may build in (dap_list_build_holdings_effect), stacking
-# county-wide bonuses in the stacking county (dap_choose_stacking_counties_effect), within
+# county-wide bonuses in the stacking county (dap_choose_stacking_counties_effect) and
+# stationed bonuses in military bases (dap_update_military_bases_effect), within
 # the gold above the reserve and the constructions allowed per season; in Suggest only mode
 # (local_var:dap_dry) it logs them instead. A holding with construction under way, or one
 # already waiting for the holding view, is skipped.
@@ -264,6 +414,7 @@ dap_run_buildings_effect = {
 			OR = {
 				var:dap_build_income >= 1
 				var:dap_build_development >= 1
+				var:dap_build_military >= 1
 			}
 		}
 		# A queue whose marks lapsed (a day passed without the holding view pressing it) is stale
@@ -313,6 +464,7 @@ dap_run_buildings_effect = {
 			}
 		}
 		dap_list_build_holdings_effect = yes
+		dap_update_military_bases_effect = yes
 		dap_choose_stacking_counties_effect = yes
 		every_in_list = {
 			variable = dap_build_holdings

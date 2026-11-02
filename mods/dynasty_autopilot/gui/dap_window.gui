@@ -54,6 +54,70 @@ types DapTypes
 	}
 }
 
+types DapBaseTypes
+{
+	# The military bases (Buildings tab): each base's holding, specialty, whether regiments
+	# of it are stationed there, and a button to set its specialty
+	type dap_bases_view = vbox {
+		layoutpolicy_horizontal = expanding
+
+		dap_section_header = {
+			blockoverride "title" {
+				text = "dap_bases_title"
+			}
+		}
+
+		text_multi = {
+			layoutpolicy_horizontal = expanding
+			autoresize = yes
+			margin = { 8 4 }
+			max_width = 900
+			text = "dap_bases_desc"
+		}
+
+		text_single = {
+			margin = { 8 4 }
+			visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('dap_military_bases') )]"
+			text = "dap_bases_empty"
+		}
+
+		vbox = {
+			layoutpolicy_horizontal = expanding
+			datamodel = "[GetPlayer.MakeScope.GetList('dap_military_bases')]"
+
+			item = {
+				hbox = {
+					layoutpolicy_horizontal = expanding
+					datacontext = "[Scope.GetProvince]"
+					margin = { 8 2 }
+					spacing = 8
+
+					text_single = {
+						align = left|nobaseline
+						text = "dap_base_name"
+					}
+					text_single = {
+						align = left|nobaseline
+						visible = "[Province.MakeScope.Var('dap_specialty_set').IsSet]"
+						text = "dap_base_set"
+					}
+					text_single = {
+						align = left|nobaseline
+						text = "[Province.Custom( 'dap_cl_base_stationed' )]"
+					}
+					expand = {}
+					button_standard_small = {
+						size = { 160 26 }
+						text = "dap_base_next_specialty"
+						tooltip = "dap_base_next_specialty_tt"
+						onclick = "[GetScriptedGui( 'dap_next_specialty' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', Province.MakeScope ).End )]"
+					}
+				}
+			}
+		}
+	}
+}
+
 types DapLogTypes
 {
 	# The log in the General tab; datacontext is the player
@@ -215,6 +279,9 @@ window = {
 						datacontext = "[GetPlayer]"
 
 						dap_settings_view = {}
+						dap_bases_view = {
+							visible = "[GetVariableSystem.HasValue( 'dap_tab', 'buildings' )]"
+						}
 						dap_log_view = {
 							visible = "[GetVariableSystem.HasValue( 'dap_tab', 'general' )]"
 						}

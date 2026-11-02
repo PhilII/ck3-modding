@@ -172,3 +172,14 @@ dap_build_started = {
 		dap_build_started_effect = yes
 	}
 }
+
+# scope:province = a military base in the window's list; its specialty moves on to the next
+# men-at-arms type the player owns, after the last back to automatic, and the list follows
+dap_next_specialty = {
+	scope = character
+	saved_scopes = { province }
+	effect = {
+		scope:province = { dap_next_specialty_effect = yes }
+		dap_update_military_bases_effect = yes
+	}
+}

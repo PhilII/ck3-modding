@@ -70,7 +70,7 @@ TEST_VALUES = {
     "dap_faith_spouses": 1, "dap_faith_vassals": 2, "dap_hof_gold": 1, "dap_excomm_alert": 1,
     "dap_faith_warn_heir": 1, "dap_faith_warn_vassals": 1, "dap_faith_report": 1,
     "dap_build_enabled": 1, "dap_build_suggest": 0, "dap_build_income": 2, "dap_build_development": 2,
-    "dap_build_per_season": 3,
+    "dap_build_per_season": 3, "dap_build_military": 2,
 }
 
 
@@ -340,7 +340,9 @@ SUITE_SETUP = """\
 			dap_devtest_add_upgradable_effect = yes
 			dap_devtest_fill_slots_effect = yes
 		}
-		# Buildings: nothing is asked for with the switch off, or without gold above the reserve
+		# Buildings: nothing is asked for with the switch off, or without gold above the reserve.
+		# Military stacking stays off until its own scenario below
+		set_variable = { name = dap_build_military value = 0 }
 		set_variable = { name = dap_build_enabled value = 0 }
 		dap_run_buildings_effect = yes
 		dap_devtest_queued_effect = yes
@@ -525,8 +527,168 @@ SUITE_SETUP = """\
 			dap_devtest_name_pick_effect = yes
 			remove_variable = dap_t_income_pick
 		}
+		# Military bases, Military alone on High. You own skirmishers and archers, nothing else.
+		# A holding of your domain with military camps (a skirmisher building, a lesser archer
+		# one) becomes the skirmisher base and gets another building that stacks skirmisher
+		# bonuses; a vassal's holding with military camps never becomes a base, nor does stables
+		# (cavalry) make a cavalry base. Then you set your capital's specialty to archers with
+		# the window's button, and the next run keeps it
+		set_variable = { name = dap_build_development value = 0 }
+		set_variable = { name = dap_build_military value = 2 }
+		every_maa_regiment = { destroy_maa_regiment = yes }
+		create_maa_regiment = { type = light_footmen }
+		create_maa_regiment = { type = bowmen }
+		random_vassal = {
+			limit = {
+				capital_province ?= {
+					has_holding = yes
+					NOT = { scope:dap_t_baron_holding ?= this }
+				}
+			}
+			capital_province = {
+				save_scope_as = dap_t_vassal_camps
+				if = {
+					limit = { has_free_building_slot = no }
+					add_province_modifier = extra_building_slot
+				}
+				add_building = military_camps_01
+			}
+		}
+		ordered_directly_owned_province = {
+			limit = {
+				has_holding = yes
+				has_ongoing_construction = no
+				NOT = { this = root.capital_province }
+				NOT = { scope:dap_t_baron_holding ?= this }
+				NOT = { scope:dap_t_main_upgrade ?= this }
+				NOT = { scope:dap_t_upgrade ?= this }
+			}
+			order_by = dap_holding_skirmishers_stationed_value
+			save_scope_as = dap_t_camps
+			if = {
+				limit = { has_free_building_slot = no }
+				add_province_modifier = extra_building_slot
+			}
+			if = {
+				limit = { NOT = { has_building_or_higher = military_camps_01 } }
+				add_building = military_camps_01
+			}
+			if = {
+				limit = { has_free_building_slot = no }
+				add_province_modifier = extra_building_slot
+			}
+		}
+		ordered_directly_owned_province = {
+			limit = {
+				has_holding = yes
+				NOT = { this = root.capital_province }
+				NOT = { scope:dap_t_camps ?= this }
+				NOT = { scope:dap_t_baron_holding ?= this }
+				NOT = { scope:dap_t_main_upgrade ?= this }
+				NOT = { scope:dap_t_upgrade ?= this }
+			}
+			order_by = num_buildings
+			save_scope_as = dap_t_stables
+			if = {
+				limit = { has_free_building_slot = no }
+				add_province_modifier = extra_building_slot
+			}
+			add_building = stables_01
+		}
+		dap_run_buildings_effect = yes
+		if = {
+			limit = {
+				any_in_list = { variable = dap_military_bases }
+				NOT = {
+					any_in_list = {
+						variable = dap_military_bases
+						NOT = { var:dap_specialty ?= flag:skirmishers }
+						NOT = { var:dap_specialty ?= flag:archers }
+					}
+				}
+				NOT = { scope:dap_t_stables ?= { has_variable = dap_specialty } }
+			}
+			debug_log = "DAPTEST OK no military base for a type you do not own"
+		}
+		else = {
+			debug_log = "DAPTEST FAIL a military base for a type you do not own"
+			every_in_list = {
+				variable = dap_military_bases
+				save_scope_as = holding
+				debug_log = "DAPTEST   base:"
+				debug_log_scopes = yes
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:dap_t_vassal_camps
+				NOT = { scope:dap_t_vassal_camps = { has_variable = dap_specialty } }
+				NOT = { any_in_list = { variable = dap_military_bases NOT = { province_owner = root } } }
+			}
+			debug_log = "DAPTEST OK no military base outside your domain"
+		}
+		else_if = {
+			limit = { NOT = { exists = scope:dap_t_vassal_camps } }
+			debug_log = "DAPTEST note no vassal holding to test bases outside your domain"
+		}
+		else = { debug_log = "DAPTEST FAIL a military base outside your domain" }
+		scope:dap_t_camps ?= {
+			if = {
+				limit = {
+					var:dap_specialty ?= flag:skirmishers
+					root = { is_target_in_variable_list = { name = dap_military_bases target = scope:dap_t_camps } }
+				}
+				debug_log = "DAPTEST OK a domain holding with a skirmisher building becomes the skirmisher base"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL the domain holding with military camps is not the skirmisher base"
+				dap_devtest_explain_effect = yes
+			}
+			if = {
+				limit = { dap_devtest_skirmisher_pick_trigger = yes }
+				debug_log = "DAPTEST OK the skirmisher base gets another building that stacks skirmisher bonuses"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL the skirmisher base gets no building that stacks skirmisher bonuses"
+				dap_devtest_explain_effect = yes
+			}
+		}
+		# The button keeps the capital's automatic specialty, if it was the archer base, else
+		# sets the first type you own: archers
+		capital_province = { dap_next_specialty_effect = yes }
+		set_global_variable = { name = dap_t_set_base value = root.capital_province }
+		dap_run_buildings_effect = yes
+		capital_province = {
+			if = {
+				limit = {
+					var:dap_specialty ?= flag:archers
+					has_variable = dap_specialty_set
+					root = { is_target_in_variable_list = { name = dap_military_bases target = root.capital_province } }
+					# Another archer base only if the capital has no room left for one more
+					OR = {
+						has_variable = dap_base_room
+						NOT = {
+							root = {
+								any_in_list = {
+									variable = dap_military_bases
+									var:dap_specialty ?= flag:archers
+									NOT = { this = root.capital_province }
+								}
+							}
+						}
+					}
+				}
+				debug_log = "DAPTEST OK the specialty you set is kept on the next run (capital: archers)"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL the specialty you set for the capital is not kept"
+				dap_devtest_explain_effect = yes
+			}
+		}
+		set_variable = { name = dap_build_military value = 0 }
 		remove_local_variable = dap_dry
 		set_variable = { name = dap_build_suggest value = 0 }
+		set_variable = { name = dap_build_development value = 2 }
 		set_variable = { name = dap_build_income value = 2 }
 		set_variable = { name = dap_build_per_season value = 3 }
 		# Gold for every construction the seasonal run asks for, the vassal's holding included
@@ -734,6 +896,34 @@ dap_devtest.30 = {
 			debug_log = "DAPTEST OK heir is now the player"
 		}
 		else = { debug_log = "DAPTEST note heir is not the player" }
+		global_var:dap_t_set_base ?= {
+			if = {
+				limit = {
+					var:dap_specialty ?= flag:archers
+					has_variable = dap_specialty_set
+				}
+				debug_log = "DAPTEST OK the military base specialty you set survives succession"
+			}
+			else = { debug_log = "DAPTEST FAIL the military base specialty you set is lost on succession" }
+		}
+		set_variable = { name = dap_build_military value = 2 }
+		dap_update_military_bases_effect = yes
+		if = {
+			limit = {
+				global_var:dap_t_set_base ?= { province_owner = root }
+				number_maa_regiments_of_base_type = { type = archers value > 0 }
+			}
+			if = {
+				limit = { is_target_in_variable_list = { name = dap_military_bases target = global_var:dap_t_set_base } }
+				debug_log = "DAPTEST OK the heir's run keeps the base you set"
+			}
+			else = { debug_log = "DAPTEST FAIL the heir's run drops the base you set" }
+		}
+		else_if = {
+			limit = { NOT = { global_var:dap_t_set_base ?= { province_owner = root } } }
+			debug_log = "DAPTEST note the heir did not get the holding whose specialty you set"
+		}
+		else = { debug_log = "DAPTEST note the heir has no archers, so that base is not active for them" }
 		if = {
 			limit = {
 				has_variable = dap_initialized
@@ -1022,6 +1212,23 @@ widget = {
 		size = { 1 1 }
 		alwaystransparent = yes
 		state = {
+			name = window_check
+			trigger_when = "[GetPlayer.MakeScope.Var( 'dap_t_window_check' ).IsSet]"
+			delay = 1
+			on_finish = "[GetVariableSystem.Set( 'dap_tab', 'buildings' )]"
+			next = window_done
+		}
+		state = {
+			name = window_done
+			delay = 3
+			on_finish = "[GetScriptedGui( 'dap_devtest_window_done' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+		}
+	}
+
+	widget = {
+		size = { 1 1 }
+		alwaystransparent = yes
+		state = {
 			name = check
 			trigger_when = "[GetScriptedGui( 'dap_devtest_suite_queue_done' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 			delay = 2
@@ -1121,7 +1328,32 @@ dap_devtest_suite_build_check = {
 		}
 		else = { debug_log = "DAPTEST OK holdings with construction under way are skipped" }
 		dap_devtest_cancel_builds_effect = yes
-		dap_devtest_succession_effect = yes
+		# The window's Buildings tab lists the military bases: the GUI widget opens it, then
+		# goes on to the succession test (dap_devtest_window_done), so errors in the list reach
+		# error.log. Before the death: the death screen stops GUI widgets
+		set_variable = { name = dap_build_military value = 2 }
+		dap_update_military_bases_effect = yes
+		set_variable = dap_window_open
+		set_variable = dap_t_window_check
+	}
+}
+
+dap_devtest_window_done = {
+	scope = character
+	effect = {
+		save_scope_value_as = { name = bases value = { value = 0 every_in_list = { variable = dap_military_bases add = 1 } } }
+		if = {
+			limit = { scope:bases > 0 }
+			debug_log = "DAPTEST OK the window showed the Buildings tab listing military bases:"
+		}
+		else = { debug_log = "DAPTEST FAIL the window showed the Buildings tab with no military bases" }
+		debug_log_scopes = yes
+		remove_variable = dap_window_open
+		if = {
+			limit = { has_variable = dap_t_window_check }
+			remove_variable = dap_t_window_check
+			dap_devtest_succession_effect = yes
+		}
 	}
 }
 
@@ -1143,7 +1375,8 @@ def building_helpers():
     """(effects, triggers) for the suite's building scenarios, from the generated building data."""
     found, _ = build_buildings.candidates(build_buildings.DEFAULT_GAME)
     first = [c for c in found if not c["previous"] and not c["main"]]
-    fillers = [c["key"] for c in first if not any(v > 0 for v in c["scores"].values())]
+    fillers = [c["key"] for c in first
+               if not any(v > 0 for v in c["scores"].values()) and not any(v > 0 for v in c["military"].values())]
     income = lambda c: sum(c["scores"][k] for k in ("INCOME_HOLDING", "INCOME_HOLDER", "INCOME_COUNTY")) > 0
     upgradable = [c["previous"] for c in found
                   if c["previous"] and income(c) and any(f["key"] == c["previous"] for f in first)]
@@ -1281,6 +1514,9 @@ dap_devtest_explain_effect = {
                 pick_trigger("dap_devtest_income_pick_trigger", [c["key"] for c in found if income(c)]),
                 pick_trigger("dap_devtest_development_pick_trigger",
                              [c["key"] for c in found if c["scores"]["DEVELOPMENT_COUNTY"] > 0]),
+                pick_trigger("dap_devtest_skirmisher_pick_trigger",
+                             [c["key"] for c in found
+                              if c["military"].get("skirmishers", 0) + c["military"].get("maa", 0) > 0]),
                 "# this = province; could be the vassal baron's holding in the stacking county: a\n"
                 "# vassal's holding, or one of the player's castles or cities, or an empty barony\n"
                 "dap_devtest_baron_holding_candidate_trigger = {\n"

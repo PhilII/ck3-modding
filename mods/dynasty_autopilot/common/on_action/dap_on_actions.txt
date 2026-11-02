@@ -26,5 +26,7 @@ dap_player_change = {
 	effect = {
 		dap_inherit_settings_effect = { FROM = scope:previous_player_character }
 		dap_init_player_effect = yes
+		# The heir's window lists their military bases at once
+		dap_update_military_bases_effect = yes
 	}
 }

@@ -73,6 +73,7 @@ dap_set_default_player_settings_effect = {
 	set_variable = { name = dap_build_suggest value = 0 }
 	set_variable = { name = dap_build_income value = 1 }
 	set_variable = { name = dap_build_development value = 2 }
+	set_variable = { name = dap_build_military value = 0 }
 	set_variable = { name = dap_build_per_season value = 1 }
 }
 
@@ -489,6 +490,10 @@ dap_ensure_player_settings_effect = {
 		set_variable = { name = dap_build_development value = 2 }
 	}
 	if = {
+		limit = { NOT = { has_variable = dap_build_military } }
+		set_variable = { name = dap_build_military value = 0 }
+	}
+	if = {
 		limit = { NOT = { has_variable = dap_build_per_season } }
 		set_variable = { name = dap_build_per_season value = 1 }
 	}
@@ -752,6 +757,7 @@ dap_declare_setting_flags_effect = {
 	set_local_variable = { name = dap_setting_flag value = flag:dap_build_suggest }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_build_income }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_build_development }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_build_military }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_build_per_season }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_breeding }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_power }
@@ -1078,6 +1084,7 @@ dap_inherit_settings_effect = {
 	set_variable = { name = dap_build_suggest value = $FROM$.var:dap_build_suggest }
 	set_variable = { name = dap_build_income value = $FROM$.var:dap_build_income }
 	set_variable = { name = dap_build_development value = $FROM$.var:dap_build_development }
+	set_variable = { name = dap_build_military value = $FROM$.var:dap_build_military }
 	set_variable = { name = dap_build_per_season value = $FROM$.var:dap_build_per_season }
 	set_variable = { name = dap_status value = $FROM$.var:dap_status }
 	set_variable = { name = dap_same_faith value = $FROM$.var:dap_same_faith }
@@ -1704,6 +1711,10 @@ dap_setting_next_effect = {
 		dap_cycle_effect = { VAR = dap_build_development MAX = 2 }
 	}
 	else_if = {
+		limit = { scope:setting = flag:dap_build_military }
+		dap_cycle_effect = { VAR = dap_build_military MAX = 2 }
+	}
+	else_if = {
 		limit = { scope:setting = flag:dap_build_per_season }
 		dap_cycle_effect = { VAR = dap_build_per_season MAX = 3 }
 	}
@@ -2142,6 +2153,10 @@ dap_setting_prev_effect = {
 	else_if = {
 		limit = { scope:setting = flag:dap_build_development }
 		dap_cycle_back_effect = { VAR = dap_build_development MAX = 2 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_build_military }
+		dap_cycle_back_effect = { VAR = dap_build_military MAX = 2 }
 	}
 	else_if = {
 		limit = { scope:setting = flag:dap_build_per_season }

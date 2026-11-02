@@ -3,6 +3,10 @@
 dap_cl_log_building = {
 	type = character
 	text = {
+		trigger = { var:dap_log_building ?= flag:barracks_01 }
+		localization_key = building_barracks_01
+	}
+	text = {
 		trigger = { var:dap_log_building ?= flag:breweries_01 }
 		localization_key = building_breweries_01
 	}
@@ -43,8 +47,16 @@ dap_cl_log_building = {
 		localization_key = building_hill_farms_01
 	}
 	text = {
+		trigger = { var:dap_log_building ?= flag:hill_forts_01 }
+		localization_key = building_hill_forts_01
+	}
+	text = {
 		trigger = { var:dap_log_building ?= flag:hillside_grazing_01 }
 		localization_key = building_hillside_grazing_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:horse_pastures_01 }
+		localization_key = building_horse_pastures_01
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:hospices_01 }
@@ -53,6 +65,10 @@ dap_cl_log_building = {
 	text = {
 		trigger = { var:dap_log_building ?= flag:hunting_grounds_01 }
 		localization_key = building_hunting_grounds_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kora_kora_yards_01 }
+		localization_key = building_kora_kora_yards_01
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:logging_camps_01 }
@@ -65,6 +81,10 @@ dap_cl_log_building = {
 	text = {
 		trigger = { var:dap_log_building ?= flag:megalith_01 }
 		localization_key = building_megalith_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:military_camps_01 }
+		localization_key = building_military_camps_01
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:monastic_schools_01 }
@@ -99,12 +119,24 @@ dap_cl_log_building = {
 		localization_key = building_plantations_01
 	}
 	text = {
+		trigger = { var:dap_log_building ?= flag:powder_magazine_01 }
+		localization_key = building_powder_magazine_01
+	}
+	text = {
 		trigger = { var:dap_log_building ?= flag:qanats_01 }
 		localization_key = building_qanats_01
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:quarries_01 }
 		localization_key = building_quarries_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ramparts_01 }
+		localization_key = building_ramparts_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:regimental_grounds_01 }
+		localization_key = building_regimental_grounds_01
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:smiths_01 }
@@ -115,12 +147,32 @@ dap_cl_log_building = {
 		localization_key = building_spice_plantation_01
 	}
 	text = {
+		trigger = { var:dap_log_building ?= flag:stables_01 }
+		localization_key = building_stables_01
+	}
+	text = {
 		trigger = { var:dap_log_building ?= flag:stilted_granaries_01 }
 		localization_key = building_stilted_granaries_01
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:vihara_halls_01 }
 		localization_key = building_vihara_halls_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wantilan_01 }
+		localization_key = building_wantilan_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:war_camps_01 }
+		localization_key = building_war_camps_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:warrior_lodges_01 }
+		localization_key = building_warrior_lodges_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watchtowers_01 }
+		localization_key = building_watchtowers_01
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:water_temples_01 }
@@ -145,6 +197,34 @@ dap_cl_log_building = {
 	text = {
 		trigger = { var:dap_log_building ?= flag:workshops_01 }
 		localization_key = building_workshops_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:barracks_02 }
+		localization_key = building_barracks_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:barracks_03 }
+		localization_key = building_barracks_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:barracks_04 }
+		localization_key = building_barracks_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:barracks_05 }
+		localization_key = building_barracks_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:barracks_06 }
+		localization_key = building_barracks_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:barracks_07 }
+		localization_key = building_barracks_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:barracks_08 }
+		localization_key = building_barracks_08
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:breweries_02 }
@@ -451,6 +531,34 @@ dap_cl_log_building = {
 		localization_key = building_hill_farms_08
 	}
 	text = {
+		trigger = { var:dap_log_building ?= flag:hill_forts_02 }
+		localization_key = building_hill_forts_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hill_forts_03 }
+		localization_key = building_hill_forts_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hill_forts_04 }
+		localization_key = building_hill_forts_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hill_forts_05 }
+		localization_key = building_hill_forts_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hill_forts_06 }
+		localization_key = building_hill_forts_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hill_forts_07 }
+		localization_key = building_hill_forts_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hill_forts_08 }
+		localization_key = building_hill_forts_08
+	}
+	text = {
 		trigger = { var:dap_log_building ?= flag:hillside_grazing_02 }
 		localization_key = building_hillside_grazing_02
 	}
@@ -477,6 +585,34 @@ dap_cl_log_building = {
 	text = {
 		trigger = { var:dap_log_building ?= flag:hillside_grazing_08 }
 		localization_key = building_hillside_grazing_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:horse_pastures_02 }
+		localization_key = building_horse_pastures_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:horse_pastures_03 }
+		localization_key = building_horse_pastures_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:horse_pastures_04 }
+		localization_key = building_horse_pastures_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:horse_pastures_05 }
+		localization_key = building_horse_pastures_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:horse_pastures_06 }
+		localization_key = building_horse_pastures_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:horse_pastures_07 }
+		localization_key = building_horse_pastures_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:horse_pastures_08 }
+		localization_key = building_horse_pastures_08
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:hospices_02 }
@@ -533,6 +669,18 @@ dap_cl_log_building = {
 	text = {
 		trigger = { var:dap_log_building ?= flag:hunting_grounds_08 }
 		localization_key = building_hunting_grounds_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kora_kora_yards_02 }
+		localization_key = building_kora_kora_yards_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kora_kora_yards_03 }
+		localization_key = building_kora_kora_yards_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kora_kora_yards_04 }
+		localization_key = building_kora_kora_yards_04
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:logging_camps_02 }
@@ -593,6 +741,34 @@ dap_cl_log_building = {
 	text = {
 		trigger = { var:dap_log_building ?= flag:megalith_08 }
 		localization_key = building_megalith_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:military_camps_02 }
+		localization_key = building_military_camps_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:military_camps_03 }
+		localization_key = building_military_camps_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:military_camps_04 }
+		localization_key = building_military_camps_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:military_camps_05 }
+		localization_key = building_military_camps_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:military_camps_06 }
+		localization_key = building_military_camps_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:military_camps_07 }
+		localization_key = building_military_camps_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:military_camps_08 }
+		localization_key = building_military_camps_08
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:monastic_schools_02 }
@@ -819,6 +995,34 @@ dap_cl_log_building = {
 		localization_key = building_plantations_08
 	}
 	text = {
+		trigger = { var:dap_log_building ?= flag:powder_magazine_02 }
+		localization_key = building_powder_magazine_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:powder_magazine_03 }
+		localization_key = building_powder_magazine_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:powder_magazine_04 }
+		localization_key = building_powder_magazine_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:powder_magazine_05 }
+		localization_key = building_powder_magazine_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:powder_magazine_06 }
+		localization_key = building_powder_magazine_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:powder_magazine_07 }
+		localization_key = building_powder_magazine_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:powder_magazine_08 }
+		localization_key = building_powder_magazine_08
+	}
+	text = {
 		trigger = { var:dap_log_building ?= flag:qanats_02 }
 		localization_key = building_qanats_02
 	}
@@ -879,6 +1083,58 @@ dap_cl_log_building = {
 		localization_key = building_ramparts_02
 	}
 	text = {
+		trigger = { var:dap_log_building ?= flag:ramparts_03 }
+		localization_key = building_ramparts_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ramparts_04 }
+		localization_key = building_ramparts_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ramparts_05 }
+		localization_key = building_ramparts_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ramparts_06 }
+		localization_key = building_ramparts_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ramparts_07 }
+		localization_key = building_ramparts_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ramparts_08 }
+		localization_key = building_ramparts_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:regimental_grounds_02 }
+		localization_key = building_regimental_grounds_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:regimental_grounds_03 }
+		localization_key = building_regimental_grounds_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:regimental_grounds_04 }
+		localization_key = building_regimental_grounds_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:regimental_grounds_05 }
+		localization_key = building_regimental_grounds_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:regimental_grounds_06 }
+		localization_key = building_regimental_grounds_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:regimental_grounds_07 }
+		localization_key = building_regimental_grounds_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:regimental_grounds_08 }
+		localization_key = building_regimental_grounds_08
+	}
+	text = {
 		trigger = { var:dap_log_building ?= flag:smiths_02 }
 		localization_key = building_smiths_02
 	}
@@ -935,6 +1191,34 @@ dap_cl_log_building = {
 		localization_key = building_spice_plantation_08
 	}
 	text = {
+		trigger = { var:dap_log_building ?= flag:stables_02 }
+		localization_key = building_stables_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:stables_03 }
+		localization_key = building_stables_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:stables_04 }
+		localization_key = building_stables_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:stables_05 }
+		localization_key = building_stables_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:stables_06 }
+		localization_key = building_stables_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:stables_07 }
+		localization_key = building_stables_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:stables_08 }
+		localization_key = building_stables_08
+	}
+	text = {
 		trigger = { var:dap_log_building ?= flag:stilted_granaries_02 }
 		localization_key = building_stilted_granaries_02
 	}
@@ -971,6 +1255,10 @@ dap_cl_log_building = {
 		localization_key = building_temple_citadel_04
 	}
 	text = {
+		trigger = { var:dap_log_building ?= flag:tribe_02 }
+		localization_key = building_tribe_02
+	}
+	text = {
 		trigger = { var:dap_log_building ?= flag:vihara_halls_02 }
 		localization_key = building_vihara_halls_02
 	}
@@ -997,6 +1285,78 @@ dap_cl_log_building = {
 	text = {
 		trigger = { var:dap_log_building ?= flag:vihara_halls_08 }
 		localization_key = building_vihara_halls_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wantilan_02 }
+		localization_key = building_wantilan_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wantilan_03 }
+		localization_key = building_wantilan_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wantilan_04 }
+		localization_key = building_wantilan_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:war_camps_02 }
+		localization_key = building_war_camps_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:warrior_lodges_02 }
+		localization_key = building_warrior_lodges_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:warrior_lodges_03 }
+		localization_key = building_warrior_lodges_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:warrior_lodges_04 }
+		localization_key = building_warrior_lodges_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:warrior_lodges_05 }
+		localization_key = building_warrior_lodges_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:warrior_lodges_06 }
+		localization_key = building_warrior_lodges_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:warrior_lodges_07 }
+		localization_key = building_warrior_lodges_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:warrior_lodges_08 }
+		localization_key = building_warrior_lodges_08
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watchtowers_02 }
+		localization_key = building_watchtowers_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watchtowers_03 }
+		localization_key = building_watchtowers_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watchtowers_04 }
+		localization_key = building_watchtowers_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watchtowers_05 }
+		localization_key = building_watchtowers_05
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watchtowers_06 }
+		localization_key = building_watchtowers_06
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watchtowers_07 }
+		localization_key = building_watchtowers_07
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:watchtowers_08 }
+		localization_key = building_watchtowers_08
 	}
 	text = {
 		trigger = { var:dap_log_building ?= flag:water_temples_02 }

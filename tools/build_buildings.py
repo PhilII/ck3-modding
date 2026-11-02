@@ -8,16 +8,22 @@ does not run it. Writes (all marked GENERATED, never edit them by hand):
   common/scripted_effects/dap_buildings_generated.txt
   common/customizable_localization/dap_buildings_generated.txt
   common/script_values/dap_buildings_generated.txt
+  common/scripted_effects/dap_military_generated.txt
+  common/scripted_triggers/dap_military_generated.txt
+  common/customizable_localization/dap_military_generated.txt
 
 Every regular building is listed: its requirement triggers, cost and construction
 time (the game's named script values), next level, and its focus scores split by
 the reach of each bonus (county_modifier = county, province_modifier = holding,
-character_modifier = holder). First levels are new buildings for free slots; later
+character_modifier = holder), and their stationed men-at-arms bonuses by base type (the
+Military stacking focus, which stacks them in military bases). First levels are new buildings for free slots; later
 levels are upgrades of the level before, scored by what they add. The holdings'
 main buildings (castle, city, temple...) come with the holding, so only their
 upgrades are listed. The scripted effects file ends with a list of every regular
 building that is left out, and why. The script values count, per holding, the buildings
-whose county-wide bonus serves each focus, which picks the stacking county.
+whose county-wide bonus serves each focus, which picks the stacking county; per men-at-arms
+base type, the stationed bonuses a holding has and how well its terrain suits the type (from
+the game's men-at-arms types), which pick a military base's specialty.
 """
 
 import argparse
@@ -176,6 +182,37 @@ def raw_scores(building, values):
     return scores
 
 
+# Stationed men-at-arms bonuses (province_modifier) that make regiments of a base type
+# stationed there stronger; "maa" means every type
+STATIONED = re.compile(r"stationed_(\w+?)_(?:damage|toughness|pursuit|screen)_mult$")
+
+
+def stationed_scores(building, values):
+    """Base type -> the sum of its stationed damage/toughness/pursuit/screen bonuses; key "maa"
+    holds the bonuses to every type."""
+    scores = {}
+    for key, _, value in get(building, "province_modifier") or []:
+        match = STATIONED.match(key)
+        if match and not isinstance(value, list):
+            scores[match.group(1)] = scores.get(match.group(1), 0.0) + number(value, values)
+    return scores
+
+
+def terrain_fit(game):
+    """Base type -> terrain -> how many of the game's men-at-arms types of that base type
+    get a bonus on that terrain."""
+    fit = {}
+    for path in script_files(game, "men_at_arms_types"):
+        for key, _, maa in parse(tokenize(read(path)))[0]:
+            if not isinstance(maa, list) or not get(maa, "type"):
+                continue
+            terrains = fit.setdefault(get(maa, "type"), {})
+            for terrain, _, bonus in get(maa, "terrain_bonus") or []:
+                if isinstance(bonus, list):
+                    terrains[terrain] = terrains.get(terrain, 0) + 1
+    return fit
+
+
 def median(numbers):
     numbers = sorted(numbers)
     return numbers[len(numbers) // 2] if numbers else 1.0
@@ -242,13 +279,18 @@ def candidates(game):
             continue
         scores = raw_scores(building, values)
         total = dict(scores)
+        military = stationed_scores(building, values)
+        military_total = dict(military)
         if prev:
             before = raw_scores(buildings[prev], values)
             scores = {s: scores[s] - before[s] for s in SCORES}
+            before = stationed_scores(buildings[prev], values)
+            military = {t: military.get(t, 0.0) - before.get(t, 0.0) for t in set(military) | set(before)}
         found.append({
             "key": key, "previous": prev, "cost": cost, "gold": values[cost],
             "time": get(building, "construction_time"), "next": get(building, "next_building"),
             "main": key in chain_of_main, "trigger": trigger, "scores": scores, "total": total,
+            "military": military, "military_total": military_total,
         })
 
     # Weigh development against income: a typical development building gives as much
@@ -259,10 +301,26 @@ def candidates(game):
     development = [c["scores"]["DEVELOPMENT_COUNTY"] / c["gold"] for c in found
                    if not c["previous"] and c["scores"]["DEVELOPMENT_COUNTY"] > 0]
     scale = median(income) / median(development)
+    # Military likewise: a typical military building stacks as much stationed bonus per gold,
+    # for a base of its best type, as a typical income building gives income per gold
+    military = [best_stationed(c["military"]) / c["gold"] for c in found
+                if not c["previous"] and best_stationed(c["military"]) > 0]
+    military_scale = median(income) / median(military)
     for c in found:
         c["scores"]["DEVELOPMENT_COUNTY"] *= scale
+        c["military"] = {t: v * military_scale for t, v in c["military"].items()}
     found.sort(key=lambda c: (c["previous"] is not None, c["key"]))
     return found, skipped
+
+
+def best_stationed(military):
+    """What a building's stationed bonuses give a military base of the type they suit best."""
+    return military.get("maa", 0.0) + max([v for t, v in military.items() if t != "maa"] or [0.0])
+
+
+def base_types(found):
+    """Men-at-arms base types that some building has stationed bonuses for, in a stable order."""
+    return sorted({t for c in found for t, v in c["military_total"].items() if t != "maa" and v > 0})
 
 
 def fmt(x):
@@ -298,19 +356,27 @@ def main():
         return (f"{pad}if = {{\n{pad}\tlimit = {{ dap_can_build_{c['key']}_trigger = yes }}\n"
                 f"{pad}\t# next level: {c['next'] or 'none'}; construction time: {c['time']}\n"
                 f"{pad}\tdap_consider_building_effect = {{ BUILDING = {c['key']} FROM = {c['previous'] or 'none'} "
-                f"COST = {c['cost']} " + " ".join(f"{name} = {fmt(s[name])}" for name in SCORES) + f" }}\n{pad}}}\n")
+                f"COST = {c['cost']} " + " ".join(f"{name} = {fmt(s[name])}" for name in SCORES)
+                + f" MILITARY = {stationed_value(c)} }}\n{pad}}}\n")
 
-    useful = [c for c in found if any(v > 0 for v in c["scores"].values())]
+    def has_military(c):
+        return any(v > 0 for v in c["military"].values())
+
+    def stationed_value(c):
+        return f"dap_stationed_{c['key']}_value" if has_military(c) else "0"
+
+    useful = [c for c in found if any(v > 0 for v in c["scores"].values()) or has_military(c)]
     effects = [HEADER,
                "# this = province, with scope:holder and scope:county saved. Offers every new building that\n"
                "# can go in a free slot there, and every upgrade of a building there, to\n"
                "# dap_consider_building_effect. Scores: income in gold a month and development growth\n"
-               "# (weighed to match income), by the reach of the bonus; upgrades score what they add.\n",
+               "# (weighed to match income), by the reach of the bonus, and the stationed bonuses for a\n"
+               "# military base's specialty (a script value); upgrades score what they add.\n",
                "dap_consider_buildings_effect = {\n\tif = {\n\t\tlimit = { has_free_building_slot = yes }\n"]
     effects += [consider(c, 2) for c in useful if not c["previous"]]
     effects.append("\t}\n")
     effects += [consider(c, 1) for c in useful if c["previous"]]
-    effects.append("}\n\n# Regular buildings that serve neither focus (cost, construction time, next level):\n"
+    effects.append("}\n\n# Regular buildings that serve no focus (cost, construction time, next level):\n"
                    + "".join(f"#   {c['key']}: {c['cost']}, {c['time']}, {c['next'] or 'none'}\n"
                              for c in found if c not in useful))
     effects.append("# Regular buildings left out:\n" + "".join(f"#   {k}: {r}\n" for k, r in skipped))
@@ -332,7 +398,87 @@ def main():
                       f"dap_holding_{focus}_buildings_value = {{\n\tvalue = 0\n"
                       + "".join(f"\tif = {{\n\t\tlimit = {{ has_building = {k} }}\n\t\tadd = 1\n\t}}\n" for k in keys)
                       + "}\n\n")
+    types = base_types(found)
+    for c in found:
+        if has_military(c):
+            m = c["military"]
+            counts.append(f"# this = province; what {c['key']} adds to the stationed bonuses of its military base's\n"
+                          f"# specialty (var:dap_specialty)\ndap_stationed_{c['key']}_value = {{\n\tvalue = {fmt(m.get('maa', 0))}\n"
+                          + "".join(f"\tif = {{\n\t\tlimit = {{ var:dap_specialty ?= flag:{t} }}\n\t\tadd = {fmt(m[t])}\n\t}}\n"
+                                    for t in types if m.get(t, 0) > 0)
+                          + "}\n\n")
+    fit = terrain_fit(args.game)
+    for t in types:
+        counts.append(f"# this = province; the stationed bonuses its buildings give {t} alone (a military\n"
+                      f"# base's specialty follows them)\ndap_holding_{t}_stationed_value = {{\n\tvalue = 0\n"
+                      + "".join(f"\tif = {{\n\t\tlimit = {{ has_building = {c['key']} }}\n\t\tadd = {fmt(c['military_total'][t])}\n\t}}\n"
+                                for c in found if c["military_total"].get(t, 0) > 0)
+                      + "}\n\n")
+        counts.append(f"# this = province; how many men-at-arms types of base type {t} get a bonus on its terrain\n"
+                      f"dap_terrain_fit_{t}_value = {{\n\tvalue = 0\n"
+                      + "".join(f"\tif = {{\n\t\tlimit = {{ terrain = {terrain} }}\n\t\tadd = {n}\n\t}}\n"
+                                for terrain, n in sorted(fit.get(t, {}).items()))
+                      + "}\n\n")
+    counts.append("# this = province, root = the player; the most stationed bonuses its buildings give any\n"
+                  "# base type the player owns (a holding goes to the type it suits best)\n"
+                  "dap_best_owned_stationed_value = {\n\tvalue = 0\n"
+                  + "".join(f"\tif = {{\n\t\tlimit = {{ root = {{ {owns(t)} }} }}\n\t\tmin = dap_holding_{t}_stationed_value\n\t}}\n"
+                            for t in types)
+                  + "}\n\n")
     write("common/script_values/dap_buildings_generated.txt", "".join(counts).rstrip("\n") + "\n")
+    write_military(found, types)
+
+def owns(base_type):
+    """Trigger, in the player's scope, that they own regiments of the base type."""
+    return f"number_maa_regiments_of_base_type = {{ type = {base_type} value > 0 }}"
+
+
+def write_military(found, types):
+    """The military base helpers that go through every base type: effects, trigger and the
+    window's custom localization."""
+    military = [HEADER, "# this = player; dap_military_base_for_type_effect for every men-at-arms base type that\n"
+                        "# some building has stationed bonuses for and that the player owns regiments of\n"
+                        "dap_military_bases_for_owned_types_effect = {\n"]
+    military += [f"\tif = {{\n\t\tlimit = {{ {owns(t)} }}\n\t\tdap_military_base_for_type_effect = {{ TYPE = {t} }}\n\t}}\n"
+                 for t in types]
+    owned = [HEADER, "# this = province, root = the player; its var:dap_specialty is a base type the player owns\n"
+                     "dap_owns_specialty_trigger = {\n\tOR = {\n"]
+    owned += [f"\t\tAND = {{\n\t\t\tvar:dap_specialty ?= flag:{t}\n\t\t\troot = {{ {owns(t)} }}\n\t\t}}\n" for t in types]
+    owned.append("\t}\n}\n")
+    write("common/scripted_triggers/dap_military_generated.txt", "".join(owned))
+    military.append("}\n\n# this = province, root = the player; the specialty the player sets moves on to the\n"
+                    "# next base type they own, after the last back to automatic; an automatic specialty\n"
+                    "# is first kept as the player's own\n"
+                    "dap_next_specialty_effect = {\n"
+                    "\t# 1 once the current specialty is passed; at once if there is none\n"
+                    "\tset_local_variable = { name = dap_sp_passed value = 0 }\n"
+                    "\tif = {\n\t\tlimit = { NOT = { has_variable = dap_specialty } }\n"
+                    "\t\tset_local_variable = { name = dap_sp_passed value = 1 }\n\t}\n"
+                    "\tset_local_variable = { name = dap_sp_done value = 0 }\n"
+                    "\tif = {\n\t\tlimit = {\n\t\t\thas_variable = dap_specialty\n"
+                    "\t\t\tNOT = { has_variable = dap_specialty_set }\n\t\t}\n"
+                    "\t\tset_variable = { name = dap_specialty_set value = 1 }\n"
+                    "\t\tset_local_variable = { name = dap_sp_done value = 1 }\n\t}\n")
+    for t in types:
+        military.append(f"\tif = {{\n\t\tlimit = {{\n\t\t\tlocal_var:dap_sp_done = 0\n\t\t\tlocal_var:dap_sp_passed = 1\n"
+                        f"\t\t\troot = {{ {owns(t)} }}\n\t\t}}\n"
+                        f"\t\tset_variable = {{ name = dap_specialty value = flag:{t} }}\n"
+                        f"\t\tset_variable = {{ name = dap_specialty_set value = 1 }}\n"
+                        f"\t\tset_local_variable = {{ name = dap_sp_done value = 1 }}\n\t}}\n"
+                        f"\telse_if = {{\n\t\tlimit = {{ var:dap_specialty ?= flag:{t} }}\n"
+                        f"\t\tset_local_variable = {{ name = dap_sp_passed value = 1 }}\n\t}}\n")
+    military.append("\tif = {\n\t\tlimit = { local_var:dap_sp_done = 0 }\n\t\tdap_clear_specialty_effect = yes\n\t}\n}\n")
+    write("common/scripted_effects/dap_military_generated.txt", "".join(military))
+
+    loc = [HEADER, "# this = province; its military base's specialty\ndap_cl_base_specialty = {\n\ttype = province\n"]
+    loc += [f"\ttext = {{\n\t\ttrigger = {{ var:dap_specialty ?= flag:{t} }}\n\t\tlocalization_key = {t}\n\t}}\n" for t in types]
+    loc.append("\ttext = {\n\t\tfallback = yes\n\t\tlocalization_key = dap_empty\n\t}\n}\n\n"
+               "# this = province; whether regiments of its military base's specialty are stationed there\n"
+               "dap_cl_base_stationed = {\n\ttype = province\n")
+    loc += [f"\ttext = {{\n\t\ttrigger = {{\n\t\t\tvar:dap_specialty ?= flag:{t}\n\t\t\thas_stationed_regiment_of_base_type = {t}\n\t\t}}\n"
+            f"\t\tlocalization_key = dap_base_stationed\n\t}}\n" for t in types]
+    loc.append("\ttext = {\n\t\tfallback = yes\n\t\tlocalization_key = dap_base_not_stationed\n\t}\n}\n")
+    write("common/customizable_localization/dap_military_generated.txt", "".join(loc))
 
 
 if __name__ == "__main__":

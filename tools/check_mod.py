@@ -10,6 +10,8 @@ The game itself is not needed. Checks:
   - every dap_* localization key used by GUI, custom localization or events exists
   - the generated building data classifies known buildings by reach as expected, and
     counts the known ones with county-wide bonuses for picking the stacking county
+  - it gives known buildings the stationed men-at-arms bonuses they have, by base type,
+    and counts the known ones a holding has for picking a military base's specialty
   - no dev-test scaffolding or debug_log lines are left in the mod
 Exits with status 1 if anything fails.
 """
@@ -172,6 +174,40 @@ def check_county_counts():
                 errors.append(f"generated building data: {value} should {'' if positive else 'not '}count {building}")
 
 
+# Stationed men-at-arms bonuses of known buildings: base type (or "maa", as the game calls
+# bonuses to every type stationed there) -> whether it gets one
+KNOWN_STATIONED = {
+    "military_camps_01": {"skirmishers": True, "archers": True, "light_cavalry": False, "maa": False},
+    "stables_01": {"light_cavalry": True, "heavy_cavalry": True, "skirmishers": False},
+    "regimental_grounds_01": {"maa": True, "skirmishers": False},
+    "watermills_01": {"maa": False, "skirmishers": False},
+}
+# Buildings that must, or must not, count towards a type when choosing a base's specialty
+KNOWN_SPECIALTY_COUNTS = {
+    "dap_holding_skirmishers_stationed_value": {"military_camps_01": True, "regimental_grounds_01": False},
+    "dap_holding_light_cavalry_stationed_value": {"stables_01": True, "military_camps_01": False},
+}
+
+
+def check_stationed_bonuses():
+    path = os.path.join(MOD, "common", "script_values", "dap_buildings_generated.txt")
+    blocks = dict(re.findall(r"^(dap_\w+) = \{(.*?)^\}", read(path), re.M | re.S))
+    for building, expected in KNOWN_STATIONED.items():
+        block = blocks.get(f"dap_stationed_{building}_value", "")
+        found = {"maa": float((re.search(r"^\tvalue = (\S+)", block, re.M) or [0, "0"])[1]) > 0}
+        for base_type, amount in re.findall(r"flag:(\w+) \}\s*add = (\S+)", block):
+            found[base_type] = float(amount) > 0
+        for base_type, positive in expected.items():
+            if found.get(base_type, False) != positive:
+                errors.append(f"generated building data: {building} should {'' if positive else 'not '}"
+                              f"have a stationed bonus for {base_type}")
+    for value, expected in KNOWN_SPECIALTY_COUNTS.items():
+        counted = set(re.findall(r"has_building = (\w+)", blocks.get(value, "")))
+        for building, positive in expected.items():
+            if (building in counted) != positive:
+                errors.append(f"generated building data: {value} should {'' if positive else 'not '}count {building}")
+
+
 def check_no_dev_leftovers():
     for path in files(*TEXT_EXTENSIONS):
         if "zz_devtest" in os.path.basename(path):
@@ -190,6 +226,7 @@ if __name__ == "__main__":
     check_localization_keys()
     check_building_classifications()
     check_county_counts()
+    check_stationed_bonuses()
     check_no_dev_leftovers()
     for error in errors:
         print("ERROR", error)

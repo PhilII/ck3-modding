@@ -2107,6 +2107,26 @@ dap_cl_dap_build_development = {
 	}
 }
 
+dap_cl_dap_build_military = {
+	type = character
+	text = {
+		trigger = { var:dap_build_military = 0 }
+		localization_key = dap_val_dap_build_military_0
+	}
+	text = {
+		trigger = { var:dap_build_military = 1 }
+		localization_key = dap_val_dap_build_military_1
+	}
+	text = {
+		trigger = { var:dap_build_military = 2 }
+		localization_key = dap_val_dap_build_military_2
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+
 dap_cl_dap_build_per_season = {
 	type = character
 	text = {
