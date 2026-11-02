@@ -329,6 +329,14 @@ dap_cl_log_action = {
 		localization_key = dap_log_replace_suggested
 	}
 	text = {
+		trigger = { var:dap_log_action = flag:dap_log_holding_started }
+		localization_key = dap_log_holding_started
+	}
+	text = {
+		trigger = { var:dap_log_action = flag:dap_log_holding_suggested }
+		localization_key = dap_log_holding_suggested
+	}
+	text = {
 		fallback = yes
 		localization_key = dap_empty
 	}
@@ -393,6 +401,23 @@ dap_cl_county_excluded = {
 	text = {
 		trigger = { county = { has_variable = dap_build_excluded } }
 		localization_key = dap_listed_excluded
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_empty
+	}
+}
+
+# Name of the holding type started, in var:dap_log_building (a log entry of the new holdings option)
+dap_cl_log_holding = {
+	type = character
+	text = {
+		trigger = { var:dap_log_building ?= flag:city_holding }
+		localization_key = city_holding
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:castle_holding }
+		localization_key = castle_holding
 	}
 	text = {
 		fallback = yes

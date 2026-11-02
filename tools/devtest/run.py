@@ -1074,6 +1074,142 @@ SUITE_CHECKS = """\
 				remove_variable = dap_t_full
 			}
 		}
+		# New holdings: a county of yours with an empty barony where a city can go, every other
+		# county and holding of yours excluded, and its own holdings too (as if full), so no county
+		# is left to stack. With the option off no holding is started; on, a city is really under
+		# construction in that barony, its base price paid and logged, and a second run starts no
+		# other holding
+		save_scope_as = holder
+		ordered_held_title = {
+			limit = {
+				tier = tier_county
+				NOT = { has_variable = dap_build_excluded }
+				any_county_province = {
+					has_holding = no
+					has_ongoing_construction = no
+					barony_cannot_construct_holding = no
+				}
+			}
+			order_by = {
+				value = 0
+				if = {
+					limit = { this = root.capital_county }
+					subtract = 1
+				}
+			}
+			save_scope_as = dap_t_new_holding_county
+			every_county_province = {
+				limit = { has_holding = no }
+				culture = {
+					if = {
+						limit = { NOT = { has_innovation = innovation_city_planning } }
+						add_innovation = innovation_city_planning
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				scope:dap_t_new_holding_county ?= {
+					any_county_province = { dap_can_create_city_holding_trigger = yes }
+				}
+			}
+			every_held_title = {
+				limit = {
+					tier = tier_county
+					NOT = { this = scope:dap_t_new_holding_county }
+					NOT = { has_variable = dap_build_excluded }
+				}
+				set_variable = { name = dap_build_excluded value = 1 }
+				set_variable = dap_t_full
+			}
+			every_directly_owned_province = {
+				limit = { NOT = { has_variable = dap_build_excluded } }
+				set_variable = { name = dap_build_excluded value = 1 }
+				set_variable = dap_t_full
+			}
+			scope:dap_t_new_holding_county = {
+				every_county_province = {
+					limit = {
+						has_holding = yes
+						NOT = { has_variable = dap_build_excluded }
+					}
+					set_variable = { name = dap_build_excluded value = 1 }
+					set_variable = dap_t_full
+				}
+			}
+			add_gold = 5000
+			dap_run_buildings_effect = yes
+			if = {
+				limit = { scope:dap_t_new_holding_county = { any_county_province = { has_holding = no has_ongoing_construction = yes } } }
+				debug_log = "DAPTEST FAIL with the option off, a new holding was started"
+			}
+			else = { debug_log = "DAPTEST OK with the option off, no new holding is started, even with nowhere left to build" }
+			set_variable = { name = dap_build_new_holdings value = 1 }
+			set_local_variable = { name = dap_t_paid value = gold }
+			dap_run_buildings_effect = yes
+			change_local_variable = { name = dap_t_paid subtract = gold }
+			if = {
+				limit = {
+					scope:dap_t_new_holding_county = {
+						any_county_province = {
+							has_holding = no
+							has_ongoing_construction = yes
+							has_construction_with_flag = city
+						}
+					}
+				}
+				debug_log = "DAPTEST OK with the option on and nowhere left to stack, a new city is under construction in the county"
+			}
+			else = { debug_log = "DAPTEST FAIL with the option on and nowhere left to stack, no new city is under construction" }
+			if = {
+				limit = { local_var:dap_t_paid = dap_city_holding_cost_value }
+				debug_log = "DAPTEST OK the new city's base price was paid once"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL the new city's base price was not paid once"
+				debug_log_scopes = yes
+			}
+			if = {
+				limit = { var:dap_log_action ?= flag:dap_log_holding_started }
+				debug_log = "DAPTEST OK the new holding is in the log"
+			}
+			else = { debug_log = "DAPTEST FAIL the new holding is not in the log" }
+			dap_run_buildings_effect = yes
+			if = {
+				limit = {
+					scope:dap_t_new_holding_county = {
+						any_county_province = {
+							count >= 2
+							has_holding = no
+							has_ongoing_construction = yes
+						}
+					}
+				}
+				debug_log = "DAPTEST FAIL a second run started another new holding"
+			}
+			else = { debug_log = "DAPTEST OK a second run starts no other new holding while one is under way" }
+			set_variable = { name = dap_build_new_holdings value = 0 }
+			every_held_title = {
+				limit = { has_variable = dap_t_full }
+				remove_variable = dap_build_excluded
+				remove_variable = dap_t_full
+			}
+			every_held_title = {
+				limit = { tier = tier_county }
+				every_county_province = {
+					limit = { has_variable = dap_t_full }
+					remove_variable = dap_build_excluded
+					remove_variable = dap_t_full
+				}
+			}
+			every_directly_owned_province = {
+				limit = { has_variable = dap_t_full }
+				remove_variable = dap_build_excluded
+				remove_variable = dap_t_full
+			}
+		}
+		else = { debug_log = "DAPTEST FAIL no county of yours with an empty barony where a city can go, to test new holdings" }
 		if = {
 			limit = { cp:councillor_chancellor ?= { is_performing_council_task = task_domestic_affairs } }
 			debug_log = "DAPTEST OK chancellor on Domestic Affairs (a vassal hates you)"

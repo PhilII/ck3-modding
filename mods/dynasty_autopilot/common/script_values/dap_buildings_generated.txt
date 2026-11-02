@@ -4369,6 +4369,16 @@ dap_terrain_fit_skirmishers_value = {
 	}
 }
 
+# The base price of starting a new city_holding (its main building, city_01)
+dap_city_holding_cost_value = {
+	value = main_building_tier_1_cost
+}
+
+# The base price of starting a new castle_holding (its main building, castle_01)
+dap_castle_holding_cost_value = {
+	value = main_building_tier_1_cost
+}
+
 # this = province, root = the player; the most stationed bonuses its buildings give any
 # base type the player owns (a holding goes to the type it suits best)
 dap_best_owned_stationed_value = {

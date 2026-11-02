@@ -766,6 +766,15 @@ dap_build_replace_here_trigger = {
 	}
 }
 
+# this = province (a military base); full: no free slot, no pick this run, and nothing under
+# way or waiting for the holding view (the new holdings option then starts a castle)
+dap_full_military_base_trigger = {
+	has_free_building_slot = no
+	has_ongoing_construction = no
+	NOT = { has_variable = dap_bc_value }
+	NOT = { has_variable = dap_build_queued }
+}
+
 # this = province, root = player; a holding the builder lists in a county held by one of the
 # player's vassals, not the player's own (the vassals' counties option)
 dap_in_vassal_county_trigger = {

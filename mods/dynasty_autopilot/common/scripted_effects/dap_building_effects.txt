@@ -874,5 +874,145 @@ dap_run_buildings_effect = {
 				}
 			}
 		}
+		if = {
+			limit = { var:dap_build_new_holdings ?= 1 }
+			dap_new_holdings_effect = yes
+		}
+	}
+}
+
+# this = player; with the new holdings option, once there is nowhere left to build for a
+# focus, starts a new holding in an empty barony of a county the player holds, through the
+# engine's own holding construction (begin_create_holding): a city when an active focus with
+# county-wide bonuses has no stacking county (no room for such a bonus anywhere), else a
+# castle when a military base is full (no free slot, no pick, nothing under way). One new
+# holding at a time, within the gold above the reserve and the constructions allowed per
+# season (local_var:dap_build_left and dap_build_spent of dap_run_buildings_effect).
+dap_new_holdings_effect = {
+	# Saved scopes last the whole event, so none is left from an earlier run
+	if = {
+		limit = { exists = scope:dap_full_base }
+		clear_saved_scope = dap_full_base
+	}
+	if = {
+		limit = {
+			local_var:dap_build_left > 0
+			NOT = {
+				any_held_title = {
+					tier = tier_county
+					any_county_province = {
+						has_holding = no
+						has_ongoing_construction = yes
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						local_var:dap_w_income > 0
+						NOT = { exists = scope:dap_stack_income }
+					}
+					AND = {
+						local_var:dap_w_development > 0
+						NOT = { exists = scope:dap_stack_development }
+					}
+				}
+			}
+			dap_start_new_holding_effect = { HOLDING = city_holding }
+		}
+		else_if = {
+			limit = {
+				local_var:dap_w_military > 0
+				any_in_list = {
+					variable = dap_military_bases
+					dap_full_military_base_trigger = yes
+				}
+			}
+			ordered_in_list = {
+				variable = dap_military_bases
+				limit = { dap_full_military_base_trigger = yes }
+				order_by = { value = 0 }
+				save_scope_as = dap_full_base
+			}
+			dap_start_new_holding_effect = { HOLDING = castle_holding }
+		}
+	}
+}
+
+# this = player; starts a new $HOLDING$ (city_holding or castle_holding) in an empty barony
+# where the game allows one (dap_can_create_$HOLDING$_trigger, generated), in a county the
+# player holds that is not excluded: for a city, the one with the most buildings serving the
+# active county-wide focuses, the capital breaking ties; for a castle, the full military base's
+# county (scope:dap_full_base), else ordered as for a city. Pays the holding's base price; in Suggest
+# only mode it logs it instead.
+dap_start_new_holding_effect = {
+	save_scope_as = holder
+	capital_county = { save_scope_as = dap_capital_county }
+	if = {
+		limit = { exists = scope:dap_new_holding }
+		clear_saved_scope = dap_new_holding
+	}
+	ordered_held_title = {
+		limit = {
+			tier = tier_county
+			NOT = { has_variable = dap_build_excluded }
+			any_county_province = { dap_can_create_$HOLDING$_trigger = yes }
+		}
+		order_by = {
+			value = dap_county_income_buildings_value
+			multiply = local_var:dap_on_income
+			add = {
+				value = dap_county_development_buildings_value
+				multiply = local_var:dap_on_development
+			}
+			if = {
+				limit = {
+					exists = scope:dap_full_base
+					scope:dap_full_base = { county = prev }
+				}
+				add = 1000
+			}
+			if = {
+				limit = { this = scope:dap_capital_county }
+				add = 0.5
+			}
+		}
+		random_county_province = {
+			limit = { dap_can_create_$HOLDING$_trigger = yes }
+			save_scope_as = dap_new_holding
+		}
+	}
+	set_local_variable = {
+		name = dap_build_need
+		value = {
+			value = local_var:dap_build_spent
+			add = dap_$HOLDING$_cost_value
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:dap_new_holding
+			dap_can_spend_trigger = { AMOUNT = local_var:dap_build_need }
+		}
+		change_local_variable = { name = dap_build_left subtract = 1 }
+		set_local_variable = { name = dap_build_spent value = local_var:dap_build_need }
+		if = {
+			limit = { dap_dry_run_trigger = yes }
+			dap_log_effect = { ACTION = dap_log_holding_suggested }
+		}
+		else = {
+			remove_short_term_gold = dap_$HOLDING$_cost_value
+			scope:dap_new_holding = { begin_create_holding = $HOLDING$ }
+			dap_log_effect = { ACTION = dap_log_holding_started }
+			if = {
+				limit = { NOT = { has_variable = dap_build_season_count } }
+				set_variable = { name = dap_build_season_count value = 0 days = 90 }
+			}
+			change_variable = { name = dap_build_season_count add = 1 }
+		}
+		set_variable = { name = dap_log_building value = flag:$HOLDING$ }
+		set_variable = { name = dap_log_province value = scope:dap_new_holding }
 	}
 }

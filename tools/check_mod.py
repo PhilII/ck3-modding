@@ -12,6 +12,7 @@ The game itself is not needed. Checks:
     counts the known ones with county-wide bonuses for picking the stacking county
   - it gives known buildings the stationed men-at-arms bonuses they have, by base type,
     and counts the known ones a holding has for picking a military base's specialty
+  - it has the requirements and cost of starting the new holdings automatic building starts
   - no dev-test scaffolding or debug_log lines are left in the mod
 Exits with status 1 if anything fails.
 """
@@ -242,6 +243,25 @@ def check_replacement_worth():
         errors.append("generated building data: replacing watermills_02 should lose more than its upgrade adds")
 
 
+# New holdings: the holding type started for each focus, and a requirement the game sets for it
+KNOWN_NEW_HOLDINGS = {"city_holding": "innovation_city_planning", "castle_holding": "innovation_motte"}
+
+
+def check_new_holdings():
+    triggers = read(os.path.join(MOD, "common", "scripted_triggers", "dap_buildings_generated.txt"))
+    values = read(os.path.join(MOD, "common", "script_values", "dap_buildings_generated.txt"))
+    for holding, innovation in KNOWN_NEW_HOLDINGS.items():
+        block = re.search(rf"^dap_can_create_{holding}_trigger = \{{(.*?)^\}}", triggers, re.M | re.S)
+        if not block:
+            errors.append(f"generated building data: no trigger for starting a new {holding}")
+            continue
+        for needed in ("has_holding = no", innovation):
+            if needed not in block[1]:
+                errors.append(f"generated building data: starting a new {holding} should need {needed}")
+        if not re.search(rf"^dap_{holding}_cost_value = \{{\s*value = main_building_tier_1_cost", values, re.M):
+            errors.append(f"generated building data: a new {holding} should cost main_building_tier_1_cost")
+
+
 def check_no_dev_leftovers():
     for path in files(*TEXT_EXTENSIONS):
         if "zz_devtest" in os.path.basename(path):
@@ -262,6 +282,7 @@ if __name__ == "__main__":
     check_county_counts()
     check_stationed_bonuses()
     check_replacement_worth()
+    check_new_holdings()
     check_no_dev_leftovers()
     for error in errors:
         print("ERROR", error)

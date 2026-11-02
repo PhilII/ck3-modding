@@ -2183,3 +2183,19 @@ dap_cl_dap_build_replace = {
 	}
 }
 
+dap_cl_dap_build_new_holdings = {
+	type = character
+	text = {
+		trigger = { var:dap_build_new_holdings = 0 }
+		localization_key = dap_val_dap_build_new_holdings_0
+	}
+	text = {
+		trigger = { var:dap_build_new_holdings = 1 }
+		localization_key = dap_val_dap_build_new_holdings_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+

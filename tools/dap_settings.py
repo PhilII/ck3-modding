@@ -1025,6 +1025,13 @@ MODULES = [
                         "default": 0,
                         "values": ["Off", "On"],
                     },
+                    {
+                        "key": "dap_build_new_holdings",
+                        "label": "New holdings",
+                        "tooltip": "When on, the autopilot may start a new holding in an empty barony of a county you hold, once there is nowhere left to build for a focus: a city when no county has room for another Income or Development building with a county-wide bonus, a castle when a military base is full. It pays the holding's base price and starts one at a time. When off, it never starts holdings.",
+                        "default": 0,
+                        "values": ["Off", "On"],
+                    },
                 ],
             },
         ],

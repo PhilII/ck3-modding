@@ -24,7 +24,8 @@ gives, for replacing it with a new building. The scripted effects file ends with
 of every regular building that is left out, and why. The script values count, per holding, the buildings
 whose county-wide bonus serves each focus, which picks the stacking county; per men-at-arms
 base type, the stationed bonuses a holding has and how well its terrain suits the type (from
-the game's men-at-arms types), which pick a military base's specialty.
+the game's men-at-arms types), which pick a military base's specialty. For the new holdings
+option, the requirements and base price of starting a city or a castle holding.
 """
 
 import argparse
@@ -135,6 +136,14 @@ def load_buildings(game):
     return found
 
 
+def holding_main_buildings(game):
+    """Holding type -> the first level of its main building (castle_holding -> castle_01...)."""
+    return {key: get(holding, "primary_building")
+            for path in script_files(game, "holdings")
+            for key, _, holding in parse(tokenize(read(path)))[0]
+            if isinstance(holding, list) and get(holding, "primary_building")}
+
+
 def main_buildings(game):
     """The first level of each holding type's main building (castle_01, city_01...)."""
     return {get(holding, "primary_building")
@@ -153,6 +162,9 @@ HOLDINGS_PER_COUNTY = 2.5
 FACTOR_BASE_GROWTH = 0.5
 REACH_BLOCKS = {"county_modifier": "COUNTY", "province_modifier": "HOLDING", "character_modifier": "HOLDER"}
 SCORES = ("INCOME_HOLDING", "INCOME_HOLDER", "INCOME_COUNTY", "DEVELOPMENT_COUNTY")
+# Holding types automatic building may start with the new holdings option (city for Income
+# and Development, castle for Military)
+NEW_HOLDINGS = ("city_holding", "castle_holding")
 # Focuses with county-wide bonuses, which county stacking stacks: focus -> score
 COUNTY_FOCUSES = {"income": "INCOME_COUNTY", "development": "DEVELOPMENT_COUNTY"}
 
@@ -217,6 +229,19 @@ def terrain_fit(game):
 def median(numbers):
     numbers = sorted(numbers)
     return numbers[len(numbers) // 2] if numbers else 1.0
+
+
+def new_holding_trigger(building):
+    """Body of the trigger that a holding whose main building this is can be started there."""
+    body = ["\thas_holding = no\n"]
+    for name in REQUIREMENT_BLOCKS:
+        block = get(building, name)
+        if block:
+            text = serialize(block, 1)
+            if "@" in text or re.search(r"\broot\b", text):
+                sys.exit(f"the requirements of {building} need their own scope handling")
+            body.append(f"\t# {name}\n{text}")
+    return "".join(body)
 
 
 def requirement_trigger(key, building, previous):
@@ -352,6 +377,12 @@ def main():
                         "# building triggers expect). True when the building can be started there: a new\n"
                         "# building in a free slot, or an upgrade of the level before it.\n\n"]
     triggers += [f"dap_can_build_{c['key']}_trigger = {{\n{c['trigger']}}}\n\n" for c in found]
+    buildings = load_buildings(args.game)
+    mains = holding_main_buildings(args.game)
+    triggers.append("# this = province (a barony with no holding); scope:holder = who would build it. True when\n"
+                    "# a holding of the type can be started there (the requirements of its main building).\n\n")
+    triggers += [f"dap_can_create_{h}_trigger = {{\n{new_holding_trigger(buildings[mains[h]])}}}\n\n"
+                 for h in NEW_HOLDINGS]
     write("common/scripted_triggers/dap_buildings_generated.txt", "".join(triggers))
 
     def consider(c, depth):
@@ -440,6 +471,9 @@ def main():
                       + "".join(f"\tif = {{\n\t\tlimit = {{ terrain = {terrain} }}\n\t\tadd = {n}\n\t}}\n"
                                 for terrain, n in sorted(fit.get(t, {}).items()))
                       + "}\n\n")
+    for h in NEW_HOLDINGS:
+        counts.append(f"# The base price of starting a new {h} (its main building, {mains[h]})\n"
+                      f"dap_{h}_cost_value = {{\n\tvalue = {get(buildings[mains[h]], 'cost_gold')}\n}}\n\n")
     counts.append("# this = province, root = the player; the most stationed bonuses its buildings give any\n"
                   "# base type the player owns (a holding goes to the type it suits best)\n"
                   "dap_best_owned_stationed_value = {\n\tvalue = 0\n"

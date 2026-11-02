@@ -8669,3 +8669,41 @@ dap_can_build_workshops_08_trigger = {
 	building_requirement_tribal = no
 }
 
+# this = province (a barony with no holding); scope:holder = who would build it. True when
+# a holding of the type can be started there (the requirements of its main building).
+
+dap_can_create_city_holding_trigger = {
+	has_holding = no
+	# can_construct_potential
+	barony_cannot_construct_holding = no
+	# can_construct
+	culture = {
+		has_innovation = innovation_city_planning
+	}
+	# can_construct_showing_failures_only
+	building_requirement_tribal = no
+	building_requirement_tribal_holding_in_county = yes
+	building_requirement_nomad = no
+	building_requirement_nomad_holding_in_county = yes
+	building_requirement_herder = no
+	building_requirement_herder_holding_in_county = yes
+}
+
+dap_can_create_castle_holding_trigger = {
+	has_holding = no
+	# can_construct_potential
+	barony_cannot_construct_holding = no
+	# can_construct
+	culture = {
+		has_innovation = innovation_motte
+	}
+	japan_castle_construction_trigger = yes
+	# can_construct_showing_failures_only
+	building_requirement_tribal = no
+	building_requirement_tribal_holding_in_county = yes
+	building_requirement_nomad = no
+	building_requirement_nomad_holding_in_county = yes
+	building_requirement_herder = no
+	building_requirement_herder_holding_in_county = yes
+}
+

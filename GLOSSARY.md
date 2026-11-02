@@ -36,6 +36,10 @@ _Avoid_: Realm counties
 Lets automatic building replace a building that serves none of the active building focuses with a new one, only in a county with no free slot left (excluded holdings aside), and only when the new building gives at least 50% more than all the old one gave, whatever focus it served.
 _Avoid_: Demolish, rebuild
 
+**New holdings** (an option):
+Lets automatic building start a new holding in an empty barony of a county the player holds once there is nowhere left to build for a focus: a city when no county has room for an Income or Development county-wide bonus, a castle when a military base is full; one at a time.
+_Avoid_: Expand, settle
+
 **Excluded holding**:
 A county or holding the player has taken out of automatic building.
 _Avoid_: Locked, blacklisted
