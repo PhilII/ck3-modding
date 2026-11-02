@@ -13,6 +13,8 @@ The game itself is not needed. Checks:
   - it gives known buildings the stationed men-at-arms bonuses they have, by base type,
     and counts the known ones a holding has for picking a military base's specialty
   - it has the requirements and cost of starting the new holdings automatic building starts
+  - it offers known duchy capital and special buildings only in their own slots, and never a
+    great project
   - no dev-test scaffolding or debug_log lines are left in the mod
 Exits with status 1 if anything fails.
 """
@@ -262,6 +264,42 @@ def check_new_holdings():
             errors.append(f"generated building data: a new {holding} should cost main_building_tier_1_cost")
 
 
+# Duchy capital and special buildings, each in its own slot: (building, the consider effect
+# that offers it, a score that must be above zero, lines its requirement trigger must have)
+KNOWN_SLOT_BUILDINGS = {
+    "tax_assessor_01": ("dap_consider_duchy_capital_buildings_effect", "INCOME_COUNTY",
+                        ("this = duchy.title_capital_county.title_province", "has_building_with_flag = duchy_building")),
+    "generic_copper_mines_02": ("dap_consider_special_buildings_effect", "INCOME_HOLDING",
+                                ("has_building = generic_copper_mines_01",)),
+    "golden_gate_of_kiev_01": ("dap_consider_special_buildings_effect", None,
+                               ("has_special_building_slot = yes", "has_special_building = no", "this = province:547")),
+}
+# Great projects, which are never automated
+KNOWN_GREAT_PROJECTS = ("great_project_cathedral_01", "the_great_wall_01", "mandala_capital_01")
+
+
+def check_slot_buildings():
+    effects = read(os.path.join(MOD, "common", "scripted_effects", "dap_buildings_generated.txt"))
+    triggers = read(os.path.join(MOD, "common", "scripted_triggers", "dap_buildings_generated.txt"))
+    blocks = dict(re.findall(r"^(dap_\w+) = \{(.*?)^\}", effects, re.M | re.S))
+    for building, (effect, score, needed) in KNOWN_SLOT_BUILDINGS.items():
+        for name, block in blocks.items():
+            offered = re.search(rf"BUILDING = {building} [^}}]*", block)
+            if name == effect and not offered:
+                errors.append(f"generated building data: {effect} should offer {building}")
+            elif name != effect and offered:
+                errors.append(f"generated building data: {building} should be offered only by {effect}, not {name}")
+            elif offered and score and not float((re.search(rf"{score} = (\S+)", offered[0]) or [0, "0"])[1]) > 0:
+                errors.append(f"generated building data: {building} should score {score} above zero")
+        trigger = re.search(rf"^dap_can_build_{building}_trigger = \{{(.*?)^\}}", triggers, re.M | re.S)
+        for line in needed:
+            if not trigger or line not in trigger[1]:
+                errors.append(f"generated building data: building {building} should need {line}")
+    for building in KNOWN_GREAT_PROJECTS:
+        if re.search(rf"\b{building}\b", effects + triggers):
+            errors.append(f"generated building data: great project {building} must never be a candidate")
+
+
 def check_no_dev_leftovers():
     for path in files(*TEXT_EXTENSIONS):
         if "zz_devtest" in os.path.basename(path):
@@ -283,6 +321,7 @@ if __name__ == "__main__":
     check_stationed_bonuses()
     check_replacement_worth()
     check_new_holdings()
+    check_slot_buildings()
     check_no_dev_leftovers()
     for error in errors:
         print("ERROR", error)

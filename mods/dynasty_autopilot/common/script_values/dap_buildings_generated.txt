@@ -2775,6 +2775,312 @@ dap_stationed_workshops_08_value = {
 	}
 }
 
+# this = province; what archery_ranges_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_archery_ranges_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.612
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.350
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.787
+	}
+}
+
+# this = province; what blacksmiths_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_blacksmiths_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.394
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.394
+	}
+}
+
+# this = province; what jousting_lists_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_jousting_lists_01_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:camel_cavalry }
+		add = 0.700
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:elephant_cavalry }
+		add = 0.525
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 1.050
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.700
+	}
+}
+
+# this = province; what royal_armory_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_royal_armory_01_value = {
+	value = 0.262
+}
+
+# this = province; what archery_ranges_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_archery_ranges_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.284
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.153
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.394
+	}
+}
+
+# this = province; what archery_ranges_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_archery_ranges_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:archer_cavalry }
+		add = 0.284
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:archers }
+		add = 0.153
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:skirmishers }
+		add = 0.394
+	}
+}
+
+# this = province; what blacksmiths_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_blacksmiths_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.175
+	}
+}
+
+# this = province; what blacksmiths_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_blacksmiths_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_infantry }
+		add = 0.175
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:pikemen }
+		add = 0.175
+	}
+}
+
+# this = province; what jousting_lists_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_jousting_lists_02_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:camel_cavalry }
+		add = 0.350
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:elephant_cavalry }
+		add = 0.262
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.525
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.350
+	}
+}
+
+# this = province; what jousting_lists_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_jousting_lists_03_value = {
+	value = 0.000
+	if = {
+		limit = { var:dap_specialty ?= flag:camel_cavalry }
+		add = 0.350
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:elephant_cavalry }
+		add = 0.262
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:heavy_cavalry }
+		add = 0.525
+	}
+	if = {
+		limit = { var:dap_specialty ?= flag:light_cavalry }
+		add = 0.350
+	}
+}
+
+# this = province; what royal_armory_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_royal_armory_02_value = {
+	value = 0.088
+}
+
+# this = province; what royal_armory_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_royal_armory_03_value = {
+	value = 0.087
+}
+
+# this = province; what alcazar_of_segovia_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_alcazar_of_segovia_01_value = {
+	value = 0.350
+}
+
+# this = province; what aljaferia_palace_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_aljaferia_palace_01_value = {
+	value = 0.350
+}
+
+# this = province; what buddha_kamakura_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_buddha_kamakura_01_value = {
+	value = 0.219
+}
+
+# this = province; what citadel_thang_long_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_citadel_thang_long_01_value = {
+	value = 0.131
+}
+
+# this = province; what danevirke_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_danevirke_01_value = {
+	value = 0.044
+}
+
+# this = province; what gongsanseong_fortress_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_gongsanseong_fortress_01_value = {
+	value = 0.306
+}
+
+# this = province; what hotin_fort_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hotin_fort_01_value = {
+	value = 0.262
+}
+
+# this = province; what maiden_tower adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_maiden_tower_value = {
+	value = 0.350
+}
+
+# this = province; what patras_castle adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_patras_castle_value = {
+	value = 0.262
+}
+
+# this = province; what the_tower_of_london_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_the_tower_of_london_01_value = {
+	value = 0.350
+}
+
+# this = province; what trosky_castle_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_trosky_castle_01_value = {
+	value = 0.087
+}
+
+# this = province; what visegrad_castle_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_visegrad_castle_01_value = {
+	value = 0.131
+}
+
+# this = province; what wartburg_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wartburg_01_value = {
+	value = 0.262
+}
+
+# this = province; what wawel_cathedral_01 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wawel_cathedral_01_value = {
+	value = 0.044
+}
+
+# this = province; what alamut_castle_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_alamut_castle_02_value = {
+	value = 0.087
+}
+
+# this = province; what alhambra_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_alhambra_02_value = {
+	value = 0.088
+}
+
+# this = province; what citadel_of_aleppo_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_citadel_of_aleppo_02_value = {
+	value = 0.088
+}
+
+# this = province; what citadel_thang_long_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_citadel_thang_long_02_value = {
+	value = 0.044
+}
+
+# this = province; what hotin_fort_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_hotin_fort_02_value = {
+	value = 0.088
+}
+
+# this = province; what wawel_cathedral_02 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wawel_cathedral_02_value = {
+	value = 0.044
+}
+
+# this = province; what wawel_cathedral_03 adds to the stationed bonuses of its military base's
+# specialty (var:dap_specialty)
+dap_stationed_wawel_cathedral_03_value = {
+	value = 0.087
+}
+
 # this = province; the stationed bonuses its buildings give archer_cavalry alone (a military
 # base's specialty follows them)
 dap_holding_archer_cavalry_stationed_value = {

@@ -70,7 +70,7 @@ TEST_VALUES = {
     "dap_faith_spouses": 1, "dap_faith_vassals": 2, "dap_hof_gold": 1, "dap_excomm_alert": 1,
     "dap_faith_warn_heir": 1, "dap_faith_warn_vassals": 1, "dap_faith_report": 1,
     "dap_build_enabled": 1, "dap_build_suggest": 0, "dap_build_income": 2, "dap_build_development": 2,
-    "dap_build_per_season": 3, "dap_build_military": 2,
+    "dap_build_per_season": 3, "dap_build_military": 2, "dap_build_duchy": 1, "dap_build_special": 1,
 }
 
 
@@ -341,8 +341,11 @@ SUITE_SETUP = """\
 			dap_devtest_fill_slots_effect = yes
 		}
 		# Buildings: nothing is asked for with the switch off, or without gold above the reserve.
-		# Military stacking stays off until its own scenario below
+		# Military stacking stays off until its own scenario below, and duchy capital and special
+		# buildings until theirs
 		set_variable = { name = dap_build_military value = 0 }
+		set_variable = { name = dap_build_duchy value = 0 }
+		set_variable = { name = dap_build_special value = 0 }
 		set_variable = { name = dap_build_enabled value = 0 }
 		dap_run_buildings_effect = yes
 		dap_devtest_queued_effect = yes
@@ -1210,6 +1213,301 @@ SUITE_CHECKS = """\
 			}
 		}
 		else = { debug_log = "DAPTEST FAIL no county of yours with an empty barony where a city can go, to test new holdings" }
+		# Duchy capital and special buildings: the capital barony of a duchy of yours (given to
+		# you if need be), and another castle of your domain given a copper mine in a special slot,
+		# both with every regular slot full of buildings that serve no focus, and every other
+		# holding of yours excluded (as if full). With both options off neither gets a duchy capital
+		# or special building; with the duchy option on, a duchy capital building that serves a
+		# focus is asked for in the duchy capital; with the special option on, the mine's upgrade.
+		# Both are pressed below
+		set_local_variable = { name = dap_t_military_was value = var:dap_build_military }
+		set_variable = { name = dap_build_military value = 0 }
+		ordered_held_title = {
+			limit = {
+				tier = tier_county
+				NOT = { has_variable = dap_build_excluded }
+				de_jure_liege ?= { title_capital_county = prev }
+				title_province = {
+					has_holding = yes
+					has_ongoing_construction = no
+					NOT = { this = root.capital_province }
+					NOT = { scope:dap_t_baron_holding ?= this }
+					NOT = { scope:dap_t_main_upgrade ?= this }
+					NOT = { scope:dap_t_upgrade ?= this }
+					NOT = { global_var:dap_t_replace_holding ?= this }
+					NOT = { global_var:dap_t_vassal_county_holding ?= this }
+					OR = {
+						province_owner = root
+						province_owner = { is_vassal_of = root }
+					}
+				}
+			}
+			# A duchy you hold, then a holding waiting for nothing: the earlier scenarios' spare
+			# holdings may be used again, their requests dropped
+			order_by = {
+				value = 0
+				if = {
+					limit = { de_jure_liege.holder ?= root }
+					add = 10
+				}
+				if = {
+					limit = { title_province = { dap_devtest_waiting_trigger = yes } }
+					subtract = 1
+				}
+			}
+			save_scope_as = dap_t_duchy_county
+		}
+		# By now the land module may have granted away all but the counties the other scenarios
+		# use: then take one back from a vassal
+		if = {
+			limit = { NOT = { exists = scope:dap_t_duchy_county } }
+			ordered_realm_county = {
+				limit = {
+					NOT = { holder = root }
+					de_jure_liege ?= { title_capital_county = prev }
+					title_province = {
+						has_holding_type = castle_holding
+						has_ongoing_construction = no
+					}
+				}
+				order_by = development_level
+				save_scope_as = dap_t_duchy_county
+				dap_devtest_take_county_effect = yes
+			}
+		}
+		scope:dap_t_duchy_county ?= {
+			if = {
+				limit = { NOT = { de_jure_liege.holder ?= root } }
+				de_jure_liege = { save_scope_as = dap_t_duchy }
+				root = {
+					create_title_and_vassal_change = { type = granted save_scope_as = change add_claim_on_loss = no }
+					scope:dap_t_duchy = { change_title_holder = { holder = root change = scope:change } }
+					resolve_title_and_vassal_change = scope:change
+				}
+			}
+			title_province = { save_scope_as = dap_t_duchy_holding }
+		}
+		scope:dap_t_duchy_holding ?= {
+			dap_drop_build_request_effect = yes
+			root = { remove_list_variable = { name = dap_t_asked target = scope:dap_t_duchy_holding } }
+			dap_devtest_remove_duchy_buildings_effect = yes
+			dap_devtest_remove_focus_buildings_effect = yes
+			dap_devtest_fill_slots_effect = yes
+			culture = {
+				if = {
+					limit = { NOT = { has_innovation = innovation_manorialism } }
+					add_innovation = innovation_manorialism
+				}
+			}
+		}
+		ordered_directly_owned_province = {
+			limit = {
+				has_holding_type = castle_holding
+				has_special_building_slot = no
+				has_ongoing_construction = no
+				dap_build_excluded_trigger = no
+				NOT = { this = root.capital_province }
+				NOT = { scope:dap_t_baron_holding ?= this }
+				NOT = { scope:dap_t_main_upgrade ?= this }
+				NOT = { scope:dap_t_upgrade ?= this }
+				NOT = { global_var:dap_t_replace_holding ?= this }
+				NOT = { global_var:dap_t_vassal_county_holding ?= this }
+				NOT = { scope:dap_t_duchy_holding ?= this }
+			}
+			order_by = {
+				value = 0
+				if = {
+					limit = { has_building_or_higher = castle_02 }
+					add = 1
+				}
+				if = {
+					limit = { dap_devtest_waiting_trigger = yes }
+					subtract = 2
+				}
+			}
+			save_scope_as = dap_t_special_holding
+		}
+		if = {
+			limit = { NOT = { exists = scope:dap_t_special_holding } }
+			ordered_realm_county = {
+				limit = {
+					NOT = { holder = root }
+					NOT = { scope:dap_t_duchy_county ?= this }
+					title_province = {
+						has_holding_type = castle_holding
+						has_special_building_slot = no
+						has_ongoing_construction = no
+					}
+				}
+				order_by = development_level
+				dap_devtest_take_county_effect = yes
+				title_province = { save_scope_as = dap_t_special_holding }
+			}
+		}
+		scope:dap_t_special_holding ?= {
+			dap_drop_build_request_effect = yes
+			root = { remove_list_variable = { name = dap_t_asked target = scope:dap_t_special_holding } }
+			# The mine's upgrade needs a level 2 castle
+			if = {
+				limit = { NOT = { has_building_or_higher = castle_02 } }
+				add_building = castle_02
+			}
+			add_special_building_slot = generic_copper_mines_01
+			add_special_building = generic_copper_mines_01
+			dap_devtest_remove_focus_buildings_effect = yes
+			dap_devtest_fill_slots_effect = yes
+			culture = {
+				if = {
+					limit = { NOT = { has_innovation = innovation_manorialism } }
+					add_innovation = innovation_manorialism
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = { has_building_or_higher = castle_02 }
+						NOT = { has_building = generic_copper_mines_01 }
+					}
+				}
+				debug_log = "DAPTEST FAIL could not give a castle of level 2 a copper mine to test special buildings"
+			}
+		}
+		every_held_title = {
+			limit = {
+				tier = tier_county
+				NOT = { has_variable = dap_build_excluded }
+				NOT = { scope:dap_t_duchy_holding ?= { county = prev } }
+				NOT = { scope:dap_t_special_holding ?= { county = prev } }
+			}
+			set_variable = { name = dap_build_excluded value = 1 }
+			set_variable = dap_t_full
+		}
+		every_held_title = {
+			limit = {
+				tier = tier_county
+				NOT = { has_variable = dap_build_excluded }
+			}
+			every_county_province = {
+				limit = {
+					has_holding = yes
+					NOT = { has_variable = dap_build_excluded }
+					NOT = { scope:dap_t_duchy_holding ?= this }
+					NOT = { scope:dap_t_special_holding ?= this }
+				}
+				set_variable = { name = dap_build_excluded value = 1 }
+				set_variable = dap_t_full
+			}
+		}
+		every_directly_owned_province = {
+			limit = {
+				NOT = { has_variable = dap_build_excluded }
+				NOT = { scope:dap_t_duchy_holding ?= this }
+				NOT = { scope:dap_t_special_holding ?= this }
+			}
+			set_variable = { name = dap_build_excluded value = 1 }
+			set_variable = dap_t_full
+		}
+		add_gold = 5000
+		dap_run_buildings_effect = yes
+		if = {
+			limit = {
+				NOT = {
+					any_in_list = {
+						variable = dap_build_holdings
+						OR = {
+							var:dap_bc_slot ?= flag:duchy_capital
+							var:dap_bc_slot ?= flag:special
+						}
+					}
+				}
+			}
+			debug_log = "DAPTEST OK with both options off, no duchy capital or special building is picked"
+		}
+		else = { debug_log = "DAPTEST FAIL with both options off, a duchy capital or special building was picked" }
+		set_variable = { name = dap_build_duchy value = 1 }
+		scope:dap_t_duchy_holding ?= {
+			dap_drop_build_request_effect = yes
+			root = { dap_run_buildings_effect = yes }
+			if = {
+				limit = {
+					dap_devtest_waiting_trigger = yes
+					var:dap_bc_slot ?= flag:duchy_capital
+					dap_devtest_duchy_pick_trigger = yes
+				}
+				debug_log = "DAPTEST OK with the duchy option on, a duchy capital building that serves a focus is asked for in the duchy capital"
+				set_global_variable = { name = dap_t_duchy_holding value = this }
+				root = { add_to_variable_list = { name = dap_t_asked target = prev } }
+			}
+			else = {
+				debug_log = "DAPTEST FAIL with the duchy option on, no duchy capital building is asked for in the duchy capital"
+				dap_devtest_explain_effect = yes
+			}
+		}
+		if = {
+			limit = { NOT = { exists = scope:dap_t_duchy_holding } }
+			debug_log = "DAPTEST FAIL no duchy capital in a county of yours to test duchy capital buildings"
+			save_scope_value_as = { name = counties value = { value = 0 every_held_title = { limit = { tier = tier_county } add = 1 } } }
+			save_scope_value_as = { name = not_excluded value = { value = 0 every_held_title = { limit = { tier = tier_county NOT = { has_variable = dap_build_excluded } } add = 1 } } }
+			save_scope_value_as = { name = duchy_capitals value = { value = 0 every_held_title = { limit = { tier = tier_county de_jure_liege ?= { title_capital_county = prev } } add = 1 } } }
+			save_scope_value_as = { name = with_holding value = { value = 0 every_held_title = { limit = { tier = tier_county de_jure_liege ?= { title_capital_county = prev } title_province = { has_holding = yes has_ongoing_construction = no } } add = 1 } } }
+			debug_log_scopes = yes
+		}
+		scope:dap_t_special_holding ?= {
+			if = {
+				limit = { var:dap_bc_slot ?= flag:special }
+				debug_log = "DAPTEST FAIL with the special option off, a special building was picked"
+			}
+			else = { debug_log = "DAPTEST OK with the special option off, no special building is picked, even with a mine to upgrade" }
+			dap_drop_build_request_effect = yes
+			root = {
+				set_variable = { name = dap_build_special value = 1 }
+				dap_run_buildings_effect = yes
+			}
+			if = {
+				limit = {
+					dap_devtest_waiting_trigger = yes
+					var:dap_bc_slot ?= flag:special
+					var:dap_bc_building ?= flag:generic_copper_mines_02
+				}
+				debug_log = "DAPTEST OK with the special option on, the copper mine's upgrade is asked for in its special slot"
+				set_global_variable = { name = dap_t_special_holding value = this }
+				root = { add_to_variable_list = { name = dap_t_asked target = prev } }
+			}
+			else = {
+				debug_log = "DAPTEST FAIL with the special option on, the copper mine's upgrade is not asked for"
+				dap_devtest_explain_effect = yes
+			}
+		}
+		if = {
+			limit = { NOT = { exists = scope:dap_t_special_holding } }
+			debug_log = "DAPTEST FAIL no castle of your domain to test special buildings"
+			save_scope_value_as = { name = domain value = { value = 0 every_directly_owned_province = { add = 1 } } }
+			save_scope_value_as = { name = castles value = { value = 0 every_directly_owned_province = { limit = { has_holding_type = castle_holding } add = 1 } } }
+			save_scope_value_as = { name = no_slot value = { value = 0 every_directly_owned_province = { limit = { has_holding_type = castle_holding has_special_building_slot = no } add = 1 } } }
+			save_scope_value_as = { name = idle value = { value = 0 every_directly_owned_province = { limit = { has_holding_type = castle_holding has_special_building_slot = no has_ongoing_construction = no dap_build_excluded_trigger = no } add = 1 } } }
+			debug_log_scopes = yes
+		}
+		set_variable = { name = dap_build_duchy value = 0 }
+		set_variable = { name = dap_build_special value = 0 }
+		set_variable = { name = dap_build_military value = local_var:dap_t_military_was }
+		every_held_title = {
+			limit = { has_variable = dap_t_full }
+			remove_variable = dap_build_excluded
+			remove_variable = dap_t_full
+		}
+		every_held_title = {
+			limit = { tier = tier_county }
+			every_county_province = {
+				limit = { has_variable = dap_t_full }
+				remove_variable = dap_build_excluded
+				remove_variable = dap_t_full
+			}
+		}
+		every_directly_owned_province = {
+			limit = { has_variable = dap_t_full }
+			remove_variable = dap_build_excluded
+			remove_variable = dap_t_full
+		}
 		if = {
 			limit = { cp:councillor_chancellor ?= { is_performing_council_task = task_domestic_affairs } }
 			debug_log = "DAPTEST OK chancellor on Domestic Affairs (a vassal hates you)"
@@ -1797,6 +2095,26 @@ dap_devtest_suite_build_check = {
 				dap_devtest_explain_effect = yes
 			}
 		}
+		global_var:dap_t_duchy_holding ?= {
+			if = {
+				limit = { has_construction_with_flag = duchy_building }
+				debug_log = "DAPTEST OK a duchy capital building is under construction in the duchy capital, pressed in its own slot"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL no duchy capital building under construction in the duchy capital"
+				dap_devtest_explain_effect = yes
+			}
+		}
+		global_var:dap_t_special_holding ?= {
+			if = {
+				limit = { has_ongoing_construction = yes }
+				debug_log = "DAPTEST OK the copper mine's upgrade is under construction, pressed in its special slot"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL the copper mine's upgrade is not under construction"
+				dap_devtest_explain_effect = yes
+			}
+		}
 		global_var:dap_t_vassal_county_holding ?= {
 			if = {
 				limit = { has_ongoing_construction = yes }
@@ -1911,7 +2229,9 @@ dap_devtest_suite_build_timeout = {
 
 def building_helpers():
     """(effects, triggers) for the suite's building scenarios, from the generated building data."""
-    found, _ = build_buildings.candidates(build_buildings.DEFAULT_GAME)
+    everything, _ = build_buildings.candidates(build_buildings.DEFAULT_GAME, build_buildings.KINDS)
+    found = [c for c in everything if c["kind"] == "regular"]
+    in_slots = [c for c in everything if c["kind"] != "regular"]
     first = [c for c in found if not c["previous"] and not c["main"]]
     fillers = [c["key"] for c in first
                if not any(v > 0 for v in c["scores"].values()) and not any(v > 0 for v in c["military"].values())]
@@ -1960,6 +2280,7 @@ dap_devtest_cancel_builds_effect = {
 		remove_variable = dap_build_province
 		remove_variable = dap_build_building
 		remove_variable = dap_build_from
+		remove_variable = dap_build_slot
 		remove_variable = dap_build_gold_before
 	}
 	if = {
@@ -2043,7 +2364,7 @@ dap_devtest_fill_strong_military_effect = {
                              f"\t\tadd_building = {key}\n\t}}\n" for i, key in enumerate(fillers))
                    + "}\n")
 
-    keys = [c["key"] for c in found] + ["none"]
+    keys = [c["key"] for c in everything] + ["none"]
 
     def chain(var):
         return "".join(f"\t{'if' if i == 0 else 'else_if'} = {{\n\t\tlimit = {{ var:{var} ?= flag:{key} }}\n"
@@ -2059,6 +2380,25 @@ dap_devtest_fill_strong_military_effect = {
                              for c in found if not c["main"] and any(v > 0 for v in c["scores"].values()))
                    + "}\n")
     dev_first = [c for c in first if c["scores"]["DEVELOPMENT_COUNTY"] > 0]
+    duchy_keys = sorted(k for k, b in build_buildings.load_buildings(build_buildings.DEFAULT_GAME).items()
+                        if build_buildings.get(b, "type") == "duchy_capital")
+    effects.append("\n# this = province; removes its duchy capital building, if any\n"
+                   "dap_devtest_remove_duchy_buildings_effect = {\n"
+                   + "".join(f"\tif = {{\n\t\tlimit = {{ has_building = {k} }}\n\t\tremove_building = {k}\n\t}}\n"
+                             for k in duchy_keys)
+                   + "}\n")
+    effects.append("""
+# this = county title, root = player; the county is given to the player (its capital barony
+# goes with it)
+dap_devtest_take_county_effect = {
+	save_scope_as = dap_t_taken
+	root = {
+		create_title_and_vassal_change = { type = granted save_scope_as = change add_claim_on_loss = no }
+		scope:dap_t_taken = { change_title_holder = { holder = root change = scope:change } }
+		resolve_title_and_vassal_change = scope:change
+	}
+}
+""")
     effects.append("\n# this = province; removes every building there but its main building\n"
                    "dap_devtest_remove_regular_buildings_effect = {\n"
                    + "".join(f"\tif = {{\n\t\tlimit = {{ has_building = {c['key']} }}\n\t\tremove_building = {c['key']}\n\t}}\n"
@@ -2098,6 +2438,9 @@ dap_devtest_fill_strong_military_effect = {
                 pick_trigger("dap_devtest_income_pick_trigger", [c["key"] for c in found if income(c)]),
                 pick_trigger("dap_devtest_development_pick_trigger",
                              [c["key"] for c in found if c["scores"]["DEVELOPMENT_COUNTY"] > 0]),
+                pick_trigger("dap_devtest_duchy_pick_trigger",
+                             [c["key"] for c in in_slots if c["kind"] == "duchy_capital"
+                              and any(v > 0 for v in c["scores"].values())]),
                 pick_trigger("dap_devtest_skirmisher_pick_trigger",
                              [c["key"] for c in found
                               if c["military"].get("skirmishers", 0) + c["military"].get("maa", 0) > 0]),

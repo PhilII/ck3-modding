@@ -148,12 +148,13 @@ types DapCountyViewTypes
 		}
 
 		# Dynasty Autopilot (ADR 0001): while the mod has asked for a construction in this
-		# holding, open the slot it is for and press Build (a new building in a free slot) or
-		# Upgrade (a building there, or the holding's main building) on the building it
-		# picked, or for a replacement (var:dap_build_replacing) Replace on the old building and
-		# then Build on the new one, then closes the panel as vanilla's buttons do (or the panel
-		# stays open for the next holding). Only the opened (highlighted) slot presses, and the view closes a
-		# moment later: closing it while another press is still queued crashes the game.
+		# holding, open the slot it is for and press Build (a new building in a free slot, or in
+		# the duchy capital or special slot) or Upgrade (a building there, or the holding's main
+		# building) on the building it picked, or for a replacement (var:dap_build_replacing)
+		# Replace on the old building and then Build on the new one, then closes the panel as
+		# vanilla's buttons do (or the panel stays open for the next holding). Only the opened
+		# (highlighted) slot presses, and the view closes a moment later: closing it while another
+		# press is still queued crashes the game.
 		widget = {
 			name = "dap_auto_build"
 			size = { 0 0 }
@@ -161,10 +162,11 @@ types DapCountyViewTypes
 
 			# A new building: open a free slot. Regular slots only: they are
 			# HoldingView.GetBuildings items; the duchy capital, special and great building
-			# slots are not in a datamodel (index -1)
+			# slots are not in a datamodel (index -1), and a request for those slots
+			# (var:dap_build_slot) opens them below
 			state = {
 				name = open_free_slot
-				trigger_when = "[And( And( And( And( And( GUIBuildingItem.IsBuildNewIconShown, GUIBuildingItem.IsBuildingButtonEnabled ), Not( GUIBuildingItem.HasLevel ) ), GreaterThanOrEqualTo_int32( PdxGuiWidget.AccessParent.GetIndexInDataModel, '(int32)0' ) ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) ), EqualTo_string( GetPlayer.MakeScope.Var( 'dap_build_from' ).GetFlagName, 'none' ) )]"
+				trigger_when = "[And( And( And( And( And( And( GUIBuildingItem.IsBuildNewIconShown, GUIBuildingItem.IsBuildingButtonEnabled ), Not( GUIBuildingItem.HasLevel ) ), GreaterThanOrEqualTo_int32( PdxGuiWidget.AccessParent.GetIndexInDataModel, '(int32)0' ) ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) ), EqualTo_string( GetPlayer.MakeScope.Var( 'dap_build_from' ).GetFlagName, 'none' ) ), Not( Or( EqualTo_string( GetPlayer.MakeScope.Var( 'dap_build_slot' ).GetFlagName, 'duchy_capital' ), EqualTo_string( GetPlayer.MakeScope.Var( 'dap_build_slot' ).GetFlagName, 'special' ) ) ) )]"
 				on_finish = "[GUIBuildingItem.OnClick]"
 			}
 
@@ -181,6 +183,21 @@ types DapCountyViewTypes
 				name = open_main_building
 				trigger_when = "[And( And( And( EqualTo_int32( PdxGuiWidget.AccessParent.GetIndexInDataModel, '(int32)0' ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) ), Not( HoldingView.GetGUIHoldingBuilding.IsConstructing ) ), EqualTo_string( HoldingView.GetGUIHoldingBuilding.GetCurrentOrConstrucingBuilding.GetKey, GetPlayer.MakeScope.Var( 'dap_build_from' ).GetFlagName ) )]"
 				on_finish = "[HoldingView.GetGUIHoldingBuilding.OnClick]"
+			}
+
+			# A duchy capital or special building, new or upgrade (duchy capital and special
+			# buildings options): their slots are outside the datamodel, so the first regular slot
+			# opens them; Build or Upgrade is then pressed in that slot as in any other. Great
+			# building slots are never opened
+			state = {
+				name = open_duchy_capital_slot
+				trigger_when = "[And( And( And( EqualTo_int32( PdxGuiWidget.AccessParent.GetIndexInDataModel, '(int32)0' ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) ), And( HoldingView.HasDuchyCapitalBuildingSlot, Not( HoldingView.GetGUIDuchyCapitalBuilding.IsConstructing ) ) ), EqualTo_string( GetPlayer.MakeScope.Var( 'dap_build_slot' ).GetFlagName, 'duchy_capital' ) )]"
+				on_finish = "[HoldingView.GetGUIDuchyCapitalBuilding.OnClick]"
+			}
+			state = {
+				name = open_special_slot
+				trigger_when = "[And( And( And( EqualTo_int32( PdxGuiWidget.AccessParent.GetIndexInDataModel, '(int32)0' ), GetScriptedGui( 'dap_build_pending' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', HoldingView.GetProvince.MakeScope ).End ) ), And( HoldingView.HasSpecialBuildingSlot, Not( HoldingView.GetGUISpecialBuilding.IsConstructing ) ) ), EqualTo_string( GetPlayer.MakeScope.Var( 'dap_build_slot' ).GetFlagName, 'special' ) )]"
+				on_finish = "[HoldingView.GetGUISpecialBuilding.OnClick]"
 			}
 
 			# A replacement: select the old building in the opened slot's track, then press Replace,

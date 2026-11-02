@@ -78,6 +78,8 @@ dap_set_default_player_settings_effect = {
 	set_variable = { name = dap_build_vassal_counties value = 0 }
 	set_variable = { name = dap_build_replace value = 0 }
 	set_variable = { name = dap_build_new_holdings value = 0 }
+	set_variable = { name = dap_build_duchy value = 0 }
+	set_variable = { name = dap_build_special value = 0 }
 }
 
 # this = rule holder; default rule values
@@ -512,6 +514,14 @@ dap_ensure_player_settings_effect = {
 		limit = { NOT = { has_variable = dap_build_new_holdings } }
 		set_variable = { name = dap_build_new_holdings value = 0 }
 	}
+	if = {
+		limit = { NOT = { has_variable = dap_build_duchy } }
+		set_variable = { name = dap_build_duchy value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = dap_build_special } }
+		set_variable = { name = dap_build_special value = 0 }
+	}
 }
 
 # this = rule holder; adds rules introduced after the save was started
@@ -777,6 +787,8 @@ dap_declare_setting_flags_effect = {
 	set_local_variable = { name = dap_setting_flag value = flag:dap_build_vassal_counties }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_build_replace }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_build_new_holdings }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_build_duchy }
+	set_local_variable = { name = dap_setting_flag value = flag:dap_build_special }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_breeding }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_power }
 	set_local_variable = { name = dap_setting_flag value = flag:dap_preset_cheap }
@@ -1107,6 +1119,8 @@ dap_inherit_settings_effect = {
 	set_variable = { name = dap_build_vassal_counties value = $FROM$.var:dap_build_vassal_counties }
 	set_variable = { name = dap_build_replace value = $FROM$.var:dap_build_replace }
 	set_variable = { name = dap_build_new_holdings value = $FROM$.var:dap_build_new_holdings }
+	set_variable = { name = dap_build_duchy value = $FROM$.var:dap_build_duchy }
+	set_variable = { name = dap_build_special value = $FROM$.var:dap_build_special }
 	set_variable = { name = dap_status value = $FROM$.var:dap_status }
 	set_variable = { name = dap_same_faith value = $FROM$.var:dap_same_faith }
 	set_variable = { name = dap_same_culture value = $FROM$.var:dap_same_culture }
@@ -1751,6 +1765,14 @@ dap_setting_next_effect = {
 		limit = { scope:setting = flag:dap_build_new_holdings }
 		dap_cycle_effect = { VAR = dap_build_new_holdings MAX = 1 }
 	}
+	else_if = {
+		limit = { scope:setting = flag:dap_build_duchy }
+		dap_cycle_effect = { VAR = dap_build_duchy MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_build_special }
+		dap_cycle_effect = { VAR = dap_build_special MAX = 1 }
+	}
 }
 
 # this = setting holder; scope:setting = flag naming the setting
@@ -2206,6 +2228,14 @@ dap_setting_prev_effect = {
 	else_if = {
 		limit = { scope:setting = flag:dap_build_new_holdings }
 		dap_cycle_back_effect = { VAR = dap_build_new_holdings MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_build_duchy }
+		dap_cycle_back_effect = { VAR = dap_build_duchy MAX = 1 }
+	}
+	else_if = {
+		limit = { scope:setting = flag:dap_build_special }
+		dap_cycle_back_effect = { VAR = dap_build_special MAX = 1 }
 	}
 }
 

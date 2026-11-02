@@ -160,7 +160,11 @@ HOLDINGS_PER_COUNTY = 2.5
 # Development is valued in development growth; development_growth_factor multiplies the
 # county's own growth, estimated at FACTOR_BASE_GROWTH.
 FACTOR_BASE_GROWTH = 0.5
-REACH_BLOCKS = {"county_modifier": "COUNTY", "province_modifier": "HOLDING", "character_modifier": "HOLDER"}
+REACH_BLOCKS = {"county_modifier": "COUNTY", "province_modifier": "HOLDING", "character_modifier": "HOLDER",
+                "duchy_capital_county_modifier": "DUCHY"}
+# A duchy capital building's duchy_capital_county_modifier reaches every county of its de jure
+# duchy, estimated at COUNTIES_PER_DUCHY; it is scored as a county-wide bonus that many times
+COUNTIES_PER_DUCHY = 4.0
 SCORES = ("INCOME_HOLDING", "INCOME_HOLDER", "INCOME_COUNTY", "DEVELOPMENT_COUNTY")
 # Holding types automatic building may start with the new holdings option (city for Income
 # and Development, castle for Military)
@@ -180,10 +184,13 @@ def raw_scores(building, values):
     """Income (gold/month) by reach and development growth (county reach), before scaling."""
     scores = dict.fromkeys(SCORES, 0.0)
     for block, reach in REACH_BLOCKS.items():
+        counties = 1.0
+        if reach == "DUCHY":
+            reach, counties = "COUNTY", COUNTIES_PER_DUCHY
         for key, _, value in get(building, block) or []:
             if isinstance(value, list):
                 continue
-            amount = number(value, values)
+            amount = number(value, values) * counties
             if key == "monthly_income":
                 scores[f"INCOME_{reach}"] += amount
             elif key == "tax_mult":
@@ -244,10 +251,20 @@ def new_holding_trigger(building):
     return "".join(body)
 
 
-def requirement_trigger(key, building, previous):
-    """Body of the trigger that the building can be started there, or None if it cannot be copied."""
+def requirement_trigger(key, building, previous, kind="regular", slot=None):
+    """Body of the trigger that the building can be started there, or None if it cannot be copied.
+    A new duchy capital building goes in the empty duchy capital slot of its duchy's capital
+    barony; a new special building in an empty special slot, at a place `slot` (a trigger)
+    the game's files give its slot, unless its own requirements name the barony."""
     if previous:
         body = [f"\thas_building = {previous}\n"]
+    elif kind == "duchy_capital":
+        body = ["\tthis = duchy.title_capital_county.title_province\n",
+                "\tNOT = { has_building_with_flag = duchy_building }\n"]
+    elif kind == "special":
+        body = ["\thas_special_building_slot = yes\n", "\thas_special_building = no\n"]
+        if slot:
+            body.append(slot)
     else:
         body = [f"\tNOT = {{ has_building_or_higher = {key} }}\n"]
     for name in REQUIREMENT_BLOCKS:
@@ -260,12 +277,60 @@ def requirement_trigger(key, building, previous):
     return "".join(body)
 
 
-def candidates(game):
-    """(candidates, skipped): each candidate a dict for one regular building, in a stable
-    order (new buildings, then upgrades, each by key); skipped as (key, reason)."""
+def read_lenient(path):
+    with open(path, encoding="utf-8-sig", errors="replace") as f:
+        return f.read()
+
+
+ADD_SLOT = re.compile(r"title:(b_[\w-]+)\.title_province\s*=\s*\{[^{}]*?add_special_building_slot\s*=\s*(\w+)")
+
+
+def special_slots(game):
+    """Special building -> where the game's files put a special slot for it: the provinces
+    whose history has one (province:<id>) and the baronies that script gives one by name
+    (title:<barony>.title_province). Slots that events place by other means are not known."""
+    slots = {}
+    folder = os.path.join(game, "history", "provinces")
+    for name in sorted(os.listdir(folder)):
+        if not name.endswith(".txt"):
+            continue
+        for key, _, block in parse(tokenize(read_lenient(os.path.join(folder, name))))[0]:
+            if key and key.isdigit() and isinstance(block, list):
+                stack = [block]
+                while stack:
+                    for k, _, v in stack.pop():
+                        if k == "special_building_slot" and isinstance(v, str):
+                            slots.setdefault(v, set()).add(f"province:{key}")
+                        elif isinstance(v, list):
+                            stack.append(v)
+    for top in ("common", "events"):
+        for dirpath, _, names in os.walk(os.path.join(game, top)):
+            for name in sorted(names):
+                if name.endswith(".txt"):
+                    for m in ADD_SLOT.finditer(read_lenient(os.path.join(dirpath, name))):
+                        slots.setdefault(m.group(2), set()).add(f"title:{m.group(1)}.title_province")
+    return slots
+
+
+def slot_trigger(places):
+    """Trigger lines: this province is one of the places."""
+    lines = "".join(f"\t\tthis = {p}\n" for p in sorted(places))
+    return f"\t# where the game's files give it a special slot\n\tOR = {{\n{lines}\t}}\n"
+
+
+# Building types automatic building may build: regular buildings, and with their options
+# duchy capital and special buildings. Great projects (great_building) are never automated.
+KINDS = ("regular", "duchy_capital", "special")
+
+
+def candidates(game, kinds=("regular",)):
+    """(candidates, skipped): each candidate a dict for one building of the given types
+    (KINDS), in a stable order (by type, then new buildings, then upgrades, each by key);
+    skipped as (key, reason). Scores are scaled by the regular buildings alone."""
     buildings = load_buildings(game)
     values = named_values(game)
     mains = main_buildings(game)
+    slots = special_slots(game) if "special" in kinds else {}
     previous = {}
     for key, building in buildings.items():
         nxt = get(building, "next_building")
@@ -278,10 +343,14 @@ def candidates(game):
             chain_of_main.add(key)
             key = get(buildings.get(key, []), "next_building")
 
+    def kind_of(key):
+        return get(buildings[key], "type") or "regular"
+
     found, skipped = [], []
     for key in sorted(buildings):
         building = buildings[key]
-        if (get(building, "type") or "regular") != "regular":
+        kind = kind_of(key)
+        if kind not in kinds:
             continue
         cost = get(building, "cost_gold")
         prev = previous.get(key)
@@ -290,14 +359,24 @@ def candidates(game):
             reason = "background only"
         elif key in mains:
             reason = "comes with its holding"
-        elif cost is None or cost not in values:
+        elif cost is None or (cost not in values and not re.fullmatch(r"\d+(\.\d+)?", cost)):
             reason = "no gold cost"
         elif get(building, "cost") is not None:
             reason = "also costs prestige or piety"
-        elif prev and (get(buildings[prev], "type") or "regular") != "regular":
-            reason = "upgrade of a building that is not regular"
+        elif prev and kind_of(prev) != kind:
+            reason = f"upgrade of a building that is not {kind}"
+        elif kind == "duchy_capital" and "duchy_building" not in [v for k, _, v in building if k == "flag"]:
+            reason = "no duchy_building flag to tell its slot is taken"
+        slot = None
+        if reason is None and kind == "special" and not prev:
+            requirements = "".join(serialize(get(building, n) or [], 0) for n in REQUIREMENT_BLOCKS)
+            own_place = re.search(r"\bbarony\s*=", requirements)
+            if key in slots:
+                slot = slot_trigger(slots[key])
+            elif not own_place:
+                reason = "its special slot is placed by events"
         if reason is None:
-            trigger = requirement_trigger(key, building, prev)
+            trigger = requirement_trigger(key, building, prev, kind, slot)
             if trigger is None:
                 reason = "requirements need their own scope handling"
         if reason:
@@ -313,7 +392,8 @@ def candidates(game):
             before = stationed_scores(buildings[prev], values)
             military = {t: military.get(t, 0.0) - before.get(t, 0.0) for t in set(military) | set(before)}
         found.append({
-            "key": key, "previous": prev, "cost": cost, "gold": values[cost],
+            "key": key, "kind": kind, "previous": prev, "cost": cost,
+            "gold": values[cost] if cost in values else float(cost),
             "time": get(building, "construction_time"), "next": get(building, "next_building"),
             "main": key in chain_of_main, "trigger": trigger, "scores": scores, "total": total,
             "military": military, "military_total": military_total,
@@ -322,15 +402,16 @@ def candidates(game):
     # Weigh development against income: a typical development building gives as much
     # development per gold as a typical income building gives income per gold, so Low and
     # High mean the same for both focuses
-    income = [sum(c["scores"][s] for s in SCORES[:3]) / c["gold"] for c in found
-              if not c["previous"] and sum(c["scores"][s] for s in SCORES[:3]) > 0]
-    development = [c["scores"]["DEVELOPMENT_COUNTY"] / c["gold"] for c in found
-                   if not c["previous"] and c["scores"]["DEVELOPMENT_COUNTY"] > 0]
+    regular = [c for c in found if c["kind"] == "regular" and not c["previous"]]
+    income = [sum(c["scores"][s] for s in SCORES[:3]) / c["gold"] for c in regular
+              if sum(c["scores"][s] for s in SCORES[:3]) > 0]
+    development = [c["scores"]["DEVELOPMENT_COUNTY"] / c["gold"] for c in regular
+                   if c["scores"]["DEVELOPMENT_COUNTY"] > 0]
     scale = median(income) / median(development)
     # Military likewise: a typical military building stacks as much stationed bonus per gold,
     # for a base of its best type, as a typical income building gives income per gold
-    military = [best_stationed(c["military"]) / c["gold"] for c in found
-                if not c["previous"] and best_stationed(c["military"]) > 0]
+    military = [best_stationed(c["military"]) / c["gold"] for c in regular
+                if best_stationed(c["military"]) > 0]
     military_scale = median(income) / median(military)
     for c in found:
         c["scores"]["DEVELOPMENT_COUNTY"] *= scale
@@ -338,8 +419,13 @@ def candidates(game):
         # All the building gives, on the same scale, whatever focus it serves (what replacing it loses)
         c["worth"] = {s: c["total"][s] * (scale if s == "DEVELOPMENT_COUNTY" else 1.0) for s in SCORES}
         c["worth"]["MILITARY"] = best_stationed(c["military_total"]) * military_scale
-    found.sort(key=lambda c: (c["previous"] is not None, c["key"]))
+    found.sort(key=lambda c: (KINDS.index(c["kind"]), c["previous"] is not None, c["key"]))
     return found, skipped
+
+
+def serves_focus(c):
+    """Whether the building serves some focus: income, development or stationed bonuses."""
+    return any(v > 0 for v in c["scores"].values()) or any(v > 0 for v in c["military"].values())
 
 
 def best_stationed(military):
@@ -350,6 +436,24 @@ def best_stationed(military):
 def base_types(found):
     """Men-at-arms base types that some building has stationed bonuses for, in a stable order."""
     return sorted({t for c in found for t, v in c["military_total"].items() if t != "maa" and v > 0})
+
+
+def loc_keys(game):
+    """Every English localization key the game defines."""
+    keys = set()
+    for dirpath, _, names in os.walk(os.path.join(game, "localization", "english")):
+        for name in names:
+            if name.endswith(".yml"):
+                keys.update(re.findall(r"^\s*([\w.-]+):\d*\s", read_lenient(os.path.join(dirpath, name)), re.M))
+    return keys
+
+
+def name_key(c, by_key, keys):
+    """Localization key of the building's name; a level the game left unnamed takes the
+    name of the nearest level before it."""
+    while f"building_{c['key']}" not in keys and c["previous"] in by_key:
+        c = by_key[c["previous"]]
+    return f"building_{c['key']}"
 
 
 def fmt(x):
@@ -370,13 +474,17 @@ def main():
     if not os.path.isdir(os.path.join(args.game, "common", "buildings")):
         sys.exit(f"No building files under {args.game}")
 
-    found, skipped = candidates(args.game)
+    everything, skipped = candidates(args.game, KINDS)
+    found = [c for c in everything if c["kind"] == "regular"]
+    in_slots = [c for c in everything if c["kind"] != "regular"]
     assert any(c["scores"]["DEVELOPMENT_COUNTY"] > 0 for c in found), "no development buildings; did the game's files change?"
 
     triggers = [HEADER, "# this = province; scope:holder = its holder, scope:county = its county (as the game's\n"
                         "# building triggers expect). True when the building can be started there: a new\n"
                         "# building in a free slot, or an upgrade of the level before it.\n\n"]
     triggers += [f"dap_can_build_{c['key']}_trigger = {{\n{c['trigger']}}}\n\n" for c in found]
+    triggers.append("# Duchy capital and special buildings, in their own slots\n\n")
+    triggers += [f"dap_can_build_{c['key']}_trigger = {{\n{c['trigger']}}}\n\n" for c in in_slots if serves_focus(c)]
     buildings = load_buildings(args.game)
     mains = holding_main_buildings(args.game)
     triggers.append("# this = province (a barony with no holding); scope:holder = who would build it. True when\n"
@@ -400,7 +508,7 @@ def main():
     def stationed_value(c):
         return f"dap_stationed_{c['key']}_value" if has_military(c) else "0"
 
-    useful = [c for c in found if any(v > 0 for v in c["scores"].values()) or has_military(c)]
+    useful = [c for c in found if serves_focus(c)]
     effects = [HEADER,
                "# this = province, with scope:holder and scope:county saved. Offers every new building that\n"
                "# can go in a free slot there, and every upgrade of a building there, to\n"
@@ -424,14 +532,25 @@ def main():
     effects.append("}\n\n# Regular buildings that serve no focus (cost, construction time, next level):\n"
                    + "".join(f"#   {c['key']}: {c['cost']}, {c['time']}, {c['next'] or 'none'}\n"
                              for c in found if c not in useful))
-    effects.append("# Regular buildings left out:\n" + "".join(f"#   {k}: {r}\n" for k, r in skipped))
+    for kind in KINDS[1:]:
+        effects.append(f"\n# this = province, with scope:holder and scope:county saved; with its option, every\n"
+                       f"# {kind} building that can be built there, new or upgrade, in its own slot, offered to\n"
+                       f"# dap_consider_building_effect as above\ndap_consider_{kind}_buildings_effect = {{\n")
+        effects += [consider(c, 1) for c in in_slots if c["kind"] == kind and serves_focus(c)]
+        effects.append("}\n")
+    effects.append("\n# Duchy capital and special buildings that serve no focus: "
+                   + str(sum(1 for c in in_slots if not serves_focus(c))) + "\n")
+    effects.append("# Buildings left out (great projects are never automated):\n"
+                   + "".join(f"#   {k}: {r}\n" for k, r in skipped))
     write("common/scripted_effects/dap_buildings_generated.txt", "".join(effects))
 
     loc = [HEADER, "# Name of the building in var:dap_log_building (a log entry)\n",
            "dap_cl_log_building = {\n\ttype = character\n"]
-    for c in useful:
+    keys = loc_keys(args.game)
+    by_key = {c["key"]: c for c in everything}
+    for c in useful + [c for c in in_slots if serves_focus(c)]:
         loc.append(f"\ttext = {{\n\t\ttrigger = {{ var:dap_log_building ?= flag:{c['key']} }}\n"
-                   f"\t\tlocalization_key = building_{c['key']}\n\t}}\n")
+                   f"\t\tlocalization_key = {name_key(c, by_key, keys)}\n\t}}\n")
     loc.append("\ttext = {\n\t\tfallback = yes\n\t\tlocalization_key = dap_empty\n\t}\n}\n\n"
                "# Name of the building replaced, in var:dap_log_replaced (a log entry)\n"
                "dap_cl_log_replaced_building = {\n\ttype = character\n")
@@ -451,7 +570,7 @@ def main():
                       + "".join(f"\tif = {{\n\t\tlimit = {{ has_building = {k} }}\n\t\tadd = 1\n\t}}\n" for k in keys)
                       + "}\n\n")
     types = base_types(found)
-    for c in found:
+    for c in found + [c for c in in_slots if serves_focus(c)]:
         if has_military(c):
             m = c["military"]
             counts.append(f"# this = province; what {c['key']} adds to the stationed bonuses of its military base's\n"

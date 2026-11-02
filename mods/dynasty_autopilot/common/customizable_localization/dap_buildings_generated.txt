@@ -1511,6 +1511,1606 @@ dap_cl_log_building = {
 		localization_key = building_workshops_08
 	}
 	text = {
+		trigger = { var:dap_log_building ?= flag:archery_ranges_01 }
+		localization_key = building_archery_ranges_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:aurelian_walls_01 }
+		localization_key = building_aurelian_walls_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:blacksmiths_01 }
+		localization_key = building_blacksmiths_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:charnel_grounds_01 }
+		localization_key = building_charnel_grounds_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dragon_kiln_01 }
+		localization_key = building_dragon_kiln_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:examination_hall_01 }
+		localization_key = building_examination_hall_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:great_megalith_01 }
+		localization_key = building_great_megalith_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:jousting_lists_01 }
+		localization_key = building_jousting_lists_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:royal_armory_01 }
+		localization_key = building_royal_armory_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:royal_forest_01 }
+		localization_key = building_royal_forest_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:royal_garden_01 }
+		localization_key = building_royal_garden_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:tax_assessor_01 }
+		localization_key = building_tax_assessor_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:theodosian_walls_01 }
+		localization_key = building_theodosian_walls_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:archery_ranges_02 }
+		localization_key = building_archery_ranges_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:archery_ranges_03 }
+		localization_key = building_archery_ranges_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:blacksmiths_02 }
+		localization_key = building_blacksmiths_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:blacksmiths_03 }
+		localization_key = building_blacksmiths_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:charnel_grounds_02 }
+		localization_key = building_charnel_grounds_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:charnel_grounds_03 }
+		localization_key = building_charnel_grounds_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dragon_kiln_02 }
+		localization_key = building_dragon_kiln_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dragon_kiln_03 }
+		localization_key = building_dragon_kiln_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:examination_hall_02 }
+		localization_key = building_examination_hall_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:examination_hall_03 }
+		localization_key = building_examination_hall_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:jousting_lists_02 }
+		localization_key = building_jousting_lists_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:jousting_lists_03 }
+		localization_key = building_jousting_lists_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:royal_armory_02 }
+		localization_key = building_royal_armory_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:royal_armory_03 }
+		localization_key = building_royal_armory_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:royal_forest_02 }
+		localization_key = building_royal_forest_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:royal_forest_03 }
+		localization_key = building_royal_forest_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:royal_garden_02 }
+		localization_key = building_royal_garden_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:royal_garden_03 }
+		localization_key = building_royal_garden_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:tax_assessor_02 }
+		localization_key = building_tax_assessor_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:tax_assessor_03 }
+		localization_key = building_tax_assessor_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:al_azhar_university }
+		localization_key = building_al_azhar_university
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:alcazar_of_segovia_01 }
+		localization_key = building_alcazar_of_segovia_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:aljaferia_palace_01 }
+		localization_key = building_aljaferia_palace_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:allaq_mines_01 }
+		localization_key = building_allaq_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ananda_temple_01 }
+		localization_key = building_ananda_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:angkor_wat_01 }
+		localization_key = building_angkor_wat_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:apollinare_nuovo }
+		localization_key = building_apollinare_nuovo
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:argentiera_mines_01 }
+		localization_key = building_argentiera_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:baofeng_mines_01 }
+		localization_key = building_baofeng_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:besakih_temple_01 }
+		localization_key = building_besakih_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:beta_giyorgis_01 }
+		localization_key = building_beta_giyorgis_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:borobudur_01 }
+		localization_key = building_borobudur_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:boudhanath_01 }
+		localization_key = building_boudhanath_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:brihadeeswarar_temple_01 }
+		localization_key = building_brihadeeswarar_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:buddha_kamakura_01 }
+		localization_key = building_buddha_kamakura_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:byeokran_port_01 }
+		localization_key = building_byeokran_port_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cattolica_stilo }
+		localization_key = building_cattolica_stilo
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cevennes_mines_01 }
+		localization_key = building_cevennes_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:chinjufu_01 }
+		localization_key = building_chinjufu_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:church_of_the_theotokos }
+		localization_key = building_church_of_the_theotokos
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:citadel_linan_01 }
+		localization_key = building_citadel_linan_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:citadel_thang_long_01 }
+		localization_key = building_citadel_thang_long_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cluny_abbey_01 }
+		localization_key = building_cluny_abbey_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:confucius_temple_01 }
+		localization_key = building_confucius_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:culai_academy_01 }
+		localization_key = building_culai_academy_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:damascus_mosque_01 }
+		localization_key = building_damascus_mosque_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:danevirke_01 }
+		localization_key = building_danevirke_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dau_temple_01 }
+		localization_key = building_dau_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dazaifu_01 }
+		localization_key = building_dazaifu_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dengfeng_observatory_01 }
+		localization_key = building_dengfeng_observatory_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:despot_palace }
+		localization_key = building_despot_palace
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:doges_palace_01 }
+		localization_key = building_doges_palace_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dome_of_the_rock_01 }
+		localization_key = building_dome_of_the_rock_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:drassanes_01 }
+		localization_key = building_drassanes_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:duomo_florence_01 }
+		localization_key = building_duomo_florence_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:enryaku_ji_01 }
+		localization_key = building_enryaku_ji_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:etchmiadzin_cathedral }
+		localization_key = building_etchmiadzin_cathedral
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:fairy_chimneys }
+		localization_key = building_fairy_chimneys
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:falun_mines_01 }
+		localization_key = building_falun_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:fengtian_mines_01 }
+		localization_key = building_fengtian_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:generic_university }
+		localization_key = building_generic_university
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:giant_wild_goose_pagoda_01 }
+		localization_key = building_giant_wild_goose_pagoda_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:golden_gate_of_kiev_01 }
+		localization_key = building_golden_gate_of_kiev_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:gongsanseong_fortress_01 }
+		localization_key = building_gongsanseong_fortress_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hagia_sophia_01 }
+		localization_key = building_hagia_sophia_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hagios_demetrios }
+		localization_key = building_hagios_demetrios
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hakata_port_01 }
+		localization_key = building_hakata_port_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hanging_temple_01 }
+		localization_key = building_hanging_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:heddal_stave_church_01 }
+		localization_key = building_heddal_stave_church_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:heian_palace_01 }
+		localization_key = building_heian_palace_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hetian_mines_01 }
+		localization_key = building_hetian_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_basilica_santiago_01 }
+		localization_key = building_holy_site_basilica_santiago_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_buddhist_grand_temple_01 }
+		localization_key = building_holy_site_buddhist_grand_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_canterbury_cathedral_01 }
+		localization_key = building_holy_site_canterbury_cathedral_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_cathedral_01 }
+		localization_key = building_holy_site_cathedral_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_chinese_temple_01 }
+		localization_key = building_holy_site_chinese_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_cologne_cathedral_01 }
+		localization_key = building_holy_site_cologne_cathedral_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_fire_temple_01 }
+		localization_key = building_holy_site_fire_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_great_mosque_of_cordoba_01 }
+		localization_key = building_holy_site_great_mosque_of_cordoba_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_great_mosque_of_djenne_01 }
+		localization_key = building_holy_site_great_mosque_of_djenne_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_great_mosque_of_mecca_01 }
+		localization_key = building_holy_site_great_mosque_of_mecca_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_great_mosque_of_samarra_01 }
+		localization_key = building_holy_site_great_mosque_of_samarra_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_imam_ali_mosque_01 }
+		localization_key = building_holy_site_imam_ali_mosque_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_indian_grand_temple_01 }
+		localization_key = building_holy_site_indian_grand_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_japanese_temple_01 }
+		localization_key = building_holy_site_japanese_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_mahabodhi_temple_01 }
+		localization_key = building_holy_site_mahabodhi_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_mosque_01 }
+		localization_key = building_holy_site_mosque_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_other_grand_temple_01 }
+		localization_key = building_holy_site_other_grand_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_pagan_grand_temple_01 }
+		localization_key = building_holy_site_pagan_grand_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_prophetic_mosque_01 }
+		localization_key = building_holy_site_prophetic_mosque_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_se_asia_pagan_temple_01 }
+		localization_key = building_holy_site_se_asia_pagan_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_st_peters_basilica_01 }
+		localization_key = building_holy_site_st_peters_basilica_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_wisdom_01 }
+		localization_key = building_holy_wisdom_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hoshi_ryokan_01 }
+		localization_key = building_hoshi_ryokan_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hosios_loukas }
+		localization_key = building_hosios_loukas
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hotin_fort_01 }
+		localization_key = building_hotin_fort_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hpakant_mines_01 }
+		localization_key = building_hpakant_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hwangnyongsa_01 }
+		localization_key = building_hwangnyongsa_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:imam_reza_shrine_01 }
+		localization_key = building_imam_reza_shrine_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:iron_lion_cangzhou_01 }
+		localization_key = building_iron_lion_cangzhou_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:iron_pillar_of_dhar_01 }
+		localization_key = building_iron_pillar_of_dhar_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ise_jingu_01 }
+		localization_key = building_ise_jingu_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:itoigawa_mines_01 }
+		localization_key = building_itoigawa_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:itsukushima_jinja_01 }
+		localization_key = building_itsukushima_jinja_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:jizu_shan_temples_01 }
+		localization_key = building_jizu_shan_temples_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:jvari_monastery }
+		localization_key = building_jvari_monastery
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kaifeng_palace_01 }
+		localization_key = building_kaifeng_palace_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kano_walls_01 }
+		localization_key = building_kano_walls_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kassiopi_castle }
+		localization_key = building_kassiopi_castle
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:khajuraho_01 }
+		localization_key = building_khajuraho_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kofuku_ji_01 }
+		localization_key = building_kofuku_ji_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:koganeyama_mines_01 }
+		localization_key = building_koganeyama_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kollur_mines_01 }
+		localization_key = building_kollur_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:konark_temple_01 }
+		localization_key = building_konark_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kremnica_mines_01 }
+		localization_key = building_kremnica_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kutna_hora_mines_01 }
+		localization_key = building_kutna_hora_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:lantian_mines_01 }
+		localization_key = building_lantian_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:leshan_giant_buddha_01 }
+		localization_key = building_leshan_giant_buddha_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:liuhe_pagoda_01 }
+		localization_key = building_liuhe_pagoda_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:lize_academy_01 }
+		localization_key = building_lize_academy_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:london_bridge_01 }
+		localization_key = building_london_bridge_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:lund_cathedral_01 }
+		localization_key = building_lund_cathedral_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:maiden_tower }
+		localization_key = building_maiden_tower
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mali_mines_01 }
+		localization_key = building_mali_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:maoshan_academy_01 }
+		localization_key = building_maoshan_academy_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:meteora_01 }
+		localization_key = building_meteora_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:minarets_and_remains_of_jam_01 }
+		localization_key = building_minarets_and_remains_of_jam_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mount_apo_01 }
+		localization_key = building_mount_apo_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mount_athos_01 }
+		localization_key = building_mount_athos_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mount_baekdu_01 }
+		localization_key = building_mount_baekdu_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mount_fuji_01 }
+		localization_key = building_mount_fuji_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:muaro_jambi_01 }
+		localization_key = building_muaro_jambi_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:my_son_sanctuary_01 }
+		localization_key = building_my_son_sanctuary_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:nalanda_university }
+		localization_key = building_nalanda_university
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:notre_dame_01 }
+		localization_key = building_notre_dame_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:pagoda_of_fogong_temple_01 }
+		localization_key = building_pagoda_of_fogong_temple_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:patras_castle }
+		localization_key = building_patras_castle
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:phnom_dek_mines_01 }
+		localization_key = building_phnom_dek_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:phocaea_mines_01 }
+		localization_key = building_phocaea_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:plain_of_jars_01 }
+		localization_key = building_plain_of_jars_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:po_klong_garai_01 }
+		localization_key = building_po_klong_garai_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:pyramid_lingapura_01 }
+		localization_key = building_pyramid_lingapura_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:quanzhou_seaport_01 }
+		localization_key = building_quanzhou_seaport_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:rammelsberg_mines_01 }
+		localization_key = building_rammelsberg_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:rudnik_mines_01 }
+		localization_key = building_rudnik_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:sado_mines_01 }
+		localization_key = building_sado_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:saint_catherine }
+		localization_key = building_saint_catherine
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:saint_lazarus }
+		localization_key = building_saint_lazarus
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:sankore_university }
+		localization_key = building_sankore_university
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:schwaz_mines_01 }
+		localization_key = building_schwaz_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:shigu_academy_01 }
+		localization_key = building_shigu_academy_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:shwedagon_pagoda_01 }
+		localization_key = building_shwedagon_pagoda_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:siderokausia_mines_01 }
+		localization_key = building_siderokausia_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:siena_university }
+		localization_key = building_siena_university
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:sofia_ohrid }
+		localization_key = building_sofia_ohrid
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:soltaniyeh_01 }
+		localization_key = building_soltaniyeh_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:srebrenica_mines_01 }
+		localization_key = building_srebrenica_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:sumela_monastery_01 }
+		localization_key = building_sumela_monastery_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:suvarnadvipa_mines_01 }
+		localization_key = building_suvarnadvipa_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:swahili_port_lamu }
+		localization_key = building_swahili_port_lamu
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:swahili_port_mombasa }
+		localization_key = building_swahili_port_mombasa
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:swahili_port_pate }
+		localization_key = building_swahili_port_pate
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:swahili_port_pemba }
+		localization_key = building_swahili_port_pemba
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:swahili_port_zanzibar }
+		localization_key = building_swahili_port_zanzibar
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:tada_mines_01 }
+		localization_key = building_tada_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:takkeda_mines_01 }
+		localization_key = building_takkeda_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:temple_of_uppsala_01 }
+		localization_key = building_temple_of_uppsala_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:the_friday_mosque_01 }
+		localization_key = building_the_friday_mosque_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:the_tower_of_london_01 }
+		localization_key = building_the_tower_of_london_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:tiantai_monasteries_01 }
+		localization_key = building_tiantai_monasteries_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:trepca_mines_01 }
+		localization_key = building_trepca_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:trosky_castle_01 }
+		localization_key = building_trosky_castle_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:tsushima_mines_01 }
+		localization_key = building_tsushima_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:turda_mines_01 }
+		localization_key = building_turda_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:verespatak_mines_01 }
+		localization_key = building_verespatak_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:visby_ringmur_01 }
+		localization_key = building_visby_ringmur_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:visegrad_castle_01 }
+		localization_key = building_visegrad_castle_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:walls_of_benin_01 }
+		localization_key = building_walls_of_benin_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:walls_of_genoa_01 }
+		localization_key = building_walls_of_genoa_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wartburg_01 }
+		localization_key = building_wartburg_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wawel_cathedral_01 }
+		localization_key = building_wawel_cathedral_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:white_deer_grotto_academy_01 }
+		localization_key = building_white_deer_grotto_academy_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wilwatikta_palace_01 }
+		localization_key = building_wilwatikta_palace_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wudang_mountain_temples_01 }
+		localization_key = building_wudang_mountain_temples_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:xiuyan_mines_01 }
+		localization_key = building_xiuyan_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:yazd_mosque_01 }
+		localization_key = building_yazd_mosque_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:yuelu_academy_01 }
+		localization_key = building_yuelu_academy_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:zawar_mines_01 }
+		localization_key = building_zawar_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:zijinshan_mines_01 }
+		localization_key = building_zijinshan_mines_01
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:alamut_castle_02 }
+		localization_key = building_alamut_castle_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:alhambra_02 }
+		localization_key = building_alhambra_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:allaq_mines_02 }
+		localization_key = building_allaq_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:allaq_mines_03 }
+		localization_key = building_allaq_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:allaq_mines_04 }
+		localization_key = building_allaq_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:argentiera_mines_02 }
+		localization_key = building_argentiera_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:argentiera_mines_03 }
+		localization_key = building_argentiera_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:argentiera_mines_04 }
+		localization_key = building_argentiera_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:baofeng_mines_02 }
+		localization_key = building_baofeng_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:baofeng_mines_03 }
+		localization_key = building_baofeng_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:baofeng_mines_04 }
+		localization_key = building_baofeng_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cevennes_mines_02 }
+		localization_key = building_cevennes_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cevennes_mines_03 }
+		localization_key = building_cevennes_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cevennes_mines_04 }
+		localization_key = building_cevennes_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:changan_market_02 }
+		localization_key = building_changan_market_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:chihu_mines_02 }
+		localization_key = building_chihu_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:chihu_mines_03 }
+		localization_key = building_chihu_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:chihu_mines_04 }
+		localization_key = building_chihu_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:citadel_of_aleppo_02 }
+		localization_key = building_citadel_of_aleppo_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:citadel_thang_long_02 }
+		localization_key = building_citadel_thang_long_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:cluny_abbey_02 }
+		localization_key = building_cluny_abbey_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dean_mines_02 }
+		localization_key = building_dean_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dean_mines_03 }
+		localization_key = building_dean_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dean_mines_04 }
+		localization_key = building_dean_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dunhuang_market_02 }
+		localization_key = building_dunhuang_market_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:duomo_florence_02 }
+		localization_key = building_duomo_florence_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:duomo_florence_03 }
+		localization_key = building_duomo_florence_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:duomo_florence_04 }
+		localization_key = building_duomo_florence_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dushan_mines_02 }
+		localization_key = building_dushan_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dushan_mines_03 }
+		localization_key = building_dushan_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dushan_mines_04 }
+		localization_key = building_dushan_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:dvin_shuka_02 }
+		localization_key = building_dvin_shuka_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:falun_mines_02 }
+		localization_key = building_falun_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:falun_mines_03 }
+		localization_key = building_falun_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:falun_mines_04 }
+		localization_key = building_falun_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:fengtian_mines_02 }
+		localization_key = building_fengtian_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:fengtian_mines_03 }
+		localization_key = building_fengtian_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:generic_copper_mines_02 }
+		localization_key = building_generic_copper_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:generic_copper_mines_03 }
+		localization_key = building_generic_copper_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:generic_copper_mines_04 }
+		localization_key = building_generic_copper_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:generic_gold_mines_02 }
+		localization_key = building_generic_gold_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:generic_gold_mines_03 }
+		localization_key = building_generic_gold_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:generic_gold_mines_04 }
+		localization_key = building_generic_gold_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:generic_silver_mines_02 }
+		localization_key = building_generic_silver_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:generic_silver_mines_03 }
+		localization_key = building_generic_silver_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:generic_silver_mines_04 }
+		localization_key = building_generic_silver_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:guiyang_mines_02 }
+		localization_key = building_guiyang_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:guiyang_mines_03 }
+		localization_key = building_guiyang_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:guiyang_mines_04 }
+		localization_key = building_guiyang_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hamadan_bazaar_02 }
+		localization_key = building_hamadan_bazaar_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hanxing_mines_02 }
+		localization_key = building_hanxing_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hanxing_mines_03 }
+		localization_key = building_hanxing_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hanxing_mines_04 }
+		localization_key = building_hanxing_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:herat_bazaar_02 }
+		localization_key = building_herat_bazaar_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hetian_mines_02 }
+		localization_key = building_hetian_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hetian_mines_03 }
+		localization_key = building_hetian_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hetian_mines_04 }
+		localization_key = building_hetian_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_canterbury_cathedral_02 }
+		localization_key = building_holy_site_canterbury_cathedral_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:holy_site_canterbury_cathedral_03 }
+		localization_key = building_holy_site_canterbury_cathedral_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hotin_fort_02 }
+		localization_key = building_hotin_fort_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hpakant_mines_02 }
+		localization_key = building_hpakant_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hpakant_mines_03 }
+		localization_key = building_hpakant_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:hpakant_mines_04 }
+		localization_key = building_hpakant_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ijil_mines_02 }
+		localization_key = building_ijil_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ijil_mines_03 }
+		localization_key = building_ijil_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ijil_mines_04 }
+		localization_key = building_ijil_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:itoigawa_mines_02 }
+		localization_key = building_itoigawa_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:itoigawa_mines_03 }
+		localization_key = building_itoigawa_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:itoigawa_mines_04 }
+		localization_key = building_itoigawa_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:itsukushima_jinja_02 }
+		localization_key = building_itsukushima_jinja_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:jiaodong_mines_02 }
+		localization_key = building_jiaodong_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:jiaodong_mines_03 }
+		localization_key = building_jiaodong_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:jiaodong_mines_04 }
+		localization_key = building_jiaodong_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kaibao_mines_02 }
+		localization_key = building_kaibao_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kaibao_mines_03 }
+		localization_key = building_kaibao_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kaibao_mines_04 }
+		localization_key = building_kaibao_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:khetri_mines_02 }
+		localization_key = building_khetri_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:khetri_mines_03 }
+		localization_key = building_khetri_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:khetri_mines_04 }
+		localization_key = building_khetri_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:khiva_bazaar_02 }
+		localization_key = building_khiva_bazaar_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:koganeyama_mines_02 }
+		localization_key = building_koganeyama_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:koganeyama_mines_03 }
+		localization_key = building_koganeyama_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:koganeyama_mines_04 }
+		localization_key = building_koganeyama_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kollur_mines_02 }
+		localization_key = building_kollur_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kollur_mines_03 }
+		localization_key = building_kollur_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kollur_mines_04 }
+		localization_key = building_kollur_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:konasamudram_mines_02 }
+		localization_key = building_konasamudram_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:konasamudram_mines_03 }
+		localization_key = building_konasamudram_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:konasamudram_mines_04 }
+		localization_key = building_konasamudram_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kremnica_mines_02 }
+		localization_key = building_kremnica_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kremnica_mines_03 }
+		localization_key = building_kremnica_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kremnica_mines_04 }
+		localization_key = building_kremnica_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kutna_hora_mines_02 }
+		localization_key = building_kutna_hora_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kutna_hora_mines_03 }
+		localization_key = building_kutna_hora_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:kutna_hora_mines_04 }
+		localization_key = building_kutna_hora_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:lahur_bazaar_02 }
+		localization_key = building_lahur_bazaar_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:lantian_mines_02 }
+		localization_key = building_lantian_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:lantian_mines_03 }
+		localization_key = building_lantian_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:lantian_mines_04 }
+		localization_key = building_lantian_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:lhasa_market_02 }
+		localization_key = building_lhasa_market_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:liangzhe_mines_02 }
+		localization_key = building_liangzhe_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:liangzhe_mines_03 }
+		localization_key = building_liangzhe_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:liangzhe_mines_04 }
+		localization_key = building_liangzhe_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mali_mines_02 }
+		localization_key = building_mali_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mali_mines_03 }
+		localization_key = building_mali_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mali_mines_04 }
+		localization_key = building_mali_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:meteora_02 }
+		localization_key = building_meteora_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mogok_mines_02 }
+		localization_key = building_mogok_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mogok_mines_03 }
+		localization_key = building_mogok_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mogok_mines_04 }
+		localization_key = building_mogok_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mont_st_michel_02 }
+		localization_key = building_mont_st_michel_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mont_st_michel_03 }
+		localization_key = building_mont_st_michel_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mont_st_michel_04 }
+		localization_key = building_mont_st_michel_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mount_athos_02 }
+		localization_key = building_mount_athos_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:mount_athos_03 }
+		localization_key = building_mount_athos_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:nishapur_mines_02 }
+		localization_key = building_nishapur_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:nishapur_mines_03 }
+		localization_key = building_nishapur_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:nishapur_mines_04 }
+		localization_key = building_nishapur_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:palace_of_ctesiphon_02 }
+		localization_key = building_palace_of_ctesiphon_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:pansjhir_mines_02 }
+		localization_key = building_pansjhir_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:pansjhir_mines_03 }
+		localization_key = building_pansjhir_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:pansjhir_mines_04 }
+		localization_key = building_pansjhir_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:phnom_dek_mines_02 }
+		localization_key = building_phnom_dek_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:phnom_dek_mines_03 }
+		localization_key = building_phnom_dek_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:phnom_dek_mines_04 }
+		localization_key = building_phnom_dek_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:phocaea_mines_02 }
+		localization_key = building_phocaea_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:phocaea_mines_03 }
+		localization_key = building_phocaea_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:phocaea_mines_04 }
+		localization_key = building_phocaea_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:qutb_minar_02 }
+		localization_key = building_qutb_minar_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:qutb_minar_03 }
+		localization_key = building_qutb_minar_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:qutb_minar_04 }
+		localization_key = building_qutb_minar_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:rammelsberg_mines_02 }
+		localization_key = building_rammelsberg_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:rammelsberg_mines_03 }
+		localization_key = building_rammelsberg_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:rammelsberg_mines_04 }
+		localization_key = building_rammelsberg_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ratnapura_mines_02 }
+		localization_key = building_ratnapura_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ratnapura_mines_03 }
+		localization_key = building_ratnapura_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:ratnapura_mines_04 }
+		localization_key = building_ratnapura_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:rudnik_mines_02 }
+		localization_key = building_rudnik_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:rudnik_mines_03 }
+		localization_key = building_rudnik_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:rudnik_mines_04 }
+		localization_key = building_rudnik_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:sado_mines_02 }
+		localization_key = building_sado_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:sado_mines_03 }
+		localization_key = building_sado_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:sado_mines_04 }
+		localization_key = building_sado_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:sar_i_sang_mines_02 }
+		localization_key = building_sar_i_sang_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:sar_i_sang_mines_03 }
+		localization_key = building_sar_i_sang_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:sar_i_sang_mines_04 }
+		localization_key = building_sar_i_sang_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:schwaz_mines_02 }
+		localization_key = building_schwaz_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:schwaz_mines_03 }
+		localization_key = building_schwaz_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:schwaz_mines_04 }
+		localization_key = building_schwaz_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:shah_i_zinda_02 }
+		localization_key = building_shah_i_zinda_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:siderokausia_mines_02 }
+		localization_key = building_siderokausia_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:siderokausia_mines_03 }
+		localization_key = building_siderokausia_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:siderokausia_mines_04 }
+		localization_key = building_siderokausia_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:srebrenica_mines_02 }
+		localization_key = building_srebrenica_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:srebrenica_mines_03 }
+		localization_key = building_srebrenica_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:srebrenica_mines_04 }
+		localization_key = building_srebrenica_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:sumela_monastery_02 }
+		localization_key = building_sumela_monastery_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:sunday_bazaar_02 }
+		localization_key = building_sunday_bazaar_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:suvarnadvipa_mines_02 }
+		localization_key = building_suvarnadvipa_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:suvarnadvipa_mines_03 }
+		localization_key = building_suvarnadvipa_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:suvarnadvipa_mines_04 }
+		localization_key = building_suvarnadvipa_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:tada_mines_02 }
+		localization_key = building_tada_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:tada_mines_03 }
+		localization_key = building_tada_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:tada_mines_04 }
+		localization_key = building_tada_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:taghaza_mines_02 }
+		localization_key = building_taghaza_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:taghaza_mines_03 }
+		localization_key = building_taghaza_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:taghaza_mines_04 }
+		localization_key = building_taghaza_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:takkeda_mines_02 }
+		localization_key = building_takkeda_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:takkeda_mines_03 }
+		localization_key = building_takkeda_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:takkeda_mines_04 }
+		localization_key = building_takkeda_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:temple_of_uppsala_02 }
+		localization_key = building_temple_of_uppsala_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:temples_angkor_02 }
+		localization_key = building_temples_angkor_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:trepca_mines_02 }
+		localization_key = building_trepca_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:trepca_mines_03 }
+		localization_key = building_trepca_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:trepca_mines_04 }
+		localization_key = building_trepca_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:tsushima_mines_02 }
+		localization_key = building_tsushima_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:tsushima_mines_03 }
+		localization_key = building_tsushima_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:tsushima_mines_04 }
+		localization_key = building_tsushima_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:turda_mines_02 }
+		localization_key = building_turda_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:turda_mines_03 }
+		localization_key = building_turda_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:turda_mines_04 }
+		localization_key = building_turda_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:verespatak_mines_02 }
+		localization_key = building_verespatak_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:verespatak_mines_03 }
+		localization_key = building_verespatak_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:verespatak_mines_04 }
+		localization_key = building_verespatak_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wawel_cathedral_02 }
+		localization_key = building_wawel_cathedral_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:wawel_cathedral_03 }
+		localization_key = building_wawel_cathedral_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:xiuyan_mines_02 }
+		localization_key = building_xiuyan_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:xiuyan_mines_03 }
+		localization_key = building_xiuyan_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:xiuyan_mines_04 }
+		localization_key = building_xiuyan_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:zawar_mines_02 }
+		localization_key = building_zawar_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:zawar_mines_03 }
+		localization_key = building_zawar_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:zawar_mines_04 }
+		localization_key = building_zawar_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:zigong_mines_02 }
+		localization_key = building_zigong_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:zigong_mines_03 }
+		localization_key = building_zigong_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:zigong_mines_04 }
+		localization_key = building_zigong_mines_04
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:zijinshan_mines_02 }
+		localization_key = building_zijinshan_mines_02
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:zijinshan_mines_03 }
+		localization_key = building_zijinshan_mines_03
+	}
+	text = {
+		trigger = { var:dap_log_building ?= flag:zijinshan_mines_04 }
+		localization_key = building_zijinshan_mines_04
+	}
+	text = {
 		fallback = yes
 		localization_key = dap_empty
 	}

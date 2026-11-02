@@ -766,6 +766,21 @@ dap_build_replace_here_trigger = {
 	}
 }
 
+# this = province, root = player; with the duchy capital buildings option, the capital barony
+# of its de jure duchy, where a duchy capital building goes (the building's own requirements,
+# dap_can_build_*_trigger, add that the county's holder, the player, holds the duchy)
+dap_build_duchy_capital_here_trigger = {
+	root = { var:dap_build_duchy ?= 1 }
+	this = duchy.title_capital_county.title_province
+}
+
+# this = province, root = player; with the special buildings option, a holding with a special
+# building slot
+dap_build_special_here_trigger = {
+	root = { var:dap_build_special ?= 1 }
+	has_special_building_slot = yes
+}
+
 # this = province (a military base); full: no free slot, no pick this run, and nothing under
 # way or waiting for the holding view (the new holdings option then starts a castle)
 dap_full_military_base_trigger = {

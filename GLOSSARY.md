@@ -40,6 +40,16 @@ _Avoid_: Demolish, rebuild
 Lets automatic building start a new holding in an empty barony of a county the player holds once there is nowhere left to build for a focus: a city when no county has room for an Income or Development county-wide bonus, a castle when a military base is full; one at a time.
 _Avoid_: Expand, settle
 
+**Duchy capital buildings** (an option):
+Lets automatic building build and upgrade a duchy capital building in the capital barony of a duchy the player holds, scored like any other candidate there; a bonus to every county of the duchy counts as four counties' worth.
+
+**Special buildings** (an option):
+Lets automatic building build and upgrade special buildings, such as mines, in a holding's special building slot; a new one only where the game's files say which building the slot is for.
+_Avoid_: Wonders, unique buildings
+
+**Great project**:
+A great building built through a project (cathedrals, the Great Wall, mandala capitals); never automated.
+
 **Excluded holding**:
 A county or holding the player has taken out of automatic building.
 _Avoid_: Locked, blacklisted

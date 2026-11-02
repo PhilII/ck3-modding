@@ -3524,7 +3524,2028 @@ dap_consider_replacements_effect = {
 #   scriptorium_06: normal_building_tier_6_cost, standard_construction_time, scriptorium_07
 #   scriptorium_07: normal_building_tier_7_cost, standard_construction_time, scriptorium_08
 #   scriptorium_08: normal_building_tier_8_cost, standard_construction_time, none
-# Regular buildings left out:
+
+# this = province, with scope:holder and scope:county saved; with its option, every
+# duchy_capital building that can be built there, new or upgrade, in its own slot, offered to
+# dap_consider_building_effect as above
+dap_consider_duchy_capital_buildings_effect = {
+	if = {
+		limit = { dap_can_build_archery_ranges_01_trigger = yes }
+		# next level: archery_ranges_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = archery_ranges_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_archery_ranges_01_value }
+	}
+	if = {
+		limit = { dap_can_build_aurelian_walls_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = aurelian_walls_01 FROM = none COST = 3000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 1.500 DEVELOPMENT_COUNTY = 4.900 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_blacksmiths_01_trigger = yes }
+		# next level: blacksmiths_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = blacksmiths_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_blacksmiths_01_value }
+	}
+	if = {
+		limit = { dap_can_build_charnel_grounds_01_trigger = yes }
+		# next level: charnel_grounds_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = charnel_grounds_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dragon_kiln_01_trigger = yes }
+		# next level: dragon_kiln_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = dragon_kiln_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 1.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_examination_hall_01_trigger = yes }
+		# next level: examination_hall_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = examination_hall_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_great_megalith_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = great_megalith_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 1.100 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_jousting_lists_01_trigger = yes }
+		# next level: jousting_lists_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = jousting_lists_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_jousting_lists_01_value }
+	}
+	if = {
+		limit = { dap_can_build_royal_armory_01_trigger = yes }
+		# next level: royal_armory_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = royal_armory_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_royal_armory_01_value }
+	}
+	if = {
+		limit = { dap_can_build_royal_forest_01_trigger = yes }
+		# next level: royal_forest_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = royal_forest_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 0.800 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_royal_garden_01_trigger = yes }
+		# next level: royal_garden_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = royal_garden_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 0.800 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_tax_assessor_01_trigger = yes }
+		# next level: tax_assessor_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = tax_assessor_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 1.500 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_theodosian_walls_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = theodosian_walls_01 FROM = none COST = 3000 INCOME_HOLDING = 10.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 2.250 DEVELOPMENT_COUNTY = 7.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_archery_ranges_02_trigger = yes }
+		# next level: archery_ranges_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = archery_ranges_02 FROM = archery_ranges_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_archery_ranges_02_value }
+	}
+	if = {
+		limit = { dap_can_build_archery_ranges_03_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = archery_ranges_03 FROM = archery_ranges_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_archery_ranges_03_value }
+	}
+	if = {
+		limit = { dap_can_build_blacksmiths_02_trigger = yes }
+		# next level: blacksmiths_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = blacksmiths_02 FROM = blacksmiths_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_blacksmiths_02_value }
+	}
+	if = {
+		limit = { dap_can_build_blacksmiths_03_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = blacksmiths_03 FROM = blacksmiths_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_blacksmiths_03_value }
+	}
+	if = {
+		limit = { dap_can_build_charnel_grounds_02_trigger = yes }
+		# next level: charnel_grounds_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = charnel_grounds_02 FROM = charnel_grounds_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 0.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_charnel_grounds_03_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = charnel_grounds_03 FROM = charnel_grounds_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 0.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dragon_kiln_02_trigger = yes }
+		# next level: dragon_kiln_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = dragon_kiln_02 FROM = dragon_kiln_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 0.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dragon_kiln_03_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = dragon_kiln_03 FROM = dragon_kiln_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 0.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_examination_hall_02_trigger = yes }
+		# next level: examination_hall_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = examination_hall_02 FROM = examination_hall_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_examination_hall_03_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = examination_hall_03 FROM = examination_hall_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_jousting_lists_02_trigger = yes }
+		# next level: jousting_lists_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = jousting_lists_02 FROM = jousting_lists_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_jousting_lists_02_value }
+	}
+	if = {
+		limit = { dap_can_build_jousting_lists_03_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = jousting_lists_03 FROM = jousting_lists_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_jousting_lists_03_value }
+	}
+	if = {
+		limit = { dap_can_build_royal_armory_02_trigger = yes }
+		# next level: royal_armory_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = royal_armory_02 FROM = royal_armory_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_royal_armory_02_value }
+	}
+	if = {
+		limit = { dap_can_build_royal_armory_03_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = royal_armory_03 FROM = royal_armory_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_royal_armory_03_value }
+	}
+	if = {
+		limit = { dap_can_build_royal_forest_02_trigger = yes }
+		# next level: royal_forest_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = royal_forest_02 FROM = royal_forest_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 0.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_royal_forest_03_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = royal_forest_03 FROM = royal_forest_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 0.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_royal_garden_02_trigger = yes }
+		# next level: royal_garden_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = royal_garden_02 FROM = royal_garden_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 0.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_royal_garden_03_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = royal_garden_03 FROM = royal_garden_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 0.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_tax_assessor_02_trigger = yes }
+		# next level: tax_assessor_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = tax_assessor_02 FROM = tax_assessor_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_tax_assessor_03_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = tax_assessor_03 FROM = tax_assessor_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 1.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+}
+
+# this = province, with scope:holder and scope:county saved; with its option, every
+# special building that can be built there, new or upgrade, in its own slot, offered to
+# dap_consider_building_effect as above
+dap_consider_special_buildings_effect = {
+	if = {
+		limit = { dap_can_build_al_azhar_university_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = al_azhar_university FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 5.600 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_alcazar_of_segovia_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = alcazar_of_segovia_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_alcazar_of_segovia_01_value }
+	}
+	if = {
+		limit = { dap_can_build_aljaferia_palace_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = aljaferia_palace_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_aljaferia_palace_01_value }
+	}
+	if = {
+		limit = { dap_can_build_allaq_mines_01_trigger = yes }
+		# next level: allaq_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = allaq_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_ananda_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = ananda_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_angkor_wat_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = angkor_wat_01 FROM = none COST = 2000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_apollinare_nuovo_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = apollinare_nuovo FROM = none COST = 1000 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.750 DEVELOPMENT_COUNTY = 5.250 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_argentiera_mines_01_trigger = yes }
+		# next level: argentiera_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = argentiera_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_baofeng_mines_01_trigger = yes }
+		# next level: baofeng_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = baofeng_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_besakih_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = besakih_temple_01 FROM = none COST = 2000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.375 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_beta_giyorgis_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = beta_giyorgis_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 6.300 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_borobudur_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = borobudur_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_boudhanath_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = boudhanath_01 FROM = none COST = 3000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.375 DEVELOPMENT_COUNTY = 3.150 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_brihadeeswarar_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = brihadeeswarar_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_buddha_kamakura_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = buddha_kamakura_01 FROM = none COST = 2000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.100 MILITARY = dap_stationed_buddha_kamakura_01_value }
+	}
+	if = {
+		limit = { dap_can_build_byeokran_port_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = byeokran_port_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 1.000 INCOME_COUNTY = 0.375 DEVELOPMENT_COUNTY = 2.450 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_cattolica_stilo_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = cattolica_stilo FROM = none COST = 750 INCOME_HOLDING = 0.200 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 3.150 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_cevennes_mines_01_trigger = yes }
+		# next level: cevennes_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = cevennes_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_chinjufu_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = chinjufu_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_church_of_the_theotokos_trigger = yes }
+		# next level: parthenon; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = church_of_the_theotokos FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_citadel_linan_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = citadel_linan_01 FROM = none COST = 1500 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_citadel_thang_long_01_trigger = yes }
+		# next level: citadel_thang_long_02; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = citadel_thang_long_01 FROM = none COST = 750 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_citadel_thang_long_01_value }
+	}
+	if = {
+		limit = { dap_can_build_cluny_abbey_01_trigger = yes }
+		# next level: cluny_abbey_02; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = cluny_abbey_01 FROM = none COST = 1000 INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.050 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_confucius_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = confucius_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_culai_academy_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = culai_academy_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_damascus_mosque_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = damascus_mosque_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_danevirke_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = danevirke_01 FROM = none COST = 300 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_danevirke_01_value }
+	}
+	if = {
+		limit = { dap_can_build_dau_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = dau_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dazaifu_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = dazaifu_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.450 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dengfeng_observatory_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = dengfeng_observatory_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_despot_palace_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = despot_palace FROM = none COST = 1200 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.750 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_doges_palace_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = doges_palace_01 FROM = none COST = 1000 INCOME_HOLDING = 5.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 9.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dome_of_the_rock_01_trigger = yes }
+		# next level: temple_in_jerusalem_01; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = dome_of_the_rock_01 FROM = none COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.750 DEVELOPMENT_COUNTY = 6.300 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_drassanes_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = drassanes_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.150 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_duomo_florence_01_trigger = yes }
+		# next level: duomo_florence_02; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = duomo_florence_01 FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.050 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_enryaku_ji_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = enryaku_ji_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_etchmiadzin_cathedral_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = etchmiadzin_cathedral FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.750 DEVELOPMENT_COUNTY = 3.850 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_fairy_chimneys_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = fairy_chimneys FROM = none COST = 250 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_falun_mines_01_trigger = yes }
+		# next level: falun_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = falun_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_fengtian_mines_01_trigger = yes }
+		# next level: fengtian_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = fengtian_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_generic_university_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = generic_university FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_giant_wild_goose_pagoda_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = giant_wild_goose_pagoda_01 FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_golden_gate_of_kiev_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = golden_gate_of_kiev_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_gongsanseong_fortress_01_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = gongsanseong_fortress_01 FROM = none COST = 1500 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_gongsanseong_fortress_01_value }
+	}
+	if = {
+		limit = { dap_can_build_hagia_sophia_01_trigger = yes }
+		# next level: hagia_sophia_02; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = hagia_sophia_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hagios_demetrios_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hagios_demetrios FROM = none COST = 1000 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hakata_port_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = hakata_port_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.450 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hanging_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = hanging_temple_01 FROM = none COST = 2000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_heddal_stave_church_01_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = heddal_stave_church_01 FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_heian_palace_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = heian_palace_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.750 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hetian_mines_01_trigger = yes }
+		# next level: hetian_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hetian_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_basilica_santiago_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_basilica_santiago_01 FROM = none COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.750 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_buddhist_grand_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_buddhist_grand_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_canterbury_cathedral_01_trigger = yes }
+		# next level: holy_site_canterbury_cathedral_02; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_canterbury_cathedral_01 FROM = none COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_cathedral_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_cathedral_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_chinese_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_chinese_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_cologne_cathedral_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_cologne_cathedral_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_fire_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_fire_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_great_mosque_of_cordoba_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_great_mosque_of_cordoba_01 FROM = none COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.375 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_great_mosque_of_djenne_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_great_mosque_of_djenne_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.375 DEVELOPMENT_COUNTY = 5.600 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_great_mosque_of_mecca_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_great_mosque_of_mecca_01 FROM = none COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 9.450 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_great_mosque_of_samarra_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_great_mosque_of_samarra_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 5.600 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_imam_ali_mosque_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_imam_ali_mosque_01 FROM = none COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 6.300 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_indian_grand_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_indian_grand_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_japanese_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_japanese_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_mahabodhi_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_mahabodhi_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 6.300 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_mosque_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_mosque_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_other_grand_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_other_grand_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_pagan_grand_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_pagan_grand_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_prophetic_mosque_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_prophetic_mosque_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 9.450 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_se_asia_pagan_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_se_asia_pagan_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_st_peters_basilica_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_st_peters_basilica_01 FROM = none COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.750 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_wisdom_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_wisdom_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hoshi_ryokan_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = hoshi_ryokan_01 FROM = none COST = 500 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hosios_loukas_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hosios_loukas FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 1.000 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hotin_fort_01_trigger = yes }
+		# next level: hotin_fort_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hotin_fort_01 FROM = none COST = 400 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_hotin_fort_01_value }
+	}
+	if = {
+		limit = { dap_can_build_hpakant_mines_01_trigger = yes }
+		# next level: hpakant_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hpakant_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hwangnyongsa_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = hwangnyongsa_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_imam_reza_shrine_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = imam_reza_shrine_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.375 DEVELOPMENT_COUNTY = 3.850 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_iron_lion_cangzhou_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = iron_lion_cangzhou_01 FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 4.900 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_iron_pillar_of_dhar_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = iron_pillar_of_dhar_01 FROM = none COST = 2000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_ise_jingu_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = ise_jingu_01 FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_itoigawa_mines_01_trigger = yes }
+		# next level: itoigawa_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = itoigawa_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_itsukushima_jinja_01_trigger = yes }
+		# next level: itsukushima_jinja_02; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = itsukushima_jinja_01 FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_jizu_shan_temples_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = jizu_shan_temples_01 FROM = none COST = 1000 INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.450 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_jvari_monastery_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = jvari_monastery FROM = none COST = 700 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.750 DEVELOPMENT_COUNTY = 2.450 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kaifeng_palace_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = kaifeng_palace_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.750 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kano_walls_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = kano_walls_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kassiopi_castle_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = kassiopi_castle FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_khajuraho_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = khajuraho_01 FROM = none COST = 1000 INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 5.600 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kofuku_ji_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = kofuku_ji_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_koganeyama_mines_01_trigger = yes }
+		# next level: koganeyama_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = koganeyama_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kollur_mines_01_trigger = yes }
+		# next level: kollur_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kollur_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 5.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_konark_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = konark_temple_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kremnica_mines_01_trigger = yes }
+		# next level: kremnica_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kremnica_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kutna_hora_mines_01_trigger = yes }
+		# next level: kutna_hora_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kutna_hora_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_lantian_mines_01_trigger = yes }
+		# next level: lantian_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = lantian_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_leshan_giant_buddha_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = leshan_giant_buddha_01 FROM = none COST = 2000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_liuhe_pagoda_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = liuhe_pagoda_01 FROM = none COST = 1250 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.375 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_lize_academy_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = lize_academy_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_london_bridge_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = london_bridge_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 4.550 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_lund_cathedral_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = lund_cathedral_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_maiden_tower_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = maiden_tower FROM = none COST = 750 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_maiden_tower_value }
+	}
+	if = {
+		limit = { dap_can_build_mali_mines_01_trigger = yes }
+		# next level: mali_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = mali_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 5.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 1.750 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_maoshan_academy_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = maoshan_academy_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_meteora_01_trigger = yes }
+		# next level: meteora_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = meteora_01 FROM = none COST = 500 INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_minarets_and_remains_of_jam_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = minarets_and_remains_of_jam_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mount_apo_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = mount_apo_01 FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mount_athos_01_trigger = yes }
+		# next level: mount_athos_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = mount_athos_01 FROM = none COST = 300 INCOME_HOLDING = 0.100 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mount_baekdu_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = mount_baekdu_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mount_fuji_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = mount_fuji_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.375 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_muaro_jambi_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = muaro_jambi_01 FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_my_son_sanctuary_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = my_son_sanctuary_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_nalanda_university_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = nalanda_university FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 5.600 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_notre_dame_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = notre_dame_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 6.300 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_pagoda_of_fogong_temple_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = pagoda_of_fogong_temple_01 FROM = none COST = 2000 INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_patras_castle_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = patras_castle FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = dap_stationed_patras_castle_value }
+	}
+	if = {
+		limit = { dap_can_build_phnom_dek_mines_01_trigger = yes }
+		# next level: phnom_dek_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = phnom_dek_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_phocaea_mines_01_trigger = yes }
+		# next level: phocaea_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = phocaea_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_plain_of_jars_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = plain_of_jars_01 FROM = none COST = 2000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_po_klong_garai_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = po_klong_garai_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_pyramid_lingapura_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = pyramid_lingapura_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_quanzhou_seaport_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = quanzhou_seaport_01 FROM = none COST = 1000 INCOME_HOLDING = 4.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_rammelsberg_mines_01_trigger = yes }
+		# next level: rammelsberg_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = rammelsberg_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 5.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_rudnik_mines_01_trigger = yes }
+		# next level: rudnik_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = rudnik_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_sado_mines_01_trigger = yes }
+		# next level: sado_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = sado_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_saint_catherine_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = saint_catherine FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.750 DEVELOPMENT_COUNTY = 6.300 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_saint_lazarus_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = saint_lazarus FROM = none COST = 750 INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_sankore_university_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = sankore_university FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 5.600 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_schwaz_mines_01_trigger = yes }
+		# next level: schwaz_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = schwaz_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_shigu_academy_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = shigu_academy_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_shwedagon_pagoda_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = shwedagon_pagoda_01 FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 5.600 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_siderokausia_mines_01_trigger = yes }
+		# next level: siderokausia_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = siderokausia_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_siena_university_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = siena_university FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 5.600 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_sofia_ohrid_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = sofia_ohrid FROM = none COST = 1000 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 6.300 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_soltaniyeh_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = soltaniyeh_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_srebrenica_mines_01_trigger = yes }
+		# next level: srebrenica_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = srebrenica_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 5.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_sumela_monastery_01_trigger = yes }
+		# next level: sumela_monastery_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = sumela_monastery_01 FROM = none COST = 1000 INCOME_HOLDING = 0.200 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_suvarnadvipa_mines_01_trigger = yes }
+		# next level: suvarnadvipa_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = suvarnadvipa_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_swahili_port_lamu_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = swahili_port_lamu FROM = none COST = 1000 INCOME_HOLDING = 4.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_swahili_port_mombasa_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = swahili_port_mombasa FROM = none COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_swahili_port_pate_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = swahili_port_pate FROM = none COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_swahili_port_pemba_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = swahili_port_pemba FROM = none COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_swahili_port_zanzibar_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = swahili_port_zanzibar FROM = none COST = 1000 INCOME_HOLDING = 4.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 9.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_tada_mines_01_trigger = yes }
+		# next level: tada_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = tada_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.100 DEVELOPMENT_COUNTY = 0.175 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_takkeda_mines_01_trigger = yes }
+		# next level: takkeda_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = takkeda_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_temple_of_uppsala_01_trigger = yes }
+		# next level: temple_of_uppsala_02; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = temple_of_uppsala_01 FROM = none COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_the_friday_mosque_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = the_friday_mosque_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 5.950 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_the_tower_of_london_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = the_tower_of_london_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 3.500 MILITARY = dap_stationed_the_tower_of_london_01_value }
+	}
+	if = {
+		limit = { dap_can_build_tiantai_monasteries_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = tiantai_monasteries_01 FROM = none COST = 1000 INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.450 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_trepca_mines_01_trigger = yes }
+		# next level: trepca_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = trepca_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_trosky_castle_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = trosky_castle_01 FROM = none COST = 500 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_trosky_castle_01_value }
+	}
+	if = {
+		limit = { dap_can_build_tsushima_mines_01_trigger = yes }
+		# next level: tsushima_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = tsushima_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_turda_mines_01_trigger = yes }
+		# next level: turda_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = turda_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_verespatak_mines_01_trigger = yes }
+		# next level: verespatak_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = verespatak_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_visby_ringmur_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = visby_ringmur_01 FROM = none COST = 500 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.375 DEVELOPMENT_COUNTY = 5.250 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_visegrad_castle_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = visegrad_castle_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_visegrad_castle_01_value }
+	}
+	if = {
+		limit = { dap_can_build_walls_of_benin_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = walls_of_benin_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 9.450 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_walls_of_genoa_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = walls_of_genoa_01 FROM = none COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.900 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_wartburg_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = wartburg_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_wartburg_01_value }
+	}
+	if = {
+		limit = { dap_can_build_wawel_cathedral_01_trigger = yes }
+		# next level: wawel_cathedral_02; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = wawel_cathedral_01 FROM = none COST = 400 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.750 MILITARY = dap_stationed_wawel_cathedral_01_value }
+	}
+	if = {
+		limit = { dap_can_build_white_deer_grotto_academy_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = white_deer_grotto_academy_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_wilwatikta_palace_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = wilwatikta_palace_01 FROM = none COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_wudang_mountain_temples_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = wudang_mountain_temples_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 1.750 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_xiuyan_mines_01_trigger = yes }
+		# next level: xiuyan_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = xiuyan_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_yazd_mosque_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = yazd_mosque_01 FROM = none COST = 1500 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.625 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_yuelu_academy_01_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = yuelu_academy_01 FROM = none COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_zawar_mines_01_trigger = yes }
+		# next level: zawar_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = zawar_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_zijinshan_mines_01_trigger = yes }
+		# next level: zijinshan_mines_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = zijinshan_mines_01 FROM = none COST = expensive_building_tier_3_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_alamut_castle_02_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = alamut_castle_02 FROM = alamut_castle_01 COST = 600 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_alamut_castle_02_value }
+	}
+	if = {
+		limit = { dap_can_build_alhambra_02_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = alhambra_02 FROM = alhambra_01 COST = 2000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 5.950 MILITARY = dap_stationed_alhambra_02_value }
+	}
+	if = {
+		limit = { dap_can_build_allaq_mines_02_trigger = yes }
+		# next level: allaq_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = allaq_mines_02 FROM = allaq_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_allaq_mines_03_trigger = yes }
+		# next level: allaq_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = allaq_mines_03 FROM = allaq_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_allaq_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = allaq_mines_04 FROM = allaq_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_argentiera_mines_02_trigger = yes }
+		# next level: argentiera_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = argentiera_mines_02 FROM = argentiera_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_argentiera_mines_03_trigger = yes }
+		# next level: argentiera_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = argentiera_mines_03 FROM = argentiera_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_argentiera_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = argentiera_mines_04 FROM = argentiera_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_baofeng_mines_02_trigger = yes }
+		# next level: baofeng_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = baofeng_mines_02 FROM = baofeng_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_baofeng_mines_03_trigger = yes }
+		# next level: baofeng_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = baofeng_mines_03 FROM = baofeng_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_baofeng_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = baofeng_mines_04 FROM = baofeng_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_cevennes_mines_02_trigger = yes }
+		# next level: cevennes_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = cevennes_mines_02 FROM = cevennes_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_cevennes_mines_03_trigger = yes }
+		# next level: cevennes_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = cevennes_mines_03 FROM = cevennes_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_cevennes_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = cevennes_mines_04 FROM = cevennes_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_changan_market_02_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = changan_market_02 FROM = changan_market_01 COST = 800 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_chihu_mines_02_trigger = yes }
+		# next level: chihu_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = chihu_mines_02 FROM = chihu_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_chihu_mines_03_trigger = yes }
+		# next level: chihu_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = chihu_mines_03 FROM = chihu_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_chihu_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = chihu_mines_04 FROM = chihu_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_citadel_of_aleppo_02_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = citadel_of_aleppo_02 FROM = citadel_of_aleppo_01 COST = 2000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 5.250 MILITARY = dap_stationed_citadel_of_aleppo_02_value }
+	}
+	if = {
+		limit = { dap_can_build_citadel_thang_long_02_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = citadel_thang_long_02 FROM = citadel_thang_long_01 COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = dap_stationed_citadel_thang_long_02_value }
+	}
+	if = {
+		limit = { dap_can_build_cluny_abbey_02_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = cluny_abbey_02 FROM = cluny_abbey_01 COST = 1000 INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dean_mines_02_trigger = yes }
+		# next level: dean_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = dean_mines_02 FROM = dean_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dean_mines_03_trigger = yes }
+		# next level: dean_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = dean_mines_03 FROM = dean_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dean_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = dean_mines_04 FROM = dean_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dunhuang_market_02_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = dunhuang_market_02 FROM = dunhuang_market_01 COST = 800 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_duomo_florence_02_trigger = yes }
+		# next level: duomo_florence_03; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = duomo_florence_02 FROM = duomo_florence_01 COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.050 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_duomo_florence_03_trigger = yes }
+		# next level: duomo_florence_04; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = duomo_florence_03 FROM = duomo_florence_02 COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_duomo_florence_04_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = duomo_florence_04 FROM = duomo_florence_03 COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dushan_mines_02_trigger = yes }
+		# next level: dushan_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = dushan_mines_02 FROM = dushan_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dushan_mines_03_trigger = yes }
+		# next level: dushan_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = dushan_mines_03 FROM = dushan_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dushan_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = dushan_mines_04 FROM = dushan_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_dvin_shuka_02_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = dvin_shuka_02 FROM = dvin_shuka_01 COST = 800 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_falun_mines_02_trigger = yes }
+		# next level: falun_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = falun_mines_02 FROM = falun_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_falun_mines_03_trigger = yes }
+		# next level: falun_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = falun_mines_03 FROM = falun_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_falun_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = falun_mines_04 FROM = falun_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_fengtian_mines_02_trigger = yes }
+		# next level: fengtian_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = fengtian_mines_02 FROM = fengtian_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_fengtian_mines_03_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = fengtian_mines_03 FROM = fengtian_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_generic_copper_mines_02_trigger = yes }
+		# next level: generic_copper_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = generic_copper_mines_02 FROM = generic_copper_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.100 DEVELOPMENT_COUNTY = 0.175 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_generic_copper_mines_03_trigger = yes }
+		# next level: generic_copper_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = generic_copper_mines_03 FROM = generic_copper_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.100 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_generic_copper_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = generic_copper_mines_04 FROM = generic_copper_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 4.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.100 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_generic_gold_mines_02_trigger = yes }
+		# next level: generic_gold_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = generic_gold_mines_02 FROM = generic_gold_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.280 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_generic_gold_mines_03_trigger = yes }
+		# next level: generic_gold_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = generic_gold_mines_03 FROM = generic_gold_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.280 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_generic_gold_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = generic_gold_mines_04 FROM = generic_gold_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.280 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_generic_silver_mines_02_trigger = yes }
+		# next level: generic_silver_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = generic_silver_mines_02 FROM = generic_silver_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.280 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_generic_silver_mines_03_trigger = yes }
+		# next level: generic_silver_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = generic_silver_mines_03 FROM = generic_silver_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.280 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_generic_silver_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = generic_silver_mines_04 FROM = generic_silver_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.280 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_guiyang_mines_02_trigger = yes }
+		# next level: guiyang_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = guiyang_mines_02 FROM = guiyang_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_guiyang_mines_03_trigger = yes }
+		# next level: guiyang_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = guiyang_mines_03 FROM = guiyang_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_guiyang_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = guiyang_mines_04 FROM = guiyang_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hamadan_bazaar_02_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hamadan_bazaar_02 FROM = hamadan_bazaar_01 COST = 800 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hanxing_mines_02_trigger = yes }
+		# next level: hanxing_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hanxing_mines_02 FROM = hanxing_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hanxing_mines_03_trigger = yes }
+		# next level: hanxing_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hanxing_mines_03 FROM = hanxing_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hanxing_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hanxing_mines_04 FROM = hanxing_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_herat_bazaar_02_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = herat_bazaar_02 FROM = herat_bazaar_01 COST = 800 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hetian_mines_02_trigger = yes }
+		# next level: hetian_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hetian_mines_02 FROM = hetian_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hetian_mines_03_trigger = yes }
+		# next level: hetian_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hetian_mines_03 FROM = hetian_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hetian_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hetian_mines_04 FROM = hetian_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_canterbury_cathedral_02_trigger = yes }
+		# next level: holy_site_canterbury_cathedral_03; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_canterbury_cathedral_02 FROM = holy_site_canterbury_cathedral_01 COST = 1000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_holy_site_canterbury_cathedral_03_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = holy_site_canterbury_cathedral_03 FROM = holy_site_canterbury_cathedral_02 COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hotin_fort_02_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hotin_fort_02 FROM = hotin_fort_01 COST = 800 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_hotin_fort_02_value }
+	}
+	if = {
+		limit = { dap_can_build_hpakant_mines_02_trigger = yes }
+		# next level: hpakant_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hpakant_mines_02 FROM = hpakant_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hpakant_mines_03_trigger = yes }
+		# next level: hpakant_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hpakant_mines_03 FROM = hpakant_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hpakant_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hpakant_mines_04 FROM = hpakant_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_ijil_mines_02_trigger = yes }
+		# next level: ijil_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = ijil_mines_02 FROM = ijil_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_ijil_mines_03_trigger = yes }
+		# next level: ijil_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = ijil_mines_03 FROM = ijil_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_ijil_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = ijil_mines_04 FROM = ijil_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_itoigawa_mines_02_trigger = yes }
+		# next level: itoigawa_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = itoigawa_mines_02 FROM = itoigawa_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_itoigawa_mines_03_trigger = yes }
+		# next level: itoigawa_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = itoigawa_mines_03 FROM = itoigawa_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_itoigawa_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = itoigawa_mines_04 FROM = itoigawa_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_itsukushima_jinja_02_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = itsukushima_jinja_02 FROM = itsukushima_jinja_01 COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_jiaodong_mines_02_trigger = yes }
+		# next level: jiaodong_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = jiaodong_mines_02 FROM = jiaodong_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_jiaodong_mines_03_trigger = yes }
+		# next level: jiaodong_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = jiaodong_mines_03 FROM = jiaodong_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_jiaodong_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = jiaodong_mines_04 FROM = jiaodong_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kaibao_mines_02_trigger = yes }
+		# next level: kaibao_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kaibao_mines_02 FROM = kaibao_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kaibao_mines_03_trigger = yes }
+		# next level: kaibao_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kaibao_mines_03 FROM = kaibao_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kaibao_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kaibao_mines_04 FROM = kaibao_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_khetri_mines_02_trigger = yes }
+		# next level: khetri_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = khetri_mines_02 FROM = khetri_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_khetri_mines_03_trigger = yes }
+		# next level: khetri_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = khetri_mines_03 FROM = khetri_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_khetri_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = khetri_mines_04 FROM = khetri_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_khiva_bazaar_02_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = khiva_bazaar_02 FROM = khiva_bazaar_01 COST = 800 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_koganeyama_mines_02_trigger = yes }
+		# next level: koganeyama_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = koganeyama_mines_02 FROM = koganeyama_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_koganeyama_mines_03_trigger = yes }
+		# next level: koganeyama_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = koganeyama_mines_03 FROM = koganeyama_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_koganeyama_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = koganeyama_mines_04 FROM = koganeyama_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kollur_mines_02_trigger = yes }
+		# next level: kollur_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kollur_mines_02 FROM = kollur_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kollur_mines_03_trigger = yes }
+		# next level: kollur_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kollur_mines_03 FROM = kollur_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kollur_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kollur_mines_04 FROM = kollur_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_konasamudram_mines_02_trigger = yes }
+		# next level: konasamudram_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = konasamudram_mines_02 FROM = konasamudram_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_konasamudram_mines_03_trigger = yes }
+		# next level: konasamudram_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = konasamudram_mines_03 FROM = konasamudram_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_konasamudram_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = konasamudram_mines_04 FROM = konasamudram_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kremnica_mines_02_trigger = yes }
+		# next level: kremnica_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kremnica_mines_02 FROM = kremnica_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kremnica_mines_03_trigger = yes }
+		# next level: kremnica_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kremnica_mines_03 FROM = kremnica_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kremnica_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kremnica_mines_04 FROM = kremnica_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kutna_hora_mines_02_trigger = yes }
+		# next level: kutna_hora_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kutna_hora_mines_02 FROM = kutna_hora_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kutna_hora_mines_03_trigger = yes }
+		# next level: kutna_hora_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kutna_hora_mines_03 FROM = kutna_hora_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kutna_hora_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kutna_hora_mines_04 FROM = kutna_hora_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_lahur_bazaar_02_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = lahur_bazaar_02 FROM = lahur_bazaar_01 COST = 800 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_lantian_mines_02_trigger = yes }
+		# next level: lantian_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = lantian_mines_02 FROM = lantian_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_lantian_mines_03_trigger = yes }
+		# next level: lantian_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = lantian_mines_03 FROM = lantian_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_lantian_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = lantian_mines_04 FROM = lantian_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_lhasa_market_02_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = lhasa_market_02 FROM = lhasa_market_01 COST = 800 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_liangzhe_mines_02_trigger = yes }
+		# next level: liangzhe_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = liangzhe_mines_02 FROM = liangzhe_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_liangzhe_mines_03_trigger = yes }
+		# next level: liangzhe_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = liangzhe_mines_03 FROM = liangzhe_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_liangzhe_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = liangzhe_mines_04 FROM = liangzhe_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mali_mines_02_trigger = yes }
+		# next level: mali_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = mali_mines_02 FROM = mali_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 1.050 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mali_mines_03_trigger = yes }
+		# next level: mali_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = mali_mines_03 FROM = mali_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 1.050 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mali_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = mali_mines_04 FROM = mali_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 1.750 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_meteora_02_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = meteora_02 FROM = meteora_01 COST = 1000 INCOME_HOLDING = 0.100 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mogok_mines_02_trigger = yes }
+		# next level: mogok_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = mogok_mines_02 FROM = mogok_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mogok_mines_03_trigger = yes }
+		# next level: mogok_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = mogok_mines_03 FROM = mogok_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mogok_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = mogok_mines_04 FROM = mogok_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mont_st_michel_02_trigger = yes }
+		# next level: mont_st_michel_03; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = mont_st_michel_02 FROM = mont_st_michel_01 COST = 750 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mont_st_michel_03_trigger = yes }
+		# next level: mont_st_michel_04; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = mont_st_michel_03 FROM = mont_st_michel_02 COST = 1000 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mont_st_michel_04_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = mont_st_michel_04 FROM = mont_st_michel_03 COST = 2000 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mount_athos_02_trigger = yes }
+		# next level: mount_athos_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = mount_athos_02 FROM = mount_athos_01 COST = 600 INCOME_HOLDING = 0.200 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 1.050 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_mount_athos_03_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = mount_athos_03 FROM = mount_athos_02 COST = 1000 INCOME_HOLDING = 0.100 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 3.150 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_nishapur_mines_02_trigger = yes }
+		# next level: nishapur_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = nishapur_mines_02 FROM = nishapur_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_nishapur_mines_03_trigger = yes }
+		# next level: nishapur_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = nishapur_mines_03 FROM = nishapur_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_nishapur_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = nishapur_mines_04 FROM = nishapur_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_palace_of_ctesiphon_02_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = palace_of_ctesiphon_02 FROM = palace_of_ctesiphon_01 COST = 2000 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_pansjhir_mines_02_trigger = yes }
+		# next level: pansjhir_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = pansjhir_mines_02 FROM = pansjhir_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_pansjhir_mines_03_trigger = yes }
+		# next level: pansjhir_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = pansjhir_mines_03 FROM = pansjhir_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_pansjhir_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = pansjhir_mines_04 FROM = pansjhir_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_phnom_dek_mines_02_trigger = yes }
+		# next level: phnom_dek_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = phnom_dek_mines_02 FROM = phnom_dek_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_phnom_dek_mines_03_trigger = yes }
+		# next level: phnom_dek_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = phnom_dek_mines_03 FROM = phnom_dek_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_phnom_dek_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = phnom_dek_mines_04 FROM = phnom_dek_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_phocaea_mines_02_trigger = yes }
+		# next level: phocaea_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = phocaea_mines_02 FROM = phocaea_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_phocaea_mines_03_trigger = yes }
+		# next level: phocaea_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = phocaea_mines_03 FROM = phocaea_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_phocaea_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = phocaea_mines_04 FROM = phocaea_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_qutb_minar_02_trigger = yes }
+		# next level: qutb_minar_03; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = qutb_minar_02 FROM = qutb_minar_01 COST = 1000 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 1.050 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_qutb_minar_03_trigger = yes }
+		# next level: qutb_minar_04; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = qutb_minar_03 FROM = qutb_minar_02 COST = 3000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.050 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_qutb_minar_04_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = qutb_minar_04 FROM = qutb_minar_03 COST = 3000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.075 DEVELOPMENT_COUNTY = 1.050 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_rammelsberg_mines_02_trigger = yes }
+		# next level: rammelsberg_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = rammelsberg_mines_02 FROM = rammelsberg_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_rammelsberg_mines_03_trigger = yes }
+		# next level: rammelsberg_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = rammelsberg_mines_03 FROM = rammelsberg_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_rammelsberg_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = rammelsberg_mines_04 FROM = rammelsberg_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_ratnapura_mines_02_trigger = yes }
+		# next level: ratnapura_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = ratnapura_mines_02 FROM = ratnapura_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_ratnapura_mines_03_trigger = yes }
+		# next level: ratnapura_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = ratnapura_mines_03 FROM = ratnapura_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_ratnapura_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = ratnapura_mines_04 FROM = ratnapura_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_rudnik_mines_02_trigger = yes }
+		# next level: rudnik_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = rudnik_mines_02 FROM = rudnik_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_rudnik_mines_03_trigger = yes }
+		# next level: rudnik_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = rudnik_mines_03 FROM = rudnik_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_rudnik_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = rudnik_mines_04 FROM = rudnik_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_sado_mines_02_trigger = yes }
+		# next level: sado_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = sado_mines_02 FROM = sado_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_sado_mines_03_trigger = yes }
+		# next level: sado_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = sado_mines_03 FROM = sado_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_sado_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = sado_mines_04 FROM = sado_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_sar_i_sang_mines_02_trigger = yes }
+		# next level: sar_i_sang_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = sar_i_sang_mines_02 FROM = sar_i_sang_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_sar_i_sang_mines_03_trigger = yes }
+		# next level: sar_i_sang_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = sar_i_sang_mines_03 FROM = sar_i_sang_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_sar_i_sang_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = sar_i_sang_mines_04 FROM = sar_i_sang_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_schwaz_mines_02_trigger = yes }
+		# next level: schwaz_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = schwaz_mines_02 FROM = schwaz_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_schwaz_mines_03_trigger = yes }
+		# next level: schwaz_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = schwaz_mines_03 FROM = schwaz_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_schwaz_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = schwaz_mines_04 FROM = schwaz_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_shah_i_zinda_02_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = shah_i_zinda_02 FROM = shah_i_zinda_01 COST = 800 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_siderokausia_mines_02_trigger = yes }
+		# next level: siderokausia_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = siderokausia_mines_02 FROM = siderokausia_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_siderokausia_mines_03_trigger = yes }
+		# next level: siderokausia_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = siderokausia_mines_03 FROM = siderokausia_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_siderokausia_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = siderokausia_mines_04 FROM = siderokausia_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_srebrenica_mines_02_trigger = yes }
+		# next level: srebrenica_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = srebrenica_mines_02 FROM = srebrenica_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_srebrenica_mines_03_trigger = yes }
+		# next level: srebrenica_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = srebrenica_mines_03 FROM = srebrenica_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_srebrenica_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = srebrenica_mines_04 FROM = srebrenica_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_sumela_monastery_02_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = sumela_monastery_02 FROM = sumela_monastery_01 COST = 750 INCOME_HOLDING = 0.200 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.250 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_sunday_bazaar_02_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = sunday_bazaar_02 FROM = sunday_bazaar_01 COST = 800 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_suvarnadvipa_mines_02_trigger = yes }
+		# next level: suvarnadvipa_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = suvarnadvipa_mines_02 FROM = suvarnadvipa_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_suvarnadvipa_mines_03_trigger = yes }
+		# next level: suvarnadvipa_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = suvarnadvipa_mines_03 FROM = suvarnadvipa_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_suvarnadvipa_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = suvarnadvipa_mines_04 FROM = suvarnadvipa_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_tada_mines_02_trigger = yes }
+		# next level: tada_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = tada_mines_02 FROM = tada_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.100 DEVELOPMENT_COUNTY = 0.175 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_tada_mines_03_trigger = yes }
+		# next level: tada_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = tada_mines_03 FROM = tada_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.100 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_tada_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = tada_mines_04 FROM = tada_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 4.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.100 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_taghaza_mines_02_trigger = yes }
+		# next level: taghaza_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = taghaza_mines_02 FROM = taghaza_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_taghaza_mines_03_trigger = yes }
+		# next level: taghaza_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = taghaza_mines_03 FROM = taghaza_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_taghaza_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = taghaza_mines_04 FROM = taghaza_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_takkeda_mines_02_trigger = yes }
+		# next level: takkeda_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = takkeda_mines_02 FROM = takkeda_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_takkeda_mines_03_trigger = yes }
+		# next level: takkeda_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = takkeda_mines_03 FROM = takkeda_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_takkeda_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = takkeda_mines_04 FROM = takkeda_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_temple_of_uppsala_02_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = temple_of_uppsala_02 FROM = temple_of_uppsala_01 COST = 1000 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_temples_angkor_02_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = temples_angkor_02 FROM = temples_angkor_01 COST = 1000 INCOME_HOLDING = 3.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_trepca_mines_02_trigger = yes }
+		# next level: trepca_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = trepca_mines_02 FROM = trepca_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_trepca_mines_03_trigger = yes }
+		# next level: trepca_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = trepca_mines_03 FROM = trepca_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_trepca_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = trepca_mines_04 FROM = trepca_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_tsushima_mines_02_trigger = yes }
+		# next level: tsushima_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = tsushima_mines_02 FROM = tsushima_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_tsushima_mines_03_trigger = yes }
+		# next level: tsushima_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = tsushima_mines_03 FROM = tsushima_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_tsushima_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = tsushima_mines_04 FROM = tsushima_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_turda_mines_02_trigger = yes }
+		# next level: turda_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = turda_mines_02 FROM = turda_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_turda_mines_03_trigger = yes }
+		# next level: turda_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = turda_mines_03 FROM = turda_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_turda_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = turda_mines_04 FROM = turda_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_verespatak_mines_02_trigger = yes }
+		# next level: verespatak_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = verespatak_mines_02 FROM = verespatak_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_verespatak_mines_03_trigger = yes }
+		# next level: verespatak_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = verespatak_mines_03 FROM = verespatak_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_verespatak_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = verespatak_mines_04 FROM = verespatak_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_wawel_cathedral_02_trigger = yes }
+		# next level: wawel_cathedral_03; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = wawel_cathedral_02 FROM = wawel_cathedral_01 COST = 800 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.875 MILITARY = dap_stationed_wawel_cathedral_02_value }
+	}
+	if = {
+		limit = { dap_can_build_wawel_cathedral_03_trigger = yes }
+		# next level: none; construction time: very_slow_construction_time
+		dap_consider_building_effect = { BUILDING = wawel_cathedral_03 FROM = wawel_cathedral_02 COST = 1400 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.875 MILITARY = dap_stationed_wawel_cathedral_03_value }
+	}
+	if = {
+		limit = { dap_can_build_xiuyan_mines_02_trigger = yes }
+		# next level: xiuyan_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = xiuyan_mines_02 FROM = xiuyan_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_xiuyan_mines_03_trigger = yes }
+		# next level: xiuyan_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = xiuyan_mines_03 FROM = xiuyan_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_xiuyan_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = xiuyan_mines_04 FROM = xiuyan_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_zawar_mines_02_trigger = yes }
+		# next level: zawar_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = zawar_mines_02 FROM = zawar_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_zawar_mines_03_trigger = yes }
+		# next level: zawar_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = zawar_mines_03 FROM = zawar_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_zawar_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = zawar_mines_04 FROM = zawar_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_zigong_mines_02_trigger = yes }
+		# next level: zigong_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = zigong_mines_02 FROM = zigong_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_zigong_mines_03_trigger = yes }
+		# next level: zigong_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = zigong_mines_03 FROM = zigong_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_zigong_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = zigong_mines_04 FROM = zigong_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 1.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.125 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_zijinshan_mines_02_trigger = yes }
+		# next level: zijinshan_mines_03; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = zijinshan_mines_02 FROM = zijinshan_mines_01 COST = expensive_building_tier_4_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_zijinshan_mines_03_trigger = yes }
+		# next level: zijinshan_mines_04; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = zijinshan_mines_03 FROM = zijinshan_mines_02 COST = expensive_building_tier_5_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_zijinshan_mines_04_trigger = yes }
+		# next level: none; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = zijinshan_mines_04 FROM = zijinshan_mines_03 COST = expensive_building_tier_6_cost INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+}
+
+# Duchy capital and special buildings that serve no focus: 29
+# Buildings left out (great projects are never automated):
+#   al_qarawiyyin_university_01: its special slot is placed by events
+#   alamut_castle_01: its special slot is placed by events
+#   alhambra_01: its special slot is placed by events
+#   ark_of_bukhara_01: its special slot is placed by events
+#   assassin_castle_01: its special slot is placed by events
+#   buddhas_of_bamian_01: its special slot is placed by events
+#   burkhan_khaldun_01: its special slot is placed by events
 #   capital_bureau_01: requirements need their own scope handling
 #   capital_bureau_02: requirements need their own scope handling
 #   capital_bureau_03: requirements need their own scope handling
@@ -3534,8 +5555,66 @@ dap_consider_replacements_effect = {
 #   capital_bureau_07: requirements need their own scope handling
 #   capital_bureau_08: requirements need their own scope handling
 #   castle_01: comes with its holding
+#   changan_market_01: its special slot is placed by events
+#   chihu_mines_01: its special slot is placed by events
+#   chocolate_hills_01: its special slot is placed by events
+#   citadel_of_aleppo_01: its special slot is placed by events
 #   city_01: comes with its holding
+#   city_wall_of_toledo_01: its special slot is placed by events
+#   dean_mines_01: its special slot is placed by events
+#   dunhuang_market_01: its special slot is placed by events
+#   dushan_mines_01: its special slot is placed by events
+#   dvin_shuka_01: its special slot is placed by events
+#   event_tower_of_silence_01: its special slot is placed by events
+#   falak_ol_aflak_citadel_01: its special slot is placed by events
+#   fanfang_guangzhou_01: its special slot is placed by events
+#   forbidden_city_01: its special slot is placed by events
+#   generic_copper_mines_01: its special slot is placed by events
+#   generic_gold_mines_01: its special slot is placed by events
+#   generic_silver_mines_01: its special slot is placed by events
+#   ghana_palace_01: its special slot is placed by events
+#   goguryeo_tomb_01: its special slot is placed by events
+#   great_wall_of_gorgan_01: its special slot is placed by events
+#   guiyang_mines_01: its special slot is placed by events
+#   gunung_api_01: its special slot is placed by events
+#   ha_long_bay_01: its special slot is placed by events
+#   hadrians_wall_01: its special slot is placed by events
+#   hall_of_heroes_01: its special slot is placed by events
+#   hamadan_bazaar_01: its special slot is placed by events
+#   hanxing_mines_01: its special slot is placed by events
+#   herat_bazaar_01: its special slot is placed by events
 #   herder_camp_01: comes with its holding
+#   house_of_wisdom_01: its special slot is placed by events
+#   ijil_mines_01: its special slot is placed by events
+#   iron_pillar_of_delhi_01: its special slot is placed by events
+#   izumo_taisha_01: its special slot is placed by events
+#   jiaodong_mines_01: its special slot is placed by events
+#   jokhang_01: its special slot is placed by events
+#   kaibao_mines_01: its special slot is placed by events
+#   kairouan_basins_01: its special slot is placed by events
+#   khetri_mines_01: its special slot is placed by events
+#   khiva_bazaar_01: its special slot is placed by events
+#   konasamudram_mines_01: its special slot is placed by events
+#   krakatoa_01: its special slot is placed by events
+#   kyz_kala_01: its special slot is placed by events
+#   lahur_bazaar_01: its special slot is placed by events
+#   legendary_hunting_lodge: no gold cost
+#   legendary_palace: no gold cost
+#   legendary_shrine: no gold cost
+#   legendary_statue: no gold cost
+#   legendary_watchtower: no gold cost
+#   lhasa_market_01: its special slot is placed by events
+#   liangzhe_mines_01: its special slot is placed by events
+#   lingyin_temple_01: its special slot is placed by events
+#   maharloo_lake_01: its special slot is placed by events
+#   maijishan_grottoes_01: its special slot is placed by events
+#   mogok_mines_01: its special slot is placed by events
+#   mont_st_michel_01: its special slot is placed by events
+#   mount_damavand_01: its special slot is placed by events
+#   mozu_tombs: its special slot is placed by events
+#   muara_takus_01: its special slot is placed by events
+#   nanhua_temple_01: its special slot is placed by events
+#   nishapur_mines_01: its special slot is placed by events
 #   nomadic_camp_01: comes with its holding
 #   oath_faithful_building_01: no gold cost
 #   oath_faithful_building_02: no gold cost
@@ -3549,12 +5628,50 @@ dap_consider_replacements_effect = {
 #   oath_warriors_building_02: no gold cost
 #   oath_warriors_building_03: no gold cost
 #   oath_warriors_building_04: no gold cost
+#   offas_dyke_01: its special slot is placed by events
+#   palace_of_aachen_01: its special slot is placed by events
+#   palace_of_ctesiphon_01: its special slot is placed by events
+#   pam_abbey_of_st_gall_01: its special slot is placed by events
+#   pam_lateran_basilica_01: its special slot is placed by events
+#   pam_palais_de_papes_01: its special slot is placed by events
+#   pam_reims_cathedral_01: its special slot is placed by events
+#   pansjhir_mines_01: its special slot is placed by events
+#   petra_01: its special slot is placed by events
+#   pleasure_dome: no gold cost
+#   qutb_minar_01: its special slot is placed by events
+#   rainbow_mountains_01: its special slot is placed by events
+#   ratnapura_mines_01: its special slot is placed by events
+#   rock_of_gibraltar_01: its special slot is placed by events
+#   roman_wall_of_lugo_01: its special slot is placed by events
+#   sanchi_stupa_01: its special slot is placed by events
+#   sar_i_sang_mines_01: its special slot is placed by events
+#   shaolin_monastery_01: its special slot is placed by events
+#   somapura_university_01: its special slot is placed by events
+#   special_greenhouse_01: no gold cost
+#   special_sicilian_parliament_01: its special slot is placed by events
+#   stone_pagoda_01: its special slot is placed by events
+#   stonehenge_01: its special slot is placed by events
+#   sunday_bazaar_01: its special slot is placed by events
+#   suwalesi_megaliths_01: its special slot is placed by events
+#   taghaza_mines_01: its special slot is placed by events
 #   temple_01: comes with its holding
 #   temple_citadel_01: comes with its holding
+#   temples_angkor_01: its special slot is placed by events
+#   the_colosseum_01: its special slot is placed by events
+#   the_pyramids_01: its special slot is placed by events
+#   three_pagodas_dali_01: its special slot is placed by events
+#   thuriang_kilns_01: its special slot is placed by events
+#   tomb_of_cyrus_01: its special slot is placed by events
+#   tower_of_hercules_01: its special slot is placed by events
 #   tribe_01: comes with its holding
+#   vatapi_caves_01: its special slot is placed by events
 #   walls_00: background only
 #   walls_01: background only
 #   walls_01_tribal: background only
 #   walls_02: background only
 #   walls_03: background only
 #   walls_04: background only
+#   wulingyuan_01: its special slot is placed by events
+#   york_walls_01: its special slot is placed by events
+#   yungang_grottoes_01: its special slot is placed by events
+#   zigong_mines_01: its special slot is placed by events

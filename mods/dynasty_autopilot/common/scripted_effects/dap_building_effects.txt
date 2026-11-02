@@ -8,7 +8,9 @@
 # their direct vassals once their own have nothing left, dap_build_vassal_holdings), and
 # queues the best (dap_build_queue, a list of provinces, each holding its pick in
 # var:dap_bc_*). With the replace buildings option, a pick in a full county may replace a
-# building that serves no active focus (var:dap_bc_replace). gui/dap_build_driver.gui asks
+# building that serves no active focus (var:dap_bc_replace). With the duchy capital buildings
+# and special buildings options, a pick may go in the holding's duchy capital or special slot
+# (var:dap_bc_slot); great projects are never automated. gui/dap_build_driver.gui asks
 # for them one at a time (the dap_build_next scripted GUI): the mod remembers which building
 # it wants in which holding and opens the vanilla holding view for that holding.
 # gui/00_dap_building_item.gui (an override of the holding view's building slot type)
@@ -19,7 +21,8 @@
 # Asks for a construction of var:dap_build_building (flag:<building key>) in
 # scope:dap_build_province, as an upgrade of var:dap_build_from (flag:<building key>, or
 # flag:none for a new building in a free slot; with var:dap_build_replacing, the building it
-# replaces), all set for a day, and opens the holding view so it can be pressed. The request lapses after a day, so one that could not be
+# replaces), in the slot var:dap_build_slot (flag:regular, flag:duchy_capital or
+# flag:special), all set for a day, and opens the holding view so it can be pressed. The request lapses after a day, so one that could not be
 # pressed never fires later, when the player opens that holding's view themselves.
 dap_build_open_effect = {
 	if = {
@@ -53,6 +56,7 @@ dap_build_next_effect = {
 		remove_list_variable = { name = dap_build_queue target = scope:dap_build_province }
 		set_variable = { name = dap_build_building value = scope:dap_build_province.var:dap_bc_building days = 1 }
 		set_variable = { name = dap_build_from value = scope:dap_build_province.var:dap_bc_from days = 1 }
+		set_variable = { name = dap_build_slot value = scope:dap_build_province.var:dap_bc_slot days = 1 }
 		if = {
 			limit = { scope:dap_build_province = { has_variable = dap_bc_replace } }
 			set_variable = { name = dap_build_replacing value = 1 days = 1 }
@@ -80,6 +84,10 @@ dap_build_started_effect = {
 	remove_variable = dap_build_province
 	remove_variable = dap_build_building
 	remove_variable = dap_build_from
+	if = {
+		limit = { has_variable = dap_build_slot }
+		remove_variable = dap_build_slot
+	}
 	remove_variable = dap_build_gold_before
 }
 
@@ -91,6 +99,7 @@ dap_clear_building_pick_effect = {
 		remove_variable = dap_bc_building
 		remove_variable = dap_bc_from
 		remove_variable = dap_bc_cost
+		remove_variable = dap_bc_slot
 	}
 	if = {
 		limit = { has_variable = dap_bc_replace }
@@ -100,7 +109,8 @@ dap_clear_building_pick_effect = {
 
 # this = province; picks the building worth the most for its cost there, new or upgrade,
 # into var:dap_bc_building (flag:<key>), var:dap_bc_from (flag:<key upgraded> or
-# flag:none), var:dap_bc_cost and var:dap_bc_value; no pick if nothing there serves an
+# flag:none), var:dap_bc_slot (flag:regular, or the duchy capital or special slot with their
+# options), var:dap_bc_cost and var:dap_bc_value; no pick if nothing there serves an
 # active focus. Needs local_var:dap_w_income, local_var:dap_w_development and
 # local_var:dap_w_military, scope:dap_stack_income and scope:dap_stack_development (the
 # stacking county of each focus, if it has one), and the list dap_military_bases. With the
@@ -130,10 +140,27 @@ dap_pick_building_in_province_effect = {
 		limit = { root = { is_target_in_variable_list = { name = dap_military_bases target = scope:dap_here } } }
 		set_local_variable = { name = dap_base_here value = 1 }
 	}
+	set_local_variable = { name = dap_slot value = flag:regular }
 	dap_consider_buildings_effect = yes
 	if = {
 		limit = { dap_build_replace_here_trigger = yes }
 		dap_consider_replacements_effect = yes
+	}
+	# Duchy capital and special buildings have slots of their own, outside county stacking, so
+	# their county-wide bonuses count in full wherever they go
+	if = {
+		limit = { dap_build_duchy_capital_here_trigger = yes }
+		set_local_variable = { name = dap_stack_income value = 1 }
+		set_local_variable = { name = dap_stack_development value = 1 }
+		set_local_variable = { name = dap_slot value = flag:duchy_capital }
+		dap_consider_duchy_capital_buildings_effect = yes
+	}
+	if = {
+		limit = { dap_build_special_here_trigger = yes }
+		set_local_variable = { name = dap_stack_income value = 1 }
+		set_local_variable = { name = dap_stack_development value = 1 }
+		set_local_variable = { name = dap_slot value = flag:special }
+		dap_consider_special_buildings_effect = yes
 	}
 }
 
@@ -308,6 +335,7 @@ dap_score_building_effect = {
 		set_variable = { name = dap_bc_building value = flag:$BUILDING$ }
 		set_variable = { name = dap_bc_from value = flag:$FROM$ }
 		set_variable = { name = dap_bc_cost value = $COST$ }
+		set_variable = { name = dap_bc_slot value = local_var:dap_slot }
 		if = {
 			limit = { has_variable = dap_bc_replace }
 			remove_variable = dap_bc_replace
@@ -509,6 +537,7 @@ dap_drop_build_request_effect = {
 			remove_variable = dap_build_province
 			remove_variable = dap_build_building
 			remove_variable = dap_build_from
+			remove_variable = dap_build_slot
 			remove_variable = dap_build_gold_before
 			if = {
 				limit = { has_variable = dap_build_replacing }
