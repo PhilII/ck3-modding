@@ -1018,6 +1018,13 @@ MODULES = [
                         "default": 0,
                         "values": ["Off", "On"],
                     },
+                    {
+                        "key": "dap_build_replace",
+                        "label": "Replace buildings",
+                        "tooltip": "When on, the autopilot may replace a building that serves none of your active focuses, but only in a county with no free building slot left, and only with a building that gives at least 50% more than the old one gave (all it gave, whatever focus it served). Replacing costs the new building's full price. When off, your existing buildings are never touched.",
+                        "default": 0,
+                        "values": ["Off", "On"],
+                    },
                 ],
             },
         ],

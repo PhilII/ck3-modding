@@ -18,6 +18,10 @@ dap_log_effect = {
 		remove_variable = dap_log_building
 		remove_variable = dap_log_province
 	}
+	if = {
+		limit = { exists = var:dap_log_replaced }
+		remove_variable = dap_log_replaced
+	}
 	dap_log_record_effect = { ACTION = $ACTION$ }
 }
 

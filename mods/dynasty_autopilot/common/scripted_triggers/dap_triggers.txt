@@ -749,6 +749,23 @@ dap_build_excluded_trigger = {
 	}
 }
 
+# this = province, root = player; with the replace buildings option, a building here may be
+# replaced: the holding has no free slot, and nor has any other holding of its county that is
+# not an excluded holding
+dap_build_replace_here_trigger = {
+	root = { var:dap_build_replace ?= 1 }
+	has_free_building_slot = no
+	county = {
+		NOT = {
+			any_county_province = {
+				has_holding = yes
+				has_free_building_slot = yes
+				dap_build_excluded_trigger = no
+			}
+		}
+	}
+}
+
 # this = province, root = player; a holding the builder lists in a county held by one of the
 # player's vassals, not the player's own (the vassals' counties option)
 dap_in_vassal_county_trigger = {

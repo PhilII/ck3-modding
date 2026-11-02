@@ -19,8 +19,9 @@ character_modifier = holder), and their stationed men-at-arms bonuses by base ty
 Military stacking focus, which stacks them in military bases). First levels are new buildings for free slots; later
 levels are upgrades of the level before, scored by what they add. The holdings'
 main buildings (castle, city, temple...) come with the holding, so only their
-upgrades are listed. The scripted effects file ends with a list of every regular
-building that is left out, and why. The script values count, per holding, the buildings
+upgrades are listed. Every other building a holding may have is also listed with all it
+gives, for replacing it with a new building. The scripted effects file ends with a list
+of every regular building that is left out, and why. The script values count, per holding, the buildings
 whose county-wide bonus serves each focus, which picks the stacking county; per men-at-arms
 base type, the stationed bonuses a holding has and how well its terrain suits the type (from
 the game's men-at-arms types), which pick a military base's specialty.
@@ -309,6 +310,9 @@ def candidates(game):
     for c in found:
         c["scores"]["DEVELOPMENT_COUNTY"] *= scale
         c["military"] = {t: v * military_scale for t, v in c["military"].items()}
+        # All the building gives, on the same scale, whatever focus it serves (what replacing it loses)
+        c["worth"] = {s: c["total"][s] * (scale if s == "DEVELOPMENT_COUNTY" else 1.0) for s in SCORES}
+        c["worth"]["MILITARY"] = best_stationed(c["military_total"]) * military_scale
     found.sort(key=lambda c: (c["previous"] is not None, c["key"]))
     return found, skipped
 
@@ -372,10 +376,20 @@ def main():
                "# dap_consider_building_effect. Scores: income in gold a month and development growth\n"
                "# (weighed to match income), by the reach of the bonus, and the stationed bonuses for a\n"
                "# military base's specialty (a script value); upgrades score what they add.\n",
-               "dap_consider_buildings_effect = {\n\tif = {\n\t\tlimit = { has_free_building_slot = yes }\n"]
-    effects += [consider(c, 2) for c in useful if not c["previous"]]
-    effects.append("\t}\n")
+               "dap_consider_buildings_effect = {\n\tif = {\n\t\tlimit = { has_free_building_slot = yes }\n"
+               "\t\tdap_consider_new_buildings_effect = yes\n\t}\n"]
     effects += [consider(c, 1) for c in useful if c["previous"]]
+    effects.append("}\n\n# this = province, with scope:holder and scope:county saved; every new building that can\n"
+                   "# go there, as for a free slot\ndap_consider_new_buildings_effect = {\n")
+    effects += [consider(c, 1) for c in useful if not c["previous"]]
+    effects.append("}\n\n# this = province; offers every building there that a new building could replace to\n"
+                   "# dap_consider_replacement_effect, with all it gives, whatever focus it serves (scores as\n"
+                   "# above, MILITARY for a military base of the base type it suits best)\n"
+                   "dap_consider_replacements_effect = {\n")
+    effects += [f"\tif = {{\n\t\tlimit = {{ has_building = {c['key']} }}\n"
+                f"\t\tdap_consider_replacement_effect = {{ FROM = {c['key']} "
+                + " ".join(f"{name} = {fmt(c['worth'][name])}" for name in SCORES + ("MILITARY",)) + " }\n\t}\n"
+                for c in found if not c["main"]]
     effects.append("}\n\n# Regular buildings that serve no focus (cost, construction time, next level):\n"
                    + "".join(f"#   {c['key']}: {c['cost']}, {c['time']}, {c['next'] or 'none'}\n"
                              for c in found if c not in useful))
@@ -387,6 +401,13 @@ def main():
     for c in useful:
         loc.append(f"\ttext = {{\n\t\ttrigger = {{ var:dap_log_building ?= flag:{c['key']} }}\n"
                    f"\t\tlocalization_key = building_{c['key']}\n\t}}\n")
+    loc.append("\ttext = {\n\t\tfallback = yes\n\t\tlocalization_key = dap_empty\n\t}\n}\n\n"
+               "# Name of the building replaced, in var:dap_log_replaced (a log entry)\n"
+               "dap_cl_log_replaced_building = {\n\ttype = character\n")
+    for c in found:
+        if not c["main"]:
+            loc.append(f"\ttext = {{\n\t\ttrigger = {{ var:dap_log_replaced ?= flag:{c['key']} }}\n"
+                       f"\t\tlocalization_key = building_{c['key']}\n\t}}\n")
     loc.append("\ttext = {\n\t\tfallback = yes\n\t\tlocalization_key = dap_empty\n\t}\n}\n")
     write("common/customizable_localization/dap_buildings_generated.txt", "".join(loc))
 

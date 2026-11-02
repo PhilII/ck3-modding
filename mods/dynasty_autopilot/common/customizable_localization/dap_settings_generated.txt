@@ -2167,3 +2167,19 @@ dap_cl_dap_build_vassal_counties = {
 	}
 }
 
+dap_cl_dap_build_replace = {
+	type = character
+	text = {
+		trigger = { var:dap_build_replace = 0 }
+		localization_key = dap_val_dap_build_replace_0
+	}
+	text = {
+		trigger = { var:dap_build_replace = 1 }
+		localization_key = dap_val_dap_build_replace_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+

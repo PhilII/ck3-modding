@@ -7,251 +7,7 @@
 dap_consider_buildings_effect = {
 	if = {
 		limit = { has_free_building_slot = yes }
-		if = {
-			limit = { dap_can_build_barracks_01_trigger = yes }
-			# next level: barracks_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = barracks_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_barracks_01_value }
-		}
-		if = {
-			limit = { dap_can_build_breweries_01_trigger = yes }
-			# next level: breweries_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = breweries_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_camel_farms_01_trigger = yes }
-			# next level: camel_farms_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = camel_farms_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.125 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_camel_farms_01_value }
-		}
-		if = {
-			limit = { dap_can_build_caravanserai_01_trigger = yes }
-			# next level: caravanserai_02; construction time: slow_construction_time
-			dap_consider_building_effect = { BUILDING = caravanserai_01 FROM = none COST = expensive_building_tier_1_cost INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.560 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_cereal_fields_01_trigger = yes }
-			# next level: cereal_fields_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = cereal_fields_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_common_tradeport_01_trigger = yes }
-			# next level: common_tradeport_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = common_tradeport_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_curtain_walls_01_trigger = yes }
-			# next level: curtain_walls_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = curtain_walls_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_curtain_walls_01_value }
-		}
-		if = {
-			limit = { dap_can_build_elephant_pens_01_trigger = yes }
-			# next level: elephant_pens_02; construction time: slow_construction_time
-			dap_consider_building_effect = { BUILDING = elephant_pens_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_elephant_pens_01_value }
-		}
-		if = {
-			limit = { dap_can_build_farm_estates_01_trigger = yes }
-			# next level: farm_estates_02; construction time: slow_construction_time
-			dap_consider_building_effect = { BUILDING = farm_estates_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_guild_halls_01_trigger = yes }
-			# next level: guild_halls_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = guild_halls_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_hill_farms_01_trigger = yes }
-			# next level: hill_farms_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = hill_farms_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_hill_forts_01_trigger = yes }
-			# next level: hill_forts_02; construction time: slow_construction_time
-			dap_consider_building_effect = { BUILDING = hill_forts_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_hill_forts_01_value }
-		}
-		if = {
-			limit = { dap_can_build_hillside_grazing_01_trigger = yes }
-			# next level: hillside_grazing_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = hillside_grazing_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.125 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_hillside_grazing_01_value }
-		}
-		if = {
-			limit = { dap_can_build_horse_pastures_01_trigger = yes }
-			# next level: horse_pastures_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = horse_pastures_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_horse_pastures_01_value }
-		}
-		if = {
-			limit = { dap_can_build_hospices_01_trigger = yes }
-			# next level: hospices_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = hospices_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_hunting_grounds_01_trigger = yes }
-			# next level: hunting_grounds_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = hunting_grounds_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_kora_kora_yards_01_trigger = yes }
-			# next level: kora_kora_yards_02; construction time: slow_construction_time
-			dap_consider_building_effect = { BUILDING = kora_kora_yards_01 FROM = none COST = tribal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_kora_kora_yards_01_value }
-		}
-		if = {
-			limit = { dap_can_build_logging_camps_01_trigger = yes }
-			# next level: logging_camps_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = logging_camps_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_market_villages_01_trigger = yes }
-			# next level: market_villages_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = market_villages_01 FROM = none COST = tribal_building_tier_1_cost INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_megalith_01_trigger = yes }
-			# next level: megalith_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = megalith_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_military_camps_01_trigger = yes }
-			# next level: military_camps_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = military_camps_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_military_camps_01_value }
-		}
-		if = {
-			limit = { dap_can_build_monastic_schools_01_trigger = yes }
-			# next level: monastic_schools_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = monastic_schools_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_murex_farm_01_trigger = yes }
-			# next level: murex_farm_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = murex_farm_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.560 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_orchards_01_trigger = yes }
-			# next level: orchards_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = orchards_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_outposts_01_trigger = yes }
-			# next level: outposts_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = outposts_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.125 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_outposts_01_value }
-		}
-		if = {
-			limit = { dap_can_build_paddy_fields_01_trigger = yes }
-			# next level: paddy_fields_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = paddy_fields_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_pastures_01_trigger = yes }
-			# next level: pastures_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = pastures_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_peat_quarries_01_trigger = yes }
-			# next level: peat_quarries_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = peat_quarries_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_plantations_01_trigger = yes }
-			# next level: plantations_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = plantations_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_powder_magazine_01_trigger = yes }
-			# next level: powder_magazine_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = powder_magazine_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_powder_magazine_01_value }
-		}
-		if = {
-			limit = { dap_can_build_qanats_01_trigger = yes }
-			# next level: qanats_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = qanats_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.980 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_quarries_01_trigger = yes }
-			# next level: quarries_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = quarries_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_ramparts_01_trigger = yes }
-			# next level: ramparts_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = ramparts_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_ramparts_01_value }
-		}
-		if = {
-			limit = { dap_can_build_regimental_grounds_01_trigger = yes }
-			# next level: regimental_grounds_02; construction time: slow_construction_time
-			dap_consider_building_effect = { BUILDING = regimental_grounds_01 FROM = none COST = expensive_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_regimental_grounds_01_value }
-		}
-		if = {
-			limit = { dap_can_build_smiths_01_trigger = yes }
-			# next level: smiths_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = smiths_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.040 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_smiths_01_value }
-		}
-		if = {
-			limit = { dap_can_build_spice_plantation_01_trigger = yes }
-			# next level: spice_plantation_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = spice_plantation_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_stables_01_trigger = yes }
-			# next level: stables_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = stables_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_stables_01_value }
-		}
-		if = {
-			limit = { dap_can_build_stilted_granaries_01_trigger = yes }
-			# next level: stilted_granaries_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = stilted_granaries_01 FROM = none COST = tribal_building_tier_1_cost INCOME_HOLDING = 0.100 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_stilted_granaries_01_value }
-		}
-		if = {
-			limit = { dap_can_build_vihara_halls_01_trigger = yes }
-			# next level: vihara_halls_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = vihara_halls_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_wantilan_01_trigger = yes }
-			# next level: wantilan_02; construction time: slow_construction_time
-			dap_consider_building_effect = { BUILDING = wantilan_01 FROM = none COST = tribal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_wantilan_01_value }
-		}
-		if = {
-			limit = { dap_can_build_war_camps_01_trigger = yes }
-			# next level: war_camps_02; construction time: slow_construction_time
-			dap_consider_building_effect = { BUILDING = war_camps_01 FROM = none COST = tribal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_war_camps_01_value }
-		}
-		if = {
-			limit = { dap_can_build_warrior_lodges_01_trigger = yes }
-			# next level: warrior_lodges_02; construction time: quick_construction_time
-			dap_consider_building_effect = { BUILDING = warrior_lodges_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_warrior_lodges_01_value }
-		}
-		if = {
-			limit = { dap_can_build_watchtowers_01_trigger = yes }
-			# next level: watchtowers_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = watchtowers_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_watchtowers_01_value }
-		}
-		if = {
-			limit = { dap_can_build_water_temples_01_trigger = yes }
-			# next level: water_temples_02; construction time: slow_construction_time
-			dap_consider_building_effect = { BUILDING = water_temples_01 FROM = none COST = tribal_building_tier_1_cost INCOME_HOLDING = 0.100 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_water_temples_01_value }
-		}
-		if = {
-			limit = { dap_can_build_watermills_01_trigger = yes }
-			# next level: watermills_02; construction time: slow_construction_time
-			dap_consider_building_effect = { BUILDING = watermills_01 FROM = none COST = expensive_building_tier_1_cost INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.560 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_waterworks_01_trigger = yes }
-			# next level: waterworks_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = waterworks_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.040 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.280 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_wind_furnace_01_trigger = yes }
-			# next level: wind_furnace_02; construction time: standard_construction_time
-			dap_consider_building_effect = { BUILDING = wind_furnace_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_wind_furnace_01_value }
-		}
-		if = {
-			limit = { dap_can_build_windmills_01_trigger = yes }
-			# next level: windmills_02; construction time: slow_construction_time
-			dap_consider_building_effect = { BUILDING = windmills_01 FROM = none COST = expensive_building_tier_1_cost INCOME_HOLDING = 0.760 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.980 MILITARY = 0 }
-		}
-		if = {
-			limit = { dap_can_build_workshops_01_trigger = yes }
-			# next level: workshops_02; construction time: slow_construction_time
-			dap_consider_building_effect = { BUILDING = workshops_01 FROM = none COST = expensive_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
-		}
+		dap_consider_new_buildings_effect = yes
 	}
 	if = {
 		limit = { dap_can_build_barracks_02_trigger = yes }
@@ -1892,6 +1648,1846 @@ dap_consider_buildings_effect = {
 		limit = { dap_can_build_workshops_08_trigger = yes }
 		# next level: none; construction time: slow_construction_time
 		dap_consider_building_effect = { BUILDING = workshops_08 FROM = workshops_07 COST = expensive_building_tier_8_cost INCOME_HOLDING = 0.200 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_workshops_08_value }
+	}
+}
+
+# this = province, with scope:holder and scope:county saved; every new building that can
+# go there, as for a free slot
+dap_consider_new_buildings_effect = {
+	if = {
+		limit = { dap_can_build_barracks_01_trigger = yes }
+		# next level: barracks_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = barracks_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_barracks_01_value }
+	}
+	if = {
+		limit = { dap_can_build_breweries_01_trigger = yes }
+		# next level: breweries_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = breweries_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_camel_farms_01_trigger = yes }
+		# next level: camel_farms_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = camel_farms_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.125 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_camel_farms_01_value }
+	}
+	if = {
+		limit = { dap_can_build_caravanserai_01_trigger = yes }
+		# next level: caravanserai_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = caravanserai_01 FROM = none COST = expensive_building_tier_1_cost INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.560 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_cereal_fields_01_trigger = yes }
+		# next level: cereal_fields_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = cereal_fields_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_common_tradeport_01_trigger = yes }
+		# next level: common_tradeport_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = common_tradeport_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_curtain_walls_01_trigger = yes }
+		# next level: curtain_walls_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = curtain_walls_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_curtain_walls_01_value }
+	}
+	if = {
+		limit = { dap_can_build_elephant_pens_01_trigger = yes }
+		# next level: elephant_pens_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = elephant_pens_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_elephant_pens_01_value }
+	}
+	if = {
+		limit = { dap_can_build_farm_estates_01_trigger = yes }
+		# next level: farm_estates_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = farm_estates_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_guild_halls_01_trigger = yes }
+		# next level: guild_halls_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = guild_halls_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hill_farms_01_trigger = yes }
+		# next level: hill_farms_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = hill_farms_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hill_forts_01_trigger = yes }
+		# next level: hill_forts_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = hill_forts_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_hill_forts_01_value }
+	}
+	if = {
+		limit = { dap_can_build_hillside_grazing_01_trigger = yes }
+		# next level: hillside_grazing_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = hillside_grazing_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.125 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_hillside_grazing_01_value }
+	}
+	if = {
+		limit = { dap_can_build_horse_pastures_01_trigger = yes }
+		# next level: horse_pastures_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = horse_pastures_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_horse_pastures_01_value }
+	}
+	if = {
+		limit = { dap_can_build_hospices_01_trigger = yes }
+		# next level: hospices_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = hospices_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_hunting_grounds_01_trigger = yes }
+		# next level: hunting_grounds_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = hunting_grounds_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_kora_kora_yards_01_trigger = yes }
+		# next level: kora_kora_yards_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = kora_kora_yards_01 FROM = none COST = tribal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_kora_kora_yards_01_value }
+	}
+	if = {
+		limit = { dap_can_build_logging_camps_01_trigger = yes }
+		# next level: logging_camps_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = logging_camps_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_market_villages_01_trigger = yes }
+		# next level: market_villages_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = market_villages_01 FROM = none COST = tribal_building_tier_1_cost INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_megalith_01_trigger = yes }
+		# next level: megalith_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = megalith_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_military_camps_01_trigger = yes }
+		# next level: military_camps_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = military_camps_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_military_camps_01_value }
+	}
+	if = {
+		limit = { dap_can_build_monastic_schools_01_trigger = yes }
+		# next level: monastic_schools_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = monastic_schools_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_murex_farm_01_trigger = yes }
+		# next level: murex_farm_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = murex_farm_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.560 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_orchards_01_trigger = yes }
+		# next level: orchards_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = orchards_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_outposts_01_trigger = yes }
+		# next level: outposts_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = outposts_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.125 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_outposts_01_value }
+	}
+	if = {
+		limit = { dap_can_build_paddy_fields_01_trigger = yes }
+		# next level: paddy_fields_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = paddy_fields_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_pastures_01_trigger = yes }
+		# next level: pastures_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = pastures_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_peat_quarries_01_trigger = yes }
+		# next level: peat_quarries_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = peat_quarries_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_plantations_01_trigger = yes }
+		# next level: plantations_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = plantations_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_powder_magazine_01_trigger = yes }
+		# next level: powder_magazine_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = powder_magazine_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_powder_magazine_01_value }
+	}
+	if = {
+		limit = { dap_can_build_qanats_01_trigger = yes }
+		# next level: qanats_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = qanats_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.980 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_quarries_01_trigger = yes }
+		# next level: quarries_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = quarries_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_ramparts_01_trigger = yes }
+		# next level: ramparts_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = ramparts_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_ramparts_01_value }
+	}
+	if = {
+		limit = { dap_can_build_regimental_grounds_01_trigger = yes }
+		# next level: regimental_grounds_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = regimental_grounds_01 FROM = none COST = expensive_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_regimental_grounds_01_value }
+	}
+	if = {
+		limit = { dap_can_build_smiths_01_trigger = yes }
+		# next level: smiths_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = smiths_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.040 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_smiths_01_value }
+	}
+	if = {
+		limit = { dap_can_build_spice_plantation_01_trigger = yes }
+		# next level: spice_plantation_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = spice_plantation_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_stables_01_trigger = yes }
+		# next level: stables_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = stables_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_stables_01_value }
+	}
+	if = {
+		limit = { dap_can_build_stilted_granaries_01_trigger = yes }
+		# next level: stilted_granaries_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = stilted_granaries_01 FROM = none COST = tribal_building_tier_1_cost INCOME_HOLDING = 0.100 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_stilted_granaries_01_value }
+	}
+	if = {
+		limit = { dap_can_build_vihara_halls_01_trigger = yes }
+		# next level: vihara_halls_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = vihara_halls_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_wantilan_01_trigger = yes }
+		# next level: wantilan_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = wantilan_01 FROM = none COST = tribal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_wantilan_01_value }
+	}
+	if = {
+		limit = { dap_can_build_war_camps_01_trigger = yes }
+		# next level: war_camps_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = war_camps_01 FROM = none COST = tribal_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_war_camps_01_value }
+	}
+	if = {
+		limit = { dap_can_build_warrior_lodges_01_trigger = yes }
+		# next level: warrior_lodges_02; construction time: quick_construction_time
+		dap_consider_building_effect = { BUILDING = warrior_lodges_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_warrior_lodges_01_value }
+	}
+	if = {
+		limit = { dap_can_build_watchtowers_01_trigger = yes }
+		# next level: watchtowers_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = watchtowers_01 FROM = none COST = cheap_building_tier_1_cost INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_watchtowers_01_value }
+	}
+	if = {
+		limit = { dap_can_build_water_temples_01_trigger = yes }
+		# next level: water_temples_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = water_temples_01 FROM = none COST = tribal_building_tier_1_cost INCOME_HOLDING = 0.100 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_water_temples_01_value }
+	}
+	if = {
+		limit = { dap_can_build_watermills_01_trigger = yes }
+		# next level: watermills_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = watermills_01 FROM = none COST = expensive_building_tier_1_cost INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.560 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_waterworks_01_trigger = yes }
+		# next level: waterworks_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = waterworks_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.040 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.280 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_wind_furnace_01_trigger = yes }
+		# next level: wind_furnace_02; construction time: standard_construction_time
+		dap_consider_building_effect = { BUILDING = wind_furnace_01 FROM = none COST = normal_building_tier_1_cost INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = dap_stationed_wind_furnace_01_value }
+	}
+	if = {
+		limit = { dap_can_build_windmills_01_trigger = yes }
+		# next level: windmills_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = windmills_01 FROM = none COST = expensive_building_tier_1_cost INCOME_HOLDING = 0.760 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.980 MILITARY = 0 }
+	}
+	if = {
+		limit = { dap_can_build_workshops_01_trigger = yes }
+		# next level: workshops_02; construction time: slow_construction_time
+		dap_consider_building_effect = { BUILDING = workshops_01 FROM = none COST = expensive_building_tier_1_cost INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0 }
+	}
+}
+
+# this = province; offers every building there that a new building could replace to
+# dap_consider_replacement_effect, with all it gives, whatever focus it serves (scores as
+# above, MILITARY for a military base of the base type it suits best)
+dap_consider_replacements_effect = {
+	if = {
+		limit = { has_building = barracks_01 }
+		dap_consider_replacement_effect = { FROM = barracks_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.175 }
+	}
+	if = {
+		limit = { has_building = breweries_01 }
+		dap_consider_replacement_effect = { FROM = breweries_01 INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = camel_farms_01 }
+		dap_consider_replacement_effect = { FROM = camel_farms_01 INCOME_HOLDING = 0.125 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.306 }
+	}
+	if = {
+		limit = { has_building = caravanserai_01 }
+		dap_consider_replacement_effect = { FROM = caravanserai_01 INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.560 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = cereal_fields_01 }
+		dap_consider_replacement_effect = { FROM = cereal_fields_01 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = citadel_shrine_01 }
+		dap_consider_replacement_effect = { FROM = citadel_shrine_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = common_tradeport_01 }
+		dap_consider_replacement_effect = { FROM = common_tradeport_01 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = curtain_walls_01 }
+		dap_consider_replacement_effect = { FROM = curtain_walls_01 INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.175 }
+	}
+	if = {
+		limit = { has_building = elephant_pens_01 }
+		dap_consider_replacement_effect = { FROM = elephant_pens_01 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = farm_estates_01 }
+		dap_consider_replacement_effect = { FROM = farm_estates_01 INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = guild_halls_01 }
+		dap_consider_replacement_effect = { FROM = guild_halls_01 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = hill_farms_01 }
+		dap_consider_replacement_effect = { FROM = hill_farms_01 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = hill_forts_01 }
+		dap_consider_replacement_effect = { FROM = hill_forts_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.175 }
+	}
+	if = {
+		limit = { has_building = hillside_grazing_01 }
+		dap_consider_replacement_effect = { FROM = hillside_grazing_01 INCOME_HOLDING = 0.125 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.131 }
+	}
+	if = {
+		limit = { has_building = horse_pastures_01 }
+		dap_consider_replacement_effect = { FROM = horse_pastures_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.481 }
+	}
+	if = {
+		limit = { has_building = hospices_01 }
+		dap_consider_replacement_effect = { FROM = hospices_01 INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = hunting_grounds_01 }
+		dap_consider_replacement_effect = { FROM = hunting_grounds_01 INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = idjang_forts_01 }
+		dap_consider_replacement_effect = { FROM = idjang_forts_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = kora_kora_yards_01 }
+		dap_consider_replacement_effect = { FROM = kora_kora_yards_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = logging_camps_01 }
+		dap_consider_replacement_effect = { FROM = logging_camps_01 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = longhouses_01 }
+		dap_consider_replacement_effect = { FROM = longhouses_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = market_villages_01 }
+		dap_consider_replacement_effect = { FROM = market_villages_01 INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = megalith_01 }
+		dap_consider_replacement_effect = { FROM = megalith_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = military_camps_01 }
+		dap_consider_replacement_effect = { FROM = military_camps_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = monastic_schools_01 }
+		dap_consider_replacement_effect = { FROM = monastic_schools_01 INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = murex_farm_01 }
+		dap_consider_replacement_effect = { FROM = murex_farm_01 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.560 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = orchards_01 }
+		dap_consider_replacement_effect = { FROM = orchards_01 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = outposts_01 }
+		dap_consider_replacement_effect = { FROM = outposts_01 INCOME_HOLDING = 0.125 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = paddy_fields_01 }
+		dap_consider_replacement_effect = { FROM = paddy_fields_01 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = palisades_01 }
+		dap_consider_replacement_effect = { FROM = palisades_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = pastures_01 }
+		dap_consider_replacement_effect = { FROM = pastures_01 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = peat_quarries_01 }
+		dap_consider_replacement_effect = { FROM = peat_quarries_01 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = plantations_01 }
+		dap_consider_replacement_effect = { FROM = plantations_01 INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = powder_magazine_01 }
+		dap_consider_replacement_effect = { FROM = powder_magazine_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = qanats_01 }
+		dap_consider_replacement_effect = { FROM = qanats_01 INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.980 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = quarries_01 }
+		dap_consider_replacement_effect = { FROM = quarries_01 INCOME_HOLDING = 0.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = ramparts_01 }
+		dap_consider_replacement_effect = { FROM = ramparts_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.219 }
+	}
+	if = {
+		limit = { has_building = regimental_grounds_01 }
+		dap_consider_replacement_effect = { FROM = regimental_grounds_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.262 }
+	}
+	if = {
+		limit = { has_building = sacred_pool_01 }
+		dap_consider_replacement_effect = { FROM = sacred_pool_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = scriptorium_01 }
+		dap_consider_replacement_effect = { FROM = scriptorium_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = smiths_01 }
+		dap_consider_replacement_effect = { FROM = smiths_01 INCOME_HOLDING = 0.040 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.131 }
+	}
+	if = {
+		limit = { has_building = spice_plantation_01 }
+		dap_consider_replacement_effect = { FROM = spice_plantation_01 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = stables_01 }
+		dap_consider_replacement_effect = { FROM = stables_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.306 }
+	}
+	if = {
+		limit = { has_building = stilted_granaries_01 }
+		dap_consider_replacement_effect = { FROM = stilted_granaries_01 INCOME_HOLDING = 0.100 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.175 }
+	}
+	if = {
+		limit = { has_building = vihara_halls_01 }
+		dap_consider_replacement_effect = { FROM = vihara_halls_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = wantilan_01 }
+		dap_consider_replacement_effect = { FROM = wantilan_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.262 }
+	}
+	if = {
+		limit = { has_building = war_camps_01 }
+		dap_consider_replacement_effect = { FROM = war_camps_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.306 }
+	}
+	if = {
+		limit = { has_building = warrior_lodges_01 }
+		dap_consider_replacement_effect = { FROM = warrior_lodges_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.131 }
+	}
+	if = {
+		limit = { has_building = watchtowers_01 }
+		dap_consider_replacement_effect = { FROM = watchtowers_01 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.175 }
+	}
+	if = {
+		limit = { has_building = water_temples_01 }
+		dap_consider_replacement_effect = { FROM = water_temples_01 INCOME_HOLDING = 0.100 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.262 }
+	}
+	if = {
+		limit = { has_building = watermills_01 }
+		dap_consider_replacement_effect = { FROM = watermills_01 INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.560 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = waterworks_01 }
+		dap_consider_replacement_effect = { FROM = waterworks_01 INCOME_HOLDING = 0.040 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.280 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = wind_furnace_01 }
+		dap_consider_replacement_effect = { FROM = wind_furnace_01 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = windmills_01 }
+		dap_consider_replacement_effect = { FROM = windmills_01 INCOME_HOLDING = 0.760 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.980 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = workshops_01 }
+		dap_consider_replacement_effect = { FROM = workshops_01 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = barracks_02 }
+		dap_consider_replacement_effect = { FROM = barracks_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.262 }
+	}
+	if = {
+		limit = { has_building = barracks_03 }
+		dap_consider_replacement_effect = { FROM = barracks_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.525 }
+	}
+	if = {
+		limit = { has_building = barracks_04 }
+		dap_consider_replacement_effect = { FROM = barracks_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.700 }
+	}
+	if = {
+		limit = { has_building = barracks_05 }
+		dap_consider_replacement_effect = { FROM = barracks_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.875 }
+	}
+	if = {
+		limit = { has_building = barracks_06 }
+		dap_consider_replacement_effect = { FROM = barracks_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.050 }
+	}
+	if = {
+		limit = { has_building = barracks_07 }
+		dap_consider_replacement_effect = { FROM = barracks_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.225 }
+	}
+	if = {
+		limit = { has_building = barracks_08 }
+		dap_consider_replacement_effect = { FROM = barracks_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.400 }
+	}
+	if = {
+		limit = { has_building = breweries_02 }
+		dap_consider_replacement_effect = { FROM = breweries_02 INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.280 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = breweries_03 }
+		dap_consider_replacement_effect = { FROM = breweries_03 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.420 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = breweries_04 }
+		dap_consider_replacement_effect = { FROM = breweries_04 INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.560 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = breweries_05 }
+		dap_consider_replacement_effect = { FROM = breweries_05 INCOME_HOLDING = 0.850 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = breweries_06 }
+		dap_consider_replacement_effect = { FROM = breweries_06 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.840 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = breweries_07 }
+		dap_consider_replacement_effect = { FROM = breweries_07 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.980 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = breweries_08 }
+		dap_consider_replacement_effect = { FROM = breweries_08 INCOME_HOLDING = 1.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.120 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = camel_farms_02 }
+		dap_consider_replacement_effect = { FROM = camel_farms_02 INCOME_HOLDING = 0.200 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.437 }
+	}
+	if = {
+		limit = { has_building = camel_farms_03 }
+		dap_consider_replacement_effect = { FROM = camel_farms_03 INCOME_HOLDING = 0.275 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.875 }
+	}
+	if = {
+		limit = { has_building = camel_farms_04 }
+		dap_consider_replacement_effect = { FROM = camel_farms_04 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.137 }
+	}
+	if = {
+		limit = { has_building = camel_farms_05 }
+		dap_consider_replacement_effect = { FROM = camel_farms_05 INCOME_HOLDING = 0.425 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.400 }
+	}
+	if = {
+		limit = { has_building = camel_farms_06 }
+		dap_consider_replacement_effect = { FROM = camel_farms_06 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.662 }
+	}
+	if = {
+		limit = { has_building = camel_farms_07 }
+		dap_consider_replacement_effect = { FROM = camel_farms_07 INCOME_HOLDING = 0.575 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.925 }
+	}
+	if = {
+		limit = { has_building = camel_farms_08 }
+		dap_consider_replacement_effect = { FROM = camel_farms_08 INCOME_HOLDING = 0.650 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 2.187 }
+	}
+	if = {
+		limit = { has_building = caravanserai_02 }
+		dap_consider_replacement_effect = { FROM = caravanserai_02 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.120 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = caravanserai_03 }
+		dap_consider_replacement_effect = { FROM = caravanserai_03 INCOME_HOLDING = 1.600 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.680 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = caravanserai_04 }
+		dap_consider_replacement_effect = { FROM = caravanserai_04 INCOME_HOLDING = 2.050 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.240 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = caravanserai_05 }
+		dap_consider_replacement_effect = { FROM = caravanserai_05 INCOME_HOLDING = 2.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = caravanserai_06 }
+		dap_consider_replacement_effect = { FROM = caravanserai_06 INCOME_HOLDING = 2.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.360 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = caravanserai_07 }
+		dap_consider_replacement_effect = { FROM = caravanserai_07 INCOME_HOLDING = 3.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.920 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = caravanserai_08 }
+		dap_consider_replacement_effect = { FROM = caravanserai_08 INCOME_HOLDING = 3.850 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.480 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = cereal_fields_02 }
+		dap_consider_replacement_effect = { FROM = cereal_fields_02 INCOME_HOLDING = 0.800 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.025 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = cereal_fields_03 }
+		dap_consider_replacement_effect = { FROM = cereal_fields_03 INCOME_HOLDING = 1.100 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.025 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = cereal_fields_04 }
+		dap_consider_replacement_effect = { FROM = cereal_fields_04 INCOME_HOLDING = 1.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.025 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = cereal_fields_05 }
+		dap_consider_replacement_effect = { FROM = cereal_fields_05 INCOME_HOLDING = 1.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.025 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = cereal_fields_06 }
+		dap_consider_replacement_effect = { FROM = cereal_fields_06 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.025 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = cereal_fields_07 }
+		dap_consider_replacement_effect = { FROM = cereal_fields_07 INCOME_HOLDING = 2.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.025 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = cereal_fields_08 }
+		dap_consider_replacement_effect = { FROM = cereal_fields_08 INCOME_HOLDING = 2.600 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.050 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = citadel_shrine_02 }
+		dap_consider_replacement_effect = { FROM = citadel_shrine_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = citadel_shrine_03 }
+		dap_consider_replacement_effect = { FROM = citadel_shrine_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = citadel_shrine_04 }
+		dap_consider_replacement_effect = { FROM = citadel_shrine_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = citadel_shrine_05 }
+		dap_consider_replacement_effect = { FROM = citadel_shrine_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = citadel_shrine_06 }
+		dap_consider_replacement_effect = { FROM = citadel_shrine_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = citadel_shrine_07 }
+		dap_consider_replacement_effect = { FROM = citadel_shrine_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = citadel_shrine_08 }
+		dap_consider_replacement_effect = { FROM = citadel_shrine_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = common_tradeport_02 }
+		dap_consider_replacement_effect = { FROM = common_tradeport_02 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = common_tradeport_03 }
+		dap_consider_replacement_effect = { FROM = common_tradeport_03 INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.050 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = common_tradeport_04 }
+		dap_consider_replacement_effect = { FROM = common_tradeport_04 INCOME_HOLDING = 0.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = common_tradeport_05 }
+		dap_consider_replacement_effect = { FROM = common_tradeport_05 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.750 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = common_tradeport_06 }
+		dap_consider_replacement_effect = { FROM = common_tradeport_06 INCOME_HOLDING = 1.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = common_tradeport_07 }
+		dap_consider_replacement_effect = { FROM = common_tradeport_07 INCOME_HOLDING = 1.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.450 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = common_tradeport_08 }
+		dap_consider_replacement_effect = { FROM = common_tradeport_08 INCOME_HOLDING = 1.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = curtain_walls_02 }
+		dap_consider_replacement_effect = { FROM = curtain_walls_02 INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.219 }
+	}
+	if = {
+		limit = { has_building = curtain_walls_03 }
+		dap_consider_replacement_effect = { FROM = curtain_walls_03 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.262 }
+	}
+	if = {
+		limit = { has_building = curtain_walls_04 }
+		dap_consider_replacement_effect = { FROM = curtain_walls_04 INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.306 }
+	}
+	if = {
+		limit = { has_building = curtain_walls_05 }
+		dap_consider_replacement_effect = { FROM = curtain_walls_05 INCOME_HOLDING = 0.850 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = curtain_walls_06 }
+		dap_consider_replacement_effect = { FROM = curtain_walls_06 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.394 }
+	}
+	if = {
+		limit = { has_building = curtain_walls_07 }
+		dap_consider_replacement_effect = { FROM = curtain_walls_07 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.437 }
+	}
+	if = {
+		limit = { has_building = curtain_walls_08 }
+		dap_consider_replacement_effect = { FROM = curtain_walls_08 INCOME_HOLDING = 1.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.481 }
+	}
+	if = {
+		limit = { has_building = elephant_pens_02 }
+		dap_consider_replacement_effect = { FROM = elephant_pens_02 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.525 }
+	}
+	if = {
+		limit = { has_building = elephant_pens_03 }
+		dap_consider_replacement_effect = { FROM = elephant_pens_03 INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.700 }
+	}
+	if = {
+		limit = { has_building = elephant_pens_04 }
+		dap_consider_replacement_effect = { FROM = elephant_pens_04 INCOME_HOLDING = 0.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.875 }
+	}
+	if = {
+		limit = { has_building = elephant_pens_05 }
+		dap_consider_replacement_effect = { FROM = elephant_pens_05 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.050 }
+	}
+	if = {
+		limit = { has_building = elephant_pens_06 }
+		dap_consider_replacement_effect = { FROM = elephant_pens_06 INCOME_HOLDING = 1.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.225 }
+	}
+	if = {
+		limit = { has_building = elephant_pens_07 }
+		dap_consider_replacement_effect = { FROM = elephant_pens_07 INCOME_HOLDING = 1.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 1.400 }
+	}
+	if = {
+		limit = { has_building = elephant_pens_08 }
+		dap_consider_replacement_effect = { FROM = elephant_pens_08 INCOME_HOLDING = 1.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 1.575 }
+	}
+	if = {
+		limit = { has_building = farm_estates_02 }
+		dap_consider_replacement_effect = { FROM = farm_estates_02 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = farm_estates_03 }
+		dap_consider_replacement_effect = { FROM = farm_estates_03 INCOME_HOLDING = 1.600 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = farm_estates_04 }
+		dap_consider_replacement_effect = { FROM = farm_estates_04 INCOME_HOLDING = 2.050 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = farm_estates_05 }
+		dap_consider_replacement_effect = { FROM = farm_estates_05 INCOME_HOLDING = 2.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = farm_estates_06 }
+		dap_consider_replacement_effect = { FROM = farm_estates_06 INCOME_HOLDING = 2.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.025 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = farm_estates_07 }
+		dap_consider_replacement_effect = { FROM = farm_estates_07 INCOME_HOLDING = 3.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.025 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = farm_estates_08 }
+		dap_consider_replacement_effect = { FROM = farm_estates_08 INCOME_HOLDING = 3.850 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.050 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = guild_halls_02 }
+		dap_consider_replacement_effect = { FROM = guild_halls_02 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = guild_halls_03 }
+		dap_consider_replacement_effect = { FROM = guild_halls_03 INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.050 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = guild_halls_04 }
+		dap_consider_replacement_effect = { FROM = guild_halls_04 INCOME_HOLDING = 0.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = guild_halls_05 }
+		dap_consider_replacement_effect = { FROM = guild_halls_05 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.750 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = guild_halls_06 }
+		dap_consider_replacement_effect = { FROM = guild_halls_06 INCOME_HOLDING = 1.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = guild_halls_07 }
+		dap_consider_replacement_effect = { FROM = guild_halls_07 INCOME_HOLDING = 1.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.450 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = guild_halls_08 }
+		dap_consider_replacement_effect = { FROM = guild_halls_08 INCOME_HOLDING = 1.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = hill_farms_02 }
+		dap_consider_replacement_effect = { FROM = hill_farms_02 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.017 }
+	}
+	if = {
+		limit = { has_building = hill_farms_03 }
+		dap_consider_replacement_effect = { FROM = hill_farms_03 INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.017 }
+	}
+	if = {
+		limit = { has_building = hill_farms_04 }
+		dap_consider_replacement_effect = { FROM = hill_farms_04 INCOME_HOLDING = 0.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.035 }
+	}
+	if = {
+		limit = { has_building = hill_farms_05 }
+		dap_consider_replacement_effect = { FROM = hill_farms_05 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.035 }
+	}
+	if = {
+		limit = { has_building = hill_farms_06 }
+		dap_consider_replacement_effect = { FROM = hill_farms_06 INCOME_HOLDING = 1.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.035 }
+	}
+	if = {
+		limit = { has_building = hill_farms_07 }
+		dap_consider_replacement_effect = { FROM = hill_farms_07 INCOME_HOLDING = 1.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.035 }
+	}
+	if = {
+		limit = { has_building = hill_farms_08 }
+		dap_consider_replacement_effect = { FROM = hill_farms_08 INCOME_HOLDING = 1.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0.035 }
+	}
+	if = {
+		limit = { has_building = hill_forts_02 }
+		dap_consider_replacement_effect = { FROM = hill_forts_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.219 }
+	}
+	if = {
+		limit = { has_building = hill_forts_03 }
+		dap_consider_replacement_effect = { FROM = hill_forts_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.262 }
+	}
+	if = {
+		limit = { has_building = hill_forts_04 }
+		dap_consider_replacement_effect = { FROM = hill_forts_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.306 }
+	}
+	if = {
+		limit = { has_building = hill_forts_05 }
+		dap_consider_replacement_effect = { FROM = hill_forts_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = hill_forts_06 }
+		dap_consider_replacement_effect = { FROM = hill_forts_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.394 }
+	}
+	if = {
+		limit = { has_building = hill_forts_07 }
+		dap_consider_replacement_effect = { FROM = hill_forts_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.437 }
+	}
+	if = {
+		limit = { has_building = hill_forts_08 }
+		dap_consider_replacement_effect = { FROM = hill_forts_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.481 }
+	}
+	if = {
+		limit = { has_building = hillside_grazing_02 }
+		dap_consider_replacement_effect = { FROM = hillside_grazing_02 INCOME_HOLDING = 0.200 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.262 }
+	}
+	if = {
+		limit = { has_building = hillside_grazing_03 }
+		dap_consider_replacement_effect = { FROM = hillside_grazing_03 INCOME_HOLDING = 0.275 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.328 }
+	}
+	if = {
+		limit = { has_building = hillside_grazing_04 }
+		dap_consider_replacement_effect = { FROM = hillside_grazing_04 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.394 }
+	}
+	if = {
+		limit = { has_building = hillside_grazing_05 }
+		dap_consider_replacement_effect = { FROM = hillside_grazing_05 INCOME_HOLDING = 0.425 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.459 }
+	}
+	if = {
+		limit = { has_building = hillside_grazing_06 }
+		dap_consider_replacement_effect = { FROM = hillside_grazing_06 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.525 }
+	}
+	if = {
+		limit = { has_building = hillside_grazing_07 }
+		dap_consider_replacement_effect = { FROM = hillside_grazing_07 INCOME_HOLDING = 0.575 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.591 }
+	}
+	if = {
+		limit = { has_building = hillside_grazing_08 }
+		dap_consider_replacement_effect = { FROM = hillside_grazing_08 INCOME_HOLDING = 0.650 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.656 }
+	}
+	if = {
+		limit = { has_building = horse_pastures_02 }
+		dap_consider_replacement_effect = { FROM = horse_pastures_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.634 }
+	}
+	if = {
+		limit = { has_building = horse_pastures_03 }
+		dap_consider_replacement_effect = { FROM = horse_pastures_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.787 }
+	}
+	if = {
+		limit = { has_building = horse_pastures_04 }
+		dap_consider_replacement_effect = { FROM = horse_pastures_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.941 }
+	}
+	if = {
+		limit = { has_building = horse_pastures_05 }
+		dap_consider_replacement_effect = { FROM = horse_pastures_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.094 }
+	}
+	if = {
+		limit = { has_building = horse_pastures_06 }
+		dap_consider_replacement_effect = { FROM = horse_pastures_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.247 }
+	}
+	if = {
+		limit = { has_building = horse_pastures_07 }
+		dap_consider_replacement_effect = { FROM = horse_pastures_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.400 }
+	}
+	if = {
+		limit = { has_building = horse_pastures_08 }
+		dap_consider_replacement_effect = { FROM = horse_pastures_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.553 }
+	}
+	if = {
+		limit = { has_building = hospices_02 }
+		dap_consider_replacement_effect = { FROM = hospices_02 INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = hospices_03 }
+		dap_consider_replacement_effect = { FROM = hospices_03 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.009 }
+	}
+	if = {
+		limit = { has_building = hospices_04 }
+		dap_consider_replacement_effect = { FROM = hospices_04 INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.017 }
+	}
+	if = {
+		limit = { has_building = hospices_05 }
+		dap_consider_replacement_effect = { FROM = hospices_05 INCOME_HOLDING = 0.850 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.026 }
+	}
+	if = {
+		limit = { has_building = hospices_06 }
+		dap_consider_replacement_effect = { FROM = hospices_06 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.035 }
+	}
+	if = {
+		limit = { has_building = hospices_07 }
+		dap_consider_replacement_effect = { FROM = hospices_07 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.044 }
+	}
+	if = {
+		limit = { has_building = hospices_08 }
+		dap_consider_replacement_effect = { FROM = hospices_08 INCOME_HOLDING = 1.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.052 }
+	}
+	if = {
+		limit = { has_building = hunting_grounds_02 }
+		dap_consider_replacement_effect = { FROM = hunting_grounds_02 INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = hunting_grounds_03 }
+		dap_consider_replacement_effect = { FROM = hunting_grounds_03 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = hunting_grounds_04 }
+		dap_consider_replacement_effect = { FROM = hunting_grounds_04 INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = hunting_grounds_05 }
+		dap_consider_replacement_effect = { FROM = hunting_grounds_05 INCOME_HOLDING = 0.850 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = hunting_grounds_06 }
+		dap_consider_replacement_effect = { FROM = hunting_grounds_06 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = hunting_grounds_07 }
+		dap_consider_replacement_effect = { FROM = hunting_grounds_07 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = hunting_grounds_08 }
+		dap_consider_replacement_effect = { FROM = hunting_grounds_08 INCOME_HOLDING = 1.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = idjang_forts_02 }
+		dap_consider_replacement_effect = { FROM = idjang_forts_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = idjang_forts_03 }
+		dap_consider_replacement_effect = { FROM = idjang_forts_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = idjang_forts_04 }
+		dap_consider_replacement_effect = { FROM = idjang_forts_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = kora_kora_yards_02 }
+		dap_consider_replacement_effect = { FROM = kora_kora_yards_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.525 }
+	}
+	if = {
+		limit = { has_building = kora_kora_yards_03 }
+		dap_consider_replacement_effect = { FROM = kora_kora_yards_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.700 }
+	}
+	if = {
+		limit = { has_building = kora_kora_yards_04 }
+		dap_consider_replacement_effect = { FROM = kora_kora_yards_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.875 }
+	}
+	if = {
+		limit = { has_building = logging_camps_02 }
+		dap_consider_replacement_effect = { FROM = logging_camps_02 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = logging_camps_03 }
+		dap_consider_replacement_effect = { FROM = logging_camps_03 INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = logging_camps_04 }
+		dap_consider_replacement_effect = { FROM = logging_camps_04 INCOME_HOLDING = 0.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = logging_camps_05 }
+		dap_consider_replacement_effect = { FROM = logging_camps_05 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.025 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = logging_camps_06 }
+		dap_consider_replacement_effect = { FROM = logging_camps_06 INCOME_HOLDING = 1.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.025 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = logging_camps_07 }
+		dap_consider_replacement_effect = { FROM = logging_camps_07 INCOME_HOLDING = 1.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.050 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = logging_camps_08 }
+		dap_consider_replacement_effect = { FROM = logging_camps_08 INCOME_HOLDING = 1.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.050 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = longhouses_02 }
+		dap_consider_replacement_effect = { FROM = longhouses_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = market_villages_02 }
+		dap_consider_replacement_effect = { FROM = market_villages_02 INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = megalith_02 }
+		dap_consider_replacement_effect = { FROM = megalith_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = megalith_03 }
+		dap_consider_replacement_effect = { FROM = megalith_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = megalith_04 }
+		dap_consider_replacement_effect = { FROM = megalith_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = megalith_05 }
+		dap_consider_replacement_effect = { FROM = megalith_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.750 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = megalith_06 }
+		dap_consider_replacement_effect = { FROM = megalith_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.450 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = megalith_07 }
+		dap_consider_replacement_effect = { FROM = megalith_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = megalith_08 }
+		dap_consider_replacement_effect = { FROM = megalith_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.500 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = military_camps_02 }
+		dap_consider_replacement_effect = { FROM = military_camps_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.525 }
+	}
+	if = {
+		limit = { has_building = military_camps_03 }
+		dap_consider_replacement_effect = { FROM = military_camps_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.962 }
+	}
+	if = {
+		limit = { has_building = military_camps_04 }
+		dap_consider_replacement_effect = { FROM = military_camps_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.225 }
+	}
+	if = {
+		limit = { has_building = military_camps_05 }
+		dap_consider_replacement_effect = { FROM = military_camps_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.487 }
+	}
+	if = {
+		limit = { has_building = military_camps_06 }
+		dap_consider_replacement_effect = { FROM = military_camps_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.750 }
+	}
+	if = {
+		limit = { has_building = military_camps_07 }
+		dap_consider_replacement_effect = { FROM = military_camps_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 2.012 }
+	}
+	if = {
+		limit = { has_building = military_camps_08 }
+		dap_consider_replacement_effect = { FROM = military_camps_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 2.275 }
+	}
+	if = {
+		limit = { has_building = monastic_schools_02 }
+		dap_consider_replacement_effect = { FROM = monastic_schools_02 INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = monastic_schools_03 }
+		dap_consider_replacement_effect = { FROM = monastic_schools_03 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = monastic_schools_04 }
+		dap_consider_replacement_effect = { FROM = monastic_schools_04 INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = monastic_schools_05 }
+		dap_consider_replacement_effect = { FROM = monastic_schools_05 INCOME_HOLDING = 0.850 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = monastic_schools_06 }
+		dap_consider_replacement_effect = { FROM = monastic_schools_06 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = monastic_schools_07 }
+		dap_consider_replacement_effect = { FROM = monastic_schools_07 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = monastic_schools_08 }
+		dap_consider_replacement_effect = { FROM = monastic_schools_08 INCOME_HOLDING = 1.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = murex_farm_02 }
+		dap_consider_replacement_effect = { FROM = murex_farm_02 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.120 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = murex_farm_03 }
+		dap_consider_replacement_effect = { FROM = murex_farm_03 INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.680 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = murex_farm_04 }
+		dap_consider_replacement_effect = { FROM = murex_farm_04 INCOME_HOLDING = 0.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.240 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = murex_farm_05 }
+		dap_consider_replacement_effect = { FROM = murex_farm_05 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = murex_farm_06 }
+		dap_consider_replacement_effect = { FROM = murex_farm_06 INCOME_HOLDING = 1.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.360 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = murex_farm_07 }
+		dap_consider_replacement_effect = { FROM = murex_farm_07 INCOME_HOLDING = 1.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.920 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = murex_farm_08 }
+		dap_consider_replacement_effect = { FROM = murex_farm_08 INCOME_HOLDING = 1.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.480 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = orchards_02 }
+		dap_consider_replacement_effect = { FROM = orchards_02 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = orchards_03 }
+		dap_consider_replacement_effect = { FROM = orchards_03 INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.050 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = orchards_04 }
+		dap_consider_replacement_effect = { FROM = orchards_04 INCOME_HOLDING = 0.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = orchards_05 }
+		dap_consider_replacement_effect = { FROM = orchards_05 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.750 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = orchards_06 }
+		dap_consider_replacement_effect = { FROM = orchards_06 INCOME_HOLDING = 1.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = orchards_07 }
+		dap_consider_replacement_effect = { FROM = orchards_07 INCOME_HOLDING = 1.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.450 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = orchards_08 }
+		dap_consider_replacement_effect = { FROM = orchards_08 INCOME_HOLDING = 1.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.800 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = outposts_02 }
+		dap_consider_replacement_effect = { FROM = outposts_02 INCOME_HOLDING = 0.200 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.459 }
+	}
+	if = {
+		limit = { has_building = outposts_03 }
+		dap_consider_replacement_effect = { FROM = outposts_03 INCOME_HOLDING = 0.275 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.569 }
+	}
+	if = {
+		limit = { has_building = outposts_04 }
+		dap_consider_replacement_effect = { FROM = outposts_04 INCOME_HOLDING = 0.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.678 }
+	}
+	if = {
+		limit = { has_building = outposts_05 }
+		dap_consider_replacement_effect = { FROM = outposts_05 INCOME_HOLDING = 0.425 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.787 }
+	}
+	if = {
+		limit = { has_building = outposts_06 }
+		dap_consider_replacement_effect = { FROM = outposts_06 INCOME_HOLDING = 0.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.897 }
+	}
+	if = {
+		limit = { has_building = outposts_07 }
+		dap_consider_replacement_effect = { FROM = outposts_07 INCOME_HOLDING = 0.575 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.006 }
+	}
+	if = {
+		limit = { has_building = outposts_08 }
+		dap_consider_replacement_effect = { FROM = outposts_08 INCOME_HOLDING = 0.650 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.116 }
+	}
+	if = {
+		limit = { has_building = paddy_fields_02 }
+		dap_consider_replacement_effect = { FROM = paddy_fields_02 INCOME_HOLDING = 0.800 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = paddy_fields_03 }
+		dap_consider_replacement_effect = { FROM = paddy_fields_03 INCOME_HOLDING = 1.100 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = paddy_fields_04 }
+		dap_consider_replacement_effect = { FROM = paddy_fields_04 INCOME_HOLDING = 1.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = paddy_fields_05 }
+		dap_consider_replacement_effect = { FROM = paddy_fields_05 INCOME_HOLDING = 1.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = paddy_fields_06 }
+		dap_consider_replacement_effect = { FROM = paddy_fields_06 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = paddy_fields_07 }
+		dap_consider_replacement_effect = { FROM = paddy_fields_07 INCOME_HOLDING = 2.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = paddy_fields_08 }
+		dap_consider_replacement_effect = { FROM = paddy_fields_08 INCOME_HOLDING = 2.600 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = palisades_02 }
+		dap_consider_replacement_effect = { FROM = palisades_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = pastures_02 }
+		dap_consider_replacement_effect = { FROM = pastures_02 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = pastures_03 }
+		dap_consider_replacement_effect = { FROM = pastures_03 INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = pastures_04 }
+		dap_consider_replacement_effect = { FROM = pastures_04 INCOME_HOLDING = 0.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = pastures_05 }
+		dap_consider_replacement_effect = { FROM = pastures_05 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = pastures_06 }
+		dap_consider_replacement_effect = { FROM = pastures_06 INCOME_HOLDING = 1.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = pastures_07 }
+		dap_consider_replacement_effect = { FROM = pastures_07 INCOME_HOLDING = 1.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = pastures_08 }
+		dap_consider_replacement_effect = { FROM = pastures_08 INCOME_HOLDING = 1.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = peat_quarries_02 }
+		dap_consider_replacement_effect = { FROM = peat_quarries_02 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = peat_quarries_03 }
+		dap_consider_replacement_effect = { FROM = peat_quarries_03 INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = peat_quarries_04 }
+		dap_consider_replacement_effect = { FROM = peat_quarries_04 INCOME_HOLDING = 0.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = peat_quarries_05 }
+		dap_consider_replacement_effect = { FROM = peat_quarries_05 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = peat_quarries_06 }
+		dap_consider_replacement_effect = { FROM = peat_quarries_06 INCOME_HOLDING = 1.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = peat_quarries_07 }
+		dap_consider_replacement_effect = { FROM = peat_quarries_07 INCOME_HOLDING = 1.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = peat_quarries_08 }
+		dap_consider_replacement_effect = { FROM = peat_quarries_08 INCOME_HOLDING = 1.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = plantations_02 }
+		dap_consider_replacement_effect = { FROM = plantations_02 INCOME_HOLDING = 0.410 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = plantations_03 }
+		dap_consider_replacement_effect = { FROM = plantations_03 INCOME_HOLDING = 0.560 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.017 }
+	}
+	if = {
+		limit = { has_building = plantations_04 }
+		dap_consider_replacement_effect = { FROM = plantations_04 INCOME_HOLDING = 0.720 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.017 }
+	}
+	if = {
+		limit = { has_building = plantations_05 }
+		dap_consider_replacement_effect = { FROM = plantations_05 INCOME_HOLDING = 0.870 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.017 }
+	}
+	if = {
+		limit = { has_building = plantations_06 }
+		dap_consider_replacement_effect = { FROM = plantations_06 INCOME_HOLDING = 1.020 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.017 }
+	}
+	if = {
+		limit = { has_building = plantations_07 }
+		dap_consider_replacement_effect = { FROM = plantations_07 INCOME_HOLDING = 1.170 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.017 }
+	}
+	if = {
+		limit = { has_building = plantations_08 }
+		dap_consider_replacement_effect = { FROM = plantations_08 INCOME_HOLDING = 1.320 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.350 MILITARY = 0.017 }
+	}
+	if = {
+		limit = { has_building = powder_magazine_02 }
+		dap_consider_replacement_effect = { FROM = powder_magazine_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.525 }
+	}
+	if = {
+		limit = { has_building = powder_magazine_03 }
+		dap_consider_replacement_effect = { FROM = powder_magazine_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.700 }
+	}
+	if = {
+		limit = { has_building = powder_magazine_04 }
+		dap_consider_replacement_effect = { FROM = powder_magazine_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.875 }
+	}
+	if = {
+		limit = { has_building = powder_magazine_05 }
+		dap_consider_replacement_effect = { FROM = powder_magazine_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.050 }
+	}
+	if = {
+		limit = { has_building = powder_magazine_06 }
+		dap_consider_replacement_effect = { FROM = powder_magazine_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.225 }
+	}
+	if = {
+		limit = { has_building = powder_magazine_07 }
+		dap_consider_replacement_effect = { FROM = powder_magazine_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.400 }
+	}
+	if = {
+		limit = { has_building = powder_magazine_08 }
+		dap_consider_replacement_effect = { FROM = powder_magazine_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.575 }
+	}
+	if = {
+		limit = { has_building = qanats_02 }
+		dap_consider_replacement_effect = { FROM = qanats_02 INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.540 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = qanats_03 }
+		dap_consider_replacement_effect = { FROM = qanats_03 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = qanats_04 }
+		dap_consider_replacement_effect = { FROM = qanats_04 INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.660 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = qanats_05 }
+		dap_consider_replacement_effect = { FROM = qanats_05 INCOME_HOLDING = 0.850 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.220 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = qanats_06 }
+		dap_consider_replacement_effect = { FROM = qanats_06 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.780 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = qanats_07 }
+		dap_consider_replacement_effect = { FROM = qanats_07 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.340 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = qanats_08 }
+		dap_consider_replacement_effect = { FROM = qanats_08 INCOME_HOLDING = 1.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.900 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = quarries_02 }
+		dap_consider_replacement_effect = { FROM = quarries_02 INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = quarries_03 }
+		dap_consider_replacement_effect = { FROM = quarries_03 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = quarries_04 }
+		dap_consider_replacement_effect = { FROM = quarries_04 INCOME_HOLDING = 0.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = quarries_05 }
+		dap_consider_replacement_effect = { FROM = quarries_05 INCOME_HOLDING = 0.850 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = quarries_06 }
+		dap_consider_replacement_effect = { FROM = quarries_06 INCOME_HOLDING = 1.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = quarries_07 }
+		dap_consider_replacement_effect = { FROM = quarries_07 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.017 }
+	}
+	if = {
+		limit = { has_building = quarries_08 }
+		dap_consider_replacement_effect = { FROM = quarries_08 INCOME_HOLDING = 1.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.140 MILITARY = 0.070 }
+	}
+	if = {
+		limit = { has_building = ramparts_02 }
+		dap_consider_replacement_effect = { FROM = ramparts_02 INCOME_HOLDING = 0.020 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.284 }
+	}
+	if = {
+		limit = { has_building = ramparts_03 }
+		dap_consider_replacement_effect = { FROM = ramparts_03 INCOME_HOLDING = 0.020 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = ramparts_04 }
+		dap_consider_replacement_effect = { FROM = ramparts_04 INCOME_HOLDING = 0.020 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.416 }
+	}
+	if = {
+		limit = { has_building = ramparts_05 }
+		dap_consider_replacement_effect = { FROM = ramparts_05 INCOME_HOLDING = 0.020 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.481 }
+	}
+	if = {
+		limit = { has_building = ramparts_06 }
+		dap_consider_replacement_effect = { FROM = ramparts_06 INCOME_HOLDING = 0.020 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.547 }
+	}
+	if = {
+		limit = { has_building = ramparts_07 }
+		dap_consider_replacement_effect = { FROM = ramparts_07 INCOME_HOLDING = 0.020 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.612 }
+	}
+	if = {
+		limit = { has_building = ramparts_08 }
+		dap_consider_replacement_effect = { FROM = ramparts_08 INCOME_HOLDING = 0.020 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.678 }
+	}
+	if = {
+		limit = { has_building = regimental_grounds_02 }
+		dap_consider_replacement_effect = { FROM = regimental_grounds_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = regimental_grounds_03 }
+		dap_consider_replacement_effect = { FROM = regimental_grounds_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.437 }
+	}
+	if = {
+		limit = { has_building = regimental_grounds_04 }
+		dap_consider_replacement_effect = { FROM = regimental_grounds_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.525 }
+	}
+	if = {
+		limit = { has_building = regimental_grounds_05 }
+		dap_consider_replacement_effect = { FROM = regimental_grounds_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.612 }
+	}
+	if = {
+		limit = { has_building = regimental_grounds_06 }
+		dap_consider_replacement_effect = { FROM = regimental_grounds_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.700 }
+	}
+	if = {
+		limit = { has_building = regimental_grounds_07 }
+		dap_consider_replacement_effect = { FROM = regimental_grounds_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.787 }
+	}
+	if = {
+		limit = { has_building = regimental_grounds_08 }
+		dap_consider_replacement_effect = { FROM = regimental_grounds_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.875 }
+	}
+	if = {
+		limit = { has_building = sacred_pool_02 }
+		dap_consider_replacement_effect = { FROM = sacred_pool_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = sacred_pool_03 }
+		dap_consider_replacement_effect = { FROM = sacred_pool_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = sacred_pool_04 }
+		dap_consider_replacement_effect = { FROM = sacred_pool_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = sacred_pool_05 }
+		dap_consider_replacement_effect = { FROM = sacred_pool_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = sacred_pool_06 }
+		dap_consider_replacement_effect = { FROM = sacred_pool_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = sacred_pool_07 }
+		dap_consider_replacement_effect = { FROM = sacred_pool_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = sacred_pool_08 }
+		dap_consider_replacement_effect = { FROM = sacred_pool_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = scriptorium_02 }
+		dap_consider_replacement_effect = { FROM = scriptorium_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = scriptorium_03 }
+		dap_consider_replacement_effect = { FROM = scriptorium_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = scriptorium_04 }
+		dap_consider_replacement_effect = { FROM = scriptorium_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = scriptorium_05 }
+		dap_consider_replacement_effect = { FROM = scriptorium_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = scriptorium_06 }
+		dap_consider_replacement_effect = { FROM = scriptorium_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = scriptorium_07 }
+		dap_consider_replacement_effect = { FROM = scriptorium_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = scriptorium_08 }
+		dap_consider_replacement_effect = { FROM = scriptorium_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = smiths_02 }
+		dap_consider_replacement_effect = { FROM = smiths_02 INCOME_HOLDING = 0.080 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.175 }
+	}
+	if = {
+		limit = { has_building = smiths_03 }
+		dap_consider_replacement_effect = { FROM = smiths_03 INCOME_HOLDING = 0.120 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = smiths_04 }
+		dap_consider_replacement_effect = { FROM = smiths_04 INCOME_HOLDING = 0.160 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.437 }
+	}
+	if = {
+		limit = { has_building = smiths_05 }
+		dap_consider_replacement_effect = { FROM = smiths_05 INCOME_HOLDING = 0.200 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.525 }
+	}
+	if = {
+		limit = { has_building = smiths_06 }
+		dap_consider_replacement_effect = { FROM = smiths_06 INCOME_HOLDING = 0.240 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.612 }
+	}
+	if = {
+		limit = { has_building = smiths_07 }
+		dap_consider_replacement_effect = { FROM = smiths_07 INCOME_HOLDING = 0.280 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.700 }
+	}
+	if = {
+		limit = { has_building = smiths_08 }
+		dap_consider_replacement_effect = { FROM = smiths_08 INCOME_HOLDING = 0.320 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.787 }
+	}
+	if = {
+		limit = { has_building = spice_plantation_02 }
+		dap_consider_replacement_effect = { FROM = spice_plantation_02 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = spice_plantation_03 }
+		dap_consider_replacement_effect = { FROM = spice_plantation_03 INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = spice_plantation_04 }
+		dap_consider_replacement_effect = { FROM = spice_plantation_04 INCOME_HOLDING = 0.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = spice_plantation_05 }
+		dap_consider_replacement_effect = { FROM = spice_plantation_05 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = spice_plantation_06 }
+		dap_consider_replacement_effect = { FROM = spice_plantation_06 INCOME_HOLDING = 1.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = spice_plantation_07 }
+		dap_consider_replacement_effect = { FROM = spice_plantation_07 INCOME_HOLDING = 1.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = spice_plantation_08 }
+		dap_consider_replacement_effect = { FROM = spice_plantation_08 INCOME_HOLDING = 1.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = stables_02 }
+		dap_consider_replacement_effect = { FROM = stables_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.437 }
+	}
+	if = {
+		limit = { has_building = stables_03 }
+		dap_consider_replacement_effect = { FROM = stables_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.744 }
+	}
+	if = {
+		limit = { has_building = stables_04 }
+		dap_consider_replacement_effect = { FROM = stables_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.962 }
+	}
+	if = {
+		limit = { has_building = stables_05 }
+		dap_consider_replacement_effect = { FROM = stables_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.312 }
+	}
+	if = {
+		limit = { has_building = stables_06 }
+		dap_consider_replacement_effect = { FROM = stables_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.575 }
+	}
+	if = {
+		limit = { has_building = stables_07 }
+		dap_consider_replacement_effect = { FROM = stables_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.837 }
+	}
+	if = {
+		limit = { has_building = stables_08 }
+		dap_consider_replacement_effect = { FROM = stables_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 2.100 }
+	}
+	if = {
+		limit = { has_building = stilted_granaries_02 }
+		dap_consider_replacement_effect = { FROM = stilted_granaries_02 INCOME_HOLDING = 0.200 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.219 }
+	}
+	if = {
+		limit = { has_building = stilted_granaries_03 }
+		dap_consider_replacement_effect = { FROM = stilted_granaries_03 INCOME_HOLDING = 0.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.262 }
+	}
+	if = {
+		limit = { has_building = stilted_granaries_04 }
+		dap_consider_replacement_effect = { FROM = stilted_granaries_04 INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.306 }
+	}
+	if = {
+		limit = { has_building = vihara_halls_02 }
+		dap_consider_replacement_effect = { FROM = vihara_halls_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.280 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = vihara_halls_03 }
+		dap_consider_replacement_effect = { FROM = vihara_halls_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.420 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = vihara_halls_04 }
+		dap_consider_replacement_effect = { FROM = vihara_halls_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.560 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = vihara_halls_05 }
+		dap_consider_replacement_effect = { FROM = vihara_halls_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.700 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = vihara_halls_06 }
+		dap_consider_replacement_effect = { FROM = vihara_halls_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.840 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = vihara_halls_07 }
+		dap_consider_replacement_effect = { FROM = vihara_halls_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.980 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = vihara_halls_08 }
+		dap_consider_replacement_effect = { FROM = vihara_halls_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.120 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = wantilan_02 }
+		dap_consider_replacement_effect = { FROM = wantilan_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = wantilan_03 }
+		dap_consider_replacement_effect = { FROM = wantilan_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.437 }
+	}
+	if = {
+		limit = { has_building = wantilan_04 }
+		dap_consider_replacement_effect = { FROM = wantilan_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.525 }
+	}
+	if = {
+		limit = { has_building = war_camps_02 }
+		dap_consider_replacement_effect = { FROM = war_camps_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.437 }
+	}
+	if = {
+		limit = { has_building = warrior_lodges_02 }
+		dap_consider_replacement_effect = { FROM = warrior_lodges_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.262 }
+	}
+	if = {
+		limit = { has_building = warrior_lodges_03 }
+		dap_consider_replacement_effect = { FROM = warrior_lodges_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.328 }
+	}
+	if = {
+		limit = { has_building = warrior_lodges_04 }
+		dap_consider_replacement_effect = { FROM = warrior_lodges_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.394 }
+	}
+	if = {
+		limit = { has_building = warrior_lodges_05 }
+		dap_consider_replacement_effect = { FROM = warrior_lodges_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.459 }
+	}
+	if = {
+		limit = { has_building = warrior_lodges_06 }
+		dap_consider_replacement_effect = { FROM = warrior_lodges_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.525 }
+	}
+	if = {
+		limit = { has_building = warrior_lodges_07 }
+		dap_consider_replacement_effect = { FROM = warrior_lodges_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.591 }
+	}
+	if = {
+		limit = { has_building = warrior_lodges_08 }
+		dap_consider_replacement_effect = { FROM = warrior_lodges_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.656 }
+	}
+	if = {
+		limit = { has_building = watchtowers_02 }
+		dap_consider_replacement_effect = { FROM = watchtowers_02 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.219 }
+	}
+	if = {
+		limit = { has_building = watchtowers_03 }
+		dap_consider_replacement_effect = { FROM = watchtowers_03 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.262 }
+	}
+	if = {
+		limit = { has_building = watchtowers_04 }
+		dap_consider_replacement_effect = { FROM = watchtowers_04 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.306 }
+	}
+	if = {
+		limit = { has_building = watchtowers_05 }
+		dap_consider_replacement_effect = { FROM = watchtowers_05 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = watchtowers_06 }
+		dap_consider_replacement_effect = { FROM = watchtowers_06 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.394 }
+	}
+	if = {
+		limit = { has_building = watchtowers_07 }
+		dap_consider_replacement_effect = { FROM = watchtowers_07 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.437 }
+	}
+	if = {
+		limit = { has_building = watchtowers_08 }
+		dap_consider_replacement_effect = { FROM = watchtowers_08 INCOME_HOLDING = 0.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.481 }
+	}
+	if = {
+		limit = { has_building = water_temples_02 }
+		dap_consider_replacement_effect = { FROM = water_temples_02 INCOME_HOLDING = 0.200 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = water_temples_03 }
+		dap_consider_replacement_effect = { FROM = water_temples_03 INCOME_HOLDING = 0.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.437 }
+	}
+	if = {
+		limit = { has_building = water_temples_04 }
+		dap_consider_replacement_effect = { FROM = water_temples_04 INCOME_HOLDING = 0.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.525 }
+	}
+	if = {
+		limit = { has_building = watermills_02 }
+		dap_consider_replacement_effect = { FROM = watermills_02 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.840 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = watermills_03 }
+		dap_consider_replacement_effect = { FROM = watermills_03 INCOME_HOLDING = 1.600 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.100 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = watermills_04 }
+		dap_consider_replacement_effect = { FROM = watermills_04 INCOME_HOLDING = 2.050 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.200 DEVELOPMENT_COUNTY = 1.960 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = watermills_05 }
+		dap_consider_replacement_effect = { FROM = watermills_05 INCOME_HOLDING = 2.500 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.300 DEVELOPMENT_COUNTY = 2.520 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = watermills_06 }
+		dap_consider_replacement_effect = { FROM = watermills_06 INCOME_HOLDING = 2.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.400 DEVELOPMENT_COUNTY = 3.080 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = watermills_07 }
+		dap_consider_replacement_effect = { FROM = watermills_07 INCOME_HOLDING = 3.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.500 DEVELOPMENT_COUNTY = 3.640 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = watermills_08 }
+		dap_consider_replacement_effect = { FROM = watermills_08 INCOME_HOLDING = 3.850 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.600 DEVELOPMENT_COUNTY = 4.200 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = waterworks_02 }
+		dap_consider_replacement_effect = { FROM = waterworks_02 INCOME_HOLDING = 0.080 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.560 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = waterworks_03 }
+		dap_consider_replacement_effect = { FROM = waterworks_03 INCOME_HOLDING = 0.120 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.840 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = waterworks_04 }
+		dap_consider_replacement_effect = { FROM = waterworks_04 INCOME_HOLDING = 0.160 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.120 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = waterworks_05 }
+		dap_consider_replacement_effect = { FROM = waterworks_05 INCOME_HOLDING = 0.200 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.400 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = waterworks_06 }
+		dap_consider_replacement_effect = { FROM = waterworks_06 INCOME_HOLDING = 0.240 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.680 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = waterworks_07 }
+		dap_consider_replacement_effect = { FROM = waterworks_07 INCOME_HOLDING = 0.280 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.960 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = waterworks_08 }
+		dap_consider_replacement_effect = { FROM = waterworks_08 INCOME_HOLDING = 0.320 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.240 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = wind_furnace_02 }
+		dap_consider_replacement_effect = { FROM = wind_furnace_02 INCOME_HOLDING = 0.800 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.525 }
+	}
+	if = {
+		limit = { has_building = wind_furnace_03 }
+		dap_consider_replacement_effect = { FROM = wind_furnace_03 INCOME_HOLDING = 1.100 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.700 }
+	}
+	if = {
+		limit = { has_building = wind_furnace_04 }
+		dap_consider_replacement_effect = { FROM = wind_furnace_04 INCOME_HOLDING = 1.400 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.875 }
+	}
+	if = {
+		limit = { has_building = wind_furnace_05 }
+		dap_consider_replacement_effect = { FROM = wind_furnace_05 INCOME_HOLDING = 1.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.050 }
+	}
+	if = {
+		limit = { has_building = wind_furnace_06 }
+		dap_consider_replacement_effect = { FROM = wind_furnace_06 INCOME_HOLDING = 2.000 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.225 }
+	}
+	if = {
+		limit = { has_building = wind_furnace_07 }
+		dap_consider_replacement_effect = { FROM = wind_furnace_07 INCOME_HOLDING = 2.300 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.400 }
+	}
+	if = {
+		limit = { has_building = wind_furnace_08 }
+		dap_consider_replacement_effect = { FROM = wind_furnace_08 INCOME_HOLDING = 2.600 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 1.575 }
+	}
+	if = {
+		limit = { has_building = windmills_02 }
+		dap_consider_replacement_effect = { FROM = windmills_02 INCOME_HOLDING = 1.250 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 1.540 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = windmills_03 }
+		dap_consider_replacement_effect = { FROM = windmills_03 INCOME_HOLDING = 1.740 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.100 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = windmills_04 }
+		dap_consider_replacement_effect = { FROM = windmills_04 INCOME_HOLDING = 2.230 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 2.660 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = windmills_05 }
+		dap_consider_replacement_effect = { FROM = windmills_05 INCOME_HOLDING = 2.720 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.220 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = windmills_06 }
+		dap_consider_replacement_effect = { FROM = windmills_06 INCOME_HOLDING = 3.210 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 3.780 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = windmills_07 }
+		dap_consider_replacement_effect = { FROM = windmills_07 INCOME_HOLDING = 3.700 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.340 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = windmills_08 }
+		dap_consider_replacement_effect = { FROM = windmills_08 INCOME_HOLDING = 4.190 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 4.900 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = workshops_02 }
+		dap_consider_replacement_effect = { FROM = workshops_02 INCOME_HOLDING = 0.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.000 }
+	}
+	if = {
+		limit = { has_building = workshops_03 }
+		dap_consider_replacement_effect = { FROM = workshops_03 INCOME_HOLDING = 0.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.175 }
+	}
+	if = {
+		limit = { has_building = workshops_04 }
+		dap_consider_replacement_effect = { FROM = workshops_04 INCOME_HOLDING = 0.950 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.262 }
+	}
+	if = {
+		limit = { has_building = workshops_05 }
+		dap_consider_replacement_effect = { FROM = workshops_05 INCOME_HOLDING = 1.150 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.350 }
+	}
+	if = {
+		limit = { has_building = workshops_06 }
+		dap_consider_replacement_effect = { FROM = workshops_06 INCOME_HOLDING = 1.350 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.437 }
+	}
+	if = {
+		limit = { has_building = workshops_07 }
+		dap_consider_replacement_effect = { FROM = workshops_07 INCOME_HOLDING = 1.550 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.525 }
+	}
+	if = {
+		limit = { has_building = workshops_08 }
+		dap_consider_replacement_effect = { FROM = workshops_08 INCOME_HOLDING = 1.750 INCOME_HOLDER = 0.000 INCOME_COUNTY = 0.000 DEVELOPMENT_COUNTY = 0.000 MILITARY = 0.612 }
 	}
 }
 

@@ -5,18 +5,21 @@
 # may build in (dap_build_holdings: the player's own, and their vassal barons', cities' and
 # temples' holdings in the player's own counties; military bases, dap_military_bases, are
 # among the player's own; with the vassals' counties option, the holdings in the counties of
-# their direct vassals once their own have nothing left, dap_build_vassal_holdings), and queues the best (dap_build_queue, a list of provinces, each
-# holding its pick in var:dap_bc_*). gui/dap_build_driver.gui asks for them one at a time (the
-# dap_build_next scripted GUI): the mod remembers which building it wants in which holding
-# and opens the vanilla holding view for that holding. gui/00_dap_building_item.gui (an
-# override of the holding view's building slot type) presses Build, or Upgrade, on that
-# building, then calls the dap_build_started scripted GUI, which runs
+# their direct vassals once their own have nothing left, dap_build_vassal_holdings), and
+# queues the best (dap_build_queue, a list of provinces, each holding its pick in
+# var:dap_bc_*). With the replace buildings option, a pick in a full county may replace a
+# building that serves no active focus (var:dap_bc_replace). gui/dap_build_driver.gui asks
+# for them one at a time (the dap_build_next scripted GUI): the mod remembers which building
+# it wants in which holding and opens the vanilla holding view for that holding.
+# gui/00_dap_building_item.gui (an override of the holding view's building slot type)
+# presses Build, or Upgrade, on that building (for a replacement, Replace on the old building
+# first), then calls the dap_build_started scripted GUI, which runs
 # dap_build_started_effect. Only the driver opens the view, so it never opens twice at once.
 
 # Asks for a construction of var:dap_build_building (flag:<building key>) in
 # scope:dap_build_province, as an upgrade of var:dap_build_from (flag:<building key>, or
-# flag:none for a new building in a free slot), both set for a day, and opens the holding
-# view so it can be pressed. The request lapses after a day, so one that could not be
+# flag:none for a new building in a free slot; with var:dap_build_replacing, the building it
+# replaces), all set for a day, and opens the holding view so it can be pressed. The request lapses after a day, so one that could not be
 # pressed never fires later, when the player opens that holding's view themselves.
 dap_build_open_effect = {
 	if = {
@@ -50,6 +53,10 @@ dap_build_next_effect = {
 		remove_list_variable = { name = dap_build_queue target = scope:dap_build_province }
 		set_variable = { name = dap_build_building value = scope:dap_build_province.var:dap_bc_building days = 1 }
 		set_variable = { name = dap_build_from value = scope:dap_build_province.var:dap_bc_from days = 1 }
+		if = {
+			limit = { scope:dap_build_province = { has_variable = dap_bc_replace } }
+			set_variable = { name = dap_build_replacing value = 1 days = 1 }
+		}
 		dap_build_open_effect = yes
 	}
 }
@@ -60,7 +67,13 @@ dap_build_started_effect = {
 	set_variable = { name = dap_build_last_province value = scope:province }
 	set_variable = { name = dap_build_last_paid value = var:dap_build_gold_before }
 	change_variable = { name = dap_build_last_paid subtract = gold }
-	dap_log_effect = { ACTION = dap_log_built }
+	if = {
+		limit = { has_variable = dap_build_replacing }
+		dap_log_effect = { ACTION = dap_log_replaced }
+		set_variable = { name = dap_log_replaced value = var:dap_build_from }
+		remove_variable = dap_build_replacing
+	}
+	else = { dap_log_effect = { ACTION = dap_log_built } }
 	set_variable = { name = dap_log_building value = var:dap_build_building }
 	set_variable = { name = dap_log_province value = scope:province }
 	scope:province = { remove_variable = dap_build_queued }
@@ -79,6 +92,10 @@ dap_clear_building_pick_effect = {
 		remove_variable = dap_bc_from
 		remove_variable = dap_bc_cost
 	}
+	if = {
+		limit = { has_variable = dap_bc_replace }
+		remove_variable = dap_bc_replace
+	}
 }
 
 # this = province; picks the building worth the most for its cost there, new or upgrade,
@@ -86,31 +103,15 @@ dap_clear_building_pick_effect = {
 # flag:none), var:dap_bc_cost and var:dap_bc_value; no pick if nothing there serves an
 # active focus. Needs local_var:dap_w_income, local_var:dap_w_development and
 # local_var:dap_w_military, scope:dap_stack_income and scope:dap_stack_development (the
-# stacking county of each focus, if it has one), and the list dap_military_bases.
+# stacking county of each focus, if it has one), and the list dap_military_bases. With the
+# replace buildings option and a full county, a new building replacing one that serves no
+# active focus is a candidate too (dap_consider_replacement_effect).
 dap_pick_building_in_province_effect = {
 	dap_clear_building_pick_effect = yes
 	province_owner = { save_scope_as = holder }
 	county = { save_scope_as = county }
 	set_local_variable = { name = dap_best_value value = 0 }
-	# What each reach of bonus is worth to the player here: holding and holder bonuses in
-	# full in their own holding; in a vassal's, the holding's bonus only as the tax the
-	# vassal pays them, and the holder's not at all
-	if = {
-		limit = { province_owner = root }
-		set_local_variable = { name = dap_share_holding value = 1 }
-		set_local_variable = { name = dap_share_holder value = 1 }
-	}
-	else = {
-		scope:holder = {
-			set_local_variable = { name = dap_share_holding value = dap_vassal_tax_share_value }
-			# Two levels down, the tax reaches the player through the holder's liege
-			if = {
-				limit = { NOT = { is_vassal_of = root } }
-				liege = { change_local_variable = { name = dap_share_holding multiply = dap_vassal_tax_share_value } }
-			}
-		}
-		set_local_variable = { name = dap_share_holder value = 0 }
-	}
+	dap_reach_shares_effect = yes
 	# County stacking: county-wide bonuses count only in the focus's stacking county
 	set_local_variable = { name = dap_stack_income value = 0 }
 	if = {
@@ -130,6 +131,83 @@ dap_pick_building_in_province_effect = {
 		set_local_variable = { name = dap_base_here value = 1 }
 	}
 	dap_consider_buildings_effect = yes
+	if = {
+		limit = { dap_build_replace_here_trigger = yes }
+		dap_consider_replacements_effect = yes
+	}
+}
+
+# this = province, scope:holder = its holder; what each reach of bonus is worth to the
+# player there, as local_var:dap_share_holding and local_var:dap_share_holder
+dap_reach_shares_effect = {
+	# What each reach of bonus is worth to the player here: holding and holder bonuses in
+	# full in their own holding; in a vassal's, the holding's bonus only as the tax the
+	# vassal pays them, and the holder's not at all
+	if = {
+		limit = { province_owner = root }
+		set_local_variable = { name = dap_share_holding value = 1 }
+		set_local_variable = { name = dap_share_holder value = 1 }
+	}
+	else = {
+		scope:holder = {
+			set_local_variable = { name = dap_share_holding value = dap_vassal_tax_share_value }
+			# Two levels down, the tax reaches the player through the holder's liege
+			if = {
+				limit = { NOT = { is_vassal_of = root } }
+				liege = { change_local_variable = { name = dap_share_holding multiply = dap_vassal_tax_share_value } }
+			}
+		}
+		set_local_variable = { name = dap_share_holder value = 0 }
+	}
+}
+
+# this = province; a building there that a new building could replace, offered by
+# dap_consider_replacements_effect (generated) with all it gives. Only one that serves none
+# of the active focuses may go, and only for a new building that gives at least half as much
+# again: what it gives counts as far as it reaches the player, county-wide bonuses in full,
+# its stationed bonuses as for a military base of the type they suit best. The new buildings
+# (dap_consider_new_buildings_effect) are then scored as replacements, with
+# local_var:dap_replace_from (flag:<the old building>) and local_var:dap_replace_need set.
+dap_consider_replacement_effect = {
+	set_local_variable = {
+		name = dap_old_value
+		value = {
+			value = $INCOME_HOLDING$
+			add = $INCOME_HOLDER$
+			add = $INCOME_COUNTY$
+			multiply = local_var:dap_w_income
+			add = {
+				value = $DEVELOPMENT_COUNTY$
+				multiply = local_var:dap_w_development
+			}
+			add = {
+				value = $MILITARY$
+				multiply = local_var:dap_w_military
+			}
+		}
+	}
+	if = {
+		limit = { local_var:dap_old_value <= 0 }
+		set_local_variable = {
+			name = dap_replace_need
+			value = {
+				value = $INCOME_HOLDING$
+				multiply = local_var:dap_share_holding
+				add = {
+					value = $INCOME_HOLDER$
+					multiply = local_var:dap_share_holder
+				}
+				add = $INCOME_COUNTY$
+				add = $DEVELOPMENT_COUNTY$
+				add = $MILITARY$
+				multiply = 1.5
+			}
+		}
+		set_local_variable = { name = dap_replace_from value = flag:$FROM$ }
+		set_local_variable = { name = dap_replace_pass value = 1 }
+		dap_consider_new_buildings_effect = yes
+		remove_local_variable = dap_replace_pass
+	}
 }
 
 # this = province; one candidate offered by dap_consider_buildings_effect (generated by
@@ -138,14 +216,22 @@ dap_pick_building_in_province_effect = {
 # With local_var:dap_room_pass set it is only noted whether a county-wide bonus of a focus
 # could still be stacked in this county (dap_build_room_income, dap_build_room_development);
 # with local_var:dap_base_room_pass, whether this military base could still stack its
-# specialty (var:dap_base_room).
+# specialty (var:dap_base_room). With local_var:dap_replace_pass it replaces a building
+# (dap_consider_replacement_effect): in the room pass only if its county-wide bonus alone
+# gives what replacing needs.
 dap_consider_building_effect = {
 	if = {
 		limit = { exists = local_var:dap_room_pass }
+		set_local_variable = { name = dap_room_need value = 0 }
+		if = {
+			limit = { exists = local_var:dap_replace_pass }
+			set_local_variable = { name = dap_room_need value = local_var:dap_replace_need }
+		}
 		set_local_variable = { name = dap_bv value = $INCOME_COUNTY$ }
 		if = {
 			limit = {
 				local_var:dap_bv > 0
+				local_var:dap_bv >= local_var:dap_room_need
 				root = { NOT = { is_target_in_variable_list = { name = dap_build_room_income target = scope:county } } }
 			}
 			root = { add_to_variable_list = { name = dap_build_room_income target = scope:county } }
@@ -154,6 +240,7 @@ dap_consider_building_effect = {
 		if = {
 			limit = {
 				local_var:dap_bv > 0
+				local_var:dap_bv >= local_var:dap_room_need
 				root = { NOT = { is_target_in_variable_list = { name = dap_build_room_development target = scope:county } } }
 			}
 			root = { add_to_variable_list = { name = dap_build_room_development target = scope:county } }
@@ -165,6 +252,14 @@ dap_consider_building_effect = {
 		if = {
 			limit = { local_var:dap_bv > 0 }
 			set_variable = { name = dap_base_room value = 1 }
+		}
+	}
+	else_if = {
+		limit = { exists = local_var:dap_replace_pass }
+		dap_score_replacement_effect = {
+			BUILDING = $BUILDING$ COST = $COST$ INCOME_HOLDING = $INCOME_HOLDING$
+			INCOME_HOLDER = $INCOME_HOLDER$ INCOME_COUNTY = $INCOME_COUNTY$ DEVELOPMENT_COUNTY = $DEVELOPMENT_COUNTY$
+			MILITARY = $MILITARY$
 		}
 	}
 	else = {
@@ -213,13 +308,72 @@ dap_score_building_effect = {
 		set_variable = { name = dap_bc_building value = flag:$BUILDING$ }
 		set_variable = { name = dap_bc_from value = flag:$FROM$ }
 		set_variable = { name = dap_bc_cost value = $COST$ }
+		if = {
+			limit = { has_variable = dap_bc_replace }
+			remove_variable = dap_bc_replace
+		}
+	}
+}
+
+# this = province; scores a new building replacing local_var:dap_replace_from: only if what
+# it gives the active focuses (unweighted, each bonus as far as it reaches the player) is at
+# least local_var:dap_replace_need, and then by its value for its cost like any other pick,
+# since the old building gave the active focuses nothing
+dap_score_replacement_effect = {
+	set_local_variable = {
+		name = dap_new_value
+		value = {
+			value = $INCOME_HOLDING$
+			multiply = local_var:dap_share_holding
+			add = {
+				value = $INCOME_HOLDER$
+				multiply = local_var:dap_share_holder
+			}
+			add = {
+				value = $INCOME_COUNTY$
+				multiply = local_var:dap_stack_income
+			}
+			multiply = local_var:dap_on_income
+			add = {
+				value = $DEVELOPMENT_COUNTY$
+				multiply = local_var:dap_stack_development
+				multiply = local_var:dap_on_development
+			}
+			add = {
+				value = $MILITARY$
+				multiply = local_var:dap_base_here
+				multiply = local_var:dap_on_military
+			}
+		}
+	}
+	if = {
+		limit = {
+			local_var:dap_new_value > 0
+			local_var:dap_new_value >= local_var:dap_replace_need
+		}
+		set_local_variable = { name = dap_best_before value = local_var:dap_best_value }
+		dap_score_building_effect = {
+			BUILDING = $BUILDING$ FROM = none COST = $COST$ INCOME_HOLDING = $INCOME_HOLDING$
+			INCOME_HOLDER = $INCOME_HOLDER$ INCOME_COUNTY = $INCOME_COUNTY$ DEVELOPMENT_COUNTY = $DEVELOPMENT_COUNTY$
+			MILITARY = $MILITARY$
+		}
+		if = {
+			limit = { local_var:dap_best_value > local_var:dap_best_before }
+			set_variable = { name = dap_bc_from value = local_var:dap_replace_from }
+			set_variable = { name = dap_bc_replace value = 1 }
+		}
 	}
 }
 
 # this = player; the weight of the focus setting var:$SETTING$ (Off/Low/High = 0/1/3) as
-# local_var:$WEIGHT$
+# local_var:$WEIGHT$, and whether it is active (0 or 1) as local_var:$ON$
 dap_focus_weight_effect = {
 	set_local_variable = { name = $WEIGHT$ value = var:$SETTING$ }
+	set_local_variable = { name = $ON$ value = 0 }
+	if = {
+		limit = { var:$SETTING$ >= 1 }
+		set_local_variable = { name = $ON$ value = 1 }
+	}
 	if = {
 		limit = { var:$SETTING$ = 2 }
 		set_local_variable = { name = $WEIGHT$ value = 3 }
@@ -228,9 +382,9 @@ dap_focus_weight_effect = {
 
 # this = player; focus weights as local variables
 dap_building_weights_effect = {
-	dap_focus_weight_effect = { SETTING = dap_build_income WEIGHT = dap_w_income }
-	dap_focus_weight_effect = { SETTING = dap_build_development WEIGHT = dap_w_development }
-	dap_focus_weight_effect = { SETTING = dap_build_military WEIGHT = dap_w_military }
+	dap_focus_weight_effect = { SETTING = dap_build_income WEIGHT = dap_w_income ON = dap_on_income }
+	dap_focus_weight_effect = { SETTING = dap_build_development WEIGHT = dap_w_development ON = dap_on_development }
+	dap_focus_weight_effect = { SETTING = dap_build_military WEIGHT = dap_w_military ON = dap_on_military }
 }
 
 # this = province, root = player; adds it to the list dap_listed_holdings, marking it var:dap_listed_first if
@@ -356,6 +510,10 @@ dap_drop_build_request_effect = {
 			remove_variable = dap_build_building
 			remove_variable = dap_build_from
 			remove_variable = dap_build_gold_before
+			if = {
+				limit = { has_variable = dap_build_replacing }
+				remove_variable = dap_build_replacing
+			}
 		}
 	}
 	dap_clear_building_pick_effect = yes
@@ -517,7 +675,9 @@ dap_military_base_for_type_effect = {
 # its stacking county as scope:dap_stack_income or scope:dap_stack_development. That is
 # the county, among those where such a bonus can still be built in some holding (busy ones
 # included, so a county stays the stacking county while its constructions are under way),
-# with the most buildings serving the focus already, the capital breaking ties.
+# with the most buildings serving the focus already, the capital breaking ties. With the
+# replace buildings option, a full county counts if replacing a building there could add such
+# a bonus.
 dap_choose_stacking_counties_effect = {
 	# Saved scopes last the whole event, so none is left from an earlier choice
 	if = {
@@ -536,6 +696,11 @@ dap_choose_stacking_counties_effect = {
 		province_owner = { save_scope_as = holder }
 		county = { save_scope_as = county }
 		dap_consider_buildings_effect = yes
+		if = {
+			limit = { dap_build_replace_here_trigger = yes }
+			dap_reach_shares_effect = yes
+			dap_consider_replacements_effect = yes
+		}
 	}
 	remove_local_variable = dap_room_pass
 	capital_county = { save_scope_as = dap_capital_county }
@@ -577,7 +742,8 @@ dap_pick_buildings_effect = {
 # their cost in the holdings it may build in (dap_list_build_holdings_effect), stacking
 # county-wide bonuses in the stacking county (dap_choose_stacking_counties_effect) and
 # stationed bonuses in military bases (dap_update_military_bases_effect), then, with the
-# vassals' counties option and nothing left in their own counties, in their vassals' counties, within
+# vassals' counties option and nothing left in their own counties, in their vassals' counties
+# (with the replace buildings option, replacing in full counties too), within
 # the gold above the reserve and the constructions allowed per season; in Suggest only mode
 # (local_var:dap_dry) it logs them instead. A holding with construction under way, or one
 # already waiting for the holding view, is skipped.
@@ -685,7 +851,12 @@ dap_run_buildings_effect = {
 				if = {
 					limit = { dap_dry_run_trigger = yes }
 					root = {
-						dap_log_effect = { ACTION = dap_log_build_suggested }
+						if = {
+							limit = { prev = { has_variable = dap_bc_replace } }
+							dap_log_effect = { ACTION = dap_log_replace_suggested }
+							set_variable = { name = dap_log_replaced value = prev.var:dap_bc_from }
+						}
+						else = { dap_log_effect = { ACTION = dap_log_build_suggested } }
 						set_variable = { name = dap_log_building value = prev.var:dap_bc_building }
 						set_variable = { name = dap_log_province value = prev }
 					}

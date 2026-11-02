@@ -964,6 +964,116 @@ SUITE_CHECKS = """\
 			remove_variable = dap_build_excluded
 			remove_variable = dap_t_full
 		}
+		# Replacing buildings: a holding of your domain whose slots are all full of buildings that
+		# serve no active focus (Military stacking is off) but give a lot, in a county with no
+		# free slot elsewhere (the other holdings excluded here, as if full). With the option off
+		# nothing is replaced; on, nothing either, as no new building gives 50% more; once one of
+		# them is swapped for a building that gives nothing, it is replaced, pressed below
+		ordered_directly_owned_province = {
+			limit = {
+				has_holding = yes
+				has_ongoing_construction = no
+				dap_build_excluded_trigger = no
+				NOT = { this = root.capital_province }
+				NOT = { county = { scope:dap_t_stack ?= this } }
+				NOT = { scope:dap_t_baron_holding ?= this }
+				NOT = { scope:dap_t_main_upgrade ?= this }
+				NOT = { scope:dap_t_upgrade ?= this }
+			}
+			# The military scenarios' holdings may be used again; one waiting for nothing, outside
+			# the capital's county, first
+			order_by = {
+				value = 0
+				subtract = num_buildings
+				if = {
+					limit = { dap_devtest_waiting_trigger = yes }
+					subtract = 100
+				}
+				if = {
+					limit = { county = root.capital_county }
+					subtract = 100
+				}
+			}
+			save_scope_as = dap_t_replace
+		}
+		scope:dap_t_replace ?= {
+			if = {
+				limit = { dap_devtest_waiting_trigger = yes }
+				dap_drop_build_request_effect = yes
+				root = { remove_list_variable = { name = dap_t_asked target = scope:dap_t_replace } }
+			}
+			dap_devtest_remove_regular_buildings_effect = yes
+			dap_devtest_fill_strong_military_effect = yes
+			county = {
+				every_county_province = {
+					limit = {
+						has_holding = yes
+						NOT = { this = scope:dap_t_replace }
+						NOT = { has_variable = dap_build_excluded }
+					}
+					set_variable = { name = dap_build_excluded value = 1 }
+					set_variable = dap_t_full
+				}
+			}
+			if = {
+				limit = { has_free_building_slot = yes }
+				debug_log = "DAPTEST FAIL could not fill a holding with buildings that serve no focus to test replacing"
+			}
+		}
+		add_gold = 5000
+		dap_run_buildings_effect = yes
+		if = {
+			limit = { NOT = { any_in_list = { variable = dap_build_holdings has_variable = dap_bc_replace } } }
+			debug_log = "DAPTEST OK with the option off, existing buildings are never replaced, even in a full county"
+		}
+		else = { debug_log = "DAPTEST FAIL with the option off, a replacement was picked" }
+		set_variable = { name = dap_build_replace value = 1 }
+		scope:dap_t_replace ?= {
+			dap_drop_build_request_effect = yes
+			root = { dap_run_buildings_effect = yes }
+			if = {
+				limit = { NOT = { has_variable = dap_bc_replace } }
+				debug_log = "DAPTEST OK no replacement when no new building gives 50% more than the old one"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL a building was replaced by one that gives less than 50% more"
+				dap_devtest_explain_effect = yes
+			}
+			dap_drop_build_request_effect = yes
+			dap_devtest_swap_in_filler_effect = yes
+			root = { dap_run_buildings_effect = yes }
+			if = {
+				limit = {
+					dap_devtest_waiting_trigger = yes
+					has_variable = dap_bc_replace
+					dap_devtest_filler_from_trigger = yes
+					OR = {
+						dap_devtest_income_pick_trigger = yes
+						dap_devtest_development_pick_trigger = yes
+					}
+				}
+				debug_log = "DAPTEST OK with the option on and a full county, a building that serves no focus is replaced by a clearly better focus building"
+				set_global_variable = { name = dap_t_replace_holding value = this }
+				root = { add_to_variable_list = { name = dap_t_asked target = prev } }
+			}
+			else = {
+				debug_log = "DAPTEST FAIL with the option on and a full county, the building that gives nothing is not replaced"
+				dap_devtest_explain_effect = yes
+			}
+		}
+		if = {
+			limit = { NOT = { exists = scope:dap_t_replace } }
+			debug_log = "DAPTEST FAIL no spare holding of your domain to test replacing"
+		}
+		set_variable = { name = dap_build_replace value = 0 }
+		every_held_title = {
+			limit = { tier = tier_county }
+			every_county_province = {
+				limit = { has_variable = dap_t_full }
+				remove_variable = dap_build_excluded
+				remove_variable = dap_t_full
+			}
+		}
 		if = {
 			limit = { cp:councillor_chancellor ?= { is_performing_council_task = task_domestic_affairs } }
 			debug_log = "DAPTEST OK chancellor on Domestic Affairs (a vassal hates you)"
@@ -1537,6 +1647,20 @@ dap_devtest_suite_build_check = {
 				dap_devtest_explain_effect = yes
 			}
 		}
+		global_var:dap_t_replace_holding ?= {
+			if = {
+				limit = { has_ongoing_construction = yes }
+				debug_log = "DAPTEST OK a replacement is under construction, pressed through the holding view's Replace"
+				if = {
+					limit = { dap_devtest_has_filler_trigger = yes }
+					debug_log = "DAPTEST note the replaced building stays until the new one is finished"
+				}
+			}
+			else = {
+				debug_log = "DAPTEST FAIL no replacement under construction"
+				dap_devtest_explain_effect = yes
+			}
+		}
 		global_var:dap_t_vassal_county_holding ?= {
 			if = {
 				limit = { has_ongoing_construction = yes }
@@ -1702,6 +1826,10 @@ dap_devtest_cancel_builds_effect = {
 		remove_variable = dap_build_from
 		remove_variable = dap_build_gold_before
 	}
+	if = {
+		limit = { has_variable = dap_build_replacing }
+		remove_variable = dap_build_replacing
+	}
 	every_in_list = {
 		variable = dap_build_holdings
 		limit = { has_variable = dap_build_queued }
@@ -1747,6 +1875,38 @@ dap_devtest_explain_effect = {
 }
 """)
 
+    # Military-only lines, each at its top level, the most worth replacing first
+    by_key = {c["key"]: c for c in found}
+    def top(c):
+        while c["next"] in by_key:
+            c = by_key[c["next"]]
+        return c
+    def military_alone(c):
+        return c["worth"]["MILITARY"] > 0 and not any(c["worth"][s] > 0 for s in build_buildings.SCORES)
+    military_only = sorted((top(c) for c in first if military_alone(c) and military_alone(top(c))),
+                           key=lambda c: -c["worth"]["MILITARY"])
+    effects.append("""
+# this = province; fills its free slots with military-only buildings at their top level, which
+# serve no focus while Military stacking is off but are worth a lot
+dap_devtest_fill_strong_military_effect = {
+	while = {
+		count = 12
+		if = {
+			limit = { has_free_building_slot = yes }
+""")
+    for i, c in enumerate(military_only):
+        line = c["key"].rsplit("_", 1)[0]
+        effects.append(f"\t\t\t{'if' if i == 0 else 'else_if'} = {{\n\t\t\t\tlimit = {{ NOT = {{ has_building_or_higher = {line}_01 }} }}\n"
+                       f"\t\t\t\tadd_building = {c['key']}\n\t\t\t}}\n")
+    effects.append("\t\t}\n\t}\n}\n")
+    effects.append("\n# this = province; swaps one of those military buildings for a building that gives nothing\n"
+                   "dap_devtest_swap_in_filler_effect = {\n"
+                   + "".join(f"\t{'if' if i == 0 else 'else_if'} = {{\n\t\tlimit = {{ has_building = {c['key']} }}\n"
+                             f"\t\tremove_building = {c['key']}\n\t}}\n" for i, c in enumerate(military_only))
+                   + "".join(f"\t{'if' if i == 0 else 'else_if'} = {{\n\t\tlimit = {{ NOT = {{ has_building_or_higher = {key} }} }}\n"
+                             f"\t\tadd_building = {key}\n\t}}\n" for i, key in enumerate(fillers))
+                   + "}\n")
+
     keys = [c["key"] for c in found] + ["none"]
 
     def chain(var):
@@ -1763,6 +1923,11 @@ dap_devtest_explain_effect = {
                              for c in found if not c["main"] and any(v > 0 for v in c["scores"].values()))
                    + "}\n")
     dev_first = [c for c in first if c["scores"]["DEVELOPMENT_COUNTY"] > 0]
+    effects.append("\n# this = province; removes every building there but its main building\n"
+                   "dap_devtest_remove_regular_buildings_effect = {\n"
+                   + "".join(f"\tif = {{\n\t\tlimit = {{ has_building = {c['key']} }}\n\t\tremove_building = {c['key']}\n\t}}\n"
+                             for c in found if not c["main"])
+                   + "}\n")
     effects.append("\n# this = province; removes every building there whose county-wide bonus serves Development\n"
                    "dap_devtest_remove_development_buildings_effect = {\n"
                    + "".join(f"\tif = {{\n\t\tlimit = {{ has_building = {c['key']} }}\n\t\tremove_building = {c['key']}\n\t}}\n"
@@ -1810,6 +1975,12 @@ dap_devtest_explain_effect = {
                 "# this = province, root = player; in a county held by a direct vassal, and not the player's own\n"
                 "dap_devtest_vassal_county_trigger = {\n\tNOT = { province_owner = root }\n"
                 "\tcounty.holder = { is_vassal_of = root }\n}\n\n"
+                "# this = province; its pick replaces a building that gives nothing\n"
+                "dap_devtest_filler_from_trigger = {\n\texists = var:dap_bc_from\n\tOR = {\n"
+                + "".join(f"\t\tvar:dap_bc_from = flag:{k}\n" for k in fillers) + "\t}\n}\n\n"
+                "# this = province; has a building that gives nothing\n"
+                "dap_devtest_has_filler_trigger = {\n\tOR = {\n"
+                + "".join(f"\t\thas_building = {k}\n" for k in fillers) + "\t}\n}\n\n"
                 "# this = province; a construction is asked for there\n"
                 "dap_devtest_waiting_trigger = {\n\thas_variable = dap_build_queued\n}\n"]
     return "".join(effects), "".join(triggers)

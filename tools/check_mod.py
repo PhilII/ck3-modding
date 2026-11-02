@@ -208,6 +208,40 @@ def check_stationed_bonuses():
                 errors.append(f"generated building data: {value} should {'' if positive else 'not '}count {building}")
 
 
+# What replacing a known building loses: all it gives, not just its last level's increase;
+# None for a building that comes with its holding and is never replaced
+KNOWN_REPLACEMENT_WORTH = {
+    "military_camps_01": {"MILITARY": True, "INCOME_HOLDING": False, "DEVELOPMENT_COUNTY": False},
+    "watermills_02": {"DEVELOPMENT_COUNTY": True, "INCOME_HOLDING": True, "MILITARY": False},
+    "castle_01": None,
+    "castle_02": None,
+}
+
+
+def check_replacement_worth():
+    path = os.path.join(MOD, "common", "scripted_effects", "dap_buildings_generated.txt")
+    worth = {}
+    for call in re.findall(r"dap_consider_replacement_effect = \{([^}]*)\}", read(path)):
+        params = dict(re.findall(r"(\w+) = (\S+)", call))
+        worth[params["FROM"]] = params
+    for building, expected in KNOWN_REPLACEMENT_WORTH.items():
+        if expected is None:
+            if building in worth:
+                errors.append(f"generated building data: {building} comes with its holding but could be replaced")
+            continue
+        if building not in worth:
+            errors.append(f"generated building data: {building} cannot be replaced")
+            continue
+        for param, positive in expected.items():
+            if (float(worth[building].get(param, 0)) > 0) != positive:
+                errors.append(f"generated building data: replacing {building} loses {param} "
+                              f"{worth[building].get(param)}, expected {'above zero' if positive else 'zero'}")
+    # An upgrade's worth is all the building gives, so it is more than its level's increase
+    upgrade = generated_building_scores().get("watermills_02", {})
+    if worth.get("watermills_02") and float(worth["watermills_02"]["DEVELOPMENT_COUNTY"]) <= float(upgrade.get("DEVELOPMENT_COUNTY", 0)):
+        errors.append("generated building data: replacing watermills_02 should lose more than its upgrade adds")
+
+
 def check_no_dev_leftovers():
     for path in files(*TEXT_EXTENSIONS):
         if "zz_devtest" in os.path.basename(path):
@@ -227,6 +261,7 @@ if __name__ == "__main__":
     check_building_classifications()
     check_county_counts()
     check_stationed_bonuses()
+    check_replacement_worth()
     check_no_dev_leftovers()
     for error in errors:
         print("ERROR", error)
