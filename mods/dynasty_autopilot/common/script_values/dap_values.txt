@@ -687,3 +687,44 @@ dap_control_county_score = {
 		add = 1000
 	}
 }
+
+# Automatic building. this = county; how many buildings in all its holdings (the player's
+# and their vassals') have a county-wide bonus serving the focus (the generated
+# dap_holding_*_buildings_value, per holding): county stacking keeps filling the county
+# with the most, scope:dap_capital_county (the capital) breaking ties by half a building
+dap_county_income_buildings_value = {
+	value = 0
+	every_county_province = {
+		add = dap_holding_income_buildings_value
+	}
+	if = {
+		limit = { this = scope:dap_capital_county }
+		add = 0.5
+	}
+}
+
+dap_county_development_buildings_value = {
+	value = 0
+	every_county_province = {
+		add = dap_holding_development_buildings_value
+	}
+	if = {
+		limit = { this = scope:dap_capital_county }
+		add = 0.5
+	}
+}
+
+# this = a vassal holding land in the player's counties; the share of their income they
+# pay the player in tax, which is what a holding-reach bonus in their holding is worth to
+# the player
+dap_vassal_tax_share_value = {
+	value = tax_to_liege
+	divide = {
+		value = monthly_character_income
+		add = tax_to_liege
+		# no division by zero for a vassal with no income
+		min = 0.1
+	}
+	min = 0
+	max = 1
+}

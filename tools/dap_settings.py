@@ -972,7 +972,7 @@ MODULES = [
                     {
                         "key": "dap_build_enabled",
                         "label": "Automatic building",
-                        "tooltip": "When on, once every season, new buildings and upgrades are started in your own holdings with the gold above your reserve: those worth the most for their cost to the focuses below. It presses the real Build button, so they cost what they cost you, and the holding view opens for a moment while it does. The yearly building reminder is off while this is on.",
+                        "tooltip": "When on, once every season, new buildings and upgrades are started with the gold above your reserve, in your own holdings and in your vassal barons', cities' and temples' holdings inside your own counties: those worth the most for their cost to you, for the focuses below. It presses the real Build button, so they cost what they cost you, and the holding view opens for a moment while it does. The yearly building reminder is off while this is on.",
                         "default": 0,
                         "values": ["#N Off#!", "#P On#!"],
                     },
@@ -986,14 +986,14 @@ MODULES = [
                     {
                         "key": "dap_build_income",
                         "label": "Income",
-                        "tooltip": "Build buildings that raise your gold income. High counts three times as much as Low.",
+                        "tooltip": "Build buildings that raise your gold income. In a vassal's holding, only the tax they pay you counts; bonuses to the whole county's tax go by county stacking, into one stacking county at a time. High counts three times as much as Low.",
                         "default": 1,
                         "values": ["Off", "Low", "High"],
                     },
                     {
                         "key": "dap_build_development",
                         "label": "Development",
-                        "tooltip": "Build buildings that make the whole county's development grow faster. High counts three times as much as Low.",
+                        "tooltip": "Build buildings that make the whole county's development grow faster, by county stacking: they fill every holding of one county, your vassals' too, before the next. The stacking county is the one with the most of them already, your capital breaking ties. High counts three times as much as Low.",
                         "default": 2,
                         "values": ["Off", "Low", "High"],
                     },

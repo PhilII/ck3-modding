@@ -15,7 +15,7 @@ Everything runs once per season (or immediately with **Run now**) and is recorde
 | Education | Education focus by role (heir, sons, daughters), natural talent, council needs or a fixed skill |
 | Court | Sway hostile vassals, fill council seats and court positions, set council tasks (Domestic Affairs for unhappy vassals, taxes when short of gold, development or culture, control in unruly counties, disrupting exposed schemes), knights, prisoners, granting counties and duchies, creating titles, recruiting men-at-arms, building reminder |
 | Faith | Fill the Court Chaplain seat, have the chaplain convert counties of another faith or rite (capital duchy or most/least developed first), ask family members, spouses and vassals who would accept to adopt your faith, piety reserve, ask the Head of Faith for gold, excommunication alert, warnings about an heir of another faith or hostile-faith vassals, yearly faith report |
-| Buildings | Once a season, starts the new buildings and upgrades (main castle, city or temple building included) worth the most for their cost to your Income and Development focuses (Off, Low or High; High counts three times as much) in your own holdings, with gold above your reserve and up to a set number per season, by pressing the real Build or Upgrade button. Skips holdings with construction under way. The yearly building reminder is off while it is on |
+| Buildings | Once a season, starts the new buildings and upgrades (main castle, city or temple building included) worth the most for their cost to your Income and Development focuses (Off, Low or High; High counts three times as much) in your own holdings and your vassal barons', cities' and temples' holdings inside your own counties (where income counts only as the tax they pay you), with gold above your reserve and up to a set number per season, by pressing the real Build or Upgrade button. County-wide bonuses are stacked by county stacking: they go only into the stacking county, the one with the most buildings serving that focus (your capital breaking ties) that still has room for more. Skips holdings with construction under way. The yearly building reminder is off while it is on |
 
 Every module has a **Mode** setting: *Act* or *Suggest only* (log what it would do without doing it).
 
@@ -29,7 +29,7 @@ Presets (Bloodline, Power, Quick) and three save slots are available, plus copy-
 
 - **Childhood personality choices**: they live in vanilla event files; automating them would mean overwriting those events. Use *Pick me as guardian: Never* to avoid them.
 - **Revoking titles**: the vanilla revoke interaction cannot be run from script with a specific title, and doing it directly would skip the vassal's right to refuse. Hostile vassals you could revoke from are listed in the log instead.
-- **Building** works in your own holdings only, for the Income and Development focuses; county stacking in vassals' holdings, military bases and the opt-in options are planned. In Suggest only mode, and in the log generally, only the latest building entry is kept.
+- **Building** works in your own counties only (your holdings and your vassals' there), for the Income and Development focuses; military bases, vassal counts' counties and the other opt-in options are planned. In Suggest only mode, and in the log generally, only the latest building entry is kept.
 - **Concubines** come only from your court and prisoners, as in vanilla. Sunni Islam in 1.20 has no concubines.
 
 ## Compatibility

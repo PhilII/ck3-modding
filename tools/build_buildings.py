@@ -7,6 +7,7 @@ does not run it. Writes (all marked GENERATED, never edit them by hand):
   common/scripted_triggers/dap_buildings_generated.txt
   common/scripted_effects/dap_buildings_generated.txt
   common/customizable_localization/dap_buildings_generated.txt
+  common/script_values/dap_buildings_generated.txt
 
 Every regular building is listed: its requirement triggers, cost and construction
 time (the game's named script values), next level, and its focus scores split by
@@ -15,7 +16,8 @@ character_modifier = holder). First levels are new buildings for free slots; lat
 levels are upgrades of the level before, scored by what they add. The holdings'
 main buildings (castle, city, temple...) come with the holding, so only their
 upgrades are listed. The scripted effects file ends with a list of every regular
-building that is left out, and why.
+building that is left out, and why. The script values count, per holding, the buildings
+whose county-wide bonus serves each focus, which picks the stacking county.
 """
 
 import argparse
@@ -144,6 +146,8 @@ HOLDINGS_PER_COUNTY = 2.5
 FACTOR_BASE_GROWTH = 0.5
 REACH_BLOCKS = {"county_modifier": "COUNTY", "province_modifier": "HOLDING", "character_modifier": "HOLDER"}
 SCORES = ("INCOME_HOLDING", "INCOME_HOLDER", "INCOME_COUNTY", "DEVELOPMENT_COUNTY")
+# Focuses with county-wide bonuses, which county stacking stacks: focus -> score
+COUNTY_FOCUSES = {"income": "INCOME_COUNTY", "development": "DEVELOPMENT_COUNTY"}
 
 
 def number(expr, values):
@@ -237,13 +241,14 @@ def candidates(game):
             skipped.append((key, reason))
             continue
         scores = raw_scores(building, values)
+        total = dict(scores)
         if prev:
             before = raw_scores(buildings[prev], values)
             scores = {s: scores[s] - before[s] for s in SCORES}
         found.append({
             "key": key, "previous": prev, "cost": cost, "gold": values[cost],
             "time": get(building, "construction_time"), "next": get(building, "next_building"),
-            "main": key in chain_of_main, "trigger": trigger, "scores": scores,
+            "main": key in chain_of_main, "trigger": trigger, "scores": scores, "total": total,
         })
 
     # Weigh development against income: a typical development building gives as much
@@ -318,6 +323,16 @@ def main():
                    f"\t\tlocalization_key = building_{c['key']}\n\t}}\n")
     loc.append("\ttext = {\n\t\tfallback = yes\n\t\tlocalization_key = dap_empty\n\t}\n}\n")
     write("common/customizable_localization/dap_buildings_generated.txt", "".join(loc))
+
+    counts = [HEADER]
+    for focus, score in COUNTY_FOCUSES.items():
+        keys = [c["key"] for c in found if not c["main"] and c["total"][score] > 0]
+        counts.append(f"# this = province; how many of its buildings have a county-wide bonus serving the\n"
+                      f"# {focus.capitalize()} focus (county stacking stacks them in the stacking county)\n"
+                      f"dap_holding_{focus}_buildings_value = {{\n\tvalue = 0\n"
+                      + "".join(f"\tif = {{\n\t\tlimit = {{ has_building = {k} }}\n\t\tadd = 1\n\t}}\n" for k in keys)
+                      + "}\n\n")
+    write("common/script_values/dap_buildings_generated.txt", "".join(counts).rstrip("\n") + "\n")
 
 
 if __name__ == "__main__":

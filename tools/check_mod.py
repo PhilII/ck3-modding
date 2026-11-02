@@ -8,7 +8,8 @@ The game itself is not needed. Checks:
   - localization files start with the right l_<language>: header
   - every dap_* scripted effect, trigger and script value that is used is defined
   - every dap_* localization key used by GUI, custom localization or events exists
-  - the generated building data classifies known buildings by reach as expected
+  - the generated building data classifies known buildings by reach as expected, and
+    counts the known ones with county-wide bonuses for picking the stacking county
   - no dev-test scaffolding or debug_log lines are left in the mod
 Exits with status 1 if anything fails.
 """
@@ -154,6 +155,23 @@ def check_building_classifications():
                               f"{'above zero' if positive else 'zero'}, is {scores[building].get(param)}")
 
 
+# Buildings that must, or must not, count towards a focus when picking the stacking county
+KNOWN_COUNTY_COUNTS = {
+    "dap_holding_development_buildings_value": {"watermills_01": True, "guild_halls_01": True, "farm_estates_01": False},
+    "dap_holding_income_buildings_value": {"cereal_fields_02": True, "watermills_01": False},
+}
+
+
+def check_county_counts():
+    path = os.path.join(MOD, "common", "script_values", "dap_buildings_generated.txt")
+    blocks = dict(re.findall(r"^(dap_\w+) = \{(.*?)^\}", read(path), re.M | re.S))
+    for value, expected in KNOWN_COUNTY_COUNTS.items():
+        counted = set(re.findall(r"has_building = (\w+)", blocks.get(value, "")))
+        for building, positive in expected.items():
+            if (building in counted) != positive:
+                errors.append(f"generated building data: {value} should {'' if positive else 'not '}count {building}")
+
+
 def check_no_dev_leftovers():
     for path in files(*TEXT_EXTENSIONS):
         if "zz_devtest" in os.path.basename(path):
@@ -171,6 +189,7 @@ if __name__ == "__main__":
     check_script_references()
     check_localization_keys()
     check_building_classifications()
+    check_county_counts()
     check_no_dev_leftovers()
     for error in errors:
         print("ERROR", error)

@@ -189,6 +189,99 @@ SUITE_SETUP = """\
 			limit = { culture = { NOT = { has_innovation = innovation_crop_rotation } } }
 			culture = { add_innovation = innovation_crop_rotation }
 		}
+		# County stacking: a county of your own besides the capital's, with a vassal's holding
+		# (granted here, or built and granted, if there is none), gets the most development
+		# buildings: every other county of yours has none. Its duchy is the capital's if it can
+		# be, as "keep core" stops the land module granting it away before the builder runs
+		ordered_held_title = {
+			limit = {
+				tier = tier_county
+				NOT = { this = root.capital_county }
+				any_county_province = { dap_devtest_baron_holding_candidate_trigger = yes }
+			}
+			order_by = {
+				value = 0
+				if = {
+					limit = { de_jure_liege ?= root.capital_county.de_jure_liege }
+					add = 100
+				}
+				if = {
+					limit = { any_county_province = { has_holding = yes province_owner = { is_vassal_of = root } } }
+					add = 10
+				}
+			}
+			save_scope_as = dap_t_stack
+		}
+		scope:dap_t_stack ?= {
+			ordered_county_province = {
+				limit = { dap_devtest_baron_holding_candidate_trigger = yes }
+				order_by = {
+					value = 0
+					# A vassal's holding, else an empty barony, so the player's own castles stay
+					# for the other scenarios
+					if = {
+						limit = { has_holding = yes province_owner = { is_vassal_of = root } }
+						add = 2
+					}
+					if = {
+						limit = { has_holding = no }
+						add = 1
+					}
+				}
+				save_scope_as = dap_t_baron_holding
+			}
+			scope:dap_t_baron_holding = {
+				if = {
+					limit = { has_holding = no }
+					set_holding_type = castle_holding
+				}
+				if = {
+					limit = { NOT = { province_owner ?= { is_vassal_of = root } } }
+					create_character = { age = 30 gender = male faith = root.faith culture = root.culture employer = root save_scope_as = dap_t_baron }
+					create_title_and_vassal_change = { type = granted save_scope_as = change add_claim_on_loss = no }
+					barony = {
+						change_title_holder = { holder = scope:dap_t_baron change = scope:change }
+					}
+					resolve_title_and_vassal_change = scope:change
+				}
+			}
+		}
+		capital_county = { save_scope_as = dap_capital_county }
+		every_held_title = {
+			limit = {
+				tier = tier_county
+				NOT = { this = scope:dap_t_stack }
+			}
+			every_county_province = { dap_devtest_remove_development_buildings_effect = yes }
+		}
+		# The development building goes in the baron's holding, which keeps a free slot; the
+		# county's own castle is left for the main building scenario below
+		scope:dap_t_baron_holding ?= {
+			if = {
+				limit = { has_free_building_slot = no }
+				add_province_modifier = extra_building_slot
+			}
+			province_owner = { save_scope_as = holder }
+			county = { save_scope_as = county }
+			dap_devtest_add_development_effect = yes
+			if = {
+				limit = { has_free_building_slot = no }
+				add_province_modifier = extra_building_slot
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:dap_t_baron_holding
+				scope:dap_t_baron_holding.province_owner = { is_vassal_of = root }
+				scope:dap_t_stack = {
+					dap_county_development_buildings_value >= 1
+				}
+			}
+			set_variable = { name = dap_t_baron_holding value = scope:dap_t_baron_holding }
+			debug_log = "DAPTEST stacking county set up (most development buildings, a vassal baron's castle):"
+			debug_log_scopes = yes
+		}
+		else = { debug_log = "DAPTEST FAIL could not set up a stacking county with a vassal baron's holding" }
 		# A free slot in the capital's holding for a new building
 		capital_province = {
 			if = {
@@ -201,6 +294,7 @@ SUITE_SETUP = """\
 		ordered_directly_owned_province = {
 			limit = {
 				NOT = { this = root.capital_province }
+				NOT = { scope:dap_t_baron_holding ?= this }
 				has_building = castle_01
 				has_ongoing_construction = no
 				# castle_02 needs the innovation in the holding's own culture
@@ -227,6 +321,7 @@ SUITE_SETUP = """\
 			limit = {
 				NOT = { this = root.capital_province }
 				NOT = { this = scope:dap_t_main_upgrade }
+				NOT = { scope:dap_t_baron_holding ?= this }
 				has_ongoing_construction = no
 			}
 			order_by = {
@@ -329,17 +424,88 @@ SUITE_SETUP = """\
 			debug_log = "DAPTEST OK income alone picks income buildings"
 		}
 		else = { debug_log = "DAPTEST FAIL income alone picks a building that gives no income" }
+		# In a vassal's holding, holding and holder bonuses count only as the tax they pay you
+		scope:dap_t_baron_holding ?= {
+			province_owner = { save_scope_value_as = { name = tax_share value = dap_vassal_tax_share_value } }
+			if = {
+				limit = { has_variable = dap_bc_value }
+				dap_devtest_income_parts_effect = yes
+				save_scope_value_as = { name = value value = var:dap_bc_value }
+				save_scope_value_as = { name = holding_part value = local_var:dap_t_holding }
+				save_scope_value_as = { name = county_part value = local_var:dap_t_county }
+				# At most the share of the holding's income, plus the county's tax if this is the
+				# stacking county; a holding valued in full would exceed it
+				if = {
+					limit = {
+						scope:tax_share < 0.95
+						var:dap_bc_value <= {
+							value = local_var:dap_t_holding
+							multiply = scope:tax_share
+							add = local_var:dap_t_county
+							multiply = 1.01
+						}
+					}
+					debug_log = "DAPTEST OK income in a vassal's holding is valued as your tax share, below its value in your own"
+				}
+				else_if = {
+					limit = { scope:tax_share >= 0.95 }
+					debug_log = "DAPTEST note the vassal pays nearly all their income in tax, so the share cannot be told apart"
+				}
+				else = { debug_log = "DAPTEST FAIL income in a vassal's holding is valued above your tax share" }
+				save_scope_as = holding
+				debug_log_scopes = yes
+			}
+			else_if = {
+				limit = { scope:tax_share = 0 }
+				debug_log = "DAPTEST OK no income pick in a vassal's holding that pays you no tax"
+			}
+			else = { debug_log = "DAPTEST note no income pick in the vassal baron's holding" }
+		}
 		set_variable = { name = dap_build_income value = 0 }
 		set_variable = { name = dap_build_development value = 2 }
 		dap_run_buildings_effect = yes
 		if = {
 			limit = {
-				any_directly_owned_province = { has_variable = dap_bc_building }
-				NOT = { any_directly_owned_province = { has_variable = dap_bc_building dap_devtest_development_pick_trigger = no } }
+				any_in_list = { variable = dap_build_holdings has_variable = dap_bc_building }
+				NOT = { any_in_list = { variable = dap_build_holdings has_variable = dap_bc_building dap_devtest_development_pick_trigger = no } }
 			}
 			debug_log = "DAPTEST OK development alone picks development buildings"
 		}
 		else = { debug_log = "DAPTEST FAIL development alone picks a building that gives no development" }
+		if = {
+			limit = {
+				exists = scope:dap_t_stack
+				any_in_list = { variable = dap_build_holdings has_variable = dap_bc_building county = scope:dap_t_stack }
+				NOT = {
+					any_in_list = {
+						variable = dap_build_holdings
+						has_variable = dap_bc_building
+						NOT = { county = scope:dap_t_stack }
+					}
+				}
+			}
+			debug_log = "DAPTEST OK development alone builds only in the stacking county, the one with the most development buildings"
+		}
+		else = {
+			debug_log = "DAPTEST FAIL development alone does not build only in the county with the most development buildings"
+			every_in_list = {
+				variable = dap_build_holdings
+				limit = { has_variable = dap_bc_building }
+				save_scope_as = holding
+				debug_log = "DAPTEST   picked in:"
+				debug_log_scopes = yes
+			}
+		}
+		scope:dap_t_baron_holding ?= {
+			if = {
+				limit = { dap_devtest_development_pick_trigger = yes }
+				debug_log = "DAPTEST OK a vassal baron's holding in the stacking county gets a development building"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL a vassal baron's holding in the stacking county gets no development building"
+				dap_devtest_explain_effect = yes
+			}
+		}
 		if = {
 			limit = {
 				any_directly_owned_province = {
@@ -363,6 +529,8 @@ SUITE_SETUP = """\
 		set_variable = { name = dap_build_suggest value = 0 }
 		set_variable = { name = dap_build_income value = 2 }
 		set_variable = { name = dap_build_per_season value = 3 }
+		# Gold for every construction the seasonal run asks for, the vassal's holding included
+		add_gold = 10000
 		clear_variable_list = dap_log
 """
 
@@ -414,8 +582,19 @@ SUITE_CHECKS = """\
 				dap_devtest_explain_effect = yes
 			}
 		}
+		scope:dap_t_baron_holding ?= {
+			if = {
+				limit = { dap_devtest_waiting_trigger = yes }
+				debug_log = "DAPTEST OK the seasonal run asked for a construction in a vassal baron's holding in the stacking county"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL the seasonal run asked for no construction in the vassal baron's holding"
+				dap_devtest_explain_effect = yes
+			}
+		}
 		# Remember what was asked for, to check it once pressed
-		every_directly_owned_province = {
+		every_in_list = {
+			variable = dap_build_holdings
 			limit = { dap_devtest_waiting_trigger = yes }
 			root = { add_to_variable_list = { name = dap_t_asked target = prev } }
 		}
@@ -902,6 +1081,19 @@ dap_devtest_suite_build_check = {
 			debug_log = "DAPTEST OK a new building is under construction in the capital"
 		}
 		else = { debug_log = "DAPTEST FAIL no construction under way in the capital" }
+		var:dap_t_baron_holding ?= {
+			if = {
+				limit = {
+					has_ongoing_construction = yes
+					dap_devtest_development_pick_trigger = yes
+				}
+				debug_log = "DAPTEST OK a development building is under construction in a vassal baron's holding"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL no development building under construction in the vassal baron's holding"
+				dap_devtest_explain_effect = yes
+			}
+		}
 		if = {
 			limit = {
 				is_target_in_variable_list = { name = dap_log target = root }
@@ -982,7 +1174,8 @@ dap_devtest_add_upgradable_effect = {
 dap_devtest_queued_effect = {
 	set_local_variable = { name = dap_t_queued value = 0 }
 	set_local_variable = { name = dap_t_queued_cost value = 0 }
-	every_directly_owned_province = {
+	every_in_list = {
+		variable = dap_build_holdings
 		limit = { has_variable = dap_build_queued }
 		change_local_variable = { name = dap_t_queued add = 1 }
 		change_local_variable = { name = dap_t_queued_cost add = var:dap_bc_cost }
@@ -998,7 +1191,8 @@ dap_devtest_cancel_builds_effect = {
 		remove_variable = dap_build_from
 		remove_variable = dap_build_gold_before
 	}
-	every_directly_owned_province = {
+	every_in_list = {
+		variable = dap_build_holdings
 		limit = { has_variable = dap_build_queued }
 		remove_variable = dap_build_queued
 	}
@@ -1028,8 +1222,11 @@ dap_devtest_explain_effect = {
 	}
 	else = { debug_log = "DAPTEST   nothing there serves a focus" }
 	if = {
-		limit = { NOT = { province_owner = root } }
-		debug_log = "DAPTEST   no longer in your domain (granted away by the land module?)"
+		limit = {
+			NOT = { province_owner = root }
+			NOT = { province_owner = { is_vassal_of = root } }
+		}
+		debug_log = "DAPTEST   no longer yours or a vassal's (granted away by the land module?)"
 	}
 }
 """)
@@ -1049,6 +1246,30 @@ dap_devtest_explain_effect = {
                    + "".join(f"\tif = {{\n\t\tlimit = {{ has_building = {c['key']} }}\n\t\tremove_building = {c['key']}\n\t}}\n"
                              for c in found if not c["main"] and any(v > 0 for v in c["scores"].values()))
                    + "}\n")
+    dev_first = [c for c in first if c["scores"]["DEVELOPMENT_COUNTY"] > 0]
+    effects.append("\n# this = province; removes every building there whose county-wide bonus serves Development\n"
+                   "dap_devtest_remove_development_buildings_effect = {\n"
+                   + "".join(f"\tif = {{\n\t\tlimit = {{ has_building = {c['key']} }}\n\t\tremove_building = {c['key']}\n\t}}\n"
+                             for c in found if not c["main"] and c["total"]["DEVELOPMENT_COUNTY"] > 0)
+                   + "}\n")
+    effects.append("\n# this = province, scope:holder and scope:county saved; adds a level 1 development\n"
+                   "# building that can be built there\ndap_devtest_add_development_effect = {\n"
+                   + "".join(f"\t{'if' if i == 0 else 'else_if'} = {{\n\t\tlimit = {{ dap_can_build_{c['key']}_trigger = yes }}\n"
+                             f"\t\tadd_building = {c['key']}\n\t}}\n" for i, c in enumerate(dev_first))
+                   + "}\n")
+    def part(c, keys):
+        return f"{sum(max(c['scores'][k], 0) for k in keys):.3f}"
+    effects.append("\n# this = province; its pick's value with Income alone on High, split into the holding's\n"
+                   "# and holder's income (local_var:dap_t_holding) and the county's tax (local_var:dap_t_county)\n"
+                   "dap_devtest_income_parts_effect = {\n\tset_local_variable = { name = dap_t_holding value = 0 }\n"
+                   "\tset_local_variable = { name = dap_t_county value = 0 }\n"
+                   + "".join(f"\tif = {{\n\t\tlimit = {{ var:dap_bc_building = flag:{c['key']} }}\n"
+                             f"\t\tset_local_variable = {{ name = dap_t_holding value = {{ value = "
+                             f"{part(c, ('INCOME_HOLDING', 'INCOME_HOLDER'))} multiply = 3000 divide = {c['cost']} }} }}\n"
+                             f"\t\tset_local_variable = {{ name = dap_t_county value = {{ value = "
+                             f"{part(c, ('INCOME_COUNTY',))} multiply = 3000 divide = {c['cost']} }} }}\n\t}}\n"
+                             for c in found if income(c))
+                   + "}\n")
     effects.append("\n# this = province; logs its pick\n"
                    f"dap_devtest_name_pick_effect = {{\n{chain('dap_bc_building')}{chain('dap_bc_from')}}}\n")
 
@@ -1060,6 +1281,13 @@ dap_devtest_explain_effect = {
                 pick_trigger("dap_devtest_income_pick_trigger", [c["key"] for c in found if income(c)]),
                 pick_trigger("dap_devtest_development_pick_trigger",
                              [c["key"] for c in found if c["scores"]["DEVELOPMENT_COUNTY"] > 0]),
+                "# this = province; could be the vassal baron's holding in the stacking county: a\n"
+                "# vassal's holding, or one of the player's castles or cities, or an empty barony\n"
+                "dap_devtest_baron_holding_candidate_trigger = {\n"
+                "\tNOT = { this = county.title_province }\n\thas_ongoing_construction = no\n\tOR = {\n"
+                "\t\tAND = {\n\t\t\thas_holding = yes\n\t\t\tprovince_owner = { is_vassal_of = root }\n\t\t}\n"
+                "\t\tAND = {\n\t\t\tprovince_owner = root\n\t\t\tOR = {\n\t\t\t\thas_holding_type = castle_holding\n"
+                "\t\t\t\thas_holding_type = city_holding\n\t\t\t}\n\t\t}\n\t\thas_holding = no\n\t}\n}\n\n"
                 "# this = province; a construction is asked for there\n"
                 "dap_devtest_waiting_trigger = {\n\thas_variable = dap_build_queued\n}\n"]
     return "".join(effects), "".join(triggers)
