@@ -1011,6 +1011,13 @@ MODULES = [
                         "default": 1,
                         "values": ["1", "2", "3", "Unlimited"],
                     },
+                    {
+                        "key": "dap_build_vassal_counties",
+                        "label": "Vassals' counties",
+                        "tooltip": "When on, the autopilot also builds in the counties your direct vassals hold, in their holdings and their own vassals', but only once your own counties have nothing left worth building: no candidate anywhere and no county left to stack. There you get only part of the gain: a holding's income counts as the tax that reaches you, and bonuses to the holder not at all. Military bases stay in your own domain.",
+                        "default": 0,
+                        "values": ["Off", "On"],
+                    },
                 ],
             },
         ],

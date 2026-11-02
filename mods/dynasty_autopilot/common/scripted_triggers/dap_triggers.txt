@@ -749,6 +749,13 @@ dap_build_excluded_trigger = {
 	}
 }
 
+# this = province, root = player; a holding the builder lists in a county held by one of the
+# player's vassals, not the player's own (the vassals' counties option)
+dap_in_vassal_county_trigger = {
+	NOT = { province_owner = root }
+	NOT = { county.holder = root }
+}
+
 # this = player; has the mod asked for a construction in scope:province (ADR 0001)?
 dap_build_pending_trigger = {
 	has_variable = dap_build_building

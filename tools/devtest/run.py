@@ -867,6 +867,11 @@ SUITE_CHECKS = """\
 				dap_devtest_explain_effect = yes
 			}
 		}
+		if = {
+			limit = { any_in_list = { variable = dap_build_holdings dap_devtest_vassal_county_trigger = yes } }
+			debug_log = "DAPTEST FAIL the seasonal run, with the vassals' counties option off, considered a vassal's county"
+		}
+		else = { debug_log = "DAPTEST OK the seasonal run, with the vassals' counties option off, leaves your vassals' counties alone" }
 		# The seasonal run left excluded holdings alone (the setup tested them in full)
 		global_var:dap_t_excluded ?= {
 			if = {
@@ -887,6 +892,77 @@ SUITE_CHECKS = """\
 			variable = dap_build_holdings
 			limit = { dap_devtest_waiting_trigger = yes }
 			root = { add_to_variable_list = { name = dap_t_asked target = prev } }
+		}
+		# Vassals' counties: your own counties are left with nothing to build (excluded here,
+		# as if full). With the option off, nothing is asked for in your vassals' counties; on,
+		# a holding there gets a construction, pressed with the rest below
+		every_held_title = {
+			limit = {
+				tier = tier_county
+				NOT = { has_variable = dap_build_excluded }
+			}
+			set_variable = { name = dap_build_excluded value = 1 }
+			set_variable = dap_t_full
+		}
+		every_directly_owned_province = {
+			limit = { NOT = { has_variable = dap_build_excluded } }
+			set_variable = { name = dap_build_excluded value = 1 }
+			set_variable = dap_t_full
+		}
+		add_gold = 5000
+		dap_run_buildings_effect = yes
+		if = {
+			limit = {
+				NOT = { any_in_list = { variable = dap_build_queue dap_devtest_vassal_county_trigger = yes } }
+				NOT = { any_in_list = { variable = dap_listed_holdings dap_devtest_vassal_county_trigger = yes } }
+			}
+			debug_log = "DAPTEST OK with the option off, your vassals' counties are left alone when yours are full"
+		}
+		else = { debug_log = "DAPTEST FAIL with the option off, a vassal's county was asked for or listed" }
+		set_variable = { name = dap_build_vassal_counties value = 1 }
+		dap_run_buildings_effect = yes
+		if = {
+			limit = { any_in_list = { variable = dap_build_queue dap_devtest_vassal_county_trigger = yes } }
+			debug_log = "DAPTEST OK with the option on and your counties full, a holding in a vassal's county gets a construction"
+			ordered_in_list = {
+				variable = dap_build_queue
+				limit = { dap_devtest_vassal_county_trigger = yes }
+				# One two levels down if there is one: a holding the county's holder does not hold
+				order_by = {
+					value = 0
+					if = {
+						limit = { NOT = { province_owner = county.holder } }
+						add = 1
+					}
+				}
+				set_global_variable = { name = dap_t_vassal_county_holding value = this }
+				save_scope_as = holding
+				province_owner = { save_scope_as = owner }
+				county.holder = { save_scope_as = county_holder }
+				debug_log_scopes = yes
+			}
+			every_in_list = {
+				variable = dap_build_queue
+				limit = { dap_devtest_vassal_county_trigger = yes }
+				root = { add_to_variable_list = { name = dap_t_asked target = prev } }
+			}
+		}
+		else = { debug_log = "DAPTEST FAIL with the option on and your counties full, nothing was asked for in a vassal's county" }
+		if = {
+			limit = { any_in_list = { variable = dap_listed_holdings dap_devtest_vassal_county_trigger = yes } }
+			debug_log = "DAPTEST OK with the option on, the window lists your vassals' counties"
+		}
+		else = { debug_log = "DAPTEST FAIL with the option on, the window does not list your vassals' counties" }
+		set_variable = { name = dap_build_vassal_counties value = 0 }
+		every_held_title = {
+			limit = { has_variable = dap_t_full }
+			remove_variable = dap_build_excluded
+			remove_variable = dap_t_full
+		}
+		every_directly_owned_province = {
+			limit = { has_variable = dap_t_full }
+			remove_variable = dap_build_excluded
+			remove_variable = dap_t_full
 		}
 		if = {
 			limit = { cp:councillor_chancellor ?= { is_performing_council_task = task_domestic_affairs } }
@@ -992,8 +1068,18 @@ SUITE_CHECKS = """\
 			debug_log = "DAPTEST OK marriage arranged or proposed"
 		}
 		else = { debug_log = "DAPTEST FAIL no marriage for adult children" }
-		# The Build button must still be affordable after the broke-steward check
-		add_gold = 5000
+		# The Build button must still be affordable after the broke-steward check, for every
+		# construction queued, those in vassals' counties included (real prices can be higher)
+		set_local_variable = { name = dap_t_owed value = 0 }
+		every_in_list = {
+			variable = dap_build_queue
+			change_local_variable = { name = dap_t_owed add = var:dap_bc_cost }
+		}
+		add_gold = {
+			value = local_var:dap_t_owed
+			multiply = 2
+			add = 5000
+		}
 """
 
 
@@ -1451,6 +1537,20 @@ dap_devtest_suite_build_check = {
 				dap_devtest_explain_effect = yes
 			}
 		}
+		global_var:dap_t_vassal_county_holding ?= {
+			if = {
+				limit = { has_ongoing_construction = yes }
+				if = {
+					limit = { province_owner = { is_vassal_of = root } }
+					debug_log = "DAPTEST OK a building is under construction in a vassal's county, in the count's own holding"
+				}
+				else = { debug_log = "DAPTEST OK a building is under construction in a vassal's county, in a holding two levels down" }
+			}
+			else = {
+				debug_log = "DAPTEST FAIL no construction under way in the vassal's county"
+				dap_devtest_explain_effect = yes
+			}
+		}
 		if = {
 			limit = {
 				is_target_in_variable_list = { name = dap_log target = root }
@@ -1532,6 +1632,16 @@ dap_devtest_suite_build_timeout = {
 			limit = { NOT = { exists = global_var:dap_devtest_build_checked } }
 			set_global_variable = { name = dap_devtest_build_checked value = yes }
 			debug_log = "DAPTEST FAIL the holding view never pressed Build"
+			var:dap_build_province ?= {
+				save_scope_as = holding
+				province_owner = { save_scope_as = owner liege ?= { save_scope_as = owner_liege } }
+				county.holder = { save_scope_as = county_holder }
+				save_scope_value_as = { name = cost value = var:dap_bc_cost }
+				save_scope_value_as = { name = gold value = root.gold }
+				debug_log = "DAPTEST   the request left unpressed:"
+				debug_log_scopes = yes
+				root = { dap_devtest_name_request_effect = yes }
+			}
 			dap_devtest_succession_effect = yes
 		}
 	}
@@ -1594,6 +1704,11 @@ dap_devtest_cancel_builds_effect = {
 	}
 	every_in_list = {
 		variable = dap_build_holdings
+		limit = { has_variable = dap_build_queued }
+		remove_variable = dap_build_queued
+	}
+	every_in_list = {
+		variable = dap_build_queue
 		limit = { has_variable = dap_build_queued }
 		remove_variable = dap_build_queued
 	}
@@ -1692,6 +1807,9 @@ dap_devtest_explain_effect = {
                 "\t\tAND = {\n\t\t\thas_holding = yes\n\t\t\tprovince_owner = { is_vassal_of = root }\n\t\t}\n"
                 "\t\tAND = {\n\t\t\tprovince_owner = root\n\t\t\tOR = {\n\t\t\t\thas_holding_type = castle_holding\n"
                 "\t\t\t\thas_holding_type = city_holding\n\t\t\t}\n\t\t}\n\t\thas_holding = no\n\t}\n}\n\n"
+                "# this = province, root = player; in a county held by a direct vassal, and not the player's own\n"
+                "dap_devtest_vassal_county_trigger = {\n\tNOT = { province_owner = root }\n"
+                "\tcounty.holder = { is_vassal_of = root }\n}\n\n"
                 "# this = province; a construction is asked for there\n"
                 "dap_devtest_waiting_trigger = {\n\thas_variable = dap_build_queued\n}\n"]
     return "".join(effects), "".join(triggers)

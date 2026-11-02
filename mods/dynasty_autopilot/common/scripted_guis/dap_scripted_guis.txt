@@ -151,6 +151,26 @@ dap_build_pending = {
 	}
 }
 
+# The two Build presses of gui/00_dap_building_item.gui take turns: each is shown only on
+# its own requests (var:dap_build_turn)
+dap_build_pending_a = {
+	scope = character
+	saved_scopes = { province }
+	is_shown = {
+		dap_build_pending_trigger = yes
+		NOT = { var:dap_build_turn ?= 1 }
+	}
+}
+
+dap_build_pending_b = {
+	scope = character
+	saved_scopes = { province }
+	is_shown = {
+		dap_build_pending_trigger = yes
+		var:dap_build_turn ?= 1
+	}
+}
+
 # Used by gui/dap_build_driver.gui: ask for the next queued construction
 dap_build_next = {
 	scope = character

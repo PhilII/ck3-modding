@@ -1006,6 +1006,13 @@ types DapSettingsGenerated
 			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_per_season' ) ).End )]" }
 			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_per_season' ) ).End )]" }
 		}
+		dap_setting_row = {
+			blockoverride "label" { text = "dap_setting_dap_build_vassal_counties" }
+			blockoverride "tooltip" { tooltip = "dap_setting_dap_build_vassal_counties_tt" }
+			blockoverride "value" { text = "[Character.Custom( 'dap_cl_dap_build_vassal_counties' )]" }
+			blockoverride "onclick" { onclick = "[GetScriptedGui( 'dap_setting_next' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_vassal_counties' ) ).End )]" }
+			blockoverride "onrightclick" { onrightclick = "[GetScriptedGui( 'dap_setting_prev' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'holder', Character.MakeScope ).AddScope( 'setting', MakeScopeFlag( 'dap_build_vassal_counties' ) ).End )]" }
+		}
 	}
 
 	type dap_module_buildings_player = vbox {

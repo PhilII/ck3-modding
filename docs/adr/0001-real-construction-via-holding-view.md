@@ -31,3 +31,5 @@ Upgrades (issue 4) go the same way: the widget opens the slot holding the buildi
 - A delayed GUI state cannot time out an unpressed request: its delay did not restart on a re-trigger, so it fired at once and cut short upgrades still being pressed. An unpressed request lapses after a day instead.
 
 Simulation was not needed. Re-copy the type after game patches that change it.
+
+Later finding (issue 8): when two requests in a row want the same building, the open panel's widgets are reused and a press whose condition stayed true never fires again, so the queue stalled. The override now has two presses for new buildings and two for upgrades that take turns request by request (`var:dap_build_turn`, flipped in `dap_build_open_effect`; scripted GUIs `dap_build_pending_a` and `_b`). The turn is checked in the press's `trigger_when`, not its `visible`, since a hidden widget does not see its condition turn false either. The same route also builds in vassals' holdings, two levels down included.

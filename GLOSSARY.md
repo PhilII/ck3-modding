@@ -28,6 +28,10 @@ _Avoid_: Unit type, military focus
 **Reach** (of a building bonus):
 Who a building's bonus benefits: the whole county, only its holding, or only the holder of that holding.
 
+**Vassals' counties** (an option):
+Counties held by the player's direct vassals; automatic building may use every holding in them (the vassal's own and their vassals', two levels below the player) only once the player's own counties have no candidate and no county left to stack, and has its own stacking county there.
+_Avoid_: Realm counties
+
 **Excluded holding**:
 A county or holding the player has taken out of automatic building.
 _Avoid_: Locked, blacklisted

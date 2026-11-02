@@ -2151,3 +2151,19 @@ dap_cl_dap_build_per_season = {
 	}
 }
 
+dap_cl_dap_build_vassal_counties = {
+	type = character
+	text = {
+		trigger = { var:dap_build_vassal_counties = 0 }
+		localization_key = dap_val_dap_build_vassal_counties_0
+	}
+	text = {
+		trigger = { var:dap_build_vassal_counties = 1 }
+		localization_key = dap_val_dap_build_vassal_counties_1
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_val_unset
+	}
+}
+

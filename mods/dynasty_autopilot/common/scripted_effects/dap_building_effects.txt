@@ -4,7 +4,8 @@
 # Route: once a season the builder scores every new building and upgrade in the holdings it
 # may build in (dap_build_holdings: the player's own, and their vassal barons', cities' and
 # temples' holdings in the player's own counties; military bases, dap_military_bases, are
-# among the player's own), and queues the best (dap_build_queue, a list of provinces, each
+# among the player's own; with the vassals' counties option, the holdings in the counties of
+# their direct vassals once their own have nothing left, dap_build_vassal_holdings), and queues the best (dap_build_queue, a list of provinces, each
 # holding its pick in var:dap_bc_*). gui/dap_build_driver.gui asks for them one at a time (the
 # dap_build_next scripted GUI): the mod remembers which building it wants in which holding
 # and opens the vanilla holding view for that holding. gui/00_dap_building_item.gui (an
@@ -25,6 +26,13 @@ dap_build_open_effect = {
 	}
 	set_variable = { name = dap_build_province value = scope:dap_build_province days = 1 }
 	set_variable = { name = dap_build_gold_before value = gold days = 1 }
+	# Whose turn it is among the two Build presses and the two Upgrade presses of
+	# gui/00_dap_building_item.gui (dap_build_pending_a: 0, _b: 1); see ADR 0001
+	if = {
+		limit = { var:dap_build_turn ?= 1 }
+		set_variable = { name = dap_build_turn value = 0 }
+	}
+	else = { set_variable = { name = dap_build_turn value = 1 } }
 	scope:dap_build_province = { open_view_data = holding_view }
 }
 
@@ -95,6 +103,11 @@ dap_pick_building_in_province_effect = {
 	else = {
 		scope:holder = {
 			set_local_variable = { name = dap_share_holding value = dap_vassal_tax_share_value }
+			# Two levels down, the tax reaches the player through the holder's liege
+			if = {
+				limit = { NOT = { is_vassal_of = root } }
+				liege = { change_local_variable = { name = dap_share_holding multiply = dap_vassal_tax_share_value } }
+			}
 		}
 		set_local_variable = { name = dap_share_holder value = 0 }
 	}
@@ -233,7 +246,9 @@ dap_add_listed_holding_effect = {
 
 # this = player; every holding the builder could build in, county by county, into the list
 # dap_listed_holdings, which the window lists with exclude buttons: the player's own, and their
-# vassals' (barons, cities, temples) in the player's own counties
+# vassals' (barons, cities, temples) in the player's own counties; with the vassals' counties
+# option, every holding in the counties of the player's direct vassals, theirs and their own
+# vassals' (a liege two levels up may build there, verified in 1.20.1.2)
 dap_list_window_holdings_effect = {
 	every_in_list = {
 		variable = dap_listed_holdings
@@ -254,9 +269,18 @@ dap_list_window_holdings_effect = {
 			dap_add_listed_holding_effect = yes
 		}
 	}
-	# Holdings of the player's own in counties someone else holds, grouped by county
+	# Holdings of the player's own in counties someone else holds, grouped by county; a direct
+	# vassal's county comes in full below when the vassals' counties option is on
 	every_directly_owned_province = {
-		limit = { has_holding = yes }
+		limit = {
+			has_holding = yes
+			NOT = {
+				AND = {
+					root = { var:dap_build_vassal_counties = 1 }
+					county.holder = { is_vassal_of = root }
+				}
+			}
+		}
 		save_temporary_scope_as = dap_owned
 		if = {
 			limit = { root = { NOT = { is_target_in_variable_list = { name = dap_listed_holdings target = scope:dap_owned } } } }
@@ -271,17 +295,45 @@ dap_list_window_holdings_effect = {
 			}
 		}
 	}
+	if = {
+		limit = { var:dap_build_vassal_counties = 1 }
+		every_vassal = {
+			save_temporary_scope_as = dap_vassal
+			every_held_title = {
+				limit = { tier = tier_county }
+				every_county_province = {
+					limit = {
+						has_holding = yes
+						OR = {
+							province_owner = root
+							province_owner = scope:dap_vassal
+							province_owner = { is_vassal_of = scope:dap_vassal }
+						}
+					}
+					dap_add_listed_holding_effect = yes
+				}
+			}
+		}
+	}
 }
 
-# this = player; the holdings the builder may build in, into the list dap_build_holdings:
-# those of dap_list_window_holdings_effect that are not excluded holdings
+# this = player; the holdings the builder may build in: those of
+# dap_list_window_holdings_effect that are not excluded holdings, into the list
+# dap_build_holdings, but those in vassals' counties into dap_build_vassal_holdings
 dap_list_build_holdings_effect = {
 	dap_list_window_holdings_effect = yes
 	clear_variable_list = dap_build_holdings
+	clear_variable_list = dap_build_vassal_holdings
 	every_in_list = {
 		variable = dap_listed_holdings
 		limit = { dap_build_excluded_trigger = no }
-		root = { add_to_variable_list = { name = dap_build_holdings target = prev } }
+		if = {
+			limit = { dap_in_vassal_county_trigger = yes }
+			root = { add_to_variable_list = { name = dap_build_vassal_holdings target = prev } }
+		}
+		else = {
+			root = { add_to_variable_list = { name = dap_build_holdings target = prev } }
+		}
 	}
 }
 
@@ -467,6 +519,15 @@ dap_military_base_for_type_effect = {
 # included, so a county stays the stacking county while its constructions are under way),
 # with the most buildings serving the focus already, the capital breaking ties.
 dap_choose_stacking_counties_effect = {
+	# Saved scopes last the whole event, so none is left from an earlier choice
+	if = {
+		limit = { exists = scope:dap_stack_income }
+		clear_saved_scope = dap_stack_income
+	}
+	if = {
+		limit = { exists = scope:dap_stack_development }
+		clear_saved_scope = dap_stack_development
+	}
 	clear_variable_list = dap_build_room_income
 	clear_variable_list = dap_build_room_development
 	set_local_variable = { name = dap_room_pass value = 1 }
@@ -498,10 +559,25 @@ dap_choose_stacking_counties_effect = {
 	clear_variable_list = dap_build_room_development
 }
 
+# this = player; picks the best building in every holding of dap_build_holdings that is
+# neither waiting for a construction nor building one
+dap_pick_buildings_effect = {
+	every_in_list = {
+		variable = dap_build_holdings
+		limit = { NOT = { has_variable = dap_build_queued } }
+		dap_clear_building_pick_effect = yes
+		if = {
+			limit = { has_ongoing_construction = no }
+			dap_pick_building_in_province_effect = yes
+		}
+	}
+}
+
 # this = player; once a season, starts the new buildings and upgrades worth the most for
 # their cost in the holdings it may build in (dap_list_build_holdings_effect), stacking
 # county-wide bonuses in the stacking county (dap_choose_stacking_counties_effect) and
-# stationed bonuses in military bases (dap_update_military_bases_effect), within
+# stationed bonuses in military bases (dap_update_military_bases_effect), then, with the
+# vassals' counties option and nothing left in their own counties, in their vassals' counties, within
 # the gold above the reserve and the constructions allowed per season; in Suggest only mode
 # (local_var:dap_dry) it logs them instead. A holding with construction under way, or one
 # already waiting for the holding view, is skipped.
@@ -564,14 +640,23 @@ dap_run_buildings_effect = {
 		dap_list_build_holdings_effect = yes
 		dap_update_military_bases_effect = yes
 		dap_choose_stacking_counties_effect = yes
-		every_in_list = {
-			variable = dap_build_holdings
-			limit = { NOT = { has_variable = dap_build_queued } }
-			dap_clear_building_pick_effect = yes
-			if = {
-				limit = { has_ongoing_construction = no }
-				dap_pick_building_in_province_effect = yes
+		dap_pick_buildings_effect = yes
+		# Vassals' counties, only once the player's own have nothing left: no pick, and no county
+		# left to stack (holdings with construction under way included)
+		if = {
+			limit = {
+				var:dap_build_vassal_counties = 1
+				NOT = { exists = scope:dap_stack_income }
+				NOT = { exists = scope:dap_stack_development }
+				NOT = { any_in_list = { variable = dap_build_holdings has_variable = dap_bc_value } }
 			}
+			clear_variable_list = dap_build_holdings
+			every_in_list = {
+				variable = dap_build_vassal_holdings
+				root = { add_to_variable_list = { name = dap_build_holdings target = prev } }
+			}
+			dap_choose_stacking_counties_effect = yes
+			dap_pick_buildings_effect = yes
 		}
 		ordered_in_list = {
 			variable = dap_build_holdings
