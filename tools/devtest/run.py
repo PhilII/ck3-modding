@@ -4,6 +4,7 @@ Usage:
   python3 tools/devtest/run.py suite            # one tick: scenario setup, one run, checks;
                                                 # then the construction the run asked for
   python3 tools/devtest/run.py soak --years 30  # many years at full speed in observer mode
+  python3 tools/devtest/run.py soak --years 30 --gold 100  # ...with 100 gold a season for building
   python3 tools/devtest/run.py build            # a mod widget starts a real construction (ADR 0001)
 
 All modes:
@@ -16,7 +17,12 @@ All modes:
 The soak mode adds a GUI widget that switches to observer mode, unpauses and
 sets top speed by itself, so no clicks are needed and events never stop time.
 The ruler you start as keeps being automated by the harness (marked with
-dap_devtest_ai), and is followed through successions.
+dap_devtest_ai), and is followed through successions. It also switches on every
+building option, and, since observer mode has no player for the build driver,
+stands in for the holding view: each season's queued picks are added at once
+(add_building) and paid for, and the report ends with how many constructions
+started, by kind. A yearly status line shows the gold and picks it had. The AI
+ruler spends its own gold, so --gold gives it some every season for the builder.
 
 The build mode adds a GUI widget that, like a button in the mod's window, asks
 for a construction; the mod then presses the holding view's real Build button.
@@ -73,6 +79,13 @@ TEST_VALUES = {
     "dap_build_per_season": 3, "dap_build_military": 2, "dap_build_duchy": 1, "dap_build_special": 1,
 }
 
+# The soak also switches on the building options the suite tests both ways
+SOAK_VALUES = {"dap_build_vassal_counties": 1, "dap_build_replace": 1, "dap_build_new_holdings": 1}
+
+# What the soak's stand-in for the holding view started, by kind (dap_devtest_soak_press_effect)
+SOAK_COUNTERS = ["dap_soak_new_building", "dap_soak_upgrade", "dap_soak_replacement",
+                 "dap_soak_duchy_capital", "dap_soak_special", "dap_soak_not_built"]
+
 
 def log_flags():
     """Every log action the mod can record, read from its custom localization."""
@@ -84,19 +97,22 @@ def player_keys():
     return {st["key"] for m in MODULES for sec in m["sections"] if sec["holder"] == "player" for st in sec["settings"]}
 
 
-def apply_test_values():
-    keys = player_keys()
-    unknown = set(TEST_VALUES) - keys
-    assert not unknown, f"TEST_VALUES has unknown settings: {unknown}"
-    return "".join(f"\t\tset_variable = {{ name = {k} value = {v} }}\n" for k, v in sorted(TEST_VALUES.items()))
+def apply_test_values(mode):
+    values = dict(TEST_VALUES, **(SOAK_VALUES if mode == "soak" else {}))
+    unknown = set(values) - player_keys()
+    assert not unknown, f"TEST_VALUES or SOAK_VALUES has unknown settings: {unknown}"
+    return "".join(f"\t\tset_variable = {{ name = {k} value = {v} }}\n" for k, v in sorted(values.items()))
 
 
-def count_effect(flags):
+def count_effect(flags, counters):
+    """Effects that count each log action per run, zero the counts and report them; counters are
+    further counts kept by the harness itself, zeroed and reported alongside."""
     out = ["dap_devtest_count_effect = {\n\tevery_in_list = {\n\t\tvariable = dap_log\n"]
     for flag in flags:
         out.append(f"\t\tif = {{\n\t\t\tlimit = {{ var:dap_log_action ?= flag:{flag} }}\n"
                    f"\t\t\troot = {{ change_variable = {{ name = dap_cnt_{flag} add = 1 }} }}\n\t\t}}\n")
     out.append("\t}\n}\n\n")
+    flags = flags + counters
     out.append("dap_devtest_zero_counts_effect = {\n")
     for flag in flags:
         out.append(f"\tset_variable = {{ name = dap_cnt_{flag} value = 0 }}\n")
@@ -1719,8 +1735,102 @@ dap_devtest.30 = {
 """
 
 
-def events_file(mode, years, flags):
-    effects = count_effect(flags)
+def soak_press_effect():
+    """The soak's stand-in for the holding view: observer mode has no player, so the build
+    driver never opens it. Every queued pick is added at once (add_building, no construction
+    time), paid for and recorded through dap_build_started_effect, as a press would be."""
+    everything, _ = build_buildings.candidates(build_buildings.DEFAULT_GAME, build_buildings.KINDS)
+    # Only the buildings the mod offers can be picks; comparing other flags is validator noise
+    with open(os.path.join(MOD, "common", "scripted_effects", "dap_buildings_generated.txt"), encoding="utf-8-sig") as f:
+        offered = set(re.findall(r"\b(?:BUILDING|FROM) = (\w+)", f.read()))
+    regular = sorted({c["key"] for c in everything if c["kind"] != "special"} & offered)
+    special = sorted({c["key"] for c in everything if c["kind"] == "special"} & offered)
+    not_built = ("\n\t\tif = {{ limit = {{ NOT = {{ has_building = {k} }} }} "
+                 "root = {{ change_variable = {{ name = dap_cnt_dap_soak_not_built add = 1 }} }} }}")
+    def chain(keys, var, body, tabs=1):
+        t = "\t" * tabs
+        return "".join(f"{t}{'if' if i == 0 else 'else_if'} = {{\n{t}\tlimit = {{ var:{var} ?= flag:{k} }}\n"
+                       f"{t}\t{body.format(k=k)}\n{t}}}\n" for i, k in enumerate(keys))
+    return ("""
+# this = province with a queued pick, root = the automated ruler; adds the pick and counts it
+dap_devtest_soak_add_building_effect = {
+	if = {
+		limit = { has_variable = dap_bc_replace }
+		root = { change_variable = { name = dap_cnt_dap_soak_replacement add = 1 } }
+""" + chain(regular, "dap_bc_from", "remove_building = {k}", tabs=2) + """	}
+	else_if = {
+		limit = { var:dap_bc_slot ?= flag:duchy_capital }
+		root = { change_variable = { name = dap_cnt_dap_soak_duchy_capital add = 1 } }
+	}
+	else_if = {
+		limit = { var:dap_bc_slot ?= flag:special }
+		root = { change_variable = { name = dap_cnt_dap_soak_special add = 1 } }
+	}
+	else_if = {
+		limit = { var:dap_bc_from ?= flag:none }
+		root = { change_variable = { name = dap_cnt_dap_soak_new_building add = 1 } }
+	}
+	else = { root = { change_variable = { name = dap_cnt_dap_soak_upgrade add = 1 } } }
+	if = {
+		limit = { var:dap_bc_slot ?= flag:special }
+		dap_devtest_soak_add_special_effect = yes
+	}
+	else = { dap_devtest_soak_add_regular_effect = yes }
+}
+
+dap_devtest_soak_add_regular_effect = {
+""" + chain(regular, "dap_bc_building", "add_building = {k}" + not_built) + """}
+
+dap_devtest_soak_add_special_effect = {
+""" + chain(special, "dap_bc_building", "add_special_building = {k}" + not_built) + """}
+
+# this = the automated ruler; once a year, what automatic building had to work with
+dap_devtest_soak_status_effect = {
+	save_scope_value_as = { name = gold value = gold }
+	save_scope_value_as = { name = holdings value = { every_in_list = { variable = dap_build_holdings add = 1 } } }
+	save_scope_value_as = { name = picks value = { every_in_list = { variable = dap_build_holdings limit = { has_variable = dap_bc_value } add = 1 } } }
+	save_scope_value_as = { name = under_way value = { every_in_list = { variable = dap_build_holdings limit = { has_ongoing_construction = yes } add = 1 } } }
+	ordered_in_list = {
+		variable = dap_build_holdings
+		limit = { has_variable = dap_bc_cost }
+		order_by = { value = 0 subtract = var:dap_bc_cost }
+		save_scope_value_as = { name = cheapest_pick value = var:dap_bc_cost }
+		save_scope_as = cheapest_holding
+	}
+	debug_log = "DAPTEST status"
+	debug_log_scopes = yes
+}
+
+# this = the automated ruler; presses every queued construction, the most valuable first
+dap_devtest_soak_press_effect = {
+	while = {
+		limit = { any_in_list = { variable = dap_build_queue } }
+		ordered_in_list = {
+			variable = dap_build_queue
+			order_by = var:dap_bc_value
+			save_scope_as = province
+		}
+		remove_list_variable = { name = dap_build_queue target = scope:province }
+		set_variable = { name = dap_build_province value = scope:province }
+		set_variable = { name = dap_build_building value = scope:province.var:dap_bc_building }
+		set_variable = { name = dap_build_from value = scope:province.var:dap_bc_from }
+		set_variable = { name = dap_build_slot value = scope:province.var:dap_bc_slot }
+		if = {
+			limit = { scope:province = { has_variable = dap_bc_replace } }
+			set_variable = { name = dap_build_replacing value = 1 }
+		}
+		set_variable = { name = dap_build_gold_before value = gold }
+		scope:province = { dap_devtest_soak_add_building_effect = yes }
+		remove_short_term_gold = scope:province.var:dap_bc_cost
+		dap_build_started_effect = yes
+	}
+}
+""")
+
+
+def events_file(mode, years, flags, gold=0):
+    counters = SOAK_COUNTERS if mode == "soak" else []
+    effects = count_effect(flags, counters)
     out = ["namespace = dap_devtest\n"]
     out.append("""
 dap_devtest.1 = {
@@ -1729,7 +1839,7 @@ dap_devtest.1 = {
 		debug_log_date = yes
 		set_variable = dap_devtest_ai
 		dap_init_player_effect = yes
-""" + apply_test_values())
+""" + apply_test_values(mode))
     out.append("\t\tdap_devtest_zero_counts_effect = yes\n")
     if mode == "build":
         out.append("\t\tadd_gold = 5000\n\t\tdebug_log = \"DAPTEST build test set up\"\n")
@@ -1756,8 +1866,8 @@ dap_devtest.10 = {
 			debug_log_scopes = yes
 		}
 		clear_variable_list = dap_log
-		dap_run_all_effect = yes
-		dap_devtest_count_effect = yes
+""" + (f"\t\tadd_gold = {gold}\n" if gold and mode == "soak" else "") + """		dap_run_all_effect = yes
+""" + ("\t\tdap_devtest_soak_press_effect = yes\n" if mode == "soak" else "") + """		dap_devtest_count_effect = yes
 		change_variable = { name = dap_devtest_pulses_left add = -1 }
 		if = {
 			limit = { var:dap_devtest_pulses_left = 0 }
@@ -1770,6 +1880,7 @@ dap_devtest.10 = {
 			set_variable = { name = dap_devtest_year_mark value = 1 days = 360 }
 			debug_log_date = yes
 			debug_log = "DAPTEST year passed"
+""" + ("\t\t\tdap_devtest_soak_status_effect = yes\n" if mode == "soak" else "") + """
 		}
 	}
 }
@@ -1786,9 +1897,9 @@ dap_devtest_follow_heir_effect = {
 		set_variable = { name = dap_devtest_pulses_left value = root.var:dap_devtest_pulses_left }
 		# Copy the counts so the final report covers the whole run
 """]
-    for flag in flags:
+    for flag in flags + counters:
         follow.append(f"\t\tset_variable = {{ name = dap_cnt_{flag} value = root.var:dap_cnt_{flag} }}\n")
-    follow.append("\t\tdap_init_player_effect = yes\n" + apply_test_values() + """	}
+    follow.append("\t\tdap_init_player_effect = yes\n" + apply_test_values(mode) + """	}
 	debug_log = "DAPTEST succession"
 }
 """)
@@ -1796,6 +1907,8 @@ dap_devtest_follow_heir_effect = {
         effects += BUILD_PICK
     elif mode == "suite":
         effects += SUITE_SUCCESSION
+    else:
+        effects += soak_press_effect()
     return "".join(out), effects + "".join(follow)
 
 
@@ -2493,6 +2606,9 @@ def main():
     parser.add_argument("mode", choices=["suite", "soak", "build"])
     parser.add_argument("--years", type=int, default=30, help="soak length in game years")
     parser.add_argument("--play", default="k_norway", help="title whose ruler you start as")
+    parser.add_argument("--gold", type=int, default=0,
+                        help="soak: gold given to the automated ruler every season, before the seasonal run "
+                             "(the AI ruler spends its own gold, leaving the builder little)")
     parser.add_argument("--seed", type=int, default=1066, help="random seed, for repeatable runs")
     parser.add_argument("--timeout", type=int, default=0, help="seconds before giving up (default: by mode)")
     args = parser.parse_args()
@@ -2501,7 +2617,7 @@ def main():
         sys.exit("CK3 is already running; close it first (it may be someone's game).")
 
     flags = log_flags()
-    events, effects = events_file(args.mode, args.years, flags)
+    events, effects = events_file(args.mode, args.years, flags, args.gold)
     timeout = args.timeout or (420 + args.years * 75 if args.mode == "soak" else 420)
     debug_log = os.path.join(LOGS, "debug.log")
     error_log = os.path.join(LOGS, "error.log")
@@ -2554,27 +2670,57 @@ def main():
         cleanup()
 
     print(f"\nOutcome: {outcome}\n")
+    counts = {}
     if os.path.exists(debug_log):
         with open(debug_log, encoding="utf-8", errors="replace") as f:
             lines = f.read().splitlines()
         for i, line in enumerate(lines):
             if "DAPTEST" in line and "year passed" not in line:
                 msg = line.split("): ", 1)[-1]
-                # A count is printed by debug_log_scopes a few lines further down
+                # A count is printed by debug_log_scopes further down, after the saved scopes
                 if msg.startswith("DAPTEST fired"):
-                    for extra in lines[i + 1:i + 30]:
+                    for extra in lines[i + 1:i + 1000]:
                         m = re.match(r"\s*count: (\S+)", extra)
+                        if "DAPTEST" in extra:
+                            break
                         if m:
                             msg += f" x{m.group(1)}"
+                            counts[msg.split()[2]] = float(m.group(1))
                             break
+                elif msg.startswith("DAPTEST status"):
+                    values = {}
+                    for extra in lines[i + 1:i + 1000]:
+                        if "DAPTEST" in extra:
+                            break
+                        m = re.match(r"\s*(gold|holdings|picks|under_way|cheapest_pick|cheapest_holding): (.+?)(?: weak|$)", extra)
+                        if m:
+                            values[m.group(1)] = m.group(2)
+                    msg += " " + ", ".join(f"{k} {v}" for k, v in values.items())
                 print(msg)
+    if args.mode == "soak":
+        started_kinds = [c for c in SOAK_COUNTERS if c != "dap_soak_not_built"] + ["dap_log_holding_started"]
+        # A pick that was not built is also counted under its kind
+        constructions = sum(counts.get(k, 0) for k in started_kinds) - counts.get("dap_soak_not_built", 0)
+        print(f"\nConstructions started: {constructions:g} "
+              f"({', '.join(f'{k}: {counts.get(k, 0):g}' for k in started_kinds)}); "
+              f"picks not built: {counts.get('dap_soak_not_built', 0):g}")
     if os.path.exists(error_log):
         with open(error_log, encoding="utf-8", errors="replace") as f:
-            errors = [l for l in f.read().splitlines()
-                      if "dap_" in l or "dynasty_autopilot" in l or "zz_devtest" in l]
+            blocks = re.split(r"\n(?=\[\d\d:\d\d:\d\d\]\[)", f.read())
+        mod = lambda text: "dap_" in text or "dynasty_autopilot" in text or "zz_devtest" in text
+        # A vanilla error whose script location is vanilla names the mod's files only in its
+        # call chain: run from an on_action the mod or the harness appends to, or from an
+        # effect of theirs (a building's on_complete after the soak's add_building)
+        errors, passing = [], []
+        for block in blocks:
+            if mod(block):
+                head = [l for l in block.splitlines() if not re.match(r"\s+file:", l)]
+                (errors if mod("\n".join(head)) else passing).append(block.splitlines()[0])
         print(f"\nMod errors in error.log: {len(errors)}")
         for line in errors[:40]:
             print("  " + line[:220])
+        if passing:
+            print(f"Vanilla errors with the mod only in their call chain (not counted): {len(passing)}")
     sys.exit(0 if outcome == "done" else 1)
 
 
