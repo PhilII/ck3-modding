@@ -118,6 +118,95 @@ types DapBaseTypes
 	}
 }
 
+types DapListedTypes
+{
+	# The holdings the builder may build in (Buildings tab), county by county: each county and
+	# each holding with a button that excludes it from automatic building or includes it again
+	type dap_listed_view = vbox {
+		layoutpolicy_horizontal = expanding
+
+		dap_section_header = {
+			blockoverride "title" {
+				text = "dap_listed_title"
+			}
+		}
+
+		text_multi = {
+			layoutpolicy_horizontal = expanding
+			autoresize = yes
+			margin = { 8 4 }
+			max_width = 900
+			text = "dap_listed_desc"
+		}
+
+		text_single = {
+			margin = { 8 4 }
+			visible = "[IsDataModelEmpty( GetPlayer.MakeScope.GetList('dap_listed_holdings') )]"
+			text = "dap_listed_empty"
+		}
+
+		vbox = {
+			layoutpolicy_horizontal = expanding
+			datamodel = "[GetPlayer.MakeScope.GetList('dap_listed_holdings')]"
+
+			item = {
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					datacontext = "[Scope.GetProvince]"
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						visible = "[Province.MakeScope.Var('dap_listed_first').IsSet]"
+						margin = { 8 2 }
+						margin_top = 6
+						spacing = 8
+
+						text_single = {
+							align = left|nobaseline
+							default_format = "#high"
+							text = "dap_listed_county"
+						}
+						text_single = {
+							align = left|nobaseline
+							text = "[Province.Custom( 'dap_cl_county_excluded' )]"
+						}
+						expand = {}
+						button_standard_small = {
+							size = { 160 26 }
+							text = "[Province.Custom( 'dap_cl_county_exclude_button' )]"
+							tooltip = "dap_county_exclude_tt"
+							onclick = "[GetScriptedGui( 'dap_toggle_county_build_excluded' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', Province.MakeScope ).End )]"
+						}
+					}
+
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						margin = { 8 2 }
+						margin_left = 28
+						spacing = 8
+
+						text_single = {
+							align = left|nobaseline
+							text = "dap_listed_name"
+						}
+						text_single = {
+							align = left|nobaseline
+							text = "[Province.Custom( 'dap_cl_listed_excluded' )]"
+						}
+						expand = {}
+						button_standard_small = {
+							size = { 160 26 }
+							text = "[Province.Custom( 'dap_cl_listed_exclude_button' )]"
+							tooltip = "dap_listed_exclude_tt"
+							onclick = "[GetScriptedGui( 'dap_toggle_build_excluded' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'province', Province.MakeScope ).End )]"
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 types DapLogTypes
 {
 	# The log in the General tab; datacontext is the player
@@ -280,6 +369,9 @@ window = {
 
 						dap_settings_view = {}
 						dap_bases_view = {
+							visible = "[GetVariableSystem.HasValue( 'dap_tab', 'buildings' )]"
+						}
+						dap_listed_view = {
 							visible = "[GetVariableSystem.HasValue( 'dap_tab', 'buildings' )]"
 						}
 						dap_log_view = {

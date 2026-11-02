@@ -338,3 +338,56 @@ dap_cl_log_prefix = {
 		localization_key = dap_empty
 	}
 }
+
+# Exclude buttons and marks in the window's list of holdings (dap_listed_holdings)
+dap_cl_listed_exclude_button = {
+	type = province
+	text = {
+		trigger = { has_variable = dap_build_excluded }
+		localization_key = dap_include_button
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_exclude_button
+	}
+}
+
+dap_cl_county_exclude_button = {
+	type = province
+	text = {
+		trigger = { county = { has_variable = dap_build_excluded } }
+		localization_key = dap_include_county_button
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_exclude_county_button
+	}
+}
+
+dap_cl_listed_excluded = {
+	type = province
+	text = {
+		trigger = { has_variable = dap_build_excluded }
+		localization_key = dap_listed_excluded
+	}
+	text = {
+		trigger = { county = { has_variable = dap_build_excluded } }
+		localization_key = dap_listed_county_excluded
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_empty
+	}
+}
+
+dap_cl_county_excluded = {
+	type = province
+	text = {
+		trigger = { county = { has_variable = dap_build_excluded } }
+		localization_key = dap_listed_excluded
+	}
+	text = {
+		fallback = yes
+		localization_key = dap_empty
+	}
+}

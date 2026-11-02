@@ -220,24 +220,118 @@ dap_building_weights_effect = {
 	dap_focus_weight_effect = { SETTING = dap_build_military WEIGHT = dap_w_military }
 }
 
-# this = player; the holdings the builder may build in, into the list dap_build_holdings:
-# the player's own, and their vassals' (barons, cities, temples) in the player's own counties
-dap_list_build_holdings_effect = {
-	clear_variable_list = dap_build_holdings
-	every_directly_owned_province = {
-		limit = { has_holding = yes }
-		root = { add_to_variable_list = { name = dap_build_holdings target = prev } }
+# this = province, root = player; adds it to the list dap_listed_holdings, marking it var:dap_listed_first if
+# it is the first listed of its county
+dap_add_listed_holding_effect = {
+	save_temporary_scope_as = dap_listed
+	if = {
+		limit = { root = { NOT = { any_in_list = { variable = dap_listed_holdings county = scope:dap_listed.county } } } }
+		set_variable = { name = dap_listed_first value = 1 }
 	}
+	root = { add_to_variable_list = { name = dap_listed_holdings target = scope:dap_listed } }
+}
+
+# this = player; every holding the builder could build in, county by county, into the list
+# dap_listed_holdings, which the window lists with exclude buttons: the player's own, and their
+# vassals' (barons, cities, temples) in the player's own counties
+dap_list_window_holdings_effect = {
+	every_in_list = {
+		variable = dap_listed_holdings
+		limit = { has_variable = dap_listed_first }
+		remove_variable = dap_listed_first
+	}
+	clear_variable_list = dap_listed_holdings
 	every_held_title = {
 		limit = { tier = tier_county }
 		every_county_province = {
 			limit = {
 				has_holding = yes
-				NOT = { province_owner = root }
-				province_owner = { is_vassal_of = root }
+				OR = {
+					province_owner = root
+					province_owner = { is_vassal_of = root }
+				}
 			}
-			root = { add_to_variable_list = { name = dap_build_holdings target = prev } }
+			dap_add_listed_holding_effect = yes
 		}
+	}
+	# Holdings of the player's own in counties someone else holds, grouped by county
+	every_directly_owned_province = {
+		limit = { has_holding = yes }
+		save_temporary_scope_as = dap_owned
+		if = {
+			limit = { root = { NOT = { is_target_in_variable_list = { name = dap_listed_holdings target = scope:dap_owned } } } }
+			county = {
+				every_county_province = {
+					limit = {
+						has_holding = yes
+						province_owner = root
+					}
+					dap_add_listed_holding_effect = yes
+				}
+			}
+		}
+	}
+}
+
+# this = player; the holdings the builder may build in, into the list dap_build_holdings:
+# those of dap_list_window_holdings_effect that are not excluded holdings
+dap_list_build_holdings_effect = {
+	dap_list_window_holdings_effect = yes
+	clear_variable_list = dap_build_holdings
+	every_in_list = {
+		variable = dap_listed_holdings
+		limit = { dap_build_excluded_trigger = no }
+		root = { add_to_variable_list = { name = dap_build_holdings target = prev } }
+	}
+}
+
+# this = province, root = player; drops the construction it waits for, if any, queued or
+# already asked of the holding view, and its pick
+dap_drop_build_request_effect = {
+	save_temporary_scope_as = dap_dropped
+	if = {
+		limit = { has_variable = dap_build_queued }
+		remove_variable = dap_build_queued
+		root = { remove_list_variable = { name = dap_build_queue target = scope:dap_dropped } }
+	}
+	root = {
+		if = {
+			limit = {
+				has_variable = dap_build_building
+				var:dap_build_province ?= scope:dap_dropped
+			}
+			remove_variable = dap_build_province
+			remove_variable = dap_build_building
+			remove_variable = dap_build_from
+			remove_variable = dap_build_gold_before
+		}
+	}
+	dap_clear_building_pick_effect = yes
+}
+
+# this = province, root = player; takes the holding out of automatic building (an excluded holding), or
+# puts it back. The flag lives on the province, so it survives succession
+dap_toggle_build_excluded_effect = {
+	if = {
+		limit = { has_variable = dap_build_excluded }
+		remove_variable = dap_build_excluded
+	}
+	else = {
+		set_variable = { name = dap_build_excluded value = 1 }
+		dap_drop_build_request_effect = yes
+	}
+}
+
+# this = county title, root = player; takes every holding of the county out of automatic building, or puts
+# them back. The flag lives on the title, so it survives succession
+dap_toggle_county_build_excluded_effect = {
+	if = {
+		limit = { has_variable = dap_build_excluded }
+		remove_variable = dap_build_excluded
+	}
+	else = {
+		set_variable = { name = dap_build_excluded value = 1 }
+		every_county_province = { dap_drop_build_request_effect = yes }
 	}
 }
 
@@ -258,7 +352,8 @@ dap_clear_specialty_effect = {
 # of one men-at-arms base type the player owns (its specialty, var:dap_specialty). Bases the
 # player set (var:dap_specialty_set) come first, then dap_military_base_for_type_effect for
 # every owned type; a holding forgets an automatic specialty that no base uses any more.
-# Specialties live on the holding, so they stay with it through succession.
+# Excluded holdings are never bases. Specialties live on the holding, so they stay with it
+# through succession.
 dap_update_military_bases_effect = {
 	clear_variable_list = dap_military_bases
 	if = {
@@ -291,6 +386,7 @@ dap_update_military_bases_effect = {
 				has_holding = yes
 				has_variable = dap_specialty_set
 				dap_owns_specialty_trigger = yes
+				dap_build_excluded_trigger = no
 			}
 			root = { add_to_variable_list = { name = dap_military_bases target = prev } }
 		}
@@ -325,6 +421,7 @@ dap_military_base_for_type_effect = {
 				has_holding = yes
 				NOT = { has_variable = dap_specialty_set }
 				var:dap_specialty ?= flag:$TYPE$
+				dap_build_excluded_trigger = no
 			}
 			root = { add_to_variable_list = { name = dap_military_bases target = prev } }
 		}
@@ -343,6 +440,7 @@ dap_military_base_for_type_effect = {
 			limit = {
 				has_holding = yes
 				NOT = { has_variable = dap_specialty }
+				dap_build_excluded_trigger = no
 			}
 			order_by = {
 				value = dap_holding_$TYPE$_stationed_value

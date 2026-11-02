@@ -691,6 +691,119 @@ SUITE_SETUP = """\
 		set_variable = { name = dap_build_development value = 2 }
 		set_variable = { name = dap_build_income value = 2 }
 		set_variable = { name = dap_build_per_season value = 3 }
+		# Excluded holdings: a holding of your domain with a free slot, excluded with the
+		# window's button, and every holding of another county of yours, excluded as a county,
+		# get nothing. The holding is one where a Suggest only run picks something
+		set_variable = { name = dap_build_suggest value = 1 }
+		set_local_variable = { name = dap_dry value = 1 }
+		dap_run_buildings_effect = yes
+		remove_local_variable = dap_dry
+		set_variable = { name = dap_build_suggest value = 0 }
+		ordered_directly_owned_province = {
+			limit = {
+				has_holding = yes
+				has_variable = dap_bc_building
+				has_ongoing_construction = no
+				NOT = { this = root.capital_province }
+				NOT = { scope:dap_t_baron_holding ?= this }
+				NOT = { scope:dap_t_main_upgrade ?= this }
+				NOT = { scope:dap_t_upgrade ?= this }
+				NOT = { scope:dap_t_camps ?= this }
+				NOT = { scope:dap_t_stables ?= this }
+			}
+			order_by = {
+				value = 0
+				subtract = num_buildings
+			}
+			save_scope_as = dap_t_excluded
+			if = {
+				limit = { has_free_building_slot = no }
+				add_province_modifier = extra_building_slot
+			}
+		}
+		ordered_held_title = {
+			limit = {
+				tier = tier_county
+				NOT = { this = root.capital_county }
+				NOT = { scope:dap_t_stack ?= this }
+				NOT = { scope:dap_t_excluded.county ?= this }
+				NOT = { scope:dap_t_main_upgrade.county ?= this }
+				NOT = { scope:dap_t_upgrade.county ?= this }
+				any_county_province = { has_holding = yes }
+			}
+			# One where the Suggest only run picked something, so excluding it is seen
+			order_by = {
+				value = development_level
+				if = {
+					limit = { any_county_province = { has_variable = dap_bc_building } }
+					add = 1000
+				}
+			}
+			save_scope_as = dap_t_excluded_county
+		}
+		scope:dap_t_excluded ?= {
+			set_global_variable = { name = dap_t_excluded value = this }
+			dap_toggle_build_excluded_effect = yes
+		}
+		scope:dap_t_excluded_county ?= {
+			set_global_variable = { name = dap_t_excluded_county value = this }
+			dap_toggle_county_build_excluded_effect = yes
+		}
+		add_gold = 5000
+		dap_run_buildings_effect = yes
+		# The excluded get nothing while others do; included again with the button, the next
+		# run asks for a construction there, and excluded once more, that request is dropped
+		scope:dap_t_excluded ?= {
+			if = {
+				limit = {
+					dap_devtest_waiting_trigger = no
+					root = { any_in_list = { variable = dap_build_holdings dap_devtest_waiting_trigger = yes } }
+				}
+				debug_log = "DAPTEST OK an excluded holding with a free slot gets nothing while others do"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL an excluded holding was asked for, or nothing was"
+				dap_devtest_explain_effect = yes
+			}
+			dap_toggle_build_excluded_effect = yes
+			root = { dap_run_buildings_effect = yes }
+			if = {
+				limit = { dap_devtest_waiting_trigger = yes }
+				debug_log = "DAPTEST OK included again, the holding gets a construction on the next run"
+			}
+			else = {
+				debug_log = "DAPTEST FAIL included again, the holding gets no construction on the next run"
+				dap_devtest_explain_effect = yes
+			}
+			dap_toggle_build_excluded_effect = yes
+			if = {
+				limit = {
+					dap_devtest_waiting_trigger = no
+					root = { NOT = { is_target_in_variable_list = { name = dap_build_queue target = scope:dap_t_excluded } } }
+				}
+				debug_log = "DAPTEST OK excluding a holding drops the construction it was waiting for"
+			}
+			else = { debug_log = "DAPTEST FAIL excluding a holding keeps the construction it was waiting for" }
+		}
+		if = {
+			limit = { NOT = { exists = scope:dap_t_excluded } }
+			debug_log = "DAPTEST note no spare holding of your domain to exclude"
+		}
+		scope:dap_t_excluded_county ?= {
+			if = {
+				limit = {
+					NOT = { any_county_province = { dap_devtest_waiting_trigger = yes } }
+					root = { NOT = { any_in_list = { variable = dap_build_holdings county = scope:dap_t_excluded_county } } }
+				}
+				debug_log = "DAPTEST OK no holding of an excluded county gets anything"
+			}
+			else = { debug_log = "DAPTEST FAIL a holding of an excluded county was asked for" }
+		}
+		if = {
+			limit = { NOT = { exists = scope:dap_t_excluded_county } }
+			debug_log = "DAPTEST note no spare county of yours to exclude"
+		}
+		dap_devtest_cancel_builds_effect = yes
 		# Gold for every construction the seasonal run asks for, the vassal's holding included
 		add_gold = 10000
 		clear_variable_list = dap_log
@@ -753,6 +866,21 @@ SUITE_CHECKS = """\
 				debug_log = "DAPTEST FAIL the seasonal run asked for no construction in the vassal baron's holding"
 				dap_devtest_explain_effect = yes
 			}
+		}
+		# The seasonal run left excluded holdings alone (the setup tested them in full)
+		global_var:dap_t_excluded ?= {
+			if = {
+				limit = { dap_devtest_waiting_trigger = yes }
+				debug_log = "DAPTEST FAIL the seasonal run asked for a construction in an excluded holding"
+			}
+			else = { debug_log = "DAPTEST OK the seasonal run leaves an excluded holding alone" }
+		}
+		global_var:dap_t_excluded_county ?= {
+			if = {
+				limit = { any_county_province = { dap_devtest_waiting_trigger = yes } }
+				debug_log = "DAPTEST FAIL the seasonal run asked for a construction in an excluded county"
+			}
+			else = { debug_log = "DAPTEST OK the seasonal run leaves an excluded county alone" }
 		}
 		# Remember what was asked for, to check it once pressed
 		every_in_list = {
@@ -924,6 +1052,28 @@ dap_devtest.30 = {
 			debug_log = "DAPTEST note the heir did not get the holding whose specialty you set"
 		}
 		else = { debug_log = "DAPTEST note the heir has no archers, so that base is not active for them" }
+		# Exclusions stay with the holding and the county, so the heir's builder skips them too
+		dap_list_build_holdings_effect = yes
+		global_var:dap_t_excluded ?= {
+			if = {
+				limit = {
+					has_variable = dap_build_excluded
+					root = { NOT = { is_target_in_variable_list = { name = dap_build_holdings target = global_var:dap_t_excluded } } }
+				}
+				debug_log = "DAPTEST OK an excluded holding stays excluded after succession"
+			}
+			else = { debug_log = "DAPTEST FAIL an excluded holding is no longer excluded after succession" }
+		}
+		global_var:dap_t_excluded_county ?= {
+			if = {
+				limit = {
+					has_variable = dap_build_excluded
+					root = { NOT = { any_in_list = { variable = dap_build_holdings county = global_var:dap_t_excluded_county } } }
+				}
+				debug_log = "DAPTEST OK an excluded county stays excluded after succession"
+			}
+			else = { debug_log = "DAPTEST FAIL an excluded county is no longer excluded after succession" }
+		}
 		if = {
 			limit = {
 				has_variable = dap_initialized
@@ -1348,6 +1498,24 @@ dap_devtest_window_done = {
 		}
 		else = { debug_log = "DAPTEST FAIL the window showed the Buildings tab with no military bases" }
 		debug_log_scopes = yes
+		if = {
+			limit = {
+				any_in_list = { variable = dap_listed_holdings }
+				OR = {
+					NOT = { exists = global_var:dap_t_excluded }
+					is_target_in_variable_list = { name = dap_listed_holdings target = global_var:dap_t_excluded }
+					# Granted out of your counties: not yours to exclude any more
+					global_var:dap_t_excluded = { NOT = { county.holder = root } }
+				}
+			}
+			debug_log = "DAPTEST OK the window lists your holdings, the excluded one included"
+		}
+		else = {
+			debug_log = "DAPTEST FAIL the window does not list your holdings with the excluded one"
+			global_var:dap_t_excluded ?= { save_scope_as = holding province_owner ?= { save_scope_as = owner } }
+			save_scope_value_as = { name = places value = { value = 0 every_in_list = { variable = dap_listed_holdings add = 1 } } }
+			debug_log_scopes = yes
+		}
 		remove_variable = dap_window_open
 		if = {
 			limit = { has_variable = dap_t_window_check }

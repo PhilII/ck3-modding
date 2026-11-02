@@ -173,6 +173,26 @@ dap_build_started = {
 	}
 }
 
+# scope:province = a holding in the window's list (dap_listed_holdings); it is taken out of
+# automatic building, or put back, from the next seasonal run
+dap_toggle_build_excluded = {
+	scope = character
+	saved_scopes = { province }
+	effect = {
+		scope:province = { dap_toggle_build_excluded_effect = yes }
+	}
+}
+
+# scope:province = the first listed holding of a county in the window's list; the whole
+# county is taken out of automatic building, or put back
+dap_toggle_county_build_excluded = {
+	scope = character
+	saved_scopes = { province }
+	effect = {
+		scope:province.county = { dap_toggle_county_build_excluded_effect = yes }
+	}
+}
+
 # scope:province = a military base in the window's list; its specialty moves on to the next
 # men-at-arms type the player owns, after the last back to automatic, and the list follows
 dap_next_specialty = {

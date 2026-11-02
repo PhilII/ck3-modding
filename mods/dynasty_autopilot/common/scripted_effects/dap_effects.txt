@@ -54,6 +54,7 @@ dap_open_window_effect = {
 		}
 	}
 	dap_refresh_family_effect = yes
+	dap_list_window_holdings_effect = yes
 	set_variable = { name = dap_window_open value = 1 }
 }
 
